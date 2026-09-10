@@ -2993,6 +2993,64 @@ theorem m6_supporting_line {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ} (A : ArcMaps d 
       (phi''_pos_right_of_contact hd hp0 hp1 hubs hub1 hhub) (A.gc.support_ub p hp0 hp_ps)
 
 open MeasureTheory in
+/-- **From a strict supporting line to "no flat tie".**  If the affine function
+`L(x) = φ_{p,d}(r^d) + a(x - r^d)` lies below `φ_{p,d}` on `[0,1]`, strictly away from `r^d`,
+then every `[0,1]`-valued law `μ` of mean `r^d` satisfies `∫ φ_{p,d} dμ ≥ J_p(r)`, with equality
+only for `μ = δ_{r^d}`.  This is the measure-theoretic half of `noFlatTie`, isolated from the
+source of the supporting line: `m6_supporting_line` supplies one on the arc's window
+`(pc r, p_*)`, and `supportingLine_strict_of_pStar_le` supplies one for every `p ≥ p_*`. -/
+theorem noFlatTie_of_strict_supporting {d : ℕ} (hd : 2 ≤ d) {p r a : ℝ}
+    (hp0 : 0 < p) (hp1 : p < 1) (hr0 : 0 < r)
+    (hLle : ∀ x ∈ Set.Icc (0:ℝ) 1, phi p d (r ^ d) + a * (x - r ^ d) ≤ phi p d x)
+    (hLlt : ∀ x ∈ Set.Icc (0:ℝ) 1, x ≠ r ^ d → phi p d (r ^ d) + a * (x - r ^ d) < phi p d x) :
+    ∀ μ : Measure ℝ, IsProbabilityMeasure μ → μ (Set.Icc (0:ℝ) 1)ᶜ = 0 →
+      (∫ x, x ∂μ = r ^ d) →
+        Jp p r ≤ ∫ x, phi p d x ∂μ ∧
+          (∫ x, phi p d x ∂μ = Jp p r → μ = Measure.dirac (r ^ d)) := by
+  intro μ hμ hμcompl hμmean
+  have hJr : phi p d (r ^ d) = Jp p r := (Jp_eq_phi_pow hd hr0.le).symm
+  -- `μ` lives on `[0,1]`
+  have hμae : ∀ᵐ x ∂μ, x ∈ Set.Icc (0:ℝ) 1 := by rw [ae_iff]; exact hμcompl
+  have hrestrict : μ.restrict (Set.Icc (0:ℝ) 1) = μ := Measure.restrict_eq_self_of_ae_mem hμae
+  -- integrability of `φ_p`, `id`, `L`
+  have hint_phi : Integrable (phi p d) μ := by
+    rw [← hrestrict]; exact (phi_continuousOn_Icc hd hp0 hp1).integrableOn_Icc
+  have hint_id : Integrable (fun x : ℝ => x) μ := by
+    rw [← hrestrict]; exact (continuous_id.continuousOn).integrableOn_Icc
+  have hint_aff : Integrable (fun x => a * (x - r ^ d)) μ :=
+    (hint_id.sub (integrable_const _)).const_mul a
+  have hint_L : Integrable (fun x => phi p d (r ^ d) + a * (x - r ^ d)) μ :=
+    (integrable_const _).add hint_aff
+  -- `∫ L dμ = Jp p r`
+  have hintL : ∫ x, (phi p d (r ^ d) + a * (x - r ^ d)) ∂μ = Jp p r := by
+    rw [integral_add (integrable_const _) hint_aff, integral_const_mul,
+      integral_sub hint_id (integrable_const _), hμmean]
+    simp [integral_const, hJr]
+  -- `L ≤ φ_p` a.e.
+  have hLle_ae : ∀ᵐ x ∂μ, phi p d (r ^ d) + a * (x - r ^ d) ≤ phi p d x := by
+    filter_upwards [hμae] with x hx; exact hLle x hx
+  refine ⟨?_, ?_⟩
+  · -- Jensen inequality
+    calc Jp p r = ∫ x, (phi p d (r ^ d) + a * (x - r ^ d)) ∂μ := hintL.symm
+      _ ≤ ∫ x, phi p d x ∂μ := integral_mono_ae hint_L hint_phi hLle_ae
+  · -- equality ⟹ Dirac
+    intro heq
+    have hzero : ∫ x, (phi p d x - (phi p d (r ^ d) + a * (x - r ^ d))) ∂μ = 0 := by
+      rw [integral_sub hint_phi hint_L, hintL, heq]; ring
+    have hnn : 0 ≤ᵐ[μ] fun x => phi p d x - (phi p d (r ^ d) + a * (x - r ^ d)) := by
+      filter_upwards [hLle_ae] with x hx
+      show (0:ℝ) ≤ phi p d x - (phi p d (r ^ d) + a * (x - r ^ d)); linarith
+    have hae0 := (integral_eq_zero_iff_of_nonneg_ae hnn (hint_phi.sub hint_L)).mp hzero
+    -- the gap is zero only at `r^d`, so `μ`-a.e. `x = r^d`
+    have haeeq : ∀ᵐ x ∂μ, x = r ^ d := by
+      filter_upwards [hae0, hμae] with x hx hxmem
+      by_contra hne
+      have hlt := hLlt x hxmem hne
+      have hgap : phi p d x - (phi p d (r ^ d) + a * (x - r ^ d)) = 0 := hx
+      linarith
+    exact measure_eq_dirac_of_ae_eq haeeq
+
+open MeasureTheory in
 /-- **The `noFlatTie` field: no flat tie** (Jensen form) for an `ArcMaps`.  A Lean-side
 window condition with no counterpart in `thm:scalar-lz-boundary`: on
 the whole replica-symmetric window `pc(r) < p < p_*`, the point `(r^d, J_p(r))`
@@ -3005,57 +3063,67 @@ theorem arcMaps_noFlatTie {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ} (A : ArcMaps d r
         (∫ x, x ∂μ = r ^ d) →
           Jp p r ≤ ∫ x, phi p d x ∂μ ∧
             (∫ x, phi p d x ∂μ = Jp p r → μ = Measure.dirac (r ^ d)) := by
-  intro r hrU p hp_gt hp_ps μ hμ hμcompl hμmean
+  intro r hrU p hp_gt hp_ps
   obtain ⟨hpc_io, _⟩ := A.family r hrU
   obtain ⟨_, hpcr, hr1, _, _, _⟩ := A.ordering r hrU
   have hp₀0 : 0 < A.pc r := hpc_io.1
-  have hp₀ps : A.pc r < pStar d := hpc_io.2
   have hr0 : 0 < r := lt_trans hp₀0 hpcr
-  have hps1 : pStar d < 1 := pStar_lt_one hd
   have hp0 : 0 < p := lt_trans hp₀0 hp_gt
-  have hp1 : p < 1 := lt_trans hp_ps hps1
+  have hp1 : p < 1 := lt_trans hp_ps (pStar_lt_one hd)
   obtain ⟨s, hLle, hLlt⟩ := m6_supporting_line hd A hrU hp_gt hp_ps
-  have hJr : phi p d (r ^ d) = Jp p r := (Jp_eq_phi_pow hd hr0.le).symm
-  -- `μ` lives on `[0,1]`
-  have hμae : ∀ᵐ x ∂μ, x ∈ Set.Icc (0:ℝ) 1 := by rw [ae_iff]; exact hμcompl
-  have hrestrict : μ.restrict (Set.Icc (0:ℝ) 1) = μ := Measure.restrict_eq_self_of_ae_mem hμae
-  -- integrability of `φ_p`, `id`, `L`
-  have hint_phi : Integrable (phi p d) μ := by
-    rw [← hrestrict]; exact (phi_continuousOn_Icc hd hp0 hp1).integrableOn_Icc
-  have hint_id : Integrable (fun x : ℝ => x) μ := by
-    rw [← hrestrict]; exact (continuous_id.continuousOn).integrableOn_Icc
-  have hint_aff : Integrable (fun x => s * (x - r ^ d)) μ :=
-    (hint_id.sub (integrable_const _)).const_mul s
-  have hint_L : Integrable (fun x => phi p d (r ^ d) + s * (x - r ^ d)) μ :=
-    (integrable_const _).add hint_aff
-  -- `∫ L dμ = Jp p r`
-  have hintL : ∫ x, (phi p d (r ^ d) + s * (x - r ^ d)) ∂μ = Jp p r := by
-    rw [integral_add (integrable_const _) hint_aff, integral_const_mul,
-      integral_sub hint_id (integrable_const _), hμmean]
-    simp [integral_const, hJr]
-  -- `L ≤ φ_p` a.e.
-  have hLle_ae : ∀ᵐ x ∂μ, phi p d (r ^ d) + s * (x - r ^ d) ≤ phi p d x := by
-    filter_upwards [hμae] with x hx; exact hLle x hx
-  refine ⟨?_, ?_⟩
-  · -- Jensen inequality
-    calc Jp p r = ∫ x, (phi p d (r ^ d) + s * (x - r ^ d)) ∂μ := hintL.symm
-      _ ≤ ∫ x, phi p d x ∂μ := integral_mono_ae hint_L hint_phi hLle_ae
-  · -- equality ⟹ Dirac
-    intro heq
-    have hzero : ∫ x, (phi p d x - (phi p d (r ^ d) + s * (x - r ^ d))) ∂μ = 0 := by
-      rw [integral_sub hint_phi hint_L, hintL, heq]; ring
-    have hnn : 0 ≤ᵐ[μ] fun x => phi p d x - (phi p d (r ^ d) + s * (x - r ^ d)) := by
-      filter_upwards [hLle_ae] with x hx
-      show (0:ℝ) ≤ phi p d x - (phi p d (r ^ d) + s * (x - r ^ d)); linarith
-    have hae0 := (integral_eq_zero_iff_of_nonneg_ae hnn (hint_phi.sub hint_L)).mp hzero
-    -- the gap is zero only at `r^d`, so `μ`-a.e. `x = r^d`
-    have haeeq : ∀ᵐ x ∂μ, x = r ^ d := by
-      filter_upwards [hae0, hμae] with x hx hxmem
-      by_contra hne
-      have hlt := hLlt x hxmem hne
-      have hgap : phi p d x - (phi p d (r ^ d) + s * (x - r ^ d)) = 0 := hx
-      linarith
-    exact measure_eq_dirac_of_ae_eq haeeq
+  exact noFlatTie_of_strict_supporting hd hp0 hp1 hr0 hLle hLlt
+
+/-! ### Above `p_*`: the same two conclusions from strict convexity
+
+The arc's `orientation` and `noFlatTie` fields are stated on the window `(pc r, p_*)`, because
+below `p_*` the function `φ_{p,d}` is not convex and the supporting line has to be produced from
+the contact maps.  Above `p_*` there is nothing to produce: `φ_{p,d}` is strictly convex on the
+whole of `[0,1]`, so its tangent at `r^d` is a strict supporting line.  These two lemmas are the
+`p ≥ p_*` counterparts of the two fields, and let `replica_symmetric_unique` run on the full
+range `pc(r) ≤ p < r`. -/
+
+/-- **The strict supporting line at `r^d` above `p_*`.**  For `p_* ≤ p < 1` the function
+`φ_{p,d}` is strictly convex on `[0,1]` (`strictConvexOn_phi_of_pStar_le`), so its tangent at the
+interior point `r^d` lies below it, strictly away from the contact. -/
+theorem supportingLine_strict_of_pStar_le {d : ℕ} (hd : 2 ≤ d) {p r : ℝ}
+    (hps : pStar d ≤ p) (hp1 : p < 1) (hr0 : 0 < r) (hr1 : r < 1) :
+    ∃ a : ℝ, (∀ x ∈ Set.Icc (0:ℝ) 1, phi p d (r ^ d) + a * (x - r ^ d) ≤ phi p d x) ∧
+      (∀ x ∈ Set.Icc (0:ℝ) 1, x ≠ r ^ d → phi p d (r ^ d) + a * (x - r ^ d) < phi p d x) := by
+  have hp0 : 0 < p := lt_of_lt_of_le (pStar_pos hd) hps
+  have hrd0 : 0 < r ^ d := pow_pos hr0 d
+  have hrd1 : r ^ d < 1 := pow_lt_one₀ hr0.le hr1 (by omega)
+  have hsconv : StrictConvexOn ℝ (Set.Icc 0 1) (phi p d) :=
+    strictConvexOn_phi_of_pStar_le hd hps hp1
+  have hH : HasDerivAt (phi p d) (deriv (phi p d) (r ^ d)) (r ^ d) := by
+    have h := hasDerivAt_phi hd hp0 hp1 hrd0 hrd1; rw [h.deriv]; exact h
+  have hmem : r ^ d ∈ Set.Icc (0:ℝ) 1 := ⟨hrd0.le, hrd1.le⟩
+  refine ⟨deriv (phi p d) (r ^ d), ?_, strictConvexOn_tangent_lt hsconv hmem hH⟩
+  intro x hx
+  rcases eq_or_ne x (r ^ d) with rfl | hne
+  · simp
+  · exact le_of_lt (strictConvexOn_tangent_lt hsconv hmem hH x hx hne)
+
+/-- **The `orientation` conclusion above `p_*`**, in the `J_p` form of the arc field: for
+`p_* ≤ p < 1` and `r ∈ (0,1)` a supporting line of `φ_{p,d}` at `x = r^d` exists. -/
+theorem orientation_of_pStar_le {d : ℕ} (hd : 2 ≤ d) {p r : ℝ}
+    (hps : pStar d ≤ p) (hp1 : p < 1) (hr0 : 0 < r) (hr1 : r < 1) :
+    ∃ a : ℝ, ∀ x ∈ Set.Icc (0:ℝ) 1, Jp p r + a * (x - r ^ d) ≤ phi p d x := by
+  obtain ⟨a, hLle, -⟩ := supportingLine_strict_of_pStar_le hd hps hp1 hr0 hr1
+  refine ⟨a, ?_⟩
+  rw [Jp_eq_phi_pow hd hr0.le]
+  exact hLle
+
+open MeasureTheory in
+/-- **The `noFlatTie` conclusion above `p_*`**: for `p_* ≤ p < 1` and `r ∈ (0,1)`, any
+`[0,1]`-valued law of mean `r^d` has `∫ φ_{p,d} ≥ J_p(r)`, with equality only at `δ_{r^d}`. -/
+theorem noFlatTie_of_pStar_le {d : ℕ} (hd : 2 ≤ d) {p r : ℝ}
+    (hps : pStar d ≤ p) (hp1 : p < 1) (hr0 : 0 < r) (hr1 : r < 1) :
+    ∀ μ : Measure ℝ, IsProbabilityMeasure μ → μ (Set.Icc (0:ℝ) 1)ᶜ = 0 →
+      (∫ x, x ∂μ = r ^ d) →
+        Jp p r ≤ ∫ x, phi p d x ∂μ ∧
+          (∫ x, phi p d x ∂μ = Jp p r → μ = Measure.dirac (r ^ d)) := by
+  obtain ⟨a, hLle, hLlt⟩ := supportingLine_strict_of_pStar_le hd hps hp1 hr0 hr1
+  exact noFlatTie_of_strict_supporting hd (lt_of_lt_of_le (pStar_pos hd) hps) hp1 hr0 hLle hLlt
 
 /-- **`thm:scalar-lz-boundary`.**  For every
 non-exceptional target density `r₀ ∈ (0,1) \ {(d-1)/d}` there is an oriented

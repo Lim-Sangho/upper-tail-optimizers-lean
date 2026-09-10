@@ -3,26 +3,31 @@ import UpperTailOptimizers.LocalOptimizer.Basic
 /-!
 # Section 6 of `paper/bipodal_optimizer.tex`, part (a): the replica-symmetric side `p ≥ pc(r)`
 
-Part (a) of the paper's `thm:local-optimizer-structure`: for `p` on the replica-symmetric side
-of a regular Lubetzky–Zhao boundary arc and close enough to the boundary, the **unique** optimizer of the
-upper-tail problem is the constant graphon `W ≡ r`.
+Part (a) of the paper's `thm:local-optimizer-structure`: on the replica-symmetric side of a
+regular Lubetzky–Zhao boundary arc, the **unique** optimizer of the upper-tail problem is the
+constant graphon `W ≡ r`.  As in the paper, the range is the whole of `pc(r) ≤ p < r`.
 
 The paper obtains this by quoting the uniqueness clause of Lubetzky–Zhao
 (`thm:lz-criterion`) at a point where condition (M2) supplies a supporting line.
 Here uniqueness is instead *derived*, so no new axiom is needed:
 
 * at the boundary value `p = pc(r)` it is exactly `boundary_uniqueness`;
-* for `pc(r) < p < p_*` the arc's `orientation` field (the replica-symmetric half of (M2))
-  supplies a supporting line whose integral against the law `μ` of `W^d` already gives the
-  **value** `Φ_H(p,r) = J_p(r)` — so the `lubetzkyZhao` axiom is not needed here either —
-  and uniqueness follows from the arc's `noFlatTie` field applied to that same law: the
-  supporting line forces the `d`-th moment `∫W^d` down to `r^d`, the generalized Hölder bound
-  forces it up to `r^d`, and then `noFlatTie` turns the equality `∫φ_{p,d} dμ = J_p(r)` into
-  `μ = δ_{r^d}`, i.e. `W ≡ r` a.e.
+* for `pc(r) < p < r` a supporting line of `φ_{p,d}` at `x = r^d` is available, and its integral
+  against the law `μ` of `W^d` already gives the **value** `Φ_H(p,r) = J_p(r)` — so the
+  `lubetzkyZhao` axiom is not needed here either — while uniqueness comes from the strict form of
+  the same line: the supporting line forces the `d`-th moment `∫W^d` down to `r^d`, the
+  generalized Hölder bound forces it up to `r^d`, and then the equality `∫φ_{p,d} dμ = J_p(r)`
+  forces `μ = δ_{r^d}`, i.e. `W ≡ r` a.e.
+
+Below `p_*` the line and its strict form are the arc's `orientation` and `noFlatTie` fields
+(the replica-symmetric half of (M2) and its Jensen companion), which are stated on the window
+`(pc r, p_*)` because `φ_{p,d}` is not convex there.  From `p_*` up they come instead from strict
+convexity of `φ_{p,d}` on all of `[0,1]`, through `orientation_of_pStar_le` and
+`noFlatTie_of_pStar_le`.
 
 The auxiliary object is `powDistribution W d`, the pushforward of the graphon measure `gμ` along
 `z ↦ W(z)^d`; the lemmas around it are the dictionary between graphon integrals and the
-scalar measure statements of `noFlatTie`.
+scalar measure statements of the no-flat-tie conclusion.
 -/
 
 namespace UpperTailOptimizers
@@ -141,20 +146,23 @@ private theorem rs_supporting_bound {d : ℕ} (hd : 2 ≤ d) {p r a : ℝ}
 /-! ### Part (a) -/
 
 /-- **`thm:local-optimizer-structure`(a): the replica-symmetric side.**  On a regular Lubetzky–Zhao boundary arc, for every `p`
-with `pc(r) ≤ p < p_*` and `p < r`:
+with `pc(r) ≤ p < r`:
 
 * the upper-tail value is the constant-graphon value, `Φ_H(p,r) = J_p(r)`;
 * the constant graphon `W ≡ r` attains it;
 * it is the **unique** optimizer: every optimizer equals `r` almost everywhere.
 
-At `p = pc(r)` this is `boundary_uniqueness`; for `p > pc(r)` both the value and the
-uniqueness come from the arc's `orientation` and `noFlatTie` fields applied to
-`powDistribution W d`, so the whole statement rests on `generalized_holder` alone — in particular it does
-*not* consume `lubetzkyZhao`, which is where the paper takes its uniqueness clause from.  The window is the *global* replica-symmetric window
-`(pc r, p_*)` of the arc, so nothing here depends on `r` through an unspecified radius; that
-is what lets `thm:local-optimizer-structure` take one window width `η` for all `r` near `r₀`. -/
+At `p = pc(r)` this is `boundary_uniqueness`; for `p > pc(r)` both the value and the uniqueness
+come from a supporting line of `φ_{p,d}` at `x = r^d` and its strict form, applied to
+`powDistribution W d` — below `p_*` the arc's `orientation` and `noFlatTie` fields, from `p_*` up
+`orientation_of_pStar_le` and `noFlatTie_of_pStar_le`.  So the whole statement rests on
+`generalized_holder` alone; in particular it does *not* consume `lubetzkyZhao`, which is where the
+paper takes its uniqueness clause from.  As in the paper, no restriction on `p - pc(r)` is
+needed — `replica_symmetric_unique_global` states the same conclusion in global boundary
+coordinates — and nothing depends on `r` through an unspecified radius, which is what lets
+`thm:local-optimizer-structure` take one window width `η` for all `r` near `r₀`. -/
 theorem replica_symmetric_unique {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {r : ℝ} (hr : r ∈ M.U)
-    {p : ℝ} (hp_ge : M.pc r ≤ p) (hp_ps : p < pStar d) (hpr : p < r)
+    {p : ℝ} (hp_ge : M.pc r ≤ p) (hpr : p < r)
     {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
     (hreg : ∀ v, H.degree v = d) (hm : 1 ≤ H.edgeFinset.card) :
     phiVar H p r = Jp p r ∧
@@ -174,8 +182,23 @@ theorem replica_symmetric_unique {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) 
     · exact absurd hxy (ne_of_lt (pow_lt_pow_left₀ h hx hdne))
     · exact h
     · exact absurd hxy.symm (ne_of_lt (pow_lt_pow_left₀ h hy hdne))
-  have hRS := M.orientation r hr
-  have hNFT := M.noFlatTie r hr
+  -- the arc's `orientation`, on `(pc r, p_*)`, extended above `p_*` by strict convexity
+  have hRS : ∀ q, M.pc r < q → q < r →
+      ∃ a : ℝ, ∀ x ∈ Set.Icc (0:ℝ) 1, Jp q r + a * (x - r ^ d) ≤ phi q d x := by
+    intro q hqgt hqr
+    rcases lt_or_ge q (pStar d) with hq | hq
+    · exact M.orientation r hr q hqgt hq
+    · exact orientation_of_pStar_le hd hq (lt_trans hqr hr1) hr0 hr1
+  -- likewise the arc's `noFlatTie`
+  have hNFT : ∀ q, M.pc r < q → q < r →
+      ∀ μ : Measure ℝ, IsProbabilityMeasure μ → μ (Set.Icc (0:ℝ) 1)ᶜ = 0 →
+        (∫ x, x ∂μ = r ^ d) →
+          Jp q r ≤ ∫ x, phi q d x ∂μ ∧
+            (∫ x, phi q d x ∂μ = Jp q r → μ = Measure.dirac (r ^ d)) := by
+    intro q hqgt hqr
+    rcases lt_or_ge q (pStar d) with hq | hq
+    · exact M.noFlatTie r hr q hqgt hq
+    · exact noFlatTie_of_pStar_le hd hq (lt_trans hqr hr1) hr0 hr1
   have hp0 : 0 < p := lt_of_lt_of_le hpc0 hp_ge
   have hp1 : p < 1 := lt_trans hpr hr1
   -- optimality of the constant graphon, in both cases
@@ -187,7 +210,7 @@ theorem replica_symmetric_unique {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) 
       rwa [hpeq] at h
     · -- replica-symmetric side: the `orientation` supporting line + generalized Hölder
       intro W hW
-      obtain ⟨a, ha⟩ := hRS p hpgt hp_ps
+      obtain ⟨a, ha⟩ := hRS p hpgt hpr
       obtain ⟨hapos, hbound⟩ := rs_supporting_bound hd hp0 hpr hr1 ha W
       have hmom : r ^ d ≤ W.Wmoment d := holder_moment H hreg hd W hr0.le hm hW
       have : 0 ≤ a * (W.Wmoment d - r ^ d) := mul_nonneg hapos.le (by linarith)
@@ -209,7 +232,7 @@ theorem replica_symmetric_unique {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) 
     refine (boundary_uniqueness hd M hr H hreg hm).2.2 W hWfeas ?_
     rw [hpeq]; exact hWopt
   · -- replica-symmetric side: `noFlatTie` applied to the law of `W^d`
-    obtain ⟨a, ha⟩ := hRS p hpgt hp_ps
+    obtain ⟨a, ha⟩ := hRS p hpgt hpr
     obtain ⟨hapos, hbound⟩ := rs_supporting_bound hd hp0 hpr hr1 ha W
     have hmom : r ^ d ≤ W.Wmoment d := holder_moment H hreg hd W hr0.le hm hWfeas
     rw [hWopt] at hbound
@@ -219,7 +242,8 @@ theorem replica_symmetric_unique {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) 
     have hphi_int : ∫ x, phi p d x ∂(powDistribution W d) = Jp p r := by
       rw [powLaw_integral_phi hd W, hWopt]
     have hdirac : powDistribution W d = Measure.dirac (r ^ d) :=
-      (hNFT p hpgt hp_ps (powDistribution W d) inferInstance (powLaw_compl_Icc W d) hmom_eq).2 hphi_int
+      (hNFT p hpgt hpr (powDistribution W d) inferInstance (powLaw_compl_Icc W d)
+        hmom_eq).2 hphi_int
     filter_upwards [ae_pow_eq_of_powLaw_dirac (W := W) (d := d) (c := r ^ d) hdirac] with z hz
     exact pow_inj _ _ (W.nonneg' z.1 z.2) hr0.le hz
 

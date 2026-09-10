@@ -15,11 +15,11 @@ the coefficient and analytic-family properties. `main_bipodal_optimizer` in
   `e(W_{p,r}) = r - λ/A_H(r) + O(λ²)` and `Φ_H(p,r) = J_p(r) - λ²/(2A_H(r)) + O(λ³)`.
 
 `local_structure_on_arc` states both on one window `|r - r₀| < ρ`, `|p - pc(r)| < η`, with `ρ`, `η`
-and the expansion constant independent of `r` and `p` — the uniformity the paper asserts.  The
-window width for the replica-symmetric half is uniform because the arc's `orientation` and
-`noFlatTie` fields are
-stated on the *global* window `(pc r, p_*)`, and `arc_gap_bounds` turns compactness of the
-`r`-interval into one margin `c` with `pc(r) + c ≤ min(r, p_*)` and `c ≤ pc(r)`.
+and the expansion constant independent of `r` and `p` — the uniformity the paper asserts.
+`arc_gap_bounds` turns compactness of the `r`-interval into one margin `c` with
+`pc(r) + c ≤ min(r, p_*)` and `c ≤ pc(r)`, which is what makes the window width uniform.  The
+window is needed only by (b) and (c): as in the paper, the replica-symmetric half holds on the
+whole range `pc(r) ≤ p < r`, which is `replica_symmetric_unique_global`.
 -/
 
 namespace UpperTailOptimizers
@@ -132,14 +132,32 @@ theorem local_structure_on_arc {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
   obtain ⟨hlo, hhi⟩ := abs_lt.mp hpη
   have hp0 : 0 < p := by linarith
   have hpr : p < r := by linarith
-  have hpps : p < pStar d := by linarith
   refine ⟨hp0, hpr, ?_, ?_⟩
   · -- (a) the replica-symmetric side
     intro hge
-    exact replica_symmetric_unique hd M hrU hge hpps hpr H hreg hm
+    exact replica_symmetric_unique hd M hrU hge hpr H hreg hm
   · -- (b), (c) the symmetry-breaking side
     intro hlt
     exact hsb r (lt_of_lt_of_le hrρ hρρb) p (by linarith) hlt
+
+/-- **`thm:local-optimizer-structure`(a) on its full range**, in global boundary coordinates.
+The window `|p - pc(r)| < η` of `local_structure_on_arc` is what parts (b) and (c) need; the
+paper notes that the replica-symmetric half needs no restriction on `p - pc(r)` at all, and holds
+for every `p ∈ [pc(r), r)`.  That is this statement: for every nonexceptional `r ∈ (0,1)` and
+every `p` with `pcGlobal(r) ≤ p < r`, the upper-tail value is `J_p(r)`, the constant graphon
+`W ≡ r` attains it, and every optimizer equals `r` almost everywhere. -/
+theorem replica_symmetric_unique_global {d : ℕ} (hd : 2 ≤ d)
+    {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
+    (hreg : ∀ v, H.degree v = d) (hm : 1 ≤ H.edgeFinset.card)
+    {r : ℝ} (hr0 : 0 < r) (hr1 : r < 1) (hrex : r ≠ rStar d)
+    {p : ℝ} (hp_ge : pcGlobal d r ≤ p) (hpr : p < r) :
+    phiVar H p r = Jp p r ∧
+    (∀ hr' : r ∈ Set.Icc (0:ℝ) 1, (constGraphon r hr').Ip p = phiVar H p r) ∧
+    (∀ W : Graphon, Feasible H r W → W.Ip p = phiVar H p r →
+      ∀ᵐ z ∂gμ, W.toFun z.1 z.2 = r) := by
+  obtain ⟨M, hrU, hrne⟩ := scalar_lz_boundary_arcs hd hr0 hr1 hrex
+  rw [pcGlobal_eq_pc hd M hrU] at hp_ge
+  exact replica_symmetric_unique hd M hrU hp_ge hpr H hreg hm
 
 
 

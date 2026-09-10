@@ -2,6 +2,7 @@ import UpperTailOptimizers.SingularEndpoint.FamilyBuild
 import UpperTailOptimizers.SingularEndpoint.SingularEndpointOptimality
 import UpperTailOptimizers.SingularEndpoint.TerminalTwoValued
 import UpperTailOptimizers.SingularEndpoint.StrictImprovement
+import UpperTailOptimizers.SingularEndpoint.CostRemainder
 
 /-!
 # `thm:endpoint-optimality`, uniqueness clause
@@ -205,10 +206,9 @@ structure SingularEndpointStructure {V : Type*} [Fintype V] [DecidableEq V]
     : Prop extends SingularEndpointOptimizers H B δ where
   base_values : B.p 0 = pStar d ∧ B.rVal 0 = rStar d ∧
     B.u 0 = uStar d ∧ B.alph 0 = 1 / 2
-  cost_gap : ∀ K : ℝ → ℝ,
-    (∀ (h : ℝ) (hh : |h| < B.h₀),
-      K h = (B.graphon hh).Ip (B.p h) - Jp (B.p h) (B.rVal h)) →
-    Tendsto (fun h : ℝ => K h / h ^ 4) (𝓝[≠] (0 : ℝ)) (𝓝 (-((d : ℝ) ^ 3 / 3)))
+  cost_gap : ∃ C : ℝ, 0 < C ∧ ∀ (h : ℝ) (hh : |h| < B.h₀), |h| < δ →
+    |((B.graphon hh).Ip (B.p h) - Jp (B.p h) (B.rVal h)) + (d : ℝ) ^ 3 / 3 * h ^ 4|
+      ≤ C * |h| ^ 6
 
 /-- **Theorem 7.1**, with the documented cost-remainder and canonical-block
 qualifications. Theorem 1.6 is a direct projection of this result. -/
@@ -218,9 +218,10 @@ theorem singular_endpoint_full (hd : 2 ≤ d) {V : Type*} [Fintype V] [Decidable
     ∃ (B : KKTFamily d) (δ : ℝ), SingularEndpointStructure H B δ := by
   obtain ⟨B⟩ := exists_kktFamily hd
   obtain ⟨δ, hδ, hfull⟩ := exists_singular_endpoint_full hd H hreg hcard hv B
-  refine ⟨B, δ, ?_⟩
+  obtain ⟨Ccost, δcost, hCcost, hδcost, hcost⟩ := constant_graphon_comparison hd B
+  refine ⟨B, min δ δcost, ?_⟩
   refine
-    { delta_pos := hδ
+    { delta_pos := lt_min hδ hδcost
       analytic_curve := fun h hh => ⟨B.analyticAt_p h hh, KKTFamily.analyticAt_rVal hh⟩
       parameter_limits := ⟨KKTFamily.tendsto_p_pcGlobal hd B, tendsto_rVal hd B⟩
       block_limit := tendsto_alph B
@@ -228,12 +229,13 @@ theorem singular_endpoint_full (hd : 2 ≤ d) {V : Type*} [Fintype V] [Decidable
       uniform_convergence := fun ε hε => KKTFamily.exists_graphon_unif hd B hε
       optimizers := ?_
       base_values := ⟨B.p_zero, KKTFamily.rVal_zero hd B, B.u_zero, B.alph_zero⟩
-      cost_gap := fun K hK => tendsto_cost_gap hd B hK }
+      cost_gap := ⟨Ccost, hCcost, fun h hh hhδ =>
+        hcost h hh (lt_of_lt_of_le hhδ (min_le_right _ _))⟩ }
   intro h hh hh0 hhδ hh1
   exact ⟨KKTFamily.graphon_rankOne hh, KKTFamily.graphon_isBipodal hh,
     KKTFamily.graphon_not_ae_const hd hh (ne_of_gt hh0),
     KKTFamily.graphon_tDensity_eq_rVal_pow H hd hreg hh,
-    (hfull h hh hh0 hhδ hh1).2⟩
+    (hfull h hh hh0 (lt_of_lt_of_le hhδ (min_le_left _ _)) hh1).2⟩
 
 end SingularEndpoint
 

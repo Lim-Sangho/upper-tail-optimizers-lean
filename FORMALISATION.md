@@ -201,7 +201,10 @@ The expansion files compute the leading coefficients of the parameters and the c
 `tendsto_cost_gap` proves
 `(I_{p_h}(W_h) − J_{p_h}(r_h))/h⁴ → −d³/3`.
 Consequently, `singular_endpoint_strict_improvement` gives a strict improvement over the constant
-graphon for small positive `h`. The paper's sharper remainders are not proved; see [D1], [D5].
+graphon for small positive `h`. `SingularEndpoint/ParityOrder.lean` then upgrades the remainders
+to the paper's: every family parameter is analytic in `h` with a definite parity, so its Taylor
+expansion proceeds in steps of two and the first omitted term is two orders down.
+`rank_one_parameter_expansions` and `constant_graphon_comparison` are the results.
 
 ### Localization and comparison
 
@@ -232,9 +235,8 @@ almost everywhere in both directions. This completes uniqueness up to relabellin
 `SingularEndpointStructure H B δ`. Its fields collect the analytic parameter curve,
 parameter and block limits, rank-one bipodality, nonconstancy, the exact density
 constraint, optimality, uniqueness and uniform convergence. The `base_values` and
-`cost_gap` fields add the values at `h = 0` and the leading cost expansion.
-The cost remainder is `o(h⁴)`; the paper's `O(h⁶)` remainder and arbitrary-block
-formulation remain qualified in [D1].
+`cost_gap` fields add the values at `h = 0` and the cost expansion
+`I_{p_h}(W_h) − J_{p_h}(r_h) = −d³h⁴/3 + O(h⁶)`, with the paper's remainder.
 
 [Theorem 1.6][thm:endpoint-optimizers] is the direct corollary
 [singular_endpoint_optimizers](UpperTailOptimizers/SingularEndpoint/IntroSingularEndpointOptimizers.lean#L15).
@@ -244,7 +246,7 @@ additional axioms. The elementary family lemmas live in `FamilyContinuity.lean`.
 
 The additional inequality `p_h < pc(r_h)` is proved separately by
 `singular_endpoint_symmetry_breaking` in `StrictImprovement.lean`. It is used by the
-concrete graph examples, but is not a clause of either public theorem [D2].
+concrete graph examples, but is not a clause of either public theorem [D1].
 
 ## 4. Paper → Lean
 
@@ -261,7 +263,7 @@ direct corollaries of Theorems 6.1 and 7.1, so they have no separate rows.
 | **[Theorem 1.3][thm:graphon-large-deviations]** — Graphon large deviations | — | Not formalised; probabilistic layer |
 | **[Theorem 1.4][thm:lz-criterion]** — Lubetzky–Zhao criterion | Assumed criterion: [lubetzkyZhao](UpperTailOptimizers/Graphon/ExternalInputs.lean#L122) | Criterion assumed; uniqueness proved separately |
 | **[Theorem 2.1][thm:krrs-analytic-extension]** — Two-sided KRR–S extension | Analytic parameter family: [krrs_rectangle](UpperTailOptimizers/KRRS/Main.lean#L111)<br>Uniform block-size bound: [kenyonRadinRenSadunUniform](UpperTailOptimizers/KRRS/Main.lean#L791) | Regular graphs; conclusions split across public forms |
-| **[Theorem 3.1][thm:scalar-lz-boundary]** — Scalar Lubetzky–Zhao boundary | Boundary arc construction: [scalar_lz_boundary_arcs](UpperTailOptimizers/LZBoundary/Existence.lean#L3069)<br>Global boundary criterion: [lz_boundary_M2_global](UpperTailOptimizers/LZBoundary/Curve.lean#L167) | Arc construction and global criterion |
+| **[Theorem 3.1][thm:scalar-lz-boundary]** — Scalar Lubetzky–Zhao boundary | Boundary arc construction: [scalar_lz_boundary_arcs](UpperTailOptimizers/LZBoundary/Existence.lean#L3137)<br>Global boundary criterion: [lz_boundary_M2_global](UpperTailOptimizers/LZBoundary/Curve.lean#L167) | Arc construction and global criterion |
 | **[Lemma 3.2][lem:convexity-defect]** — Convexity defect | Convexity classification: [convexity_defect](UpperTailOptimizers/LZBoundary/PhiDeriv.lean#L782) | Convexity and curvature threshold |
 | **[Lemma 3.3][lem:contact-points]** — Contact points | Contact existence and uniqueness: [lz_boundary_contacts](UpperTailOptimizers/LZBoundary/Existence.lean#L719) | Existence and uniqueness of the contacts |
 | **[Lemma 3.4][lem:contact-point-limits]** — Contact-point limits | Contact-point limits: [lz_boundary_endpoint_limits](UpperTailOptimizers/LZBoundary/Existence.lean#L823) | Limits at the ends of the contact curves |
@@ -274,18 +276,18 @@ direct corollaries of Theorems 6.1 and 7.1, so they have no separate rows.
 | **[Proposition 5.2][prop:graphon-quadratic-bound]** — Graphon quadratic lower bound | Graphon lower bound: [quadratic_lower_graphon](UpperTailOptimizers/Nondegeneracy/GraphonLower.lean#L29) | Lower bound for arbitrary graphons |
 | **[Lemma 5.3][lem:bipodal-quadratic-bound]** — Bipodal quadratic upper bound | Bipodal upper bound: [quadratic_upper](UpperTailOptimizers/Nondegeneracy/QuadraticUpper.lean#L54) | Upper bound from a bipodal competitor |
 | **[Theorem 5.4][thm:positive-second-variation]** — Positive second variation | Local analytic extension: [boundaryExcess_chart](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L631)<br>Uniform Taylor bounds: [boundaryExcess_taylor](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L741) | Local charts and uniform Taylor bounds; see §7 |
-| **[Theorem 6.1][thm:local-optimizer-structure]** — Local optimizer structure (includes Theorem 1.5) | Full local result: [local_structure](UpperTailOptimizers/LocalOptimizer/Main.lean#L294) | Global coefficient, optimizer window and analytic family; see §7 |
-| **[Theorem 7.1][thm:endpoint-optimality]** — Singular endpoint optimizers (includes Theorem 1.6) | Family, optimality and asymptotics: [SingularEndpoint.singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L155) | Canonical block; weaker cost remainder [D1], [D12] |
-| **[Lemma 7.2][lem:stationary-rank-one-bipodality]** — Stationary rank-one bipodality | Two-valued factor: [SingularEndpoint.exists_two_values](UpperTailOptimizers/SingularEndpoint/EssRange.lean#L105) | Starts from the scalar KKT equation [D11] |
-| **[Lemma 7.3][lem:rank-one-kkt-family]** — Analytic rank-one KKT family | KKT family construction: [SingularEndpoint.exists_kktFamily](UpperTailOptimizers/SingularEndpoint/FamilyBuild.lean#L42) | Family construction; scalar exhaustiveness [D3], [D11] |
-| **[Lemma 7.4][lem:rank-one-parameter-expansions]** — Rank-one parameter expansions | Coefficient of `u_h`: [SingularEndpoint.Ucoeff_eq](UpperTailOptimizers/SingularEndpoint/Expansions.lean#L465)<br>Block-weight coefficient: [SingularEndpoint.tendsto_alph_slope](UpperTailOptimizers/SingularEndpoint/Order5.lean#L224) | Leading coefficients; further entries below [D5] |
-| **[Lemma 7.5][lem:constant-graphon-comparison]** — Comparison with the constant graphon | Leading cost gap: [SingularEndpoint.tendsto_cost_gap](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean#L55)<br>Strict cost improvement: [SingularEndpoint.singular_endpoint_strict_improvement](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean#L91) | Leading cost gap and its sign [D1] |
-| **[Lemma 7.6][lem:localization-rank-one]** — Localization and rank-one reduction | Competitor localization: [SingularEndpoint.singular_endpoint_localization](UpperTailOptimizers/SingularEndpoint/LocalizationMain.lean#L131) | Localization from cost and feasibility [D4] |
-| **[Lemma 7.7][lem:continuation-kernel-bounds]** — Continuation and kernel bounds | Continuity modulus: [SingularEndpoint.exists_JpTilde_modulus](UpperTailOptimizers/SingularEndpoint/JpTilde.lean#L402)<br>Uniform entropy bound: [SingularEndpoint.KKTFamily.exists_abs_JpTildeH_le](UpperTailOptimizers/SingularEndpoint/DistributionQuant.lean#L1173) | Separate continuity and boundedness estimates [D12] |
+| **[Theorem 6.1][thm:local-optimizer-structure]** — Local optimizer structure (includes Theorem 1.5) | Full local result: [local_structure](UpperTailOptimizers/LocalOptimizer/Main.lean#L310) | Global coefficient, optimizer window and analytic family; see §7 |
+| **[Theorem 7.1][thm:endpoint-optimality]** — Singular endpoint optimizers (includes Theorem 1.6) | Family, optimality and asymptotics: [SingularEndpoint.singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L215) | Continuation estimates not collected [D8] |
+| **[Lemma 7.2][lem:stationary-rank-one-bipodality]** — Stationary rank-one bipodality | Two-valued factor: [SingularEndpoint.exists_two_values](UpperTailOptimizers/SingularEndpoint/EssRange.lean#L105) | Starts from the scalar KKT equation [D9] |
+| **[Lemma 7.3][lem:rank-one-kkt-family]** — Analytic rank-one KKT family | KKT family construction: [SingularEndpoint.exists_kktFamily](UpperTailOptimizers/SingularEndpoint/FamilyBuild.lean#L42) | Family construction; scalar exhaustiveness [D2], [D9] |
+| **[Lemma 7.4][lem:rank-one-parameter-expansions]** — Rank-one parameter expansions | All four expansions: [SingularEndpoint.rank_one_parameter_expansions](UpperTailOptimizers/SingularEndpoint/ParameterRemainders.lean#L196) | Further entries below |
+| **[Lemma 7.5][lem:constant-graphon-comparison]** — Comparison with the constant graphon | Cost gap: [SingularEndpoint.constant_graphon_comparison](UpperTailOptimizers/SingularEndpoint/CostRemainder.lean#L124)<br>Strict cost improvement: [SingularEndpoint.singular_endpoint_strict_improvement](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean#L91) | Cost gap, its remainder and its sign |
+| **[Lemma 7.6][lem:localization-rank-one]** — Localization and rank-one reduction | Competitor localization: [SingularEndpoint.singular_endpoint_localization](UpperTailOptimizers/SingularEndpoint/LocalizationMain.lean#L131) | Localization from cost and feasibility [D3] |
+| **[Lemma 7.7][lem:continuation-kernel-bounds]** — Continuation and kernel bounds | Continuity modulus: [SingularEndpoint.exists_JpTilde_modulus](UpperTailOptimizers/SingularEndpoint/JpTilde.lean#L402)<br>Uniform entropy bound: [SingularEndpoint.KKTFamily.exists_abs_JpTildeH_le](UpperTailOptimizers/SingularEndpoint/DistributionQuant.lean#L1173) | Separate continuity and boundedness estimates [D10] |
 | **[Lemma 7.8][lem:first-variation-bound]** — First-variation lower bound | Central lower bound: [SingularEndpoint.KKTFamily.exists_firstVariation_lower](UpperTailOptimizers/SingularEndpoint/FirstVariationBound.lean#L453)<br>Tail lower bound: [SingularEndpoint.KKTFamily.exists_firstVariation_upperGap](UpperTailOptimizers/SingularEndpoint/PsiTilde.lean#L363) | Central and tail bounds |
-| **[Lemma 7.9][lem:central-kernel-bound]** — Central kernel bound | Central integral bound: [SingularEndpoint.KKTFamily.centralQuad_lower](UpperTailOptimizers/SingularEndpoint/DistributionQuant.lean#L1037) | Central integral bound; interpolation estimates [D8] |
-| **[Lemma 7.10][lem:auxiliary-lagrangian-bound]** — Auxiliary Lagrangian bound | Distribution comparison: [SingularEndpoint.KKTFamily.exists_distributionGap_refined_window_forall](UpperTailOptimizers/SingularEndpoint/DistributionFinal.lean#L94) | Linear moment formulation [D6], [D7] |
-| **[Lemma 7.11][lem:graphon-lagrangian-bound]** — Full-graphon Lagrangian bound | Graphon comparison: [SingularEndpoint.exists_comparison_master](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMaster.lean#L497)<br>Graph-constraint comparison: [SingularEndpoint.exists_singular_endpoint_comparison_graph](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMaster.lean#L898) | Comparison and graph-constraint conversion [D6], [D7] |
+| **[Lemma 7.9][lem:central-kernel-bound]** — Central kernel bound | Central integral bound: [SingularEndpoint.KKTFamily.centralQuad_lower](UpperTailOptimizers/SingularEndpoint/DistributionQuant.lean#L1037) | Central integral bound; interpolation estimates [D6] |
+| **[Lemma 7.10][lem:auxiliary-lagrangian-bound]** — Auxiliary Lagrangian bound | Distribution comparison: [SingularEndpoint.KKTFamily.exists_distributionGap_refined_window_forall](UpperTailOptimizers/SingularEndpoint/DistributionFinal.lean#L94) | Linear moment formulation [D4], [D5] |
+| **[Lemma 7.11][lem:graphon-lagrangian-bound]** — Full-graphon Lagrangian bound | Graphon comparison: [SingularEndpoint.exists_comparison_master](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMaster.lean#L497)<br>Graph-constraint comparison: [SingularEndpoint.exists_singular_endpoint_comparison_graph](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMaster.lean#L898) | Comparison and graph-constraint conversion [D4], [D5] |
 | **[Theorem A.1][thm:krrs-bipodality]** — KRR–S bipodal entropy maximizer | Assumed bipodality: [krrs_thm11](UpperTailOptimizers/KRRS/Inputs.lean#L220) | External input: KRR–S Theorem 1.1 |
 | **[Theorem A.2][thm:krrs-cross-density]** — KRR–S cross-density selector | Assumed cross-density properties: [krrs_thm33](UpperTailOptimizers/KRRS/Inputs.lean#L88) | External input: KRR–S Theorem 3.3 and maximizer characterization |
 | **[Lemma B.1][lem:two-point-convex-minorant]** — Two-point convex minorant | Two-point representation: [lce_isLeast_twoPoint](UpperTailOptimizers/LZBoundary/ConvexMinorant.lean#L1056) | Attained two-point representation |
@@ -308,9 +310,9 @@ statements, [Theorem 1.4][thm:lz-criterion]–[Theorem 1.6][thm:endpoint-optimiz
 | `IsBipodal` (`Graphon/Bipodal.lean`) | A.e. agreement with a three-value kernel on a measurable two-block partition. | The block is a measurable subset of `ℝ`; only its intersection with `[0,1]` matters. Degenerate blocks and constant graphons are allowed. Nonconstancy is a separate theorem clause. |
 | `cutDist` (`Graphon/CutMetric.lean`) | An infimum of cut norms over relabellings, as in the paper. | Metric and quotient equivalences are not proved. |
 | `pcGlobal`, `AHGlobal`, `lambdaGlobal` (`LZBoundary/Curve.lean`, `LocalOptimizer/Main.lean`) | The scalar boundary, the chart-independent second-variation coefficient, and the difference of log odds. | `AHGlobal` is defined by `limUnder`; positivity and analyticity away from `r_*` are included in `local_structure`. |
-| [NonexceptionalOptimizers](UpperTailOptimizers/LocalOptimizer/Main.lean#L215), [LocalOptimizerStructure](UpperTailOptimizers/LocalOptimizer/Main.lean#L246) | Proposition structures for the global optimizer conclusions. The latter adds the analytic family to the former's coefficient and optimizer-window fields. | `local_structure` proves the larger structure; Theorem 1.5 projects its parent. |
-| [SingularEndpointOptimizers](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L115), [SingularEndpointStructure](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L143) | Proposition structures for one family and one positive optimality window. The latter adds base values and the leading cost gap. | `singular_endpoint_full` constructs a family satisfying the larger structure; Theorem 1.6 projects its parent. |
-| `KKTFamily` (`SingularEndpoint/Family.lean`) | An analytic family with base values, symmetry, interiority, three scalar KKT equations and block balance. | `exists_kktFamily` supplies a witness. First-variation stationarity and its equivalence to these scalar conditions are not formalised [D11]. |
+| [NonexceptionalOptimizers](UpperTailOptimizers/LocalOptimizer/Main.lean#L232), [LocalOptimizerStructure](UpperTailOptimizers/LocalOptimizer/Main.lean#L262) | Proposition structures for the global optimizer conclusions. The latter adds the analytic family to the former's coefficient and optimizer-window fields. | `local_structure` proves the larger structure; Theorem 1.5 projects its parent. |
+| [SingularEndpointOptimizers](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L115), [SingularEndpointStructure](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L203) | Proposition structures for one family and one positive optimality window. The latter adds base values and the leading cost gap. | `singular_endpoint_full` constructs a family satisfying the larger structure; Theorem 1.6 projects its parent. |
+| `KKTFamily` (`SingularEndpoint/Family.lean`) | An analytic family with base values, symmetry, interiority, three scalar KKT equations and block balance. | `exists_kktFamily` supplies a witness. First-variation stationarity and its equivalence to these scalar conditions are not formalised [D9]. |
 
 ### Namespaces and file paths
 
@@ -332,26 +334,28 @@ an inventory of every equation in the paper.
 | **[Theorem 1.3][thm:graphon-large-deviations]** — Graphon large deviations and the probabilistic conclusions | — | Outside the formalisation |
 | **[Theorem 1.4][thm:lz-criterion]** — Lubetzky–Zhao criterion | [lubetzkyZhao](UpperTailOptimizers/Graphon/ExternalInputs.lean#L122) | [Graphon/ExternalInputs.lean](UpperTailOptimizers/Graphon/ExternalInputs.lean); the criterion is assumed, without uniqueness |
 | Applications to `K₃` and `K₄` | [K3_has_nonconstant_optimizer](UpperTailOptimizers/LocalOptimizer/Instances.lean#L77), [K4_has_nonconstant_optimizer](UpperTailOptimizers/LocalOptimizer/Instances.lean#L106), [K3_main_bipodal_optimizer](UpperTailOptimizers/LocalOptimizer/Instances.lean#L137) | [LocalOptimizer/Instances.lean](UpperTailOptimizers/LocalOptimizer/Instances.lean) |
-| [Eq. (5)][eq:relative-entropy-identity] | [Graphon.Ip_eq_entropy](UpperTailOptimizers/Graphon/Basic.lean#L175) | [Graphon/Basic.lean](UpperTailOptimizers/Graphon/Basic.lean) |
+| [Eq. (5)][eq:relative-entropy-identity] | [Graphon.Ip_eq_entropy](UpperTailOptimizers/Graphon/Basic.lean#L264) | [Graphon/Basic.lean](UpperTailOptimizers/Graphon/Basic.lean) |
 | [Eq. (4)][eq:generalized-holder] | [generalized_holder](UpperTailOptimizers/Graphon/ExternalInputs.lean#L70), [holder_moment](UpperTailOptimizers/Graphon/ExternalInputs.lean#L77) | [Graphon/ExternalInputs.lean](UpperTailOptimizers/Graphon/ExternalInputs.lean); the first is an axiom, the second a consequence |
 | Identity `e(W) = t(K₂,W)` | [tDensity_top_two](UpperTailOptimizers/Graphon/HomDensity.lean#L228) | [Graphon/HomDensity.lean](UpperTailOptimizers/Graphon/HomDensity.lean) |
 | **[Lemma B.1][lem:two-point-convex-minorant]** — Two-point convex minorant (Appendix B) | [twoPointVals](UpperTailOptimizers/LZBoundary/ConvexMinorant.lean#L37), [lce_isLeast_twoPoint](UpperTailOptimizers/LZBoundary/ConvexMinorant.lean#L1056), [lce_eq_sInf_twoPoint](UpperTailOptimizers/LZBoundary/ConvexMinorant.lean#L1088) | [LZBoundary/ConvexMinorant.lean](UpperTailOptimizers/LZBoundary/ConvexMinorant.lean) |
-| **[Lemma 3.2][lem:convexity-defect]** — Convexity defect | [convexity_defect](UpperTailOptimizers/LZBoundary/PhiDeriv.lean#L782), [convexOn_phi_of_pStar_le](UpperTailOptimizers/LZBoundary/PhiDeriv.lean#L591) | [LZBoundary/PhiDeriv.lean](UpperTailOptimizers/LZBoundary/PhiDeriv.lean); the zeros are given existentially |
+| **[Lemma 3.2][lem:convexity-defect]** — Convexity defect | [convexity_defect](UpperTailOptimizers/LZBoundary/PhiDeriv.lean#L782), [convexOn_phi_of_pStar_le](UpperTailOptimizers/LZBoundary/PhiDeriv.lean#L591), [strictConvexOn_phi_of_pStar_le](UpperTailOptimizers/LZBoundary/PhiAsymptotics.lean#L449) | [LZBoundary/PhiDeriv.lean](UpperTailOptimizers/LZBoundary/PhiDeriv.lean); the zeros are given existentially |
 | **[Lemma 3.3][lem:contact-points]** — Contact points | [lz_boundary_contacts](UpperTailOptimizers/LZBoundary/Existence.lean#L719) | [LZBoundary/Existence.lean](UpperTailOptimizers/LZBoundary/Existence.lean) |
 | **[Lemma 3.4][lem:contact-point-limits]** — Contact-point limits | [lz_boundary_endpoint_limits](UpperTailOptimizers/LZBoundary/Existence.lean#L823) | [LZBoundary/Existence.lean](UpperTailOptimizers/LZBoundary/Existence.lean) |
 | Analytic contact functions | [exists_globalContacts](UpperTailOptimizers/LZBoundary/Existence.lean#L1213) | [LZBoundary/Existence.lean](UpperTailOptimizers/LZBoundary/Existence.lean) |
-| **[Theorem 3.1][thm:scalar-lz-boundary]** — Scalar Lubetzky–Zhao boundary, arc formulation | [scalar_lz_boundary_arcs](UpperTailOptimizers/LZBoundary/Existence.lean#L3069), [LZBoundaryArc](UpperTailOptimizers/LZBoundary/Arc.lean#L68) | [LZBoundary/Existence.lean](UpperTailOptimizers/LZBoundary/Existence.lean), [LZBoundary/Arc.lean](UpperTailOptimizers/LZBoundary/Arc.lean) |
+| **[Theorem 3.1][thm:scalar-lz-boundary]** — Scalar Lubetzky–Zhao boundary, arc formulation | [scalar_lz_boundary_arcs](UpperTailOptimizers/LZBoundary/Existence.lean#L3137), [LZBoundaryArc](UpperTailOptimizers/LZBoundary/Arc.lean#L68) | [LZBoundary/Existence.lean](UpperTailOptimizers/LZBoundary/Existence.lean), [LZBoundary/Arc.lean](UpperTailOptimizers/LZBoundary/Arc.lean) |
 | Global boundary functions and agreement with the arcs | [pcGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L140), [smGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L243), [pcGlobal_eq_pc](UpperTailOptimizers/LZBoundary/Curve.lean#L146) | [LZBoundary/Curve.lean](UpperTailOptimizers/LZBoundary/Curve.lean) |
 | Boundary values at the exceptional density | [pcGlobal_rStar](UpperTailOptimizers/LZBoundary/Curve.lean#L155), [smGlobal_rStar](UpperTailOptimizers/LZBoundary/Curve.lean#L323), [contactSet_pStar_rStar](UpperTailOptimizers/LZBoundary/Curve.lean#L256) | [LZBoundary/Curve.lean](UpperTailOptimizers/LZBoundary/Curve.lean) |
 | Continuity and analyticity of the boundary functions | [continuousOn_pcGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L398), [analyticAt_pcGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L390), [continuousOn_smGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L702), [analyticAt_smGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L694) | [LZBoundary/Curve.lean](UpperTailOptimizers/LZBoundary/Curve.lean); analyticity is away from `r_*` |
 | Condition (M2), including the exceptional point | [lz_boundary_M2_global](UpperTailOptimizers/LZBoundary/Curve.lean#L167) | [LZBoundary/Curve.lean](UpperTailOptimizers/LZBoundary/Curve.lean) |
 | Supporting-line contact set and uniqueness of arc data | [LZBoundaryArc.contactSet_eq](UpperTailOptimizers/LZBoundary/Curve.lean#L207), [LZBoundaryArc.pc_unique](UpperTailOptimizers/LZBoundary/Curve.lean#L56), [LZBoundaryArc.sm_unique](UpperTailOptimizers/LZBoundary/Curve.lean#L66) | [LZBoundary/Curve.lean](UpperTailOptimizers/LZBoundary/Curve.lean) |
 | Boundary optimizer uniqueness, used in the local reduction | [boundary_uniqueness](UpperTailOptimizers/LZBoundary/Uniqueness.lean#L40) | [LZBoundary/Uniqueness.lean](UpperTailOptimizers/LZBoundary/Uniqueness.lean) |
+| Supporting line and no flat tie above `p_*`, where `φ_{p,d}` is strictly convex | [supportingLine_strict_of_pStar_le](UpperTailOptimizers/LZBoundary/Existence.lean#L3088), [orientation_of_pStar_le](UpperTailOptimizers/LZBoundary/Existence.lean#L3108), [noFlatTie_of_pStar_le](UpperTailOptimizers/LZBoundary/Existence.lean#L3119) | [LZBoundary/Existence.lean](UpperTailOptimizers/LZBoundary/Existence.lean) |
 | Regular-graph counting identities | [regular_handshake](UpperTailOptimizers/Graphon/RegularGraph.lean#L32), [degree_le_card_edges](UpperTailOptimizers/Graphon/RegularGraph.lean#L41), [two_le_card_edgeFinset](UpperTailOptimizers/Graphon/RegularGraph.lean#L57), [nonempty_of_edge](UpperTailOptimizers/Graphon/RegularGraph.lean#L25) | [Graphon/RegularGraph.lean](UpperTailOptimizers/Graphon/RegularGraph.lean) |
 
 The field-to-(M1)–(M5) correspondence is explained in `LZBoundary/Arc.lean`.
 The additional `noFlatTie` field is proved during arc construction and used for
-replica-symmetric uniqueness.
+replica-symmetric uniqueness below `p_*`; above `p_*` the same conclusion follows from strict
+convexity of `φ_{p,d}` on `[0,1]`, through `noFlatTie_of_pStar_le`.
 
 ### Section 4 — local reduction
 
@@ -395,16 +399,16 @@ unqualified evaluation of the entropy envelope outside its feasible domain.
 |---|---|---|
 | Log-odds displacement and deficit rate | [lambdaDisp](UpperTailOptimizers/LocalOptimizer/Basic.lean#L52), [lambdaDisp_pos](UpperTailOptimizers/LocalOptimizer/Basic.lean#L60), [lambdaDisp_nonpos](UpperTailOptimizers/LocalOptimizer/Basic.lean#L68), [Dd](UpperTailOptimizers/LocalOptimizer/Basic.lean#L84), [Dd_pos](UpperTailOptimizers/LocalOptimizer/Basic.lean#L96) | [LocalOptimizer/Basic.lean](UpperTailOptimizers/LocalOptimizer/Basic.lean) |
 | Shift to the tilted boundary excess | [reducedObjective_sub_Jp_eq_boundaryExcess](UpperTailOptimizers/LocalOptimizer/Basic.lean#L129) | [LocalOptimizer/Basic.lean](UpperTailOptimizers/LocalOptimizer/Basic.lean) |
-| **[Theorem 6.1(a)][thm:local-optimizer-structure]** — Local optimizer structure | [replica_symmetric_unique](UpperTailOptimizers/LocalOptimizer/ReplicaSymmetric.lean#L156) | [LocalOptimizer/ReplicaSymmetric.lean](UpperTailOptimizers/LocalOptimizer/ReplicaSymmetric.lean); requires `pc(r) ≤ p < p_*` and `p < r` |
+| **[Theorem 6.1(a)][thm:local-optimizer-structure]** — Local optimizer structure | [replica_symmetric_unique](UpperTailOptimizers/LocalOptimizer/ReplicaSymmetric.lean#L163), in global coordinates [replica_symmetric_unique_global](UpperTailOptimizers/LocalOptimizer/Main.lean#L149) | [LocalOptimizer/ReplicaSymmetric.lean](UpperTailOptimizers/LocalOptimizer/ReplicaSymmetric.lean); the full range `pc(r) ≤ p < r` |
 | Unique minimizer of the tilted scalar function | [tilted_critical_point](UpperTailOptimizers/LocalOptimizer/ScalarCritical.lean#L70) | [LocalOptimizer/ScalarCritical.lean](UpperTailOptimizers/LocalOptimizer/ScalarCritical.lean) |
-| **[Theorem 6.1(b)–(c)][thm:local-optimizer-structure]** — Symmetry breaking and the expansions in [Eq. (28)][eq:optimizer-edge-expansion] and [Eq. (29)][eq:optimal-value-expansion] | [symmetry_breaking_core](UpperTailOptimizers/LocalOptimizer/SymmetryBreaking.lean#L186), [symmetry_breaking_side](UpperTailOptimizers/LocalOptimizer/SymmetryBreaking.lean#L473) | [LocalOptimizer/SymmetryBreaking.lean](UpperTailOptimizers/LocalOptimizer/SymmetryBreaking.lean) |
-| **[Theorem 6.1][thm:local-optimizer-structure]** — Assembled global result | [local_structure](UpperTailOptimizers/LocalOptimizer/Main.lean#L294), [LocalOptimizerStructure](UpperTailOptimizers/LocalOptimizer/Main.lean#L246) | [LocalOptimizer/Main.lean](UpperTailOptimizers/LocalOptimizer/Main.lean); Theorem 1.5 is a projection |
+| **[Theorem 6.1(b)–(c)][thm:local-optimizer-structure]** — Symmetry breaking and the expansions in [Eq. (28)][eq:optimizer-edge-expansion] and [Eq. (29)][eq:optimal-value-expansion] | [symmetry_breaking_core](UpperTailOptimizers/LocalOptimizer/SymmetryBreaking.lean#L186), [symmetry_breaking_side](UpperTailOptimizers/LocalOptimizer/SymmetryBreaking.lean#L470) | [LocalOptimizer/SymmetryBreaking.lean](UpperTailOptimizers/LocalOptimizer/SymmetryBreaking.lean) |
+| **[Theorem 6.1][thm:local-optimizer-structure]** — Assembled global result | [local_structure](UpperTailOptimizers/LocalOptimizer/Main.lean#L310), [LocalOptimizerStructure](UpperTailOptimizers/LocalOptimizer/Main.lean#L262) | [LocalOptimizer/Main.lean](UpperTailOptimizers/LocalOptimizer/Main.lean); Theorem 1.5 is a projection |
 | **[Theorem 6.1(a)–(c)][thm:local-optimizer-structure]** — Optimizer structure on a common parameter window | [local_structure_on_arc](UpperTailOptimizers/LocalOptimizer/Main.lean#L73), [arc_gap_bounds](UpperTailOptimizers/LocalOptimizer/Main.lean#L32) | [LocalOptimizer/Main.lean](UpperTailOptimizers/LocalOptimizer/Main.lean) |
 | Analytic critical point | [analytic_critical_family_of_chart](UpperTailOptimizers/LocalOptimizer/Analytic.lean#L98), [exists_analytic_critical_family](UpperTailOptimizers/LocalOptimizer/Analytic.lean#L182) | [LocalOptimizer/Analytic.lean](UpperTailOptimizers/LocalOptimizer/Analytic.lean) |
-| **[Theorem 6.1(d)][thm:local-optimizer-structure]** — Local optimizer structure: analyticity of the value, edge density and four block parameters | [symmetry_breaking_analytic](UpperTailOptimizers/LocalOptimizer/Analytic.lean#L501), [bipodal_family](UpperTailOptimizers/LocalOptimizer/Analytic.lean#L243) | [LocalOptimizer/Analytic.lean](UpperTailOptimizers/LocalOptimizer/Analytic.lean); the strict smaller-block convention and block-size limit are not explicit conclusions |
+| **[Theorem 6.1(d)][thm:local-optimizer-structure]** — Local optimizer structure: analyticity of the value, edge density and four block parameters | [symmetry_breaking_analytic](UpperTailOptimizers/LocalOptimizer/Analytic.lean#L583), [bipodal_family](UpperTailOptimizers/LocalOptimizer/Analytic.lean#L243) | [LocalOptimizer/Analytic.lean](UpperTailOptimizers/LocalOptimizer/Analytic.lean); the strict smaller-block convention and block-size limit are not explicit conclusions |
 | Constraint linearizations and their elimination | [krrs_edge_linearization](UpperTailOptimizers/LocalOptimizer/ParameterAsymptotics.lean#L84), [krrs_H_linearization](UpperTailOptimizers/LocalOptimizer/ParameterAsymptotics.lean#L137), [krrs_eliminate](UpperTailOptimizers/LocalOptimizer/ParameterAsymptotics.lean#L253), [exists_Dd_floor](UpperTailOptimizers/LocalOptimizer/ParameterAsymptotics.lean#L328) | [LocalOptimizer/ParameterAsymptotics.lean](UpperTailOptimizers/LocalOptimizer/ParameterAsymptotics.lean) |
 | **[Remark D.1][rmk:bipodal-parameter-expansions]** — Bipodal parameter asymptotics, [Eq. (104)][eq:optimizer-block-size], [Eq. (105)][eq:optimizer-block-density] | [parameter_asymptotics](UpperTailOptimizers/LocalOptimizer/ParameterAsymptotics.lean#L479) | [LocalOptimizer/ParameterAsymptotics.lean](UpperTailOptimizers/LocalOptimizer/ParameterAsymptotics.lean) |
-| Global coefficient and displacement | [AHGlobal](UpperTailOptimizers/LocalOptimizer/Main.lean#L152), [AH_eq_AHGlobal](UpperTailOptimizers/LocalOptimizer/Main.lean#L160), [lambdaGlobal](UpperTailOptimizers/LocalOptimizer/Main.lean#L167), [lambdaDisp_eq_lambdaGlobal](UpperTailOptimizers/LocalOptimizer/Main.lean#L170) | [LocalOptimizer/Main.lean](UpperTailOptimizers/LocalOptimizer/Main.lean) |
+| Global coefficient and displacement | [AHGlobal](UpperTailOptimizers/LocalOptimizer/Main.lean#L169), [AH_eq_AHGlobal](UpperTailOptimizers/LocalOptimizer/Main.lean#L177), [lambdaGlobal](UpperTailOptimizers/LocalOptimizer/Main.lean#L184), [lambdaDisp_eq_lambdaGlobal](UpperTailOptimizers/LocalOptimizer/Main.lean#L187) | [LocalOptimizer/Main.lean](UpperTailOptimizers/LocalOptimizer/Main.lean) |
 
 ### Appendix A — the KRR–S analytic extension
 
@@ -443,7 +447,7 @@ as a corresponding theorem; the uniform linear bound is proved directly from ana
 ### Section 7 and Appendix E — the singular endpoint
 
 The files in the following tables are under `UpperTailOptimizers/SingularEndpoint/`.
-The differences [D1]–[D12] are explained in §7.
+The differences [D1]–[D10] are explained in §7.
 
 #### Family and singular endpoint statements
 
@@ -451,20 +455,21 @@ The differences [D1]–[D12] are explained in §7.
 |---|---|---|
 | The singular endpoint values forced by triple contact | [triple_contact_forced](UpperTailOptimizers/SingularEndpoint/Forced.lean#L171) | [Forced.lean](UpperTailOptimizers/SingularEndpoint/Forced.lean) |
 | Scalar KKT root count | [four_zeros_absurd](UpperTailOptimizers/SingularEndpoint/Bipodality.lean#L186), [three_values_absurd](UpperTailOptimizers/SingularEndpoint/Bipodality.lean#L213) | [Bipodality.lean](UpperTailOptimizers/SingularEndpoint/Bipodality.lean) |
-| **[Lemma 7.2][lem:stationary-rank-one-bipodality]** — Stationary rank-one bipodality, from the scalar a.e. KKT equation [D11] | [not_three_values](UpperTailOptimizers/SingularEndpoint/TwoValued.lean#L70), [exists_two_values](UpperTailOptimizers/SingularEndpoint/EssRange.lean#L105) | [TwoValued.lean](UpperTailOptimizers/SingularEndpoint/TwoValued.lean), [EssRange.lean](UpperTailOptimizers/SingularEndpoint/EssRange.lean) |
+| **[Lemma 7.2][lem:stationary-rank-one-bipodality]** — Stationary rank-one bipodality, from the scalar a.e. KKT equation [D9] | [not_three_values](UpperTailOptimizers/SingularEndpoint/TwoValued.lean#L70), [exists_two_values](UpperTailOptimizers/SingularEndpoint/EssRange.lean#L105) | [TwoValued.lean](UpperTailOptimizers/SingularEndpoint/TwoValued.lean), [EssRange.lean](UpperTailOptimizers/SingularEndpoint/EssRange.lean) |
 | Rank-one homomorphism density | [tBip_rankOne](UpperTailOptimizers/SingularEndpoint/RankOne.lean#L143), [tDensity_rankOne_two_block](UpperTailOptimizers/SingularEndpoint/RankOne.lean#L177), [prod_edges_eq_prod_pow_degree](UpperTailOptimizers/SingularEndpoint/RankOne.lean#L58) | [RankOne.lean](UpperTailOptimizers/SingularEndpoint/RankOne.lean) |
 | **[Lemma 7.3][lem:rank-one-kkt-family]** — Analytic rank-one KKT family: scalar construction and symmetry | [exists_scalar_family](UpperTailOptimizers/SingularEndpoint/FamilyExists.lean#L55), [exists_scalar_family_density](UpperTailOptimizers/SingularEndpoint/FamilySymm.lean#L278) | [FamilyExists.lean](UpperTailOptimizers/SingularEndpoint/FamilyExists.lean), [FamilySymm.lean](UpperTailOptimizers/SingularEndpoint/FamilySymm.lean) |
-| Local exhaustiveness in scalar coordinates [D3] | [exists_scalar_family_locally_unique](UpperTailOptimizers/SingularEndpoint/FamilyUnique.lean#L125) | [FamilyUnique.lean](UpperTailOptimizers/SingularEndpoint/FamilyUnique.lean) |
+| Local exhaustiveness in scalar coordinates [D2] | [exists_scalar_family_locally_unique](UpperTailOptimizers/SingularEndpoint/FamilyUnique.lean#L125) | [FamilyUnique.lean](UpperTailOptimizers/SingularEndpoint/FamilyUnique.lean) |
 | [Eq. (35)][eq:three-value-kkt], after desingularization | [Esys1](UpperTailOptimizers/SingularEndpoint/FamilySystem.lean#L61), [Esys2](UpperTailOptimizers/SingularEndpoint/FamilySystem.lean#L72), [Esys3](UpperTailOptimizers/SingularEndpoint/FamilySystem.lean#L86), [lell_three_eq_iff](UpperTailOptimizers/SingularEndpoint/FamilySystem.lean#L141) | [FamilySystem.lean](UpperTailOptimizers/SingularEndpoint/FamilySystem.lean) |
 | [Eq. (115)][eq:block-proportion-balance] and the block-weight formula | [rowBalance_solution](UpperTailOptimizers/SingularEndpoint/RowSign.lean#L355), [exists_family_with_block_weight](UpperTailOptimizers/SingularEndpoint/Alpha.lean#L328) | [RowSign.lean](UpperTailOptimizers/SingularEndpoint/RowSign.lean), [Alpha.lean](UpperTailOptimizers/SingularEndpoint/Alpha.lean) |
 | Family structure and its existence | [KKTFamily](UpperTailOptimizers/SingularEndpoint/Family.lean#L114), [exists_kktFamily](UpperTailOptimizers/SingularEndpoint/FamilyBuild.lean#L42), [kktFamily](UpperTailOptimizers/SingularEndpoint/FamilyBuild.lean#L80) | [Family.lean](UpperTailOptimizers/SingularEndpoint/Family.lean), [FamilyBuild.lean](UpperTailOptimizers/SingularEndpoint/FamilyBuild.lean) |
-| **[Lemma 7.4][lem:rank-one-parameter-expansions]** — Rank-one parameter expansions: coefficients for `u_h, γ_h, ℓ_h` [D5] | [Ucoeff_eq](UpperTailOptimizers/SingularEndpoint/Expansions.lean#L465), [Gcoeff_eq](UpperTailOptimizers/SingularEndpoint/Expansions.lean#L422), [Lcoeff_eq](UpperTailOptimizers/SingularEndpoint/Expansions.lean#L445) | [Expansions.lean](UpperTailOptimizers/SingularEndpoint/Expansions.lean) |
-| Block-weight coefficient [D5] | [tendsto_alph_slope](UpperTailOptimizers/SingularEndpoint/Order5.lean#L224) | [Order5.lean](UpperTailOptimizers/SingularEndpoint/Order5.lean) |
-| Coefficients for `q_h, r_h, μ_h` [D5] | [tendsto_qVal_coeff](UpperTailOptimizers/SingularEndpoint/EdgeGap.lean#L128), [tendsto_rVal_coeff](UpperTailOptimizers/SingularEndpoint/EdgeGap.lean#L183), [tendsto_muVal_coeff](UpperTailOptimizers/SingularEndpoint/MuExpansion.lean#L228) | [EdgeGap.lean](UpperTailOptimizers/SingularEndpoint/EdgeGap.lean), [MuExpansion.lean](UpperTailOptimizers/SingularEndpoint/MuExpansion.lean) |
-| **[Lemma 7.5][lem:constant-graphon-comparison]** — Comparison with the constant graphon and the cost clause of [Theorem 7.1][thm:endpoint-optimality] [D1] | [tendsto_cost_gap](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean#L55), [singular_endpoint_strict_improvement](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean#L91) | [StrictImprovement.lean](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean) |
+| **[Lemma 7.4][lem:rank-one-parameter-expansions]** — Rank-one parameter expansions: coefficients for `u_h, γ_h, ℓ_h` | [Ucoeff_eq](UpperTailOptimizers/SingularEndpoint/Expansions.lean#L465), [Gcoeff_eq](UpperTailOptimizers/SingularEndpoint/Expansions.lean#L422), [Lcoeff_eq](UpperTailOptimizers/SingularEndpoint/Expansions.lean#L445) | [Expansions.lean](UpperTailOptimizers/SingularEndpoint/Expansions.lean) |
+| Block-weight coefficient | [tendsto_alph_slope](UpperTailOptimizers/SingularEndpoint/Order5.lean#L224) | [Order5.lean](UpperTailOptimizers/SingularEndpoint/Order5.lean) |
+| Coefficients for `q_h, r_h, μ_h` | [tendsto_qVal_coeff](UpperTailOptimizers/SingularEndpoint/EdgeGap.lean#L128), [tendsto_rVal_coeff](UpperTailOptimizers/SingularEndpoint/EdgeGap.lean#L183), [tendsto_muVal_coeff](UpperTailOptimizers/SingularEndpoint/MuExpansion.lean#L228) | [EdgeGap.lean](UpperTailOptimizers/SingularEndpoint/EdgeGap.lean), [MuExpansion.lean](UpperTailOptimizers/SingularEndpoint/MuExpansion.lean) |
+| The `O` remainders of [Lemma 7.4][lem:rank-one-parameter-expansions], from analyticity and parity | [rank_one_parameter_expansions](UpperTailOptimizers/SingularEndpoint/ParameterRemainders.lean#L196), [exists_pow_bound_of_reflect](UpperTailOptimizers/SingularEndpoint/ParityOrder.lean#L178) | [ParameterRemainders.lean](UpperTailOptimizers/SingularEndpoint/ParameterRemainders.lean), [ParityOrder.lean](UpperTailOptimizers/SingularEndpoint/ParityOrder.lean) |
+| **[Lemma 7.5][lem:constant-graphon-comparison]** — Comparison with the constant graphon and the cost clause of [Theorem 7.1][thm:endpoint-optimality] | [tendsto_cost_gap](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean#L55), [constant_graphon_comparison](UpperTailOptimizers/SingularEndpoint/CostRemainder.lean#L124), [singular_endpoint_strict_improvement](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean#L91) | [StrictImprovement.lean](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean), [CostRemainder.lean](UpperTailOptimizers/SingularEndpoint/CostRemainder.lean) |
 | **[Theorem 7.1][thm:endpoint-optimality]** — Nonconstancy of the singular endpoint graphon | [graphon_not_ae_const](UpperTailOptimizers/SingularEndpoint/Terminal.lean#L117)† | [Terminal.lean](UpperTailOptimizers/SingularEndpoint/Terminal.lean) |
-| **[Theorem 7.1][thm:endpoint-optimality]** — Assembled family, optimality, uniqueness and cost expansion, for every candidate block | [exists_singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L95), [singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L155) | [TerminalUnique.lean](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean) |
-| Placement below the boundary [D2] | [singular_endpoint_symmetry_breaking](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean#L131) | [StrictImprovement.lean](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean); additional Lubetzky–Zhao consequence |
+| **[Theorem 7.1][thm:endpoint-optimality]** — Assembled family, optimality, uniqueness and cost expansion, for every candidate block | [exists_singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L95), [singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L215) | [TerminalUnique.lean](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean) |
+| Placement below the boundary [D1] | [singular_endpoint_symmetry_breaking](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean#L131) | [StrictImprovement.lean](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean); additional Lubetzky–Zhao consequence |
 
 #### Localization
 
@@ -473,14 +478,14 @@ The differences [D1]–[D12] are explained in §7.
 | Singular endpoint supporting gap and quartic lower bound | [Gam_nonneg](UpperTailOptimizers/SingularEndpoint/Gap.lean#L188), [Gam_eq_zero_iff](UpperTailOptimizers/SingularEndpoint/Gap.lean#L195), [exists_gam_quartic_lower](UpperTailOptimizers/SingularEndpoint/Quartic.lean#L157) | [Gap.lean](UpperTailOptimizers/SingularEndpoint/Gap.lean), [Quartic.lean](UpperTailOptimizers/SingularEndpoint/Quartic.lean) |
 | [Eq. (47)][eq:graphon-cost-decomposition] | [Ip_sub_Ip_eq](UpperTailOptimizers/SingularEndpoint/Localization.lean#L101), [localization_basic](UpperTailOptimizers/SingularEndpoint/Localization.lean#L131) | [Localization.lean](UpperTailOptimizers/SingularEndpoint/Localization.lean) |
 | Rank-one decomposition and orthogonality | [FactorDecomp](UpperTailOptimizers/SingularEndpoint/Factor.lean#L87), [FactorDecomp.factor_eq](UpperTailOptimizers/SingularEndpoint/Factor.lean#L180), [FactorDecomp.rankOne_moment](UpperTailOptimizers/SingularEndpoint/Factor.lean#L205) | [Factor.lean](UpperTailOptimizers/SingularEndpoint/Factor.lean) |
-| Construction under an `L⁴` closeness hypothesis [D4] | [localization_rankOne](UpperTailOptimizers/SingularEndpoint/FactorMain.lean#L568), [factorMain_unique](UpperTailOptimizers/SingularEndpoint/FactorMain.lean#L768) | [FactorMain.lean](UpperTailOptimizers/SingularEndpoint/FactorMain.lean) |
+| Construction under an `L⁴` closeness hypothesis [D3] | [localization_rankOne](UpperTailOptimizers/SingularEndpoint/FactorMain.lean#L568), [factorMain_unique](UpperTailOptimizers/SingularEndpoint/FactorMain.lean#L768) | [FactorMain.lean](UpperTailOptimizers/SingularEndpoint/FactorMain.lean) |
 | Contraction and fixed point | [contractionMap_contraction](UpperTailOptimizers/SingularEndpoint/FactorContraction.lean#L726), [lpBridgeSet_exists_fixedPoint](UpperTailOptimizers/SingularEndpoint/FactorLpBridge.lean#L347), [exists_factor_solution](UpperTailOptimizers/SingularEndpoint/FactorFix.lean#L430) | [FactorContraction.lean](UpperTailOptimizers/SingularEndpoint/FactorContraction.lean), [FactorLpBridge.lean](UpperTailOptimizers/SingularEndpoint/FactorLpBridge.lean), [FactorFix.lean](UpperTailOptimizers/SingularEndpoint/FactorFix.lean) |
 | Moment stability in [Eq. (51)][eq:moment-and-cost-gap-bounds] | [FactorDecomp.holder_stability](UpperTailOptimizers/SingularEndpoint/FactorStability.lean#L503), [exists_holder_stability](UpperTailOptimizers/SingularEndpoint/FactorStability.lean#L581) | [FactorStability.lean](UpperTailOptimizers/SingularEndpoint/FactorStability.lean) |
 | Homomorphism-density error in [Eq. (50)][eq:rank-one-reduction-bounds] | [FactorDecomp.abs_tDensity_sub_qVal_pow_le](UpperTailOptimizers/SingularEndpoint/FactorHDensity.lean#L1066) | [FactorHDensity.lean](UpperTailOptimizers/SingularEndpoint/FactorHDensity.lean) |
 | [Eq. (48)][eq:graphon-quartic-localization] | [family_localization](UpperTailOptimizers/SingularEndpoint/FamilyLocalization.lean#L90), [family_localization_sq](UpperTailOptimizers/SingularEndpoint/FamilyLocalization.lean#L208) | [FamilyLocalization.lean](UpperTailOptimizers/SingularEndpoint/FamilyLocalization.lean) |
 | Sharp moment and Hölder-deficit bounds | [family_ld_sharp](UpperTailOptimizers/SingularEndpoint/LdSharp.lean#L211), [family_holder_deficit](UpperTailOptimizers/SingularEndpoint/LdSharp.lean#L292) | [LdSharp.lean](UpperTailOptimizers/SingularEndpoint/LdSharp.lean) |
 | [Eq. (54)][eq:factor-tail-mass] | [family_factor_tail_mass](UpperTailOptimizers/SingularEndpoint/FactorTail.lean#L266) | [FactorTail.lean](UpperTailOptimizers/SingularEndpoint/FactorTail.lean) |
-| **[Lemma 7.6][lem:localization-rank-one]** — Localization and rank-one reduction, from cost and feasibility [D4] | [singular_endpoint_localization](UpperTailOptimizers/SingularEndpoint/LocalizationMain.lean#L131) | [LocalizationMain.lean](UpperTailOptimizers/SingularEndpoint/LocalizationMain.lean) |
+| **[Lemma 7.6][lem:localization-rank-one]** — Localization and rank-one reduction, from cost and feasibility [D3] | [singular_endpoint_localization](UpperTailOptimizers/SingularEndpoint/LocalizationMain.lean#L131) | [LocalizationMain.lean](UpperTailOptimizers/SingularEndpoint/LocalizationMain.lean) |
 
 #### Auxiliary Lagrangian and arbitrary-graphon comparison
 
@@ -491,25 +496,25 @@ The differences [D1]–[D12] are explained in §7.
 | [Eq. (55)][eq:first-variation]: auxiliary scalar function and contacts | [Psi](UpperTailOptimizers/SingularEndpoint/FirstVariation.lean#L94)†, [etaVal](UpperTailOptimizers/SingularEndpoint/FirstVariation.lean#L74)†, [kappaVal](UpperTailOptimizers/SingularEndpoint/FirstVariation.lean#L88)†, [Psi_sVal](UpperTailOptimizers/SingularEndpoint/FirstVariation.lean#L112)†, [Psi_tVal](UpperTailOptimizers/SingularEndpoint/FirstVariation.lean#L134)† | [FirstVariation.lean](UpperTailOptimizers/SingularEndpoint/FirstVariation.lean) |
 | **[Lemma 7.8][lem:first-variation-bound]** — First-variation lower bound: central and tail bounds | [exists_firstVariation_lower](UpperTailOptimizers/SingularEndpoint/FirstVariationBound.lean#L453)†, [exists_firstVariation_upperGap](UpperTailOptimizers/SingularEndpoint/PsiTilde.lean#L363)† | [FirstVariationBound.lean](UpperTailOptimizers/SingularEndpoint/FirstVariationBound.lean), [PsiTilde.lean](UpperTailOptimizers/SingularEndpoint/PsiTilde.lean) |
 | Interpolation used to prove [Lemma 7.9][lem:central-kernel-bound] | [exists_powResid_bound](UpperTailOptimizers/SingularEndpoint/PowInterp.lean#L387), [kernel_decomposition](UpperTailOptimizers/SingularEndpoint/KernelInterp.lean#L576)† | [PowInterp.lean](UpperTailOptimizers/SingularEndpoint/PowInterp.lean), [KernelInterp.lean](UpperTailOptimizers/SingularEndpoint/KernelInterp.lean) |
-| Limiting kernel coefficient and its error [D8] | [powDopOf_powDopOf_kernel_zero](UpperTailOptimizers/SingularEndpoint/KernelTheta.lean#L430)†, [exists_kernelTheta_bound](UpperTailOptimizers/SingularEndpoint/KernelError.lean#L1655)†, [exists_kernelTheta_error](UpperTailOptimizers/SingularEndpoint/KernelError.lean#L909)† | [KernelTheta.lean](UpperTailOptimizers/SingularEndpoint/KernelTheta.lean), [KernelError.lean](UpperTailOptimizers/SingularEndpoint/KernelError.lean) |
+| Limiting kernel coefficient and its error [D6] | [powDopOf_powDopOf_kernel_zero](UpperTailOptimizers/SingularEndpoint/KernelTheta.lean#L430)†, [exists_kernelTheta_bound](UpperTailOptimizers/SingularEndpoint/KernelError.lean#L1655)†, [exists_kernelTheta_error](UpperTailOptimizers/SingularEndpoint/KernelError.lean#L909)† | [KernelTheta.lean](UpperTailOptimizers/SingularEndpoint/KernelTheta.lean), [KernelError.lean](UpperTailOptimizers/SingularEndpoint/KernelError.lean) |
 | Distribution of the factor and tail interpolation | [distributionMeasure](UpperTailOptimizers/SingularEndpoint/DistributionMeasure.lean#L238)†, [exists_tail_interpolation](UpperTailOptimizers/SingularEndpoint/DistributionMeasure.lean#L355)† | [DistributionMeasure.lean](UpperTailOptimizers/SingularEndpoint/DistributionMeasure.lean) |
 | First-variation decomposition of the distribution cost | [distributionJ_sub_eq](UpperTailOptimizers/SingularEndpoint/DistributionGap.lean#L239)†, [sigmaQuad_eq](UpperTailOptimizers/SingularEndpoint/DistributionGap.lean#L220)† | [DistributionGap.lean](UpperTailOptimizers/SingularEndpoint/DistributionGap.lean) |
 | Central integral estimate in [Lemma 7.9][lem:central-kernel-bound], and mixed/tail estimates | [centralQuad_lower](UpperTailOptimizers/SingularEndpoint/DistributionQuant.lean#L1037)†, [exists_abs_mixedQuad_le](UpperTailOptimizers/SingularEndpoint/DistributionQuant.lean#L1142)†, [exists_abs_tailQuad_le](UpperTailOptimizers/SingularEndpoint/DistributionQuant.lean#L1218)† | [DistributionQuant.lean](UpperTailOptimizers/SingularEndpoint/DistributionQuant.lean) |
-| **[Lemma 7.10][lem:auxiliary-lagrangian-bound]** — Auxiliary Lagrangian bound, with the linear moment term [D6], [D7] | [exists_distributionGap_refined_window_forall](UpperTailOptimizers/SingularEndpoint/DistributionFinal.lean#L94)†, [exists_distributionGap_window](UpperTailOptimizers/SingularEndpoint/DistributionFinal.lean#L126)† | [DistributionFinal.lean](UpperTailOptimizers/SingularEndpoint/DistributionFinal.lean) |
+| **[Lemma 7.10][lem:auxiliary-lagrangian-bound]** — Auxiliary Lagrangian bound, with the linear moment term [D4], [D5] | [exists_distributionGap_refined_window_forall](UpperTailOptimizers/SingularEndpoint/DistributionFinal.lean#L94)†, [exists_distributionGap_window](UpperTailOptimizers/SingularEndpoint/DistributionFinal.lean#L126)† | [DistributionFinal.lean](UpperTailOptimizers/SingularEndpoint/DistributionFinal.lean) |
 | Additional distribution uniqueness result | [distribution_unique](UpperTailOptimizers/SingularEndpoint/DistributionUnique.lean#L210)†, [distributionMeasure_isMinimizer](UpperTailOptimizers/SingularEndpoint/DistributionUnique.lean#L274)† | [DistributionUnique.lean](UpperTailOptimizers/SingularEndpoint/DistributionUnique.lean); not a clause of the paper's auxiliary-bound lemma |
 | Distribution-to-graphon comparison | [comparisonDistribution](UpperTailOptimizers/SingularEndpoint/GraphonComparison.lean#L92), [comparison_splitting](UpperTailOptimizers/SingularEndpoint/GraphonComparison.lean#L312), [exists_comparison_gap](UpperTailOptimizers/SingularEndpoint/GraphonComparison.lean#L348) | [GraphonComparison.lean](UpperTailOptimizers/SingularEndpoint/GraphonComparison.lean) |
-| Central entropy and KKT terms [D9] | [comparisonMain_central_convexGap](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMain.lean#L415), [comparisonMain_abs_kkt_error_le](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMain.lean#L1071) | [GraphonComparisonMain.lean](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMain.lean) |
-| Residual estimates [D10] | [comparisonMain_exists_residual_bound](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMain.lean#L2006), [comparisonMain_exists_splitting_gap](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMain.lean#L2318) | [GraphonComparisonMain.lean](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMain.lean) |
+| Central entropy and KKT terms [D7] | [comparisonMain_central_convexGap](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMain.lean#L415), [comparisonMain_abs_kkt_error_le](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMain.lean#L1071) | [GraphonComparisonMain.lean](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMain.lean) |
+| Residual estimates [D8] | [comparisonMain_exists_residual_bound](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMain.lean#L2006), [comparisonMain_exists_splitting_gap](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMain.lean#L2318) | [GraphonComparisonMain.lean](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMain.lean) |
 | Mixed rectangles and tail square | [rowJensen_exists_mixed](UpperTailOptimizers/SingularEndpoint/RowJensen.lean#L642), [rowJensen_exists_tailSq](UpperTailOptimizers/SingularEndpoint/RowJensen.lean#L771) | [RowJensen.lean](UpperTailOptimizers/SingularEndpoint/RowJensen.lean) |
-| **[Lemma 7.11][lem:graphon-lagrangian-bound]** — Full-graphon Lagrangian bound, with the qualifications [D6], [D7] | [exists_comparison_master](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMaster.lean#L497), [exists_singular_endpoint_comparison_graph](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMaster.lean#L898) | [GraphonComparisonMaster.lean](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMaster.lean) |
+| **[Lemma 7.11][lem:graphon-lagrangian-bound]** — Full-graphon Lagrangian bound, with the qualifications [D4], [D5] | [exists_comparison_master](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMaster.lean#L497), [exists_singular_endpoint_comparison_graph](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMaster.lean#L898) | [GraphonComparisonMaster.lean](UpperTailOptimizers/SingularEndpoint/GraphonComparisonMaster.lean) |
 | From the linear moment term to the graph constraint | [muVal_tDensity_le_etaVal](UpperTailOptimizers/SingularEndpoint/LagrangeBridge.lean#L182), [etaVal_eq_muVal](UpperTailOptimizers/SingularEndpoint/LagrangeBridge.lean#L125)† | [LagrangeBridge.lean](UpperTailOptimizers/SingularEndpoint/LagrangeBridge.lean) |
 | Final optimality and rigidity | [terminal_optimality_of_master](UpperTailOptimizers/SingularEndpoint/Terminal.lean#L163), [exists_singular_endpoint_rigidity](UpperTailOptimizers/SingularEndpoint/SingularEndpointOptimality.lean#L184), [exists_singular_endpoint_optimality](UpperTailOptimizers/SingularEndpoint/SingularEndpointOptimality.lean#L395) | [Terminal.lean](UpperTailOptimizers/SingularEndpoint/Terminal.lean), [SingularEndpointOptimality.lean](UpperTailOptimizers/SingularEndpoint/SingularEndpointOptimality.lean) |
 | Equality implies a two-valued factor | [FactorDecomp.ae_eq_rankOne_of_residSq_zero](UpperTailOptimizers/SingularEndpoint/TerminalTwoValued.lean#L53), [ae_twoValued_of_R_zero](UpperTailOptimizers/SingularEndpoint/TerminalTwoValued.lean#L78), [measure_eq_alph_of_qVal_eq](UpperTailOptimizers/SingularEndpoint/TerminalTwoValued.lean#L167) | [TerminalTwoValued.lean](UpperTailOptimizers/SingularEndpoint/TerminalTwoValued.lean) |
-| Relabelling to any block of the right measure | [measurePreserving_relabel](UpperTailOptimizers/SingularEndpoint/CdfTransport.lean#L286), [exists_relabel_eq_bipodalGraphon](UpperTailOptimizers/SingularEndpoint/BipodalTransport.lean#L61), [anyBlock_of_singularEndpointOptimizers](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L156) | [CdfTransport.lean](UpperTailOptimizers/SingularEndpoint/CdfTransport.lean), [BipodalTransport.lean](UpperTailOptimizers/SingularEndpoint/BipodalTransport.lean) |
+| Relabelling to any block of the right measure | [measurePreserving_relabel](UpperTailOptimizers/SingularEndpoint/CdfTransport.lean#L539), [exists_relabel_eq_bipodalGraphon](UpperTailOptimizers/SingularEndpoint/BipodalTransport.lean#L61), [anyBlock_of_singularEndpointOptimizers](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L150) | [CdfTransport.lean](UpperTailOptimizers/SingularEndpoint/CdfTransport.lean), [BipodalTransport.lean](UpperTailOptimizers/SingularEndpoint/BipodalTransport.lean) |
 | Uniqueness | [exists_singular_endpoint_uniqueness](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L61) | [TerminalUnique.lean](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean) |
 
 The general graphon and block first-variation definitions are absent; the scalar
-function `Psi` in this table does not supply those definitions. See [D11].
+function `Psi` in this table does not supply those definitions. See [D9].
 
 ## 5. Module map
 
@@ -543,8 +548,8 @@ as the existence of a supporting affine function at `r^d`.
 Both require a finite `d`-regular graph with `d ≥ 2` and at least one edge.
 The criterion also requires `0 < p < r < 1`.
 
-The criterion axiom does not include uniqueness. The boundary and local
-replica-symmetric uniqueness results are proved from Hölder and scalar contact geometry.
+The criterion axiom does not include uniqueness. The boundary and replica-symmetric
+uniqueness results are proved from Hölder, scalar contact geometry and strict convexity.
 The explicit nonempty-edge hypothesis matters because regularity alone is vacuous
 on an empty vertex type.
 
@@ -640,13 +645,15 @@ that the family lies below the boundary.
 
 ### Verification scope
 
-On 2026-09-09, the project built without errors or warnings (8874 jobs), using the
-pinned Lean and Mathlib versions. A dependency traversal of 3823 compiled project
+On 2026-09-10, the project built without errors or warnings (8877 jobs), using the
+pinned Lean and Mathlib versions. A dependency traversal of 3931 compiled project
 declarations found only the eight project axioms and the three foundational axioms,
-with no `sorryAx`. Exact footprints were checked for seven declarations affected
-by the corollary refactor: `local_structure_on_arc`, `local_structure`,
+with no `sorryAx`. Exact footprints were checked for the capstone declarations
+`scalar_lz_boundary_arcs`, `local_structure_on_arc`, `local_structure`,
 `main_bipodal_optimizer`, `analyticAt_AHGlobal_and_pos`, `singular_endpoint_full`,
-`singular_endpoint_optimizers` and `singular_endpoint_symmetry_breaking`.
+`singular_endpoint_optimizers` and `singular_endpoint_symmetry_breaking`, and for
+`replica_symmetric_unique`, `replica_symmetric_unique_global` and `arcMaps_noFlatTie`,
+which use no project axiom other than `generalized_holder`.
 The compiled proof terms also confirm that each introduction corollary directly
 uses its corresponding body theorem and the conclusion-structure projection.
 
@@ -716,11 +723,6 @@ those limits are proved to exist.
 [Theorem 2.1][thm:krrs-analytic-extension] states it for `d`-starlike graphs. All subsequent graph-dependent main
 results use the regular case.
 
-**Replica-symmetric range.** `replica_symmetric_unique` requires
-`pc(r) ≤ p < p_*` and `p < r`. It does not supply the entire range
-`pc(r) ≤ p < r` discussed in the paper. The local theorem chooses a window below
-`p_*`, so this restriction is compatible with that local result.
-
 **One local analytic extension versus an extension over a compact set.**
 [Theorem 5.4][thm:positive-second-variation] states a single analytic `G` on a neighbourhood of
 `K × {0}`, with a uniform curvature estimate.
@@ -761,27 +763,20 @@ value theorem, with the implicit function theorem used for analytic dependence.
 
 ### The singular endpoint
 
-**[D1] Cost-gap remainder.**
-`tendsto_cost_gap` proves
-`I_{p_h}(W_h) − J_{p_h}(r_h) = −d³h⁴/3 + o(h⁴)`.
-The `O(h⁶)` remainder in [Lemma 7.5][lem:constant-graphon-comparison] and
-[Theorem 7.1][thm:endpoint-optimality] is not proved. The weaker expansion suffices for strict
-improvement over the constant graphon.
-
-**[D2] Placement below the boundary.**
+**[D1] Placement below the boundary.**
 `singular_endpoint_symmetry_breaking` proves `p_h < pc(r_h)` using the
 Lubetzky–Zhao axiom. This is an additional consequence, kept separate from
 `singular_endpoint_full` and `singular_endpoint_optimizers`, in agreement with the
 paper's theorem statements. The concrete graph examples invoke it explicitly.
 
-**[D3] Local exhaustiveness.**
+**[D2] Local exhaustiveness.**
 `exists_scalar_family_locally_unique` gives uniqueness of nearby scalar triples
 `(u,ℓ,γ)` solving the three KKT equations at nonzero half-gap `h`.
 The local exhaustiveness clause of [Lemma 7.3][lem:rank-one-kkt-family] is stated for stationary
 graphons. The passage from that graphon statement to the scalar hypotheses is not
-included; see [D11].
+included; see [D9].
 
-**[D4] Rank-one construction.**
+**[D3] Rank-one construction.**
 The paper's [Lemma 7.6][lem:localization-rank-one] begins with feasibility and a cost comparison.
 `localization_rankOne` instead assumes `L⁴` closeness directly and constructs the
 factor by contraction. `singular_endpoint_localization` derives that closeness from the
@@ -789,14 +784,7 @@ paper's hypotheses and collects the localization, moment, orthogonality and resi
 bounds. The separate `factorMain_unique` proves uniqueness among normalized factor
 solutions under a smaller closeness threshold; this is an additional Lean result.
 
-**[D5] Parameter remainders ([Lemma 7.4][lem:rank-one-parameter-expansions]).**
-The parameter expansion results prove limits of difference quotients, such as
-`(u_h−u_*)/h² → U₂`. This gives `u_h = u_* + U₂h² + o(h²)`,
-rather than the paper's `O(h⁴)` remainder.
-The same qualification applies to the coefficients of `γ_h, ℓ_h, α_h, q_h, r_h, μ_h`
-and the increment expansions used in the cost calculation.
-
-**[D6] Choice of localization radius.**
+**[D4] Choice of localization radius.**
 `exists_comparison_master` and `exists_distributionGap_window` produce one
 positive radius. [Lemma 7.10][lem:auxiliary-lagrangian-bound] and [Lemma 7.11][lem:graphon-lagrangian-bound] allow every sufficiently
 small positive radius, with constants depending on it.
@@ -805,7 +793,7 @@ Several intermediate results do preserve that latter order, including
 `exists_distribution_window_forall` and
 `comparisonMain_exists_multiplier_bound_forall`.
 
-**[D7] Linear moment term.**
+**[D5] Linear moment term.**
 The distribution and comparison estimates first subtract
 `η_h Δ_h(ν)`, where `Δ_h(ν) = ∫x^d dν − q_h`.
 The paper's auxiliary Lagrangian in [Eq. (59)][eq:auxiliary-lagrangian-bound] subtracts `μ_h{(∫x^d dν)^v−q_h^v}`,
@@ -814,19 +802,19 @@ Lean performs the conversion later, using `muVal_tDensity_le_etaVal` and
 `exists_singular_endpoint_comparison_graph`. The final optimality theorem therefore uses
 the graph constraint, while the intermediate formulas differ.
 
-**[D8] Kernel interpolation estimates.**
+**[D6] Kernel interpolation estimates.**
 `exists_kernelTheta_bound` chooses its own radius.
 `exists_kernelTheta_error` states an epsilon estimate by choosing a sufficiently
 small neighbourhood. The paper presents these estimates inside the proof of
 [Lemma 7.9][lem:central-kernel-bound], with a radius-dependent error tending to zero.
 Lean does not collect them in exactly that form.
 
-**[D9] Central KKT estimate.**
+**[D7] Central KKT estimate.**
 Both `comparisonMain_abs_kkt_error_le` and the current proof of
 [Lemma 7.11][lem:graphon-lagrangian-bound] use the residual norm restricted to the central square.
 The intermediate constants are organized differently.
 
-**[D10] A separate residual estimate.**
+**[D8] A separate residual estimate.**
 `comparisonMain_exists_residual_bound` proves, for any prescribed `θ > 0`,
 a lower bound on the entropy difference of the form
 `‖E‖₂² − θA − C·tailMass`, for every supplied `FactorDecomp` in its parameter window.
@@ -834,7 +822,7 @@ a lower bound on the entropy difference of the form
 This is an additional intermediate formulation. The proof of [Lemma 7.11][lem:graphon-lagrangian-bound] combines
 central, mixed and tail estimates within the full-graphon comparison.
 
-**[D11] Variational stationarity.**
+**[D9] Variational stationarity.**
 The general definitions [Eq. (32)][eq:graphon-stationarity] and [Eq. (33)][eq:block-stationarity],
 and their reduction to the scalar equations, are not formalised.
 The singular endpoint development starts with
@@ -844,7 +832,7 @@ equations together with block balance.
 The scalar first-variation function `Psi` and the finite-dimensional derivative
 calculations in `KRRS/` do not replace the missing general variational definitions.
 
-**[D12] Continuation estimates.**
+**[D10] Continuation estimates.**
 [Lemma 7.7][lem:continuation-kernel-bounds] collects Hölder-`1/2` estimates, uniform bounds
 and `O(h²)` convergence for both the continued entropy and its kernel.
 Lean instead provides a logarithmic modulus
@@ -861,9 +849,9 @@ The cross-density maximizer characterization enters as an input field rather tha
 as a proved theorem.
 
 Other missing clauses within the deterministic development are recorded in §7:
-the broader KRR–S graph class, the extended replica-symmetric range, the single
+the broader KRR–S graph class, the single
 analytic extension over a compact set, the explicit smaller-block and limit clauses,
-general variational stationarity, and the sharper singular endpoint remainder estimates.
+and general variational stationarity.
 
 `analyticAt_AHGlobal_and_pos` excludes `r_*`; it does not settle positivity or the limiting behavior
 of that coefficient at the exceptional density. The singular endpoint optimizer construction

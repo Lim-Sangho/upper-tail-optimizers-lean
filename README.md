@@ -24,11 +24,11 @@ share a file.
 | **[Theorem 1.5][thm:nonexceptional-optimizers]** — Nonexceptional optimizers; corollary of [Theorem 6.1][thm:local-optimizer-structure] | Introduction corollary: [main_bipodal_optimizer](UpperTailOptimizers/LocalOptimizer/Global.lean#L14) | [LocalOptimizer/Global.lean](UpperTailOptimizers/LocalOptimizer/Global.lean) |
 | **[Theorem 1.6][thm:endpoint-optimizers]** — Singular endpoint optimizers; corollary of [Theorem 7.1][thm:endpoint-optimality] | Introduction corollary: [SingularEndpoint.singular_endpoint_optimizers](UpperTailOptimizers/SingularEndpoint/IntroSingularEndpointOptimizers.lean#L15) | [SingularEndpoint/IntroSingularEndpointOptimizers.lean](UpperTailOptimizers/SingularEndpoint/IntroSingularEndpointOptimizers.lean) |
 | **[Theorem 2.1][thm:krrs-analytic-extension]** — Two-sided KRR–S extension, for regular graphs | Analytic parameter family: [krrs_rectangle](UpperTailOptimizers/KRRS/Main.lean#L111)<br>Bipodality and uniqueness: [kenyonRadinRenSadun](UpperTailOptimizers/KRRS/Main.lean#L600)<br>Two-sided analyticity: [kenyonRadinRenSadunStrip](UpperTailOptimizers/KRRS/Main.lean#L689)<br>Uniform block-size bound: [kenyonRadinRenSadunUniform](UpperTailOptimizers/KRRS/Main.lean#L791) | [KRRS/Main.lean](UpperTailOptimizers/KRRS/Main.lean) |
-| **[Theorem 3.1][thm:scalar-lz-boundary]** — Scalar Lubetzky–Zhao boundary | Boundary arc construction: [scalar_lz_boundary_arcs](UpperTailOptimizers/LZBoundary/Existence.lean#L3069)<br>Boundary curve: [pcGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L140)<br>Second contact: [smGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L243)<br>Global boundary criterion: [lz_boundary_M2_global](UpperTailOptimizers/LZBoundary/Curve.lean#L167) | [LZBoundary/Existence.lean](UpperTailOptimizers/LZBoundary/Existence.lean), [LZBoundary/Curve.lean](UpperTailOptimizers/LZBoundary/Curve.lean) |
+| **[Theorem 3.1][thm:scalar-lz-boundary]** — Scalar Lubetzky–Zhao boundary | Boundary arc construction: [scalar_lz_boundary_arcs](UpperTailOptimizers/LZBoundary/Existence.lean#L3137)<br>Boundary curve: [pcGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L140)<br>Second contact: [smGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L243)<br>Global boundary criterion: [lz_boundary_M2_global](UpperTailOptimizers/LZBoundary/Curve.lean#L167) | [LZBoundary/Existence.lean](UpperTailOptimizers/LZBoundary/Existence.lean), [LZBoundary/Curve.lean](UpperTailOptimizers/LZBoundary/Curve.lean) |
 | **[Section 4][sec:local-reduction]** — Local reduction (Lemmas 4.1–4.4; Corollary 4.5) | Active constraint: [active_constraint](UpperTailOptimizers/LocalReduction/Main.lean#L274)<br>Uniform reduction: [reduction_core_uniform](UpperTailOptimizers/LocalReduction/Main.lean#L594)<br>Scalar minimization: [scalar_reduction](UpperTailOptimizers/LocalReduction/Main.lean#L728) | [LocalReduction/Main.lean](UpperTailOptimizers/LocalReduction/Main.lean) |
 | **[Theorem 5.4][thm:positive-second-variation]** — Positive second variation: local charts and uniform Taylor bounds | Local analytic extension: [boundaryExcess_chart](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L631)<br>Uniform Taylor bounds: [boundaryExcess_taylor](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L741) | [Nondegeneracy/AnalyticExcess.lean](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean) |
-| **[Theorem 6.1][thm:local-optimizer-structure]** — Local optimizer structure (also gives Theorem 1.5) | Full local result: [local_structure](UpperTailOptimizers/LocalOptimizer/Main.lean#L294) | [LocalOptimizer/Main.lean](UpperTailOptimizers/LocalOptimizer/Main.lean) |
-| **[Theorem 7.1][thm:endpoint-optimality]** — Singular endpoint optimizers (also gives Theorem 1.6) | Family, optimality and asymptotics: [SingularEndpoint.singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L155) | [SingularEndpoint/TerminalUnique.lean](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean) |
+| **[Theorem 6.1][thm:local-optimizer-structure]** — Local optimizer structure (also gives Theorem 1.5) | Full local result: [local_structure](UpperTailOptimizers/LocalOptimizer/Main.lean#L310) | [LocalOptimizer/Main.lean](UpperTailOptimizers/LocalOptimizer/Main.lean) |
+| **[Theorem 7.1][thm:endpoint-optimality]** — Singular endpoint optimizers (also gives Theorem 1.6) | Family, optimality and asymptotics: [SingularEndpoint.singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L215) | [SingularEndpoint/TerminalUnique.lean](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean) |
 | **[Remark D.1][rmk:bipodal-parameter-expansions]** — Bipodal parameter asymptotics | Parameter expansions: [parameter_asymptotics](UpperTailOptimizers/LocalOptimizer/ParameterAsymptotics.lean#L479) | [LocalOptimizer/ParameterAsymptotics.lean](UpperTailOptimizers/LocalOptimizer/ParameterAsymptotics.lean) |
 
 ## How it departs from the paper
@@ -44,15 +44,6 @@ corresponding results in the paper.
   nonexceptional density and proves Taylor bounds uniform on compact sets. It does not
   assemble the single extension over a neighbourhood of the whole compact set stated
   in the theorem.
-- **Replica-symmetric range — [Theorem 6.1(a)][thm:local-optimizer-structure].**
-  The supporting uniqueness theorem is proved for `pc(r) ≤ p < p_*`, with `p < r`.
-  This covers the local window in Theorem 6.1, but not the entire range
-  `pc(r) ≤ p < r` discussed in its proof.
-- **Singular endpoint statements — [Theorem 7.1][thm:endpoint-optimality].**
-  Lean proves the cost gap as `−d³h⁴/3 + o(h⁴)`; the theorem and
-  [Lemma 7.5][lem:constant-graphon-comparison] give `O(h⁶)`.
-  The parameter expansions in [Lemma 7.4][lem:rank-one-parameter-expansions] also have
-  weaker remainder bounds in Lean.
 - **Stationarity — [Lemma 7.2][lem:stationary-rank-one-bipodality] and
   [Lemma 7.3][lem:rank-one-kkt-family].** The singular endpoint proofs start from
   scalar KKT equations. The general variational definitions in
@@ -145,12 +136,12 @@ Most names use the namespace `UpperTailOptimizers`. Singular endpoint names use
 #print axioms UpperTailOptimizers.SingularEndpoint.KKTFamily.distribution_unique
 ```
 
-The 2026-09-09 build passed without warnings (8874 jobs). A separate traversal of
-3823 compiled project declarations found only the eight project axioms and the three
+The 2026-09-10 build passed without warnings (8877 jobs). A separate traversal of
+3931 compiled project declarations found only the eight project axioms and the three
 foundational axioms, with no `sorryAx`. See the
 [verification scope](FORMALISATION.md#verification-scope) for what was checked and its limits.
-The repository contains 168 Lean source files, including the root import module;
-105 are under `SingularEndpoint/`.
+The repository contains 171 Lean source files, including the root import module;
+108 are under `SingularEndpoint/`.
 
 ## Reading order
 

@@ -77,6 +77,7 @@ import UpperTailOptimizers.SingularEndpoint.Defs
 import UpperTailOptimizers.SingularEndpoint.LogSlope
 import UpperTailOptimizers.SingularEndpoint.Quotient
 import UpperTailOptimizers.SingularEndpoint.TaylorTail
+import UpperTailOptimizers.SingularEndpoint.ParityOrder
 import UpperTailOptimizers.SingularEndpoint.Interp2
 import UpperTailOptimizers.SingularEndpoint.PowInterp
 import UpperTailOptimizers.SingularEndpoint.Interp3
@@ -132,6 +133,7 @@ import UpperTailOptimizers.SingularEndpoint.DistributionAbsorption
 import UpperTailOptimizers.SingularEndpoint.DistributionFinal
 import UpperTailOptimizers.SingularEndpoint.DistributionUnique
 import UpperTailOptimizers.SingularEndpoint.MuExpansion
+import UpperTailOptimizers.SingularEndpoint.ParameterRemainders
 import UpperTailOptimizers.SingularEndpoint.Localization
 import UpperTailOptimizers.SingularEndpoint.L4Bound
 import UpperTailOptimizers.SingularEndpoint.Family
@@ -150,6 +152,7 @@ import UpperTailOptimizers.SingularEndpoint.IncrementSum
 import UpperTailOptimizers.SingularEndpoint.Order5
 import UpperTailOptimizers.SingularEndpoint.EdgeGap
 import UpperTailOptimizers.SingularEndpoint.StrictImprovement
+import UpperTailOptimizers.SingularEndpoint.CostRemainder
 import UpperTailOptimizers.SingularEndpoint.FamilyLocalization
 import UpperTailOptimizers.SingularEndpoint.OrderFactor
 import UpperTailOptimizers.SingularEndpoint.MfunAnalytic

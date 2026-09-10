@@ -6,7 +6,7 @@ import UpperTailOptimizers.LZBoundary.PhiDeriv
 
 Supporting lemmas for `lz_boundary_endpoint_limits` (`lem:contact-point-limits`,
 `lem:contact-point-limits`): joint (in `p` and `x`)
-continuity and `±∞` limits of `φ_{p,d}'`, strict convexity of `φ_{p_*,d}`, the
+continuity and `±∞` limits of `φ_{p,d}'`, strict convexity of `φ_{p,d}` for `p ≥ p_*`, the
 `p↓0` blow-up of `h_{p,d}`, and the generic subsequence/cluster-point lemma used to
 turn "every joint subsequential limit is the same point" into convergence.
 -/
@@ -330,9 +330,39 @@ theorem hpd_pStar_pos {d : ℕ} (hd : 2 ≤ d) {u : ℝ}
       exact le_of_tendsto hlim hev
     linarith
 
-/-- Helper for (D2): at `p = p_*`, `φ''_{p_*,d}(x) > 0` for `x ∈ (0,1)` with `x ≠ (r_*)^d`. -/
-theorem phi''_pStar_pos {d : ℕ} (hd : 2 ≤ d) {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1)
-    (hxm : x ≠ (rStar d) ^ d) : 0 < phi'' (pStar d) d x := by
+/-- **`h_{p,d}` is monotone in `p`.**  Only the `-(d-1) J_p'(u)` term of
+`h_{p,d}(u) = u J''(u) - (d-1) J_p'(u)` depends on `p`, and
+`J_p'(u) = log(u(1-p)/((1-u)p))` decreases as `p` grows. -/
+theorem hpd_mono_p {d : ℕ} (hd : 2 ≤ d) {p q u : ℝ} (hp0 : 0 < p) (hpq : p ≤ q) (hq1 : q < 1)
+    (hu0 : 0 < u) (hu1 : u < 1) : hpd p d u ≤ hpd q d u := by
+  have hq0 : 0 < q := lt_of_lt_of_le hp0 hpq
+  have hp1 : p < 1 := lt_of_le_of_lt hpq hq1
+  have hd1 : (0:ℝ) < (d:ℝ) - 1 := by have := one_lt_d hd; linarith
+  have h1u : (0:ℝ) < 1 - u := by linarith
+  have hJ : Jp' q u ≤ Jp' p u := by
+    unfold Jp'
+    refine Real.log_le_log (by positivity) ?_
+    rw [div_le_div_iff₀ (by positivity) (by positivity)]
+    have hid : u * (1 - p) * ((1 - u) * q) - u * (1 - q) * ((1 - u) * p)
+        = u * (1 - u) * (q - p) := by ring
+    have hnn : 0 ≤ u * (1 - u) * (q - p) :=
+      mul_nonneg (mul_nonneg hu0.le h1u.le) (sub_nonneg.mpr hpq)
+    linarith
+  unfold hpd
+  nlinarith [mul_nonneg hd1.le (sub_nonneg.mpr hJ)]
+
+/-- **(D1) above `p_*`.**  For `p_* ≤ p < 1` the convexity defect is strictly positive at every
+`u ∈ (0,1)` with `u ≠ r_*`: it is so at `p = p_*` (`hpd_pStar_pos`), and `h_{p,d}(u)` only
+grows with `p` (`hpd_mono_p`). -/
+theorem hpd_pos_of_pStar_le {d : ℕ} (hd : 2 ≤ d) {p : ℝ} (hps : pStar d ≤ p) (hp1 : p < 1)
+    {u : ℝ} (hu0 : 0 < u) (hu1 : u < 1) (hne : u ≠ rStar d) : 0 < hpd p d u :=
+  lt_of_lt_of_le (hpd_pStar_pos hd hu0 hu1 hne)
+    (hpd_mono_p hd (pStar_pos hd) hps hp1 hu0 hu1)
+
+/-- Helper for (D2): for `p_* ≤ p < 1`, `φ''_{p,d}(x) > 0` for `x ∈ (0,1)` with
+`x ≠ (r_*)^d`. -/
+theorem phi''_pos_of_pStar_le {d : ℕ} (hd : 2 ≤ d) {p : ℝ} (hps : pStar d ≤ p) (hp1 : p < 1)
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) (hxm : x ≠ (rStar d) ^ d) : 0 < phi'' p d x := by
   have hu0 : 0 < Real.rpow x (1 / (d:ℝ)) := Real.rpow_pos_of_pos hx0 _
   have hu1 : Real.rpow x (1 / (d:ℝ)) < 1 := by
     have : Real.rpow x (1 / (d:ℝ)) < Real.rpow 1 (1 / (d:ℝ)) :=
@@ -345,19 +375,24 @@ theorem phi''_pStar_pos {d : ℕ} (hd : 2 ≤ d) {x : ℝ} (hx0 : 0 < x) (hx1 : 
       rw [one_div]; exact Real.rpow_inv_natCast_pow hx0.le (by omega)
     rw [← hpow, hcontra]
   rw [phi''_pos_iff hd hx0]
-  exact hpd_pStar_pos hd hu0 hu1 hune
+  exact hpd_pos_of_pStar_le hd hps hp1 hu0 hu1 hune
 
-/-- **(D2)** At `p = p_*`, `deriv (phi (pStar d) d)` is strictly increasing on `(0,1)`
-(i.e. `φ_{p_*,d}` is strictly convex).  NOTE: the analogous statement on `Icc 0 1`
-is *false*, because `deriv` returns the junk value `0` at the non-differentiable
-endpoint `0` while `deriv → -∞` as `x → 0⁺`. -/
-theorem phi_deriv_pStar_strictMonoOn {d : ℕ} (hd : 2 ≤ d) :
-    StrictMonoOn (deriv (phi (pStar d) d)) (Set.Ioo (0:ℝ) 1) := by
-  have hp0 : 0 < pStar d := pStar_pos hd
-  have hp1 : pStar d < 1 := pStar_lt_one hd
+/-- Helper for (D2): at `p = p_*`, `φ''_{p_*,d}(x) > 0` for `x ∈ (0,1)` with `x ≠ (r_*)^d`. -/
+theorem phi''_pStar_pos {d : ℕ} (hd : 2 ≤ d) {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1)
+    (hxm : x ≠ (rStar d) ^ d) : 0 < phi'' (pStar d) d x :=
+  phi''_pos_of_pStar_le hd le_rfl (pStar_lt_one hd) hx0 hx1 hxm
+
+/-- **(D2)** For `p_* ≤ p < 1`, `deriv (phi p d)` is strictly increasing on `(0,1)`
+(i.e. `φ_{p,d}` is strictly convex).  `φ''_{p,d}` is positive on `(0,1)` except possibly at
+`(r_*)^d`, so strict monotonicity holds on `(0,(r_*)^d]` and on `[(r_*)^d,1)` and glues.
+NOTE: the same statement about `deriv` on `Icc 0 1` is *false*, because `deriv` returns the
+junk value `0` at the non-differentiable endpoint `0` while `deriv → -∞` as `x → 0⁺`. -/
+theorem phi_deriv_strictMonoOn_of_pStar_le {d : ℕ} (hd : 2 ≤ d) {p : ℝ} (hps : pStar d ≤ p)
+    (hp1 : p < 1) : StrictMonoOn (deriv (phi p d)) (Set.Ioo (0:ℝ) 1) := by
+  have hp0 : 0 < p := lt_of_lt_of_le (pStar_pos hd) hps
   have hus0 := rStar_pos hd
   have hus1 := rStar_lt_one hd
-  set f := deriv (phi (pStar d) d)
+  set f := deriv (phi p d)
   set m : ℝ := (rStar d) ^ d with hm
   have hm0 : 0 < m := by rw [hm]; positivity
   have hm1 : m < 1 := by
@@ -367,7 +402,7 @@ theorem phi_deriv_pStar_strictMonoOn {d : ℕ} (hd : 2 ≤ d) :
   have hcont : ContinuousOn f (Set.Ioo (0:ℝ) 1) := by
     intro x hx
     exact (hasDerivAt_phi'' hd hp0 hp1 hx.1 hx.2).continuousAt.continuousWithinAt
-  have hderiv : ∀ x ∈ Set.Ioo (0:ℝ) 1, deriv f x = phi'' (pStar d) d x := fun x hx =>
+  have hderiv : ∀ x ∈ Set.Ioo (0:ℝ) 1, deriv f x = phi'' p d x := fun x hx =>
     (hasDerivAt_phi'' hd hp0 hp1 hx.1 hx.2).deriv
   have hL : StrictMonoOn f (Set.Ioc 0 m) := by
     apply strictMonoOn_of_deriv_pos (convex_Ioc _ _)
@@ -376,7 +411,7 @@ theorem phi_deriv_pStar_strictMonoOn {d : ℕ} (hd : 2 ≤ d) :
     rw [interior_Ioc] at hx
     have hxin : x ∈ Set.Ioo (0:ℝ) 1 := ⟨hx.1, lt_trans hx.2 hm1⟩
     rw [hderiv x hxin]
-    exact phi''_pStar_pos hd hxin.1 hxin.2 (ne_of_lt hx.2)
+    exact phi''_pos_of_pStar_le hd hps hp1 hxin.1 hxin.2 (ne_of_lt hx.2)
   have hR : StrictMonoOn f (Set.Ico m 1) := by
     apply strictMonoOn_of_deriv_pos (convex_Ico _ _)
       (hcont.mono (fun x hx => ⟨lt_of_lt_of_le hm0 hx.1, hx.2⟩))
@@ -384,7 +419,7 @@ theorem phi_deriv_pStar_strictMonoOn {d : ℕ} (hd : 2 ≤ d) :
     rw [interior_Ico] at hx
     have hxin : x ∈ Set.Ioo (0:ℝ) 1 := ⟨lt_trans hm0 hx.1, hx.2⟩
     rw [hderiv x hxin]
-    exact phi''_pStar_pos hd hxin.1 hxin.2 (ne_of_gt hx.1)
+    exact phi''_pos_of_pStar_le hd hps hp1 hxin.1 hxin.2 (ne_of_gt hx.1)
   have hunion : StrictMonoOn f (Set.Ioc 0 m ∪ Set.Ico m 1) :=
     hL.union hR (isGreatest_Ioc hm0) (isLeast_Ico hm1)
   have hset : Set.Ioc (0:ℝ) m ∪ Set.Ico m 1 = Set.Ioo (0:ℝ) 1 := by
@@ -399,6 +434,25 @@ theorem phi_deriv_pStar_strictMonoOn {d : ℕ} (hd : 2 ≤ d) :
       · exact Or.inr ⟨h.le, h2⟩
   rw [hset] at hunion
   exact hunion
+
+/-- **(D2)** at `p = p_*`: `deriv (phi (pStar d) d)` is strictly increasing on `(0,1)`. -/
+theorem phi_deriv_pStar_strictMonoOn {d : ℕ} (hd : 2 ≤ d) :
+    StrictMonoOn (deriv (phi (pStar d) d)) (Set.Ioo (0:ℝ) 1) :=
+  phi_deriv_strictMonoOn_of_pStar_le hd le_rfl (pStar_lt_one hd)
+
+/-- **Strict convexity of `φ_{p,d}` on `[0,1]` for `p_* ≤ p < 1`.**  `deriv (phi p d)` is
+strictly increasing on `interior (Icc 0 1) = (0,1)`, which is all that
+`StrictMonoOn.strictConvexOn_of_deriv` asks for: it does not require differentiability at the
+endpoints, where `deriv` is the junk value `0`.  This is the strict form of
+`convexOn_phi_of_pStar_le`, and it is what supplies the strict supporting line at `r^d` — hence
+uniqueness of the constant optimizer — for every `p` above `p_*`. -/
+theorem strictConvexOn_phi_of_pStar_le {d : ℕ} (hd : 2 ≤ d) {p : ℝ} (hps : pStar d ≤ p)
+    (hp1 : p < 1) : StrictConvexOn ℝ (Set.Icc 0 1) (phi p d) := by
+  have hp0 : 0 < p := lt_of_lt_of_le (pStar_pos hd) hps
+  refine StrictMonoOn.strictConvexOn_of_deriv (convex_Icc 0 1)
+    (phi_continuousOn_Icc hd hp0 hp1) ?_
+  rw [interior_Icc]
+  exact phi_deriv_strictMonoOn_of_pStar_le hd hps hp1
 
 /-- **(D3)** For `p ↓ 0` and `uₙ → γ ∈ (0,1)`: `h_{pₙ,d}(uₙ) → -∞`. -/
 theorem hpd_tendsto_atBot_p_zero {d : ℕ} (hd : 2 ≤ d) {γ : ℝ}
