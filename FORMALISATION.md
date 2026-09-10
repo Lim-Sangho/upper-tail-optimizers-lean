@@ -190,6 +190,21 @@ and namespace `UpperTailOptimizers.SingularEndpoint` refer specifically to this 
 The singular endpoint construction instead starts with a rank-one bipodal graphon
 `W_h = f_h ⊗ f_h`, where `f_h` takes the two values `u_h−h` and `u_h+h`.
 
+### Stationarity
+
+`Stationarity.lean` defines the paper's first-order condition `IsStationary`
+([Eq. (32)][eq:graphon-stationarity]), the vanishing of `d/dε [I_p(W+εU) − μ t(H,W+εU)]` at
+`ε = 0` for every bounded symmetric direction `U`, and `SatisfiesKKT`, which adds `μ ≥ 0` and the
+density constraint. `StationaryVariation.lean` computes the two first variations, and
+`StationaryReduction.lean` adds `IsBlockStationary` ([Eq. (33)][eq:block-stationarity]), the
+separate condition for the block proportion, and reduces both:
+`kkt_scalar_of_stationary` turns graphon stationarity into the scalar equation [eq:rank-one-kkt][eq:rank-one-kkt] with
+`γ = μ e(H) q^{v−2}`, and `blockStationary_iff_rowBalance` turns block stationarity into the
+block-balance equation, using the handshake identity `d·v = 2·e(H)`.
+Both reductions are equivalences: `isStationary_of_kkt_scalar` and the reverse implication of
+`blockStationary_iff_rowBalance` return from the scalar conditions to the variational ones,
+which is the form [Lemma 7.3][lem:rank-one-kkt-family] states.
+
 ### Family construction and cost gap
 
 `FamilySystem.lean` rewrites the three scalar KKT equations in a form that remains
@@ -275,15 +290,15 @@ direct corollaries of Theorems 6.1 and 7.1, so they have no separate rows.
 | **[Lemma 5.1][lem:scalar-quadratic-bound]** — Scalar quadratic lower bound | Scalar lower bound: [expectation_quadratic_lower](UpperTailOptimizers/Nondegeneracy/ScalarLower.lean#L34) | Scalar lower bound |
 | **[Proposition 5.2][prop:graphon-quadratic-bound]** — Graphon quadratic lower bound | Graphon lower bound: [quadratic_lower_graphon](UpperTailOptimizers/Nondegeneracy/GraphonLower.lean#L29) | Lower bound for arbitrary graphons |
 | **[Lemma 5.3][lem:bipodal-quadratic-bound]** — Bipodal quadratic upper bound | Bipodal upper bound: [quadratic_upper](UpperTailOptimizers/Nondegeneracy/QuadraticUpper.lean#L54) | Upper bound from a bipodal competitor |
-| **[Theorem 5.4][thm:positive-second-variation]** — Positive second variation | Local analytic extension: [boundaryExcess_chart](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L631)<br>Uniform Taylor bounds: [boundaryExcess_taylor](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L741) | Local charts and uniform Taylor bounds; see §7 |
+| **[Theorem 5.4][thm:positive-second-variation]** — Positive second variation | Full statement: [positive_second_variation](UpperTailOptimizers/Nondegeneracy/AnalyticExtension.lean#L291) | Extension over a neighbourhood of `K × {0}`, glued from the local charts |
 | **[Theorem 6.1][thm:local-optimizer-structure]** — Local optimizer structure (includes Theorem 1.5) | Full local result: [local_structure](UpperTailOptimizers/LocalOptimizer/Main.lean#L310) | Global coefficient, optimizer window and analytic family; see §7 |
-| **[Theorem 7.1][thm:endpoint-optimality]** — Singular endpoint optimizers (includes Theorem 1.6) | Family, optimality and asymptotics: [SingularEndpoint.singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L215) | Continuation estimates not collected [D8] |
-| **[Lemma 7.2][lem:stationary-rank-one-bipodality]** — Stationary rank-one bipodality | Two-valued factor: [SingularEndpoint.exists_two_values](UpperTailOptimizers/SingularEndpoint/EssRange.lean#L105) | Starts from the scalar KKT equation [D9] |
-| **[Lemma 7.3][lem:rank-one-kkt-family]** — Analytic rank-one KKT family | KKT family construction: [SingularEndpoint.exists_kktFamily](UpperTailOptimizers/SingularEndpoint/FamilyBuild.lean#L42) | Family construction; scalar exhaustiveness [D2], [D9] |
+| **[Theorem 7.1][thm:endpoint-optimality]** — Singular endpoint optimizers (includes Theorem 1.6) | Family, optimality and asymptotics: [SingularEndpoint.singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L215) | Continuation estimates not collected [D9] |
+| **[Lemma 7.2][lem:stationary-rank-one-bipodality]** — Stationary rank-one bipodality | From the KKT conditions: [SingularEndpoint.stationary_rank_one_two_values](UpperTailOptimizers/SingularEndpoint/StationaryReduction.lean#L413) | Two values up to null sets; the normal form is `exists_relabel_eq_bipodalGraphon` |
+| **[Lemma 7.3][lem:rank-one-kkt-family]** — Analytic rank-one KKT family | KKT family construction: [SingularEndpoint.exists_kktFamily](UpperTailOptimizers/SingularEndpoint/FamilyBuild.lean#L42) | Family construction; scalar exhaustiveness [D2] |
 | **[Lemma 7.4][lem:rank-one-parameter-expansions]** — Rank-one parameter expansions | All four expansions: [SingularEndpoint.rank_one_parameter_expansions](UpperTailOptimizers/SingularEndpoint/ParameterRemainders.lean#L196) | Further entries below |
 | **[Lemma 7.5][lem:constant-graphon-comparison]** — Comparison with the constant graphon | Cost gap: [SingularEndpoint.constant_graphon_comparison](UpperTailOptimizers/SingularEndpoint/CostRemainder.lean#L124)<br>Strict cost improvement: [SingularEndpoint.singular_endpoint_strict_improvement](UpperTailOptimizers/SingularEndpoint/StrictImprovement.lean#L91) | Cost gap, its remainder and its sign |
 | **[Lemma 7.6][lem:localization-rank-one]** — Localization and rank-one reduction | Competitor localization: [SingularEndpoint.singular_endpoint_localization](UpperTailOptimizers/SingularEndpoint/LocalizationMain.lean#L131) | Localization from cost and feasibility [D3] |
-| **[Lemma 7.7][lem:continuation-kernel-bounds]** — Continuation and kernel bounds | Continuity modulus: [SingularEndpoint.exists_JpTilde_modulus](UpperTailOptimizers/SingularEndpoint/JpTilde.lean#L402)<br>Uniform entropy bound: [SingularEndpoint.KKTFamily.exists_abs_JpTildeH_le](UpperTailOptimizers/SingularEndpoint/DistributionQuant.lean#L1173) | Separate continuity and boundedness estimates [D10] |
+| **[Lemma 7.7][lem:continuation-kernel-bounds]** — Continuation and kernel bounds | Continuity modulus: [SingularEndpoint.exists_JpTilde_modulus](UpperTailOptimizers/SingularEndpoint/JpTilde.lean#L402)<br>Uniform entropy bound: [SingularEndpoint.KKTFamily.exists_abs_JpTildeH_le](UpperTailOptimizers/SingularEndpoint/DistributionQuant.lean#L1173) | Separate continuity and boundedness estimates [D9] |
 | **[Lemma 7.8][lem:first-variation-bound]** — First-variation lower bound | Central lower bound: [SingularEndpoint.KKTFamily.exists_firstVariation_lower](UpperTailOptimizers/SingularEndpoint/FirstVariationBound.lean#L453)<br>Tail lower bound: [SingularEndpoint.KKTFamily.exists_firstVariation_upperGap](UpperTailOptimizers/SingularEndpoint/PsiTilde.lean#L363) | Central and tail bounds |
 | **[Lemma 7.9][lem:central-kernel-bound]** — Central kernel bound | Central integral bound: [SingularEndpoint.KKTFamily.centralQuad_lower](UpperTailOptimizers/SingularEndpoint/DistributionQuant.lean#L1037) | Central integral bound; interpolation estimates [D6] |
 | **[Lemma 7.10][lem:auxiliary-lagrangian-bound]** — Auxiliary Lagrangian bound | Distribution comparison: [SingularEndpoint.KKTFamily.exists_distributionGap_refined_window_forall](UpperTailOptimizers/SingularEndpoint/DistributionFinal.lean#L94) | Linear moment formulation [D4], [D5] |
@@ -312,7 +327,7 @@ statements, [Theorem 1.4][thm:lz-criterion]–[Theorem 1.6][thm:endpoint-optimiz
 | `pcGlobal`, `AHGlobal`, `lambdaGlobal` (`LZBoundary/Curve.lean`, `LocalOptimizer/Main.lean`) | The scalar boundary, the chart-independent second-variation coefficient, and the difference of log odds. | `AHGlobal` is defined by `limUnder`; positivity and analyticity away from `r_*` are included in `local_structure`. |
 | [NonexceptionalOptimizers](UpperTailOptimizers/LocalOptimizer/Main.lean#L232), [LocalOptimizerStructure](UpperTailOptimizers/LocalOptimizer/Main.lean#L262) | Proposition structures for the global optimizer conclusions. The latter adds the analytic family to the former's coefficient and optimizer-window fields. | `local_structure` proves the larger structure; Theorem 1.5 projects its parent. |
 | [SingularEndpointOptimizers](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L115), [SingularEndpointStructure](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L203) | Proposition structures for one family and one positive optimality window. The latter adds base values and the leading cost gap. | `singular_endpoint_full` constructs a family satisfying the larger structure; Theorem 1.6 projects its parent. |
-| `KKTFamily` (`SingularEndpoint/Family.lean`) | An analytic family with base values, symmetry, interiority, three scalar KKT equations and block balance. | `exists_kktFamily` supplies a witness. First-variation stationarity and its equivalence to these scalar conditions are not formalised [D9]. |
+| `KKTFamily` (`SingularEndpoint/Family.lean`) | An analytic family with base values, symmetry, interiority, three scalar KKT equations and block balance. | `exists_kktFamily` supplies a witness. `kkt_scalar_of_stationary` and `blockStationary_iff_rowBalance` prove these scalar conditions equivalent to first-variation stationarity. |
 
 ### Namespaces and file paths
 
@@ -386,6 +401,7 @@ the compact subarc.
 | Quadratic bounds for the boundary excess | [boundaryExcess_quadratic](UpperTailOptimizers/Nondegeneracy/BoundaryExcess.lean#L62), [boundaryExcess_pos](UpperTailOptimizers/Nondegeneracy/BoundaryExcess.lean#L107) | [Nondegeneracy/BoundaryExcess.lean](UpperTailOptimizers/Nondegeneracy/BoundaryExcess.lean) |
 | **[Theorem 5.4][thm:positive-second-variation]** — Positive second variation: local extension, derivative identities and curvature bound | [boundaryExcess_chart](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L631), [boundaryExcess_chart_full](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L80) | [Nondegeneracy/AnalyticExcess.lean](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean); local around one density, not a single extension over all of `K` |
 | **[Theorem 5.4][thm:positive-second-variation]** — Positive second variation: uniform Taylor remainder and positive coefficient | [AH](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L53), [boundaryExcess_taylor](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L741) | [Nondegeneracy/AnalyticExcess.lean](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean); uniform over compact `K` |
+| **[Theorem 5.4][thm:positive-second-variation]** — Positive second variation: the extension over a neighbourhood of `K × {0}`, and the assembled theorem | [eqOn_prod_Ioo_of_eventuallyEq](UpperTailOptimizers/Nondegeneracy/AnalyticExtension.lean#L43), [boundaryExcess_extension](UpperTailOptimizers/Nondegeneracy/AnalyticExtension.lean#L64), [positive_second_variation](UpperTailOptimizers/Nondegeneracy/AnalyticExtension.lean#L291) | [Nondegeneracy/AnalyticExtension.lean](UpperTailOptimizers/Nondegeneracy/AnalyticExtension.lean) |
 | Bounds on the block parameters near the boundary | [krrs_parameter_lipschitz](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L662) | [Nondegeneracy/AnalyticExcess.lean](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean) |
 | Partial derivative in the deficit variable | [dDelta](UpperTailOptimizers/Nondegeneracy/AnalyticTools.lean#L50) | [Nondegeneracy/AnalyticTools.lean](UpperTailOptimizers/Nondegeneracy/AnalyticTools.lean) |
 
@@ -447,7 +463,7 @@ as a corresponding theorem; the uniform linear bound is proved directly from ana
 ### Section 7 and Appendix E — the singular endpoint
 
 The files in the following tables are under `UpperTailOptimizers/SingularEndpoint/`.
-The differences [D1]–[D10] are explained in §7.
+The differences [D1]–[D9] are explained in §7.
 
 #### Family and singular endpoint statements
 
@@ -455,7 +471,10 @@ The differences [D1]–[D10] are explained in §7.
 |---|---|---|
 | The singular endpoint values forced by triple contact | [triple_contact_forced](UpperTailOptimizers/SingularEndpoint/Forced.lean#L171) | [Forced.lean](UpperTailOptimizers/SingularEndpoint/Forced.lean) |
 | Scalar KKT root count | [four_zeros_absurd](UpperTailOptimizers/SingularEndpoint/Bipodality.lean#L186), [three_values_absurd](UpperTailOptimizers/SingularEndpoint/Bipodality.lean#L213) | [Bipodality.lean](UpperTailOptimizers/SingularEndpoint/Bipodality.lean) |
-| **[Lemma 7.2][lem:stationary-rank-one-bipodality]** — Stationary rank-one bipodality, from the scalar a.e. KKT equation [D9] | [not_three_values](UpperTailOptimizers/SingularEndpoint/TwoValued.lean#L70), [exists_two_values](UpperTailOptimizers/SingularEndpoint/EssRange.lean#L105) | [TwoValued.lean](UpperTailOptimizers/SingularEndpoint/TwoValued.lean), [EssRange.lean](UpperTailOptimizers/SingularEndpoint/EssRange.lean) |
+| **[Lemma 7.2][lem:stationary-rank-one-bipodality]** — Stationary rank-one bipodality, from the scalar a.e. KKT equation | [not_three_values](UpperTailOptimizers/SingularEndpoint/TwoValued.lean#L70), [exists_two_values](UpperTailOptimizers/SingularEndpoint/EssRange.lean#L105) | [TwoValued.lean](UpperTailOptimizers/SingularEndpoint/TwoValued.lean), [EssRange.lean](UpperTailOptimizers/SingularEndpoint/EssRange.lean) |
+| [Eq. (32)][eq:graphon-stationarity] and [Eq. (33)][eq:block-stationarity] — the two first-order conditions | [IsStationary](UpperTailOptimizers/SingularEndpoint/Stationarity.lean#L112), [SatisfiesKKT](UpperTailOptimizers/SingularEndpoint/Stationarity.lean#L119), [IsBlockStationary](UpperTailOptimizers/SingularEndpoint/StationaryReduction.lean#L206) | [Stationarity.lean](UpperTailOptimizers/SingularEndpoint/Stationarity.lean), [StationaryReduction.lean](UpperTailOptimizers/SingularEndpoint/StationaryReduction.lean) |
+| The two first variations | [hasDerivAt_Ip_pert](UpperTailOptimizers/SingularEndpoint/Stationarity.lean#L159), [hasDerivAt_tDensity_pert](UpperTailOptimizers/SingularEndpoint/StationaryVariation.lean#L236), [tDensity_variation_rankOne](UpperTailOptimizers/SingularEndpoint/StationaryVariation.lean#L358) | [StationaryVariation.lean](UpperTailOptimizers/SingularEndpoint/StationaryVariation.lean) |
+| Equivalence with the scalar equations: [eq:rank-one-kkt][eq:rank-one-kkt] and block balance | [kkt_scalar_of_stationary](UpperTailOptimizers/SingularEndpoint/StationaryReduction.lean#L60), [isStationary_of_kkt_scalar](UpperTailOptimizers/SingularEndpoint/StationaryReduction.lean#L438), [blockStationary_iff_rowBalance](UpperTailOptimizers/SingularEndpoint/StationaryReduction.lean#L223) | [StationaryReduction.lean](UpperTailOptimizers/SingularEndpoint/StationaryReduction.lean) |
 | Rank-one homomorphism density | [tBip_rankOne](UpperTailOptimizers/SingularEndpoint/RankOne.lean#L143), [tDensity_rankOne_two_block](UpperTailOptimizers/SingularEndpoint/RankOne.lean#L177), [prod_edges_eq_prod_pow_degree](UpperTailOptimizers/SingularEndpoint/RankOne.lean#L58) | [RankOne.lean](UpperTailOptimizers/SingularEndpoint/RankOne.lean) |
 | **[Lemma 7.3][lem:rank-one-kkt-family]** — Analytic rank-one KKT family: scalar construction and symmetry | [exists_scalar_family](UpperTailOptimizers/SingularEndpoint/FamilyExists.lean#L55), [exists_scalar_family_density](UpperTailOptimizers/SingularEndpoint/FamilySymm.lean#L278) | [FamilyExists.lean](UpperTailOptimizers/SingularEndpoint/FamilyExists.lean), [FamilySymm.lean](UpperTailOptimizers/SingularEndpoint/FamilySymm.lean) |
 | Local exhaustiveness in scalar coordinates [D2] | [exists_scalar_family_locally_unique](UpperTailOptimizers/SingularEndpoint/FamilyUnique.lean#L125) | [FamilyUnique.lean](UpperTailOptimizers/SingularEndpoint/FamilyUnique.lean) |
@@ -513,8 +532,9 @@ The differences [D1]–[D10] are explained in §7.
 | Relabelling to any block of the right measure | [measurePreserving_relabel](UpperTailOptimizers/SingularEndpoint/CdfTransport.lean#L539), [exists_relabel_eq_bipodalGraphon](UpperTailOptimizers/SingularEndpoint/BipodalTransport.lean#L61), [anyBlock_of_singularEndpointOptimizers](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L150) | [CdfTransport.lean](UpperTailOptimizers/SingularEndpoint/CdfTransport.lean), [BipodalTransport.lean](UpperTailOptimizers/SingularEndpoint/BipodalTransport.lean) |
 | Uniqueness | [exists_singular_endpoint_uniqueness](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L61) | [TerminalUnique.lean](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean) |
 
-The general graphon and block first-variation definitions are absent; the scalar
-function `Psi` in this table does not supply those definitions. See [D9].
+The general graphon and block first-variation definitions are `IsStationary` and
+`IsBlockStationary`; the scalar function `Psi` in this table is the one-point dual potential,
+a separate object.
 
 ## 5. Module map
 
@@ -645,8 +665,8 @@ that the family lies below the boundary.
 
 ### Verification scope
 
-On 2026-09-10, the project built without errors or warnings (8877 jobs), using the
-pinned Lean and Mathlib versions. A dependency traversal of 3931 compiled project
+On 2026-09-10, the project built without errors or warnings (8881 jobs), using the
+pinned Lean and Mathlib versions. A dependency traversal of 4039 compiled project
 declarations found only the eight project axioms and the three foundational axioms,
 with no `sorryAx`. Exact footprints were checked for the capstone declarations
 `scalar_lz_boundary_arcs`, `local_structure_on_arc`, `local_structure`,
@@ -699,6 +719,10 @@ four-part local structure theorem and singular endpoint comparison lemmas.
 `[0,1]`. Integration restricts it to the unit square, and optimizer equalities are
 almost everywhere. `IsBipodal` allows zero-measure blocks and coincident densities;
 nonconstancy is stated separately.
+Value hypotheses on a factor `f` are pointwise where the paper writes them almost everywhere —
+the interiority `η ≤ f ≤ 1−η` of `kkt_scalar_of_stationary` and the strict bounds of
+`exists_two_values`, for instance. Since `f` may be modified on a null set without changing any
+functional, this is a restatement rather than a restriction.
 
 The graph-dependent main theorems require at least one edge. Singular endpoint theorems also
 state a lower bound on the vertex count. These hypotheses exclude the empty vertex
@@ -722,14 +746,6 @@ those limits are proved to exist.
 **Regular graphs.** The KRR–S extension is proved for `d`-regular graphs.
 [Theorem 2.1][thm:krrs-analytic-extension] states it for `d`-starlike graphs. All subsequent graph-dependent main
 results use the regular case.
-
-**One local analytic extension versus an extension over a compact set.**
-[Theorem 5.4][thm:positive-second-variation] states a single analytic `G` on a neighbourhood of
-`K × {0}`, with a uniform curvature estimate.
-`boundaryExcess_chart` and `boundaryExcess_chart_full` construct `Gc` near a fixed
-density. `boundaryExcess_taylor` proves the uniform Taylor estimate and positivity on
-compact `K`, but does not return a single extension or its uniform curvature bound
-over all of `K`. That combined statement remains unformalised.
 
 **[Theorem 6.1(d)][thm:local-optimizer-structure].**
 The `analyticFamily` field of `local_structure` collects `bipodal_family` in global
@@ -773,8 +789,8 @@ paper's theorem statements. The concrete graph examples invoke it explicitly.
 `exists_scalar_family_locally_unique` gives uniqueness of nearby scalar triples
 `(u,ℓ,γ)` solving the three KKT equations at nonzero half-gap `h`.
 The local exhaustiveness clause of [Lemma 7.3][lem:rank-one-kkt-family] is stated for stationary
-graphons. The passage from that graphon statement to the scalar hypotheses is not
-included; see [D9].
+graphons. `kkt_scalar_of_stationary` supplies the passage from that graphon statement to the
+scalar hypotheses.
 
 **[D3] Rank-one construction.**
 The paper's [Lemma 7.6][lem:localization-rank-one] begins with feasibility and a cost comparison.
@@ -822,17 +838,7 @@ a lower bound on the entropy difference of the form
 This is an additional intermediate formulation. The proof of [Lemma 7.11][lem:graphon-lagrangian-bound] combines
 central, mixed and tail estimates within the full-graphon comparison.
 
-**[D9] Variational stationarity.**
-The general definitions [Eq. (32)][eq:graphon-stationarity] and [Eq. (33)][eq:block-stationarity],
-and their reduction to the scalar equations, are not formalised.
-The singular endpoint development starts with
-`Fkkt d p γ z = J_p'(z) − γz^{d−1}`.
-It uses either an a.e. equation at `z = f(x)f(y)`, or the three scalar family
-equations together with block balance.
-The scalar first-variation function `Psi` and the finite-dimensional derivative
-calculations in `KRRS/` do not replace the missing general variational definitions.
-
-**[D10] Continuation estimates.**
+**[D9] Continuation estimates.**
 [Lemma 7.7][lem:continuation-kernel-bounds] collects Hölder-`1/2` estimates, uniform bounds
 and `O(h²)` convergence for both the continued entropy and its kernel.
 Lean instead provides a logarithmic modulus
@@ -849,9 +855,8 @@ The cross-density maximizer characterization enters as an input field rather tha
 as a proved theorem.
 
 Other missing clauses within the deterministic development are recorded in §7:
-the broader KRR–S graph class, the single
-analytic extension over a compact set, the explicit smaller-block and limit clauses,
-and general variational stationarity.
+the broader KRR–S graph class, the explicit smaller-block and limit clauses,
+and the continuation estimates.
 
 `analyticAt_AHGlobal_and_pos` excludes `r_*`; it does not settle positivity or the limiting behavior
 of that coefficient at the exceptional density. The singular endpoint optimizer construction
@@ -928,5 +933,6 @@ no such additional development or axiom is included here.
 [eq:auxiliary-lagrangian-bound]: paper/sections/singular_endpoint.tex#L1659
 [eq:graphon-lagrangian-bound]: paper/sections/singular_endpoint.tex#L1782
 [eq:graphon-stationarity]: paper/sections/singular_endpoint.tex#L94
+[eq:rank-one-kkt]: paper/sections/singular_endpoint.tex#L171
 [eq:block-stationarity]: paper/sections/singular_endpoint.tex#L122
 [sec:lean-formalization]: paper/sections/lean.tex#L1

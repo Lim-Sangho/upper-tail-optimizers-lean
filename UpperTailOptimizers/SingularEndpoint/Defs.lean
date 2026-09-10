@@ -200,8 +200,9 @@ theorem hasDerivAt_Jp4 {u : ℝ} (hu0 : 0 < u) (hu1 : u < 1) :
 /-- The **rank-one scalar KKT function** `F_{p,γ}(z) = J_p'(z) - γ z^{d-1}` of
 `lem:stationary-rank-one-bipodality`.  Equation `eq:rank-one-kkt` says that
 `F_{p,γ}(f(x)f(y)) = 0` a.e. at a *rank-one KKT point*, the term Section 7 defines at
-`eq:graphon-stationarity`.  The Lean takes this scalar equation as its hypothesis
-and never forms the variational condition itself (`[D11]`). -/
+`eq:graphon-stationarity`.  Most of Section 7 takes this scalar equation as its hypothesis;
+`kkt_scalar_of_stationary` (`SingularEndpoint/StationaryReduction.lean`) derives it from the
+variational condition itself. -/
 noncomputable def Fkkt (d : ℕ) (p γ z : ℝ) : ℝ := Jp' p z - γ * z ^ (d - 1)
 
 /-- `𝓛_*(z) = J_{p_*}'(z) - γ_* z^{d-1}`; the function whose first three Taylor coefficients at

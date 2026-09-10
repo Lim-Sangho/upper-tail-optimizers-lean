@@ -58,6 +58,7 @@ import UpperTailOptimizers.Nondegeneracy.QuadraticUpper
 import UpperTailOptimizers.Nondegeneracy.BoundaryExcess
 import UpperTailOptimizers.Nondegeneracy.AnalyticTools
 import UpperTailOptimizers.Nondegeneracy.AnalyticExcess
+import UpperTailOptimizers.Nondegeneracy.AnalyticExtension
 -- Section 6 of `paper/bipodal_optimizer.tex`: the local structure theorem
 import UpperTailOptimizers.LocalOptimizer.Basic
 import UpperTailOptimizers.LocalOptimizer.ReplicaSymmetric
@@ -153,6 +154,9 @@ import UpperTailOptimizers.SingularEndpoint.Order5
 import UpperTailOptimizers.SingularEndpoint.EdgeGap
 import UpperTailOptimizers.SingularEndpoint.StrictImprovement
 import UpperTailOptimizers.SingularEndpoint.CostRemainder
+import UpperTailOptimizers.SingularEndpoint.Stationarity
+import UpperTailOptimizers.SingularEndpoint.StationaryVariation
+import UpperTailOptimizers.SingularEndpoint.StationaryReduction
 import UpperTailOptimizers.SingularEndpoint.FamilyLocalization
 import UpperTailOptimizers.SingularEndpoint.OrderFactor
 import UpperTailOptimizers.SingularEndpoint.MfunAnalytic

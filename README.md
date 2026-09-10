@@ -26,30 +26,18 @@ share a file.
 | **[Theorem 2.1][thm:krrs-analytic-extension]** — Two-sided KRR–S extension, for regular graphs | Analytic parameter family: [krrs_rectangle](UpperTailOptimizers/KRRS/Main.lean#L111)<br>Bipodality and uniqueness: [kenyonRadinRenSadun](UpperTailOptimizers/KRRS/Main.lean#L600)<br>Two-sided analyticity: [kenyonRadinRenSadunStrip](UpperTailOptimizers/KRRS/Main.lean#L689)<br>Uniform block-size bound: [kenyonRadinRenSadunUniform](UpperTailOptimizers/KRRS/Main.lean#L791) | [KRRS/Main.lean](UpperTailOptimizers/KRRS/Main.lean) |
 | **[Theorem 3.1][thm:scalar-lz-boundary]** — Scalar Lubetzky–Zhao boundary | Boundary arc construction: [scalar_lz_boundary_arcs](UpperTailOptimizers/LZBoundary/Existence.lean#L3137)<br>Boundary curve: [pcGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L140)<br>Second contact: [smGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L243)<br>Global boundary criterion: [lz_boundary_M2_global](UpperTailOptimizers/LZBoundary/Curve.lean#L167) | [LZBoundary/Existence.lean](UpperTailOptimizers/LZBoundary/Existence.lean), [LZBoundary/Curve.lean](UpperTailOptimizers/LZBoundary/Curve.lean) |
 | **[Section 4][sec:local-reduction]** — Local reduction (Lemmas 4.1–4.4; Corollary 4.5) | Active constraint: [active_constraint](UpperTailOptimizers/LocalReduction/Main.lean#L274)<br>Uniform reduction: [reduction_core_uniform](UpperTailOptimizers/LocalReduction/Main.lean#L594)<br>Scalar minimization: [scalar_reduction](UpperTailOptimizers/LocalReduction/Main.lean#L728) | [LocalReduction/Main.lean](UpperTailOptimizers/LocalReduction/Main.lean) |
-| **[Theorem 5.4][thm:positive-second-variation]** — Positive second variation: local charts and uniform Taylor bounds | Local analytic extension: [boundaryExcess_chart](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L631)<br>Uniform Taylor bounds: [boundaryExcess_taylor](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L741) | [Nondegeneracy/AnalyticExcess.lean](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean) |
+| **[Theorem 5.4][thm:positive-second-variation]** — Positive second variation | Full statement: [positive_second_variation](UpperTailOptimizers/Nondegeneracy/AnalyticExtension.lean#L291)<br>Analytic extension over `K`: [boundaryExcess_extension](UpperTailOptimizers/Nondegeneracy/AnalyticExtension.lean#L64)<br>Uniform Taylor bounds: [boundaryExcess_taylor](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean#L741) | [Nondegeneracy/AnalyticExtension.lean](UpperTailOptimizers/Nondegeneracy/AnalyticExtension.lean), [Nondegeneracy/AnalyticExcess.lean](UpperTailOptimizers/Nondegeneracy/AnalyticExcess.lean) |
 | **[Theorem 6.1][thm:local-optimizer-structure]** — Local optimizer structure (also gives Theorem 1.5) | Full local result: [local_structure](UpperTailOptimizers/LocalOptimizer/Main.lean#L310) | [LocalOptimizer/Main.lean](UpperTailOptimizers/LocalOptimizer/Main.lean) |
 | **[Theorem 7.1][thm:endpoint-optimality]** — Singular endpoint optimizers (also gives Theorem 1.6) | Family, optimality and asymptotics: [SingularEndpoint.singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean#L215) | [SingularEndpoint/TerminalUnique.lean](UpperTailOptimizers/SingularEndpoint/TerminalUnique.lean) |
 | **[Remark D.1][rmk:bipodal-parameter-expansions]** — Bipodal parameter asymptotics | Parameter expansions: [parameter_asymptotics](UpperTailOptimizers/LocalOptimizer/ParameterAsymptotics.lean#L479) | [LocalOptimizer/ParameterAsymptotics.lean](UpperTailOptimizers/LocalOptimizer/ParameterAsymptotics.lean) |
 
 ## How it departs from the paper
 
-The formalisation differs from the paper in some assumptions, theorem statements,
-and proof details. The main differences are listed below, with links to the
-corresponding results in the paper.
+One difference in the hypotheses of a main theorem remains, with a link to the
+corresponding result in the paper.
 
 - **Graph class — [Theorem 2.1][thm:krrs-analytic-extension].** The KRR–S development
   treats `d`-regular graphs; the paper states its extension for `d`-starlike graphs.
-- **Analytic extensions — [Theorem 5.4][thm:positive-second-variation].**
-  Lean constructs the boundary excess extension near each
-  nonexceptional density and proves Taylor bounds uniform on compact sets. It does not
-  assemble the single extension over a neighbourhood of the whole compact set stated
-  in the theorem.
-- **Stationarity — [Lemma 7.2][lem:stationary-rank-one-bipodality] and
-  [Lemma 7.3][lem:rank-one-kkt-family].** The singular endpoint proofs start from
-  scalar KKT equations. The general variational definitions in
-  [Eq. (32)][eq:graphon-stationarity] and [Eq. (33)][eq:block-stationarity], and the
-  passage to the scalar equations, are absent.
-
 
 The detailed [comparison with the paper](FORMALISATION.md#7-deviations-from-the-paper)
 also records differences in radius quantifiers, Lagrangian formulas and proof methods.
@@ -68,8 +56,8 @@ and show which ones each main theorem uses.
 | `edgeDensity_cutContinuous` | Background in [Section 2.1][sec:graphons] | Edge density is continuous under sequential cut convergence. | [Graphon/CutContinuity.lean](UpperTailOptimizers/Graphon/CutContinuity.lean) |
 | `tDensity_cutContinuous` | Background in [Section 2.1][sec:graphons] | Every finite simple graph's homomorphism density is continuous under sequential cut convergence. | [Graphon/CutContinuity.lean](UpperTailOptimizers/Graphon/CutContinuity.lean) |
 | `Ip_cut_lowerSemicontinuous` | Background in [Section 2.1][sec:graphons] | For `0 < p < 1`, an eventual upper bound on the costs along a cut-convergent sequence also bounds the limit's cost. | [Graphon/CutContinuity.lean](UpperTailOptimizers/Graphon/CutContinuity.lean) |
-| `krrs_thm33` | [Theorem A.2][thm:krrs-cross-density] | For `d ≥ 2`, a cross-density selector with interior values, maximality away from the diagonal, strict decrease, involutivity and fixed point `(d−1)/d`. | [KRRS/Inputs.lean](UpperTailOptimizers/KRRS/Inputs.lean) |
 | `krrs_thm11` | [Theorem A.1][thm:krrs-bipodality] | For a `d`-regular graph with `d ≥ 2` and at least two edges, an analytic bipodal entropy maximizer on an open positive-surplus region, with uniqueness up to relabelling and boundary limits. | [KRRS/Inputs.lean](UpperTailOptimizers/KRRS/Inputs.lean) |
+| `krrs_thm33` | [Theorem A.2][thm:krrs-cross-density] | For `d ≥ 2`, a cross-density selector with interior values, maximality away from the diagonal, strict decrease, involutivity and fixed point `(d−1)/d`. | [KRRS/Inputs.lean](UpperTailOptimizers/KRRS/Inputs.lean) |
 
 The KRR–S numbers A.1 and A.2 are those of this paper; the Lean axiom names retain
 Theorems 1.1 and 3.3 of the external KRR–S source. The axioms return structures.
@@ -136,12 +124,12 @@ Most names use the namespace `UpperTailOptimizers`. Singular endpoint names use
 #print axioms UpperTailOptimizers.SingularEndpoint.KKTFamily.distribution_unique
 ```
 
-The 2026-09-10 build passed without warnings (8877 jobs). A separate traversal of
-3931 compiled project declarations found only the eight project axioms and the three
+The 2026-09-10 build passed without warnings (8881 jobs). A separate traversal of
+4039 compiled project declarations found only the eight project axioms and the three
 foundational axioms, with no `sorryAx`. See the
 [verification scope](FORMALISATION.md#verification-scope) for what was checked and its limits.
-The repository contains 171 Lean source files, including the root import module;
-108 are under `SingularEndpoint/`.
+The repository contains 175 Lean source files, including the root import module;
+111 are under `SingularEndpoint/`.
 
 ## Reading order
 
