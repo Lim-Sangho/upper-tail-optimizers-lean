@@ -1,0 +1,273 @@
+\section{The local reduction}\label{sec:local-reduction}
+
+Let $H$ be a $d$-regular graph with $d\ge2$, write $m=|E(H)|$ (so that the
+constraint in \eqref{eq:graphon-variational-problem} reads $t(H,W)\ge r^m$), and fix a compact subinterval
+$K$ contained in $(0,1) \setminus \{r_*\}$.  We work uniformly for
+$r\in K$ throughout this section and \Cref{sec:nondegeneracy}.  Following the
+terminology from the introduction, we call the region
+$p<\pc(r)$ the symmetry-breaking side of the Lubetzky--Zhao boundary.  The
+purpose of this section is to replace the graphon variational problem, in a
+sufficiently small symmetry-breaking region, by a one-variable problem in the
+edge density.
+
+\begin{lemma}[Active constraint]\label{lem:active-constraint}
+Let $0<p<r<1$.  Every optimizer of \eqref{eq:graphon-variational-problem} satisfies
+$t(H,W)=r^m$.
+\end{lemma}
+
+\begin{proof}
+Let $W$ be an optimizer, and suppose for contradiction that $t(H,W)>r^m$.
+For $0\le\theta\le1$, define
+\[
+  W_\theta=p+\theta(W-p).
+\]
+Then, $W_0\equiv p$ has $t(H,W_0)=p^m<r^m$, while $W_1=W$ has
+$t(H,W)>r^m$.  By continuity of $t(H,\cdot)$, there exists
+$0<\theta_0<1$ with $t(H,W_{\theta_0})=r^m$.  Since $J_p$ is strictly convex
+and uniquely minimized at $p$ with $J_p(p) = 0$, we have, for every
+$(x,y)\in[0,1]^2$,
+\begin{align*}
+  J_p(p+\theta_0(W(x,y)-p))
+  & {}
+  \le
+  (1-\theta_0)J_p(p)+\theta_0J_p(W(x,y))
+  =
+  \theta_0J_p(W(x,y))
+  {}
+  \le
+  J_p(W(x,y)),
+\end{align*}
+with strict inequality unless $W(x,y)=p$.  Integrating gives
+\[
+   I_p(W_{\theta_0}) \le I_p(W).
+\]
+On the other hand, $W_{\theta_0}$ is feasible, so the optimality of $W$ gives
+$I_p(W_{\theta_0})\ge I_p(W)$.  Hence, equality holds in the integrated
+pointwise inequality.  Since the pointwise difference is nonnegative, equality
+of the integrals forces
+\[
+  J_p(p+\theta_0(W(x,y)-p))=J_p(W(x,y))
+\]
+for almost every $(x,y)$, and therefore $W(x,y)=p$ almost everywhere.  This
+would imply $t(H,W)=p^m<r^m$, contradicting $t(H,W)>r^m$.  Thus,  every
+optimizer satisfies $t(H,W)=r^m$.
+\end{proof}
+
+\begin{lemma}[Strict edge-density deficit]\label{lem:edge-density-deficit}
+Let $r\in K$ and let $0<p<\pc(r)$.  If $W$ is an optimizer of \eqref{eq:graphon-variational-problem}, then $e(W)<r$.
+\end{lemma}
+
+\begin{proof}
+By the (M2) of Theorem~\ref{thm:scalar-lz-boundary}, for $p<\pc(r)$, the scalar point $(r^d,J_p(r))$ is not on the convex minorant of
+$x\mapsto J_p(x^{1/d})$.  The Lubetzky--Zhao theorem,
+\Cref{thm:lz-criterion}, therefore shows that $W\equiv r$ is not a
+minimizer; since $\W_H(p,r)\ne\emptyset$ and $W\equiv r$ is feasible, this
+gives $\Phi_H(p,r)<J_p(r)$, i.e.\ a feasible graphon whose value is strictly
+below the constant value $J_p(r)$.  Hence, every optimizer satisfies
+\[
+  I_p(W)<J_p(r).
+\]
+By Jensen's inequality,
+\[
+  I_p(W)\ge J_p(e(W)).
+\]
+Since $p<\pc(r)<r$, the function $J_p$ is strictly increasing on $[r,1]$.  If
+$e(W)\ge r$, then
+\[
+  I_p(W)\ge J_p(e(W))\ge J_p(r),
+\]
+a contradiction.
+\end{proof}
+
+\begin{lemma}[Boundary convergence of optimizers]\label{lem:boundary-convergence}
+Let $r_n\in K$ with $r_n\to r_0\in K$, and let
+$p_n\in(0,\pc(r_n))$ satisfy
+\[
+  \pc(r_n)-p_n\to0.
+\]
+For each $n$, let $W_n\in\W_H(p_n,r_n)$.  Then, writing $r_0$ also for the constant
+graphon with value $r_0$,
+\[
+  \delta_\square(W_n,r_0)\to0.
+\]
+In particular,
+\[
+  e(W_n)\to r_0.
+\]
+\end{lemma}
+
+The proof is deferred to Appendix~\ref{app:local-reduction}.
+
+For $0\le\eps\le1$ and $0\le\tau\le1$, define the fixed-$(e,t(H,\cdot))$ entropy
+envelope
+\begin{equation}\label{eq:fixed-density-entropy}
+  \sigma_H(\eps,\tau)=
+  \sup\{s(W):e(W)=\eps,\ t(H,W)=\tau\}.
+\end{equation}
+We use the convention that the supremum is $-\infty$ if the constraint set is
+empty.
+
+For fixed $r\in K$ and $p\in(0,1)$, use this envelope to define the scalar
+objective
+\begin{equation}\label{eq:reduced-objective}
+  \mathcal F_{p,r}(\eps)=
+  -2\sigma_H(\eps,r^m)
+  -\log(1-p)+\eps\log\frac{1-p}{p}.
+\end{equation}
+By \eqref{eq:relative-entropy-identity}, every graphon $W$ with $e(W)=\eps$ and
+$t(H,W)=r^m$ satisfies
+\[
+  I_p(W)\ge \mathcal F_{p,r}(\eps),
+\]
+with equality exactly when $W$ attains $\sigma_H(\eps,r^m)$.  Thus,
+$\mathcal F_{p,r}(\eps)$ is the infimum of $I_p$ over the fixed-density slice
+$e(W)=\eps$, $t(H,W)=r^m$.
+
+By \Cref{lem:active-constraint}, every optimizer of \eqref{eq:graphon-variational-problem} lies on
+the constraint surface $t(H,W)=r^m$, so the search for its optimizers can be
+organized by their edge density $\eps=e(W)$.  Near the phase boundary, the
+next lemma confines these edge densities to a strip of uniform width below
+$r$ and uses
+\Cref{thm:krrs-analytic-extension} to identify the entropy maximizer in each fixed-density slice
+as a unique bipodal graphon.  The following corollary combines these facts: under
+the hypotheses of the lemma, minimizing $I_p(W)$ over graphons satisfying
+$t(H,W)\ge r^m$ is equivalent to minimizing $\mathcal F_{p,r}(\eps)$ over the
+strip $\eps\in(r-\rho,r)$, with scalar minimizers corresponding bijectively to
+graphon optimizers modulo relabelling.
+
+\begin{lemma}[Uniform localization and fixed-density bipodality]\label{lem:fixed-density-bipodality}
+There exists $\rho_0>0$ with the following property.  For every
+$0<\rho<\rho_0$, there exists $\eta=\eta(\rho)>0$, which may be chosen smaller
+than $\min_{r\in K}\pc(r)$, such that, for every $r\in K$ and every
+$p \in (\pc(r)-\eta, \pc(r))$,
+every optimizer $W$ of \eqref{eq:graphon-variational-problem} satisfies
+\[
+  e(W)\in(r-\rho,r).
+\]
+Moreover, for every $r\in K$ and every $\eps\in(r-\rho,r)$, the supremum
+$\sigma_H(\eps, r^m)$ is attained, up to relabelling, by the unique bipodal
+graphon $\widehat W_{\eps,r}$ supplied by \Cref{thm:krrs-analytic-extension}.  For every such
+$r,\eps$ and every $p\in(0,1)$, this graphon satisfies
+\begin{equation}\label{eq:reduced-objective-attainment}
+  \mathcal F_{p,r}(\eps)=I_p(\widehat W_{\eps,r}).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We first determine a uniform upper bound $\rho_0$ that guarantees the
+structural properties of the fixed-density optimizers.
+By \Cref{thm:krrs-analytic-extension}, for each $\bar r \in K$, there exist an open neighbourhood
+$U_{\bar r}$ of $\bar r$ and a constant $\Delta_{\bar r}>0$ such that the
+fixed-$(\eps,\tau)$ entropy maximizer is unique up to relabelling and bipodal
+whenever $\eps\in U_{\bar r}$ and
+\[
+  0<\tau-\eps^m<\Delta_{\bar r}.
+\]
+Using the compactness of $K$, we can choose finitely many points
+$r_1,\ldots,r_N$ with
+$K\subseteq U_*:=\bigcup_{i=1}^N U_{r_i}$, and set
+\[
+  \Delta_*=\min_{1\le i\le N}\Delta_{r_i}>0.
+\]
+Since $K$ is compact and $U_*$ is an open neighbourhood of $K$, there is
+$\rho_0>0$ such that
+\[
+  \{x\in\mathbb R:\dist(x,K)<\rho_0\}\subseteq U_*.
+\]
+After decreasing $\rho_0$ if necessary, assume also
+\[
+  m\rho_0<\Delta_*
+  \qquad \text{and} \qquad
+  \rho_0<\min_{r\in K}(r-r^d).
+\]
+The minimum on the right is positive because $K$ is a compact subset of
+$(0,1)$ and $r-r^d>0$ there.  Now fix an arbitrary $0<\rho<\rho_0$.  Then, for
+every
+$r\in K$ and $\eps\in(r-\rho,r)$,
+\[
+  r^d<r-\rho<\eps<r.
+\]
+In particular, the necessary condition $\eps\ge r^d$ for the constraint set
+defining $\sigma_H(\eps,r^m)$ to be nonempty is satisfied.  To see this,
+suppose $e(W)=\eps$ and $t(H,W)=r^m$.  Then \eqref{eq:generalized-holder} and
+$0\le W\le1$ give
+\[
+  r^m=t(H,W)
+  \le \left(\int_{[0,1]^2}W(x,y)^d\,dx\,dy\right)^{m/d}
+  \le e(W)^{m/d}
+  =\eps^{m/d},
+\]
+and hence $\eps\ge r^d$.
+For all $r\in K$ and all $\eps\in(r-\rho,r)$, we have
+$\dist(\eps,K)\le r-\eps<\rho_0$, so $\eps\in U_*$.  Moreover,
+\[
+  0<r^m-\eps^m\le m(r-\eps)<\Delta_*,
+\]
+where the middle inequality follows from the mean value theorem applied to
+$u\mapsto u^m$ on $[\eps,r]\subseteq[0,1]$, on which $mu^{m-1}\le m$,
+and the last inequality follows from $r-\eps<\rho<\rho_0$ and
+$m\rho_0<\Delta_*$.
+Thus, \Cref{thm:krrs-analytic-extension} applies uniformly for all $r\in K$ and all $\eps\in(r-\rho,r)$.
+In particular, both $\widehat W_{\eps,r}$ and $\mathcal F_{p,r}(\eps)$ are
+well-defined.  Since
+$\sigma_H(\eps,r^m)=s(\widehat W_{\eps,r})$ and
+$e(\widehat W_{\eps,r})=\eps$, \eqref{eq:relative-entropy-identity} gives
+\[
+  \mathcal{F}_{p,r}(\eps)=I_p(\widehat W_{\eps,r}).
+\]
+
+For this fixed $\rho$, we claim that there exists
+$0<\eta=\eta(\rho)<\min_{r\in K}\pc(r)$ such that the following holds: for
+every $r\in K$, every $p\in(\pc(r)-\eta,\pc(r))$, and every optimizer $W^*$
+for the problem with parameters $(p,r)$, if $\eps^*=e(W^*)$, then
+\begin{equation}\label{eq:edge-density-localization}
+  \eps^* \in (r-\rho,r).
+\end{equation}
+Suppose not.  Since $\pc$ is continuous and positive on the compact set $K$,
+we may choose a sequence $\eta_n\downarrow0$ with
+$\eta_n<\min_{r\in K}\pc(r)$.  For each $n$, the failure of the assertion with
+this value of $\eta_n$ gives $r_n\in K$, a parameter
+$p_n\in(\pc(r_n)-\eta_n,\pc(r_n))$, and an optimizer $W_n$ attaining
+$\Phi_H(p_n,r_n)$ such that
+\[
+  e(W_n) \notin (r_n-\rho,r_n).
+\]
+Then, $0<p_n<\pc(r_n)$ and $0<\pc(r_n)-p_n<\eta_n\to0$.
+By compactness of $K$, we may pass to a subsequence such that $r_n \to r_0$
+for some $r_0 \in K$.
+By \Cref{lem:boundary-convergence}, $W_n \to r_0$ in cut distance, and hence
+\[
+  e(W_n) \to r_0.
+\]
+Since $e(W_n) \notin (r_n-\rho,r_n)$, we have either
+$e(W_n) \le r_n - \rho$ or $e(W_n) \ge r_n$.
+By \Cref{lem:edge-density-deficit}, the latter alternative is impossible.  Thus,
+\[
+  e(W_n) \le r_n - \rho.
+\]
+Taking the limit as $n \to \infty$, we get $r_0 \le r_0 - \rho$, which is a
+contradiction since $\rho > 0$.
+Thus, the desired $\eta=\eta(\rho)$ exists.
+\end{proof}
+
+\begin{corollary}[Uniform one-dimensional reduction]\label{cor:scalar-reduction}
+Let $\rho_0$ and $\eta(\rho)$ be as in
+\Cref{lem:fixed-density-bipodality}.  For every $0<\rho<\rho_0$, every
+$r\in K$, and every $p\in(\pc(r)-\eta(\rho),\pc(r))$, the variational problem
+defining $\Phi_H(p,r)$ in \eqref{eq:graphon-variational-problem} reduces to the
+one-dimensional problem of minimizing $\mathcal{F}_{p,r}$:
+\begin{equation}\label{eq:edge-density-minimization}
+  \Phi_H(p,r)=
+  \min_{\eps\in(r-\rho,r)}\mathcal F_{p,r}(\eps).
+\end{equation}
+Furthermore, for such $p,r$, any optimizer $W^*$ attaining $\Phi_H(p,r)$
+is $\widehat W_{\eps^*,r}$ up to relabelling, where $\eps^*=e(W^*)$ is a minimizer of
+$\mathcal F_{p,r}$ over $(r-\rho,r)$.  Conversely, if
+$\eps\in(r-\rho,r)$ minimizes $\mathcal F_{p,r}$ over $(r-\rho,r)$, then
+$\widehat W_{\eps,r}$ is an optimizer of \eqref{eq:graphon-variational-problem}.  In
+particular, the correspondence $W^*\mapsto e(W^*)$ is a bijection between the
+set of optimizers modulo relabelling and the set of minimizers of
+$\mathcal F_{p,r}$ on $(r-\rho,r)$.
+\end{corollary}
+
+The proof is deferred to Appendix~\ref{app:local-reduction}.

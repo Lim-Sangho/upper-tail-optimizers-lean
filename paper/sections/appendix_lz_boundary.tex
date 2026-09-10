@@ -1,0 +1,558 @@
+\section{Scalar geometry of the Lubetzky--Zhao boundary}
+\label{app:lz-scalar-geometry}
+
+This appendix gives the proofs of the three supporting lemmas used in
+\Cref{sec:lz-boundary}, together with the detailed verifications of (M1), (M3),
+and (M4) in \Cref{thm:scalar-lz-boundary}.  They are collected here to
+separate the scalar convex-analysis details from the construction of the
+boundary functions $\pc$ and $\sm$ in the main text.
+
+We shall use the following standard two-point representation of a convex
+minorant.
+
+\begin{lemma}[Two-point representation of convex minorants]
+\label{lem:two-point-convex-minorant}
+Let $I\subset\mathbb R$ be a compact interval, let $f:I\to\mathbb R$ be
+continuous, and let $\widehat f$ be the convex minorant of $f$.  Then, for
+every $x\in I$,
+\[
+  \widehat f(x)
+  =
+  \min\left\{
+    \Big(\lambda f(x_1)+(1-\lambda)f(x_2)\Big):
+      x_1,x_2\in I,\  \lambda\in[0,1],\
+      \lambda x_1+(1-\lambda)x_2=x
+  \right\}.
+\]
+\end{lemma}
+\begin{proof}
+The general representation theorem expresses the convex minorant as an
+infimum over convex combinations of values of $f$.  In one dimension, two
+points suffice, and compactness of $I$ and continuity of $f$ ensure that the
+infimum is attained.  See, for example,
+\cite[Corollary~17.1.5]{RockafellarConvexAnalysis}.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{lem:convexity-defect}]
+Differentiating the definition of $h_{p,d}$ and using
+\[
+  J_p'(u)=\log\frac{u(1-p)}{(1-u)p},
+  \qquad
+  J_p''(u)=\frac1{u(1-u)},
+  \qquad
+  J_p'''(u)=\frac{2u-1}{u^2(1-u)^2}
+\]
+gives
+\[
+  h_{p,d}'(u)=(2-d)J_p''(u)+uJ_p'''(u)
+  =\frac{d(u-r_*)}{u(1-u)^2}.
+\]
+The denominator is positive.  Hence, $h_{p,d}'$ is negative before $r_*$ and
+positive after $r_*$, which proves that $h_{p,d}$ is strictly decreasing on
+$(0,r_*)$, strictly increasing on $(r_*,1)$, and has its unique minimum at
+$r_*$.
+
+We next evaluate this minimum.  Since $r_*=(d-1)/d$,
+\[
+  r_*J_p''(r_*)=d,
+  \qquad
+  J_p'(r_*)=\log\frac{(d-1)(1-p)}{p},
+\]
+and therefore
+\[
+  h_{p,d}(r_*)
+  =d-(d-1)\log\frac{(d-1)(1-p)}{p}.
+\]
+As a function of $p$, this value is strictly increasing because its derivative
+is
+\[
+  (d-1)\left(\frac1{1-p}+\frac1p\right)>0.
+\]
+Solving $h_{p,d}(r_*)=0$ gives
+\[
+  p=\frac{d-1}{(d-1)+\exp(d/(d-1))}=p_*.
+\]
+It follows that $h_{p,d}(r_*)\ge0$ exactly when $p\ge p_*$.  Since $r_*$ is
+the minimum point, $h_{p,d}\ge0$ throughout $(0,1)$ in this case.
+
+Now suppose that $p<p_*$.  Then, $h_{p,d}(r_*)<0$.  The alternative expression
+\[
+  h_{p,d}(u)=\frac1{1-u}-(d-1)J_p'(u)
+\]
+shows that $h_{p,d}(u)\to+\infty$ as $u\downarrow0$ and as $u\uparrow1$.
+At the left endpoint $J_p'(u)\to-\infty$, while at the right endpoint
+$1/(1-u)$ dominates the logarithmic divergence of $J_p'(u)$.  The intermediate
+value theorem and the strict monotonicity on either side of $r_*$ therefore
+give unique zeros $u_-(p)<r_*<u_+(p)$.  The same monotonicity gives the stated
+sign of $h_{p,d}$ on the three intervening intervals.
+
+It remains to translate this sign information into curvature of
+$\varphi_{p,d}$.  For $u=x^{1/d}$, the chain rule gives
+\[
+  \varphi_{p,d}'(x)=\frac{J_p'(u)}{d u^{d-1}},
+  \qquad
+  \varphi_{p,d}''(x)
+  =\frac{uJ_p''(u)-(d-1)J_p'(u)}{d^2u^{2d-1}}
+  =\frac{h_{p,d}(u)}{d^2u^{2d-1}}.
+\]
+The denominator is positive, so $\varphi_{p,d}''(x)$ has the same sign as
+$h_{p,d}(u)$.  When $p\ge p_*$, this proves convexity on $(0,1)$, and
+continuity extends it to $[0,1]$.  When $p<p_*$, the change of variables
+$x=u^d$ converts the three sign intervals for $h_{p,d}$ into precisely the
+convexity and concavity intervals stated in the lemma.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{lem:contact-points}]
+Write $\varphi=\varphi_{p,d}$ and $u_\pm=u_\pm(p)$, put
+\[
+  \alpha=u_-^d,
+  \qquad
+  \beta=u_+^d,
+\]
+and let $\widehat\varphi$ be the convex minorant of $\varphi$.  By
+Lemma~\ref{lem:convexity-defect}, $\varphi$ is strictly convex on
+$(0,\alpha)$ and $(\beta,1)$ and strictly concave on $(\alpha,\beta)$.
+The proof has three parts.  First we use the convex minorant to produce the
+two contact points and identify the shape of the minorant.  Then, we prove that
+no other pair of contact points can satisfy the same common-tangent equations.
+Finally we record the analytic dependence on $p$ and the monotonicity of the
+two contacts.
+
+We begin with one elementary tangency observation: if an affine
+function $L$ lies below a differentiable function $\varphi$ in a neighbourhood
+of an interior point $t$, and if $L(t)=\varphi(t)$, then the slope of $L$ is
+$\varphi'(t)$.
+
+We first extract the two contacts from the convex minorant.  The convex
+minorant cannot touch $\varphi$ at any point $c\in(\alpha,\beta)$.  To see
+this, suppose $\widehat\varphi(c)=\varphi(c)$ and take a supporting line to the
+convex function $\widehat\varphi$ at $c$.  This line lies below
+$\widehat\varphi$, hence below
+$\varphi$, and has equality with $\varphi$ at $c$.  By the tangency
+observation, this line has slope $\varphi'(c)$.  But $\varphi$ is strictly
+concave near $c$, and the tangent line to a strictly concave function lies
+strictly above the graph on both sides of the tangency point.  This is a
+contradiction.  Thus,
+\[
+  (\alpha,\beta)\subset\{x : \widehat\varphi(x)<\varphi(x)\}.
+\]
+
+Let $(a,b)$ be the connected component of
+$\{x : \widehat\varphi(x)<\varphi(x)\}$ containing $(\alpha,\beta)$.  Fix
+$x\in(a,b)$.  By Lemma~\ref{lem:two-point-convex-minorant}, there are
+$s,t\in[0,1]$ and $\lambda\in[0,1]$ such that
+\[
+  x=\lambda s+(1-\lambda)t,
+  \qquad
+  \widehat\varphi(x)=\lambda\varphi(s)+(1-\lambda)\varphi(t).
+\]
+After interchanging $s$ and $t$ and replacing $\lambda$ by $1-\lambda$ if
+necessary, we must have
+$s<x<t$ and $0<\lambda<1$; otherwise the value in this representation would
+be $\varphi(x)$.  Convexity of $\widehat\varphi$ and the inequality
+$\widehat\varphi\le\varphi$ give
+\[
+  \widehat\varphi(x)
+  \le \lambda\widehat\varphi(s)+(1-\lambda)\widehat\varphi(t)
+  \le \lambda\varphi(s)+(1-\lambda)\varphi(t)
+  =\widehat\varphi(x).
+\]
+Thus, both inequalities are equalities.  Since both weights are positive,
+$\widehat\varphi(s)=\varphi(s)$ and
+$\widehat\varphi(t)=\varphi(t)$.  For a convex function, equality at a
+nontrivial convex combination forces equality with the chord on the whole
+interval; hence $\widehat\varphi$ is affine on $[s,t]$.
+Since $(a,b)$ contains no contact points, we must have $s\le a$ and $t\ge b$.
+Hence
+$\widehat\varphi=L$ on $(a,b)$ for some affine function $L$.
+
+The endpoints of this component are contact points.  At an interior
+endpoint this follows from the continuity of
+$\varphi-\widehat\varphi$.  At the endpoints of the domain,
+Lemma~\ref{lem:two-point-convex-minorant} gives
+\[
+  \widehat\varphi(0)=\varphi(0),
+  \qquad
+  \widehat\varphi(1)=\varphi(1),
+\]
+because the only convex combination of points of $[0,1]$ with barycentre
+$0$ (respectively, $1$) is supported at $0$ (respectively, $1$).
+Consequently, the affine function $L$ extends continuously to $[a,b]$, and
+\[
+  L(a)=\varphi(a),\qquad L(b)=\varphi(b),
+\]
+where the value of $L$ at a domain endpoint is its corresponding one-sided
+limit from $(a,b)$.  We next rule out these endpoint cases.
+
+First suppose $a=0$.  Since $L$ is affine, it has some finite slope $m$, and
+the contact condition at the endpoint gives $L(0)=\varphi(0)$.  The derivative
+of $\varphi$ satisfies $\varphi'(x)\to-\infty$ as $x\downarrow0$.  By the mean
+value theorem, for all sufficiently small $x>0$,
+\[
+  \frac{\varphi(x)-\varphi(0)}{x}<m.
+\]
+Using $L(x)=L(0)+mx=\varphi(0)+mx$, this inequality becomes
+\[
+  \varphi(x)<\varphi(0)+mx=L(x),
+\]
+contradicting $L=\widehat\varphi\le\varphi$ on $(a,b)$.
+
+Since $\varphi'(x)\to+\infty$ as $x\uparrow1$, the case $b=1$ is ruled out by
+the same argument.  Therefore $0<a\le\alpha<\beta\le b<1$.
+Since the contact points $a$ and $b$ are now interior points, the tangency
+observation applies to $L$ at both endpoints.  Thus, the slope of $L$ is
+$\varphi'(a)$ and also $\varphi'(b)$.
+
+The inequalities $a\le\alpha$ and $\beta\le b$ are in fact strict.  Suppose
+$a=\alpha$.  Then, the slope of $L$ is $\varphi'(\alpha)$.  Since $\varphi'$ is
+strictly decreasing immediately to the right of $\alpha$, for small
+$x>\alpha$ we have
+\[
+  \varphi(x)-L(x)
+  =
+  \int_\alpha^x(\varphi'(t)-\varphi'(\alpha))\,dt
+  <0,
+\]
+again contradicting $L\le\varphi$.  The same argument at $\beta$ shows
+$b>\beta$: if $b=\beta$, the tangent line at $\beta$ lies above $\varphi$ just
+to the left of $\beta$.
+Thus,
+\[
+  0<a<\alpha<\beta<b<1.
+\]
+
+The affine function $L$ is therefore the line through
+$(a,\varphi(a))$ and $(b,\varphi(b))$, and the tangency observation gives
+\[
+  \varphi'(a)=\varphi'(b),
+  \qquad
+  \varphi(b)-\varphi(a)=\varphi'(a)(b-a),
+\]
+which are \eqref{eq:contact-equal-slopes}--\eqref{eq:contact-chord-identity}.
+
+There are no other connected components of
+\[
+  \{x:\widehat\varphi(x)<\varphi(x)\}.
+\]
+To see this, any such component would be contained entirely in $(0,a)$ or in
+$(b,1)$, hence in one of the two strictly convex outer regions.  Repeating
+the two-point representation argument above on such a component would show
+that $\widehat\varphi$ is affine there and joins its two endpoint contact
+points.  But the chord between two points of a strictly convex graph lies
+strictly above the graph between them, contradicting
+$\widehat\varphi\le\varphi$.  Hence
+$\widehat\varphi$ agrees with $\varphi$ outside $[a,b]$ and is the line segment
+$L$ on $[a,b]$.  This proves the existence of a pair satisfying
+\eqref{eq:contact-equal-slopes}--\eqref{eq:contact-chord-identity} and the asserted shape of the
+convex minorant.
+
+We now prove uniqueness of the contact pair.  More precisely, we must
+show that there is at most one pair
+\[
+  a\in(0,\alpha),\qquad b\in(\beta,1)
+\]
+satisfying the two equations
+\eqref{eq:contact-equal-slopes}--\eqref{eq:contact-chord-identity}.  Since the convex-minorant
+construction above has already produced one such pair, this will prove
+uniqueness of the contact pair in the lemma.
+
+We first observe that on the right convex region $(\beta,1)$, the derivative
+$\varphi'$ is strictly increasing.  Therefore, for a fixed
+$a\in(0,\alpha)$, there is at most one $b\in(\beta,1)$ satisfying
+\[
+  \varphi'(b)=\varphi'(a).
+\]
+Let $G$ be the restriction of $\varphi'$ to the interval $(\beta,1)$.  Then
+$G$ is a $C^1$ strictly increasing function with
+\[
+  G'(b)=\varphi''(b)>0\qquad(\beta<b<1).
+\]
+Hence, by the inverse function theorem, $G$ has a $C^1$ inverse on its range.
+On the set of $a\in(0,\alpha)$ for which
+$\varphi'(a)$ belongs to this range, define
+\[
+  b(a):=G^{-1}(\varphi'(a)).
+\]
+This is exactly the unique right contact with the same slope as the left
+contact $a$ and is $C^1$ as it is a composition of $C^1$ functions.
+The set on which $b(a)$ is defined is an interval, because
+$\varphi'$ is strictly increasing on the left convex region as well.
+
+By this uniqueness, every possible common-tangent pair must lie on the curve
+$a\mapsto(a,b(a))$.
+Along this curve, the remaining condition is that the
+tangent line at $a$ actually pass through the point $(b(a),\varphi(b(a)))$.
+Equivalently, define
+\[
+  D(a):=\varphi(b(a))-\varphi(a)-\varphi'(a)(b(a)-a).
+\]
+A zero of $D$ is exactly a pair satisfying the chord equation
+\eqref{eq:contact-chord-identity}.  We now show that $D$ is strictly decreasing wherever
+it is defined.  Differentiating both sides of the identity
+$\varphi'(b(a))=\varphi'(a)$ with respect to $a$ gives
+\[
+  \varphi''(b(a))\,b'(a)=\varphi''(a).
+\]
+Differentiating $D$ therefore gives
+\begin{align*}
+  D'(a)
+  &=
+  \varphi'(b(a))b'(a)-\varphi'(a)
+  -\varphi''(a)(b(a)-a)
+  -\varphi'(a)(b'(a)-1)\\
+  &=
+  \bigl(\varphi'(b(a))-\varphi'(a)\bigr)b'(a)
+  -\varphi''(a)(b(a)-a)\\
+  &=
+  -\varphi''(a)(b(a)-a)<0.
+\end{align*}
+In the last line we used the equal-slope relation
+$\varphi'(b(a))=\varphi'(a)$, the inequality $b(a)>a$, and the strict
+convexity on the left region, which gives $\varphi''(a)>0$.  Therefore $D$ can
+vanish at most once.  The convex-minorant construction above gives one zero,
+so the pair satisfying \eqref{eq:contact-equal-slopes}--\eqref{eq:contact-chord-identity} is
+unique.
+
+Finally we show that the contact points depend analytically on $p$, with
+$dx_a/dp>0$ and $dx_b/dp<0$.
+Define
+\[
+  F_1(a,b,p)=\varphi_{p,d}'(b)-\varphi_{p,d}'(a),
+\]
+\[
+  F_2(a,b,p)=
+  \varphi_{p,d}(b)-\varphi_{p,d}(a)-\varphi_{p,d}'(a)(b-a).
+\]
+Set $\mathbf F=(F_1,F_2)$.  This map is jointly analytic in $(a,b,p)$ on
+$(0,1)^3$.  At a triple $(a,b,p)$ satisfying $F_1=F_2=0$, the derivatives
+with respect to $(a,b)$ are
+\[
+  D_{(a,b)}\mathbf F=
+  \begin{pmatrix}
+    -\varphi''(a)&\varphi''(b)\\
+    -\varphi''(a)(b-a)&0
+  \end{pmatrix}.
+\]
+To obtain this matrix, note that the $b$-derivative of $F_2$ is
+$\varphi'(b)-\varphi'(a)$, which
+vanishes because $F_1=0$.  The determinant is positive:
+\[
+  \varphi''(a)\varphi''(b)(b-a)>0.
+\]
+By the analytic implicit function theorem, the contact points are locally
+analytic functions of $p$.  Since the pair satisfying
+\eqref{eq:contact-equal-slopes}--\eqref{eq:contact-chord-identity} is unique for each
+$p\in(0,p_*)$, these local analytic solutions agree on overlaps.  Hence, they
+define analytic functions $x_a(p)$ and $x_b(p)$ on $(0,p_*)$ such that
+$F_1(x_a(p),x_b(p),p)=0$ and
+$F_2(x_a(p),x_b(p),p)=0$.
+By the chain rule, we have
+\begin{align}
+  D_{(a,b)}\mathbf F
+  \binom{da/dp}{db/dp}
+  +
+  \binom{\partial_pF_1}{\partial_pF_2}
+  =0. \label{eq:contact-derivative-system}
+\end{align}
+
+If $u=x^{1/d}$, then
+\[
+  \partial_p\varphi_{p,d}(x)=\frac{p-u}{p(1-p)},
+  \qquad
+  \partial_p\varphi_{p,d}'(x)=
+  -\frac1{p(1-p)d\,u^{d-1}}.
+\]
+Writing $u_a=a^{1/d}$ and $u_b=b^{1/d}$, this gives
+\[
+  \partial_pF_1(a,b,p)
+  =
+  \frac1{p(1-p)d}\left(u_a^{1-d}-u_b^{1-d}\right)>0,
+\]
+and
+\[
+  \partial_pF_2(a,b,p)
+  =
+  \frac1{p(1-p)}
+  \left(\frac{u_b^d-u_a^d}{d u_a^{d-1}}-(u_b-u_a)\right)>0.
+\]
+The last inequality comes from the strict convexity of $u\mapsto u^d$.
+As the second row of \eqref{eq:contact-derivative-system} gives
+\[
+  -\varphi''(a)(b-a)\frac{da}{dp}+\partial_pF_2=0,
+\]
+by combining $\varphi''(a)>0$ and $b>a$, we obtain $da/dp>0$.
+
+The same linear system also gives the sign of $db/dp$.  The first row gives
+\[
+  \varphi''(b)\frac{db}{dp}
+  =
+  \varphi''(a)\frac{da}{dp}-\partial_pF_1.
+\]
+Substituting the formula for $da/dp$ from the second row, this becomes
+\[
+  \varphi''(b)\frac{db}{dp}
+  =
+  \frac{\partial_pF_2}{b-a}-\partial_pF_1.
+\]
+Set $\Delta=b-a=u_b^d-u_a^d$.  Then
+\[
+  \frac{\partial_pF_2}{b-a}
+  =
+  \frac{\partial_pF_2}{\Delta}
+  =
+  \frac1{p(1-p)}
+  \left(
+    \frac1{d u_a^{d-1}}
+    -\frac{u_b-u_a}{u_b^d-u_a^d}
+  \right),
+\]
+whereas
+\[
+  \partial_pF_1
+  =
+  \frac1{p(1-p)}
+  \left(
+    \frac1{d u_a^{d-1}}
+    -\frac1{d u_b^{d-1}}
+  \right).
+\]
+Subtracting the first equation above from the second, the
+$1/(d u_a^{d-1})$ terms cancel and we get
+\[
+  \partial_pF_1-\frac{\partial_pF_2}{b-a}
+  =
+  \frac1{p(1-p)}
+  \left(
+    \frac{u_b-u_a}{u_b^d-u_a^d}
+    -\frac1{d u_b^{d-1}}
+  \right).
+\]
+The secant slope of the strictly convex function $u\mapsto u^d$ from $u_a$ to
+$u_b$ is strictly smaller than its derivative at the right endpoint $u_b$:
+\[
+  \frac{u_b^d-u_a^d}{u_b-u_a}<d u_b^{d-1}.
+\]
+Hence, $\partial_pF_2/(b-a)-\partial_pF_1<0$, and since $\varphi''(b)>0$, we get
+$db/dp<0$.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{lem:contact-point-limits}]
+We first verify that the zeros $u_-(p)$ and $u_+(p)$ of $h_{p,d}$ collapse to
+$r_*$ as $p\uparrow p_*$.  At $p=p_*$, Lemma~\ref{lem:convexity-defect} gives
+$h_{p_*,d}(r_*)=0$, while $h_{p_*,d}$ is strictly decreasing on $(0,r_*)$ and
+strictly increasing on $(r_*,1)$.  Hence
+\[
+  h_{p_*,d}(u)>0\qquad\text{for every }u\ne r_*.
+\]
+Fix $\varepsilon>0$ small enough that $r_*-\varepsilon$ and
+$r_*+\varepsilon$ lie in $(0,1)$.  By
+continuity in $p$,
+\[
+  h_{p,d}(r_*-\varepsilon)>0,
+  \qquad
+  h_{p,d}(r_*+\varepsilon)>0
+\]
+for all $p<p_*$ sufficiently close to $p_*$.  Since $h_{p,d}(r_*)<0$ for such
+$p$, the left zero lies in $(r_*-\varepsilon,r_*)$ and the right zero lies in
+$(r_*,r_*+\varepsilon)$.  As $\varepsilon>0$ is arbitrary, we conclude that
+$u_-(p)\to r_*$ and $u_+(p)\to r_*$ as $p\uparrow p_*$.
+
+For the contact limit as $p\uparrow p_*$, by \Cref{lem:contact-points},
+monotonicity gives $x_a(p)\to A$ and $x_b(p)\to B$ for some $A,B\in[0,1]$.
+Since $x_a(p)<u_-(p)^d$ and $x_b(p)>u_+(p)^d$, while
+$u_\pm(p)\to r_*$, we have $A\le r_*^d\le B$.
+After fixing any $p_0\in(0,p_*)$, monotonicity also gives
+\[
+  0<x_a(p_0)\le x_a(p),
+  \qquad
+  x_b(p)\le x_b(p_0)<1
+  \qquad (p_0<p<p_*),
+\]
+so $A>0$ and $B<1$.  The map $(p,x)\mapsto\varphi_{p,d}'(x)$ is continuous
+at $(p_*,A)$ and $(p_*,B)$.  We may therefore pass to the limit in the
+equal-slope equation~\eqref{eq:contact-equal-slopes} to obtain
+\[
+  \varphi_{p_*,d}'(A)=\varphi_{p_*,d}'(B).
+\]
+At $p=p_*$, $\varphi_{p_*,d}''\ge0$ and vanishes only at $r_*^d$, so
+$\varphi_{p_*,d}'$ is strictly increasing.  Hence
+$A=B=r_*^d$.
+Taking positive $d$th roots gives
+$u_a(p)\to r_*$ and $u_b(p)\to r_*$ as $p\uparrow p_*$.
+
+It remains to consider $p\downarrow0$.  For every fixed $u\in(0,1)$,
+\[
+  h_{p,d}(u)
+  =
+  \frac1{1-u}-(d-1)\log\frac{u(1-p)}{(1-u)p}
+  \longrightarrow -\infty.
+\]
+If $0<\eps<r_*$, then $h_{p,d}(\eps)<0$ for all sufficiently small $p$.  Since
+$h_{p,d}$ is strictly decreasing on $(0,r_*)$, the left zero satisfies
+$u_-(p)<\eps$.  Hence, $u_-(p)\to0$.  Similarly, if
+$0<\eps<1-r_*$, then $h_{p,d}(1-\eps)<0$ for all sufficiently small $p$; since
+$h_{p,d}$ is strictly increasing on $(r_*,1)$, the right zero satisfies
+$u_+(p)>1-\eps$.  Hence, $u_+(p)\to1$.
+
+The contact ordering
+\[
+  0<u_a(p)<u_-(p)<u_+(p)<u_b(p)<1
+\]
+then gives $u_a(p)\to0$ and $u_b(p)\to1$ as $p\downarrow0$.  Finally, the
+monotonicity from Lemma~\ref{lem:contact-points} turns these limits into
+$u_a(p)\downarrow0$ and $u_b(p)\uparrow1$.
+\end{proof}
+
+\subsection{Remaining details for the scalar Lubetzky--Zhao boundary theorem}
+\label{app:lz-boundary-details}
+
+\begin{proof}[Proof of \textup{(M1)}]
+We first check that $\pc(r)<r$.  We shall use that
+\[
+  p_*=\frac{d-1}{(d-1)+\exp(d/(d-1))}
+  <
+  \frac{d-1}{d}
+  =r_*.
+\]
+For $r\in(r_*,1)$, the inequality $\pc(r)<r$ is immediate, since
+$\pc(r)<p_*<r_*<r$.  Now fix $r\in(0,r_*)$ and set
+$p=\pc(r)$.  Then, $r=u_a(p)$ and $p<p_*<r_*<u_b(p)$.  If $u_a(p)\le p$, then
+$u_a(p)^d\le p^d<u_b(p)^d$, so $p^d$ lies on the affine part of the convex
+minorant joining the two contact points.  But $J_p(p)=0$ is the strict global
+minimum of $J_p$.  Thus, unless one of the contact points has first coordinate
+$p^d$, the affine part has positive value at $p^d$, contradicting the fact that
+the convex minorant lies below $\varphi_{p,d}(p^d)=J_p(p)=0$.  If one contact
+point had first coordinate $p^d$, then the common tangent slope would be
+$\varphi_{p,d}'(p^d)=0$; the equal-slope condition would force the other contact
+point also to have first coordinate $p^d$, since $\varphi_{p,d}'(x)=0$ only at
+$x=p^d$.  This contradicts distinctness of the contacts.  Hence
+$p<u_a(p)=r$.
+
+At $p=\pc(r)$, the two contact points have first coordinates $r^d$ and
+$\sm(r)^d$.  They are distinct by Lemma~\ref{lem:contact-points}, so
+$\sm(r)\ne r$.  This proves (M1).
+\end{proof}
+
+\begin{proof}[Proof of \textup{(M3)} and \textup{(M4)}]
+Fix $r\in(0,1)\setminus\{r_*\}$ and put $p_0=\pc(r)$.  The affine part of the
+convex minorant of $\varphi_{p_0,d}$ joins
+\[
+  \bigl(r^d,J_{\pc(r)}(r)\bigr)
+  \quad\text{and}\quad
+  \bigl(\sm(r)^d,J_{\pc(r)}(\sm(r))\bigr),
+\]
+and is tangent at both endpoints.  Hence, this affine line is precisely
+$\ell_r$, the tangent line at $r^d$.
+
+On the interval between the two contact points, $\ell_r$ is the affine part of
+the convex minorant, so it lies below $\varphi_{\pc(r),d}$.  Outside that
+interval, it is the tangent line at the adjacent contact point in a strictly
+convex outer region, so it again lies below the graph, with equality only at
+that contact.  On the open interval between the contact points, the graph is
+strictly above the affine part.  Therefore $\ell_r\le\varphi_{\pc(r),d}$ on
+$[0,1]$, and the zeros of
+\[
+  x\mapsto \varphi_{\pc(r),d}(x)-\ell_r(x)
+\]
+are exactly $r^d$ and $\sm(r)^d$.  This proves (M3) and (M4).
+\end{proof}

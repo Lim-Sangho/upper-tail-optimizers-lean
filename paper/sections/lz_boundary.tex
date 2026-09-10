@@ -1,0 +1,305 @@
+\section{Lubetzky--Zhao boundary}\label{sec:lz-boundary}
+Fix $d\ge2$, and write
+\[
+  r_*:=\frac{d-1}{d},
+  \qquad
+  p_*:=\frac{d-1}{(d-1)+\exp(d/(d-1))}.
+\]
+For $p\in(0,1)$, define
+\[
+  \varphi_{p,d}(x)=J_p(x^{1/d}),\qquad 0\le x\le1.
+\]
+Recall that the result of Lubetzky and Zhao~\cite{lubetzky2015large} states
+that the constant graphon $W\equiv r$ is the unique minimizer
+of~\eqref{eq:graphon-variational-problem} if and only if the point
+$(r^d, J_p(r))$ lies on the convex minorant\footnote{For a continuous
+function $f$ on a compact interval $I$, the convex minorant is the largest
+convex function $g:I\to\mathbb R$ such that $g(x)\le f(x)$ for every
+$x\in I$.} of $\varphi_{p,d}$.
+In this section, we analyse in detail the behaviour of the function $\varphi_{p,d}$ and of its convex minorant; this is the key to the proof of \Cref{thm:nonexceptional-optimizers}.
+The main objective of this section is to prove the following.
+\begin{theorem}[Scalar Lubetzky--Zhao boundary]\label{thm:scalar-lz-boundary}
+    There exist analytic functions
+    \[
+        \pc,\sm:(0,1)\setminus\{r_*\}\to(0,1)
+    \]
+    such that the following holds for every $r \in (0,1)\setminus\{r_*\}$, where $x_r = r^d$ and $x_s = \sm(r)^d$.
+    \begin{enumerate}[label=(M\arabic*)]
+        \item $0<\pc(r)<\min\{r,p_*\}$ and $\sm(r)\neq r$.
+        \item For every $p\in(0,1)$, the point $(r^d, J_p(r))$ lies on the convex minorant of $\varphi_{p,d}$ if and only if $p\ge \pc(r)$. Thus, $\pc(r)$ defines the Lubetzky--Zhao boundary.
+        \item The tangent line   \[
+            \ell_r(x)=\varphi_{\pc(r),d}(x_r)+\varphi_{\pc(r),d}'(x_r)(x-x_r)
+          \]
+        to the graph of $\varphi_{\pc(r),d}$ at $x_r$ lies below that graph, i.e.\ $\ell_r(x)\le\varphi_{\pc(r),d}(x)$ for all $x\in[0,1]$.
+        \item Equality in (M3) holds exactly when $x\in\{x_r,x_s\}$.
+        \item For every compact $K \subseteq (0,1)\setminus\{r_*\}$, there is $\gamma_K>0$ such that, for all $r\in K$ and all $x\in[0,1]$,
+        \begin{equation}\label{eq:contact-quadratic-separation}
+          \varphi_{\pc(r),d}(x)-\ell_r(x) \ge \gamma_K\,\dist(x,\{r^d,\sm(r)^d\})^2.
+        \end{equation}
+    \end{enumerate} 
+    Furthermore, $\pc$ and $\sm$ extend continuously to the exceptional
+    point by setting
+    \[
+      \pc(r_*)=p_*,
+      \qquad
+      \sm(r_*)=r_*.
+    \]
+    With this continuous extension, condition (M2) holds for every $r\in(0,1)$.
+\end{theorem}
+
+The curvature threshold and the qualitative common-tangent description used
+below already appear in the scalar analysis of Lubetzky and
+Zhao~\cite[Appendix~A]{lubetzky2015large}.  We record the details in a form
+adapted to the later local argument.  In particular, we establish analytic
+dependence of the contact points, their endpoint limits, and the uniform
+quadratic separation in (M5).  To keep the main line of the paper visible,
+the proofs of the following three supporting lemmas are collected in
+Appendix~\ref{app:lz-scalar-geometry}.
+
+For $p\in(0,1)$ set
+\[
+  h_{p,d}(u):=uJ_p''(u)-(d-1)J_p'(u),
+  \qquad 0<u<1.
+\]
+
+\begin{lemma}[Convexity defect]\label{lem:convexity-defect}
+For every $p\in(0,1)$,
+\[
+  h_{p,d}'(u)=\frac{d(u-r_*)}{u(1-u)^2}
+  \qquad\text{and}\qquad
+  h_{p,d}(r_*)=d-(d-1)\log\frac{(d-1)(1-p)}{p}.
+\]
+Thus, $h_{p,d}$ is strictly decreasing on $(0,r_*)$, strictly increasing on
+$(r_*,1)$, and has its unique minimum at $r_*$.  Moreover, for
+$x\in(0,1)$ and $u=x^{1/d}$,
+\[
+  \varphi_{p,d}''(x)=\frac{h_{p,d}(u)}{d^2u^{2d-1}},
+\]
+so $h_{p,d}(u)$ and $\varphi_{p,d}''(x)$ have the same sign.  If $p\ge p_*$,
+then $h_{p,d}\ge0$ and $\varphi_{p,d}$ is convex on $[0,1]$.  If $p<p_*$,
+then $h_{p,d}$ has exactly two zeros
+\[
+  u_-(p)<r_*<u_+(p),
+\]
+is positive on $(0,u_-(p))\cup(u_+(p),1)$, and is negative on
+$(u_-(p),u_+(p))$.  Accordingly, $\varphi_{p,d}$ is strictly convex on
+$(0,u_-(p)^d)$ and $(u_+(p)^d,1)$ and strictly concave on
+$(u_-(p)^d,u_+(p)^d)$.
+\end{lemma}
+
+When $p<p_*$, the graph of $\varphi_{p,d}$ has one concave region between two strictly convex regions.
+The convex minorant of $\varphi_{p,d}$ consists of the two convex pieces and an affine face that covers the concave region.  
+Moreover, at the two endpoints of this affine face, the line must be tangent to the graph, so that it joins smoothly onto the remaining convex pieces and stays below the graph everywhere.
+The following lemma proves this formally. 
+
+\begin{lemma}[Contact points]\label{lem:contact-points}
+For every $p\in(0,p_*)$, there are unique points, called the \emph{contact points},
+\[
+  0<x_a(p)<u_-(p)^d<u_+(p)^d<x_b(p)<1,
+\]
+where $u_-(p)<r_*<u_+(p)$ are the two zeros of $h_{p,d}$, such that
+\begin{align}
+  \varphi_{p,d}'(x_a(p))&=\varphi_{p,d}'(x_b(p)),\label{eq:contact-equal-slopes}\\
+  \varphi_{p,d}(x_b(p))-\varphi_{p,d}(x_a(p))
+  &=\varphi_{p,d}'(x_a(p))(x_b(p)-x_a(p)).\label{eq:contact-chord-identity}
+\end{align}
+The convex minorant of $\varphi_{p,d}$ agrees with $\varphi_{p,d}$ outside
+$[x_a(p),x_b(p)]$; on $[x_a(p),x_b(p)]$, it is the straight line segment joining
+the two contact points, and it lies strictly below $\varphi_{p,d}$ on the open
+interval $(x_a(p),x_b(p))$.  The maps $p\mapsto x_a(p),x_b(p)$ are analytic on
+$(0,p_*)$, with $dx_a/dp>0$ and $dx_b/dp<0$.
+\end{lemma}
+
+\begin{lemma}[Contact-point limits]\label{lem:contact-point-limits}
+As $p\uparrow p_*$, both
+$u_a(p):=x_a(p)^{1/d}$ and $u_b(p):=x_b(p)^{1/d}$ converge to $r_*$.  As
+$p\downarrow0$, $u_a(p)\downarrow0$ and $u_b(p)\uparrow1$.
+\end{lemma}
+
+We finally prove Theorem~\ref{thm:scalar-lz-boundary}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:scalar-lz-boundary}]
+\emph{Construction and analyticity.}
+For $p\in(0,p_*)$, set
+\[
+  u_a(p):=x_a(p)^{1/d},
+  \qquad
+  u_b(p):=x_b(p)^{1/d}.
+\]
+By Lemmas~\ref{lem:contact-points} and
+\ref{lem:contact-point-limits}, $p\mapsto u_a(p)$ is an analytic
+increasing bijection from $(0,p_*)$ to $(0,r_*)$, and $p\mapsto u_b(p)$ is
+an analytic decreasing bijection from $(0,p_*)$ to $(r_*,1)$.  For
+$r\in(0,r_*)$, define $\pc(r)$ as the inverse of $p\mapsto u_a(p)$ and put
+\[
+  \sm(r)=u_b(\pc(r)).
+\]
+For $r\in(r_*,1)$, define $\pc(r)$ as the inverse of
+$p\mapsto u_b(p)$ and put
+\[
+  \sm(r)=u_a(\pc(r)).
+\]
+The derivatives of $u_a$ and $u_b$ are nonzero by
+Lemma~\ref{lem:contact-points}, so the analytic inverse function theorem
+shows that these inverse functions are locally analytic.  These local
+analytic inverses can be globally extended: on any overlap, they agree with the unique
+set-theoretic inverse of the same one-to-one map.  Hence, $\pc$ is analytic
+on each component of $(0,1)\setminus\{r_*\}$.  The function $\sm$ is analytic
+because $\sm(r)=u_b(\pc(r))$ on $(0,r_*)$ and
+$\sm(r)=u_a(\pc(r))$ on $(r_*,1)$.
+
+The detailed verifications of (M1), (M3), and (M4) are deferred to
+Appendix~\ref{app:lz-boundary-details}.  The geometric reason for
+(M3)--(M4) is that, at $p=\pc(r)$, Lemma~\ref{lem:contact-points} identifies
+the affine face of the convex minorant with the common tangent at the two
+contact points $r^d$ and $\sm(r)^d$, which lies below the graph and touches it
+exactly at those two points.
+
+\emph{Proof of (M5).}
+It suffices to treat the case in which $K$ is contained in one component of
+$(0,1)\setminus\{r_*\}$; for a general compact set, apply the argument on the
+two components separately and take the smaller constant.  Fix such a compact
+interval $K$.  For $r\in K$, write
+\[
+  g_r(x)=\varphi_{\pc(r),d}(x)-\ell_r(x).
+\]
+
+We first choose, uniformly in $r$, small intervals around the two contact
+points.  Put $p_r=\pc(r)$, and let $u_-(p_r)<r_*<u_+(p_r)$ be the two zeros of
+$h_{p_r,d}$.  By Lemma~\ref{lem:contact-points}, the two contact points, in
+increasing order, satisfy
+\[
+  x_a(p_r)<u_-(p_r)^d<u_+(p_r)^d<x_b(p_r).
+\]
+The contact points vary continuously with $r$ by
+Lemma~\ref{lem:contact-points}.  The zeros $u_-(p)$ and $u_+(p)$ also vary
+continuously in $p$.  To see this, apply the implicit function theorem to
+$h_{p,d}(u)=0$, noting that
+\[
+  \partial_u h_{p,d}(u)=\frac{d(u-r_*)}{u(1-u)^2}
+\]
+is nonzero at both zeros.  Since $p_r=\pc(r)$ is continuous, all the quantities
+above vary continuously with $r$.  Hence, the positive gaps
+\[
+  x_a(p_r),\quad
+  u_-(p_r)^d-x_a(p_r),\quad
+  x_b(p_r)-u_+(p_r)^d,\quad
+  1-x_b(p_r),\quad
+  x_b(p_r)-x_a(p_r)
+\]
+have a common positive lower bound on $K$.  We may therefore choose $\eta>0$
+such that, for every $r\in K$, the two closed intervals of radius $\eta$ around
+$x_a(p_r)$ and $x_b(p_r)$ are disjoint and lie inside the two strictly convex
+outer regions.
+
+On the compact set
+\[
+  E_K=\{(r,x)\in K\times[0,1]:
+  \dist(x,\{x_a(p_r),x_b(p_r)\})\le\eta\},
+\]
+the continuous function $(r,x)\mapsto\varphi_{\pc(r),d}''(x)$ is positive.
+Let
+\[
+  m_K:=\min_{(r,x)\in E_K}\varphi_{\pc(r),d}''(x)>0.
+\]
+
+We now apply Taylor's theorem near each contact point.  Let
+$c\in\{x_a(p_r),x_b(p_r)\}$, and suppose that $x$ lies in the interval of radius
+$\eta$ around $c$.  The function $g_r$ satisfies $g_r(c)=0$ because $\ell_r$
+agrees with the graph at both contact points.  It also satisfies $g_r'(c)=0$:
+at the contact $r^d$, this is the definition of $\ell_r$ as a tangent line, and
+at the other contact, it follows from the equal-slope condition in
+Lemma~\ref{lem:contact-points}.  Since $\ell_r$ is affine,
+$g_r''=\varphi_{\pc(r),d}''$.  Taylor's theorem gives, for some point $\xi$
+between $c$ and $x$,
+\[
+  g_r(x)=\frac12 g_r''(\xi)(x-c)^2
+  =\frac12\varphi_{\pc(r),d}''(\xi)(x-c)^2.
+\]
+The segment between $c$ and $x$ stays in the same $\eta$-interval, so
+$\varphi_{\pc(r),d}''(\xi)\ge m_K$.  Since the two intervals are disjoint, $c$
+is the closest contact point to $x$.  Using
+\[
+  \{x_a(p_r),x_b(p_r)\}=\{r^d,\sm(r)^d\},
+\]
+we get
+\[
+  g_r(x)\ge \frac{m_K}{2}\,
+  \dist(x,\{r^d,\sm(r)^d\})^2
+\]
+inside the two contact neighbourhoods.
+
+It remains to handle the complement of these neighbourhoods.  On the compact set
+\[
+  R_K:=\{(r,x): r\in K,\ x\in[0,1],\
+  \dist(x,\{r^d,\sm(r)^d\})\ge\eta\},
+\]
+the continuous function $g_r(x)$ is strictly positive by (M4).  Hence
+\[
+  b_K:=\min_{(r,x)\in R_K}g_r(x)>0.
+\]
+Since the distance in $[0,1]$ is at most $1$, this also gives
+\[
+  g_r(x)\ge b_K\,\dist(x,\{r^d,\sm(r)^d\})^2
+\]
+on $R_K$.  Taking
+\[
+  \gamma_K=\min\{m_K/2,b_K\}
+\]
+gives (M5).
+
+
+\emph{Proof of (M2) away from $r_*$.}
+Fix $r\in(0,1)\setminus\{r_*\}$ and put $p_0=\pc(r)$.
+If $p\ge p_*$, then
+$\varphi_{p,d}$ is convex by Lemma~\ref{lem:convexity-defect}, so every point
+of its graph, in particular $(r^d,J_p(r))$, lies on its convex minorant.
+Assume now that $p<p_*$.  If $r<r_*$, then $r=u_a(p_0)$.  If
+$p_0\le p<p_*$, then $u_a(p)\ge u_a(p_0)=r$, so
+$r^d\le x_a(p)$.  Hence, $r^d$ lies outside the affine part of the convex
+minorant, on the left side where the convex minorant agrees with
+$\varphi_{p,d}$.  Thus, $(r^d,J_p(r))$ lies on the convex minorant.  If
+$p<p_0$, then $u_a(p)<r<r_*<u_b(p)$, so $r^d$ lies strictly between the two
+contact points $x_a(p)$ and $x_b(p)$.  On this open interval the graph of
+$\varphi_{p,d}$ lies strictly above the affine part of the convex minorant.
+Thus, $(r^d,J_p(r))$ does not lie on the convex minorant.
+
+If $r>r_*$, then $r=u_b(p_0)$.  If $p_0\le p<p_*$, then
+$u_b(p)\le u_b(p_0)=r$, so $r^d\ge x_b(p)$ and the convex minorant agrees with
+$\varphi_{p,d}$ at $r^d$.  If $p<p_0$, then
+$u_a(p)<r_*<r<u_b(p)$, so $r^d$ lies strictly between the two contact points and
+again the graph lies strictly above the affine part of the convex minorant.
+This proves the stated dichotomy for all $p\in(0,1)$, and hence $p=\pc(r)$ is
+the Lubetzky--Zhao boundary on $(0,1)\setminus\{r_*\}$.
+
+\emph{Continuous extension and (M2) at $r_*$.}
+By Lemma~\ref{lem:contact-point-limits},
+\[
+  u_a(p)\to r_*,
+  \qquad
+  u_b(p)\to r_*
+  \qquad\text{as }p\uparrow p_*.
+\]
+Therefore the two inverse functions both satisfy $\pc(r)\to p_*$ as
+$r\to r_*$ from their respective sides.  Moreover,
+$\sm(r)=u_b(\pc(r))\to r_*$ as $r\uparrow r_*$, and
+$\sm(r)=u_a(\pc(r))\to r_*$ as $r\downarrow r_*$.  Thus, defining
+\[
+  \pc(r_*)=p_*,
+  \qquad
+  \sm(r_*)=r_*
+\]
+gives continuous functions on $(0,1)$.
+
+It remains only to check (M2) at the exceptional value $r=r_*$.  If
+$p\ge p_*$, then $\varphi_{p,d}$ is convex by
+Lemma~\ref{lem:convexity-defect}, so $(r_*^d,J_p(r_*))$ lies on its convex
+minorant.  If $p<p_*$, then by Lemma~\ref{lem:contact-points},
+\[
+  x_a(p)<u_-^d<r_*^d<u_+^d<x_b(p).
+\]
+Hence, $r_*^d$ lies strictly inside the affine part of the convex minorant of
+$\varphi_{p,d}$, where the graph is strictly above the minorant.  Thus,
+$(r_*^d,J_p(r_*))$ does not lie on the convex minorant.  This proves (M2) at
+$r=r_*$ and completes the proof of the continuous extension.
+\end{proof}

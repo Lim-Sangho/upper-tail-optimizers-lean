@@ -1,0 +1,306 @@
+\documentclass{article}
+\usepackage{fancyhdr}
+\usepackage[british]{babel}
+
+\usepackage{amssymb, amsmath, amsthm, amsfonts, enumerate}
+\usepackage{amsmath,setspace,scalefnt}
+\usepackage[dvipsnames,svgnames,table]{xcolor}
+\usepackage{graphicx,tikz,caption,subcaption}
+\usetikzlibrary{patterns}
+\usetikzlibrary{shapes}
+\usepackage{fullpage}
+\usepackage{hyperref}
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{enumitem,verbatim}%,itemize
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{aliascnt}
+\usepackage{cleveref}
+%\usepackage{ulem}
+\usepackage[normalem]{ulem}
+%\usepackage{lineno}
+\usepackage{tikz-cd}
+\usepackage{xparse}
+\usepackage{authblk}
+\renewcommand{\Affilfont}{\small}
+
+
+\usepackage[margin=2.5cm]{geometry}
+
+% Keep the many multiline formulas visually open while avoiding excess vertical space.
+\AtBeginDocument{%
+  \addtolength{\abovedisplayskip}{-1pt}%
+  \addtolength{\belowdisplayskip}{-1pt}%
+  \addtolength{\belowdisplayshortskip}{-1pt}%
+}
+
+\definecolor{gray}{rgb}{0.25, 0.25, 0.25}
+
+\newtheorem{theorem}{Theorem}[section]
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+\newaliascnt{cor}{theorem}
+\newtheorem{cor}[cor]{Corollary}
+\aliascntresetthe{cor}
+\newaliascnt{conj}{theorem}
+\newtheorem{conj}[conj]{Conjecture}
+\aliascntresetthe{conj}
+\newaliascnt{question}{theorem}
+\newtheorem{question}[question]{Question}
+\aliascntresetthe{question}
+\newtheorem*{theorem*}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{subclaim}{Subclaim}
+\DeclareTextCompositeCommand{\v}{OT1}{l}{l\nobreak\hspace{-.1em}'} %for the name of Dan Kral
+
+\global\long\def\si#1{\textcolor{red}{\textbf{[SI comments:} #1\textbf{]}}}
+\global\long\def\sl#1{\textcolor{blue}{\textbf{[SL comments:} #1\textbf{]}}}
+\global\long\def\hy#1{\textcolor{purple}{\textbf{[HY comments:} #1\textbf{]}}}
+%define your comment if you need. 
+%define your comment if you need. 
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\pc}{p_{\mathrm c}}
+\newcommand{\W}{\mathcal W}
+\newcommand{\what}{\widehat{\mathcal W}}
+\newcommand{\dd}{\,d}
+\newcommand{\EE}{\mathbb E}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\1}{\mathbf 1}
+\newcommand{\cut}{\square}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\argmin}{\operatorname*{argmin}}
+\newcommand{\argmax}{\operatorname*{argmax}}
+\newcommand{\jp}{J_p}
+\newcommand{\ip}{I_p}
+\newcommand{\sH}{\sigma_H}
+\newcommand{\PhiH}{\Phi_H}
+\newcommand{\zr}{\zeta_d}
+\newcommand{\sm}{s_{\mathrm M}}
+\newcommand{\ER}{\mathrm{ER}}
+
+
+\newcounter{propcounter}
+\newenvironment{proplist}[1][]{%
+    \stepcounter{propcounter}%
+    \enumerate[label = {\bfseries \Alph{propcounter}\arabic{enumi}}, #1]%
+}
+{\endenumerate}
+
+
+\newenvironment{poc}{\begin{proof}[Proof of claim]\renewcommand*{\qedsymbol}{$\blacksquare$}}{\end{proof}}
+\newenvironment{posc}{\begin{proof}[Proof of subclaim]\renewcommand*{\qedsymbol}{$\blacksquare$}}{\end{proof}}
+
+
+
+\theoremstyle{plain}
+\newaliascnt{claim}{theorem}
+\newtheorem{claim}[claim]{Claim}
+\aliascntresetthe{claim}
+
+\newaliascnt{op}{theorem}
+\newtheorem{op}[op]{Open Question}
+\aliascntresetthe{op}
+\newaliascnt{prob}{theorem}
+\newtheorem{prob}[prob]{Problem}
+\aliascntresetthe{prob}
+\newaliascnt{prop}{theorem}
+\newtheorem{prop}[prop]{Proposition}
+\aliascntresetthe{prop}
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+\theoremstyle{definition}
+\newaliascnt{rmk}{theorem}
+\newtheorem{rmk}[rmk]{Remark}
+\aliascntresetthe{rmk}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+\theoremstyle{definition}
+\newaliascnt{intp}{theorem}
+\newtheorem{intp}[intp]{Interpretation}
+\aliascntresetthe{intp}
+\theoremstyle{definition}
+\newaliascnt{kn}{theorem}
+\newtheorem{kn}[kn]{Known}
+\aliascntresetthe{kn}
+\theoremstyle{definition}
+\newaliascnt{defn}{theorem}
+\newtheorem{defn}[defn]{Definition}
+\aliascntresetthe{defn}
+\theoremstyle{definition}
+\newaliascnt{expl}{theorem}
+\newtheorem{expl}[expl]{Example}
+\aliascntresetthe{expl}
+\theoremstyle{definition}
+\newaliascnt{obs}{theorem}
+\newtheorem{obs}[obs]{Observation}
+\aliascntresetthe{obs}
+\crefname{theorem}{Theorem}{Theorems}
+\Crefname{theorem}{Theorem}{Theorems}
+\crefname{lemma}{Lemma}{Lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+\crefname{cor}{Corollary}{Corollaries}
+\Crefname{cor}{Corollary}{Corollaries}
+\crefname{corollary}{Corollary}{Corollaries}
+\Crefname{corollary}{Corollary}{Corollaries}
+\crefname{conj}{Conjecture}{Conjectures}
+\Crefname{conj}{Conjecture}{Conjectures}
+\crefname{question}{Question}{Questions}
+\Crefname{question}{Question}{Questions}
+\crefname{claim}{Claim}{Claims}
+\Crefname{claim}{Claim}{Claims}
+\crefname{op}{Open Question}{Open Questions}
+\Crefname{op}{Open Question}{Open Questions}
+\crefname{prob}{Problem}{Problems}
+\Crefname{prob}{Problem}{Problems}
+\crefname{prop}{Proposition}{Propositions}
+\Crefname{prop}{Proposition}{Propositions}
+\crefname{proposition}{Proposition}{Propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+\crefname{rmk}{Remark}{Remarks}
+\Crefname{rmk}{Remark}{Remarks}
+\crefname{remark}{Remark}{Remarks}
+\Crefname{remark}{Remark}{Remarks}
+\crefname{intp}{Interpretation}{Interpretations}
+\Crefname{intp}{Interpretation}{Interpretations}
+\crefname{kn}{Known}{Knowns}
+\Crefname{kn}{Known}{Knowns}
+\crefname{defn}{Definition}{Definitions}
+\Crefname{defn}{Definition}{Definitions}
+\crefname{expl}{Example}{Examples}
+\Crefname{expl}{Example}{Examples}
+\crefname{obs}{Observation}{Observations}
+\Crefname{obs}{Observation}{Observations}
+\crefname{subclaim}{Subclaim}{Subclaims}
+\Crefname{subclaim}{Subclaim}{Subclaims}
+\newcommand{\<}{\subseteq}
+\newcommand{\blue}[1]{\textcolor[rgb]{0.00,0.00,1.00}{#1}}
+\newcommand{\red}[1]{\textcolor[rgb]{1.00,0.00,0.00}{#1}}
+
+\NewDocumentEnvironment{shl}{}
+  {%
+    \begingroup
+    \color{blue}%
+    \bfseries
+    \boldmath
+    [SL:\space\ignorespaces
+  }
+  {%
+    \unskip]\endgroup\ignorespacesafterend
+  }
+
+\title{Bipodal optimizers in the upper-tail variational problem for regular subgraph densities}
+
+\date{\today}
+
+\author[1,2]{Sangho Lim}
+\author[3]{Seonghyuk Im}
+\author[1,2]{Taeyoung Kim}
+\author[4]{Kyeongsik Nam}
+\author[1,2]{Hongseok Yang}
+\affil[1]{School of Computing, KAIST, Daejeon, Korea}
+\affil[2]{School of Computational Sciences, Korea Institute for Advanced Study (KIAS), Seoul, Korea}
+\affil[3]{Center for AI and Natural Sciences, Korea Institute for Advanced Study (KIAS), Seoul, Korea}
+\affil[4]{Department of Mathematical Sciences, KAIST, Daejeon, Korea}
+\affil[ ]{E-mail addresses: \texttt{lim.sang@kaist.ac.kr},
+\texttt{seonghyuk@kias.re.kr},
+\texttt{taeyoungkim21@kaist.ac.kr},
+\texttt{ksnam@kaist.ac.kr},
+\texttt{hongseokyang@kias.re.kr}}
+
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+Let $H$ be a fixed $d$-regular graph with $d\ge2$, and let $t(H,\cdot)$
+denote its homomorphism density.  We study the upper-tail event
+$t(H,G(n,p))\ge r^{|E(H)|}$ for fixed $0<p<r<1$ in a dense
+Erd\H{o}s--R\'enyi random graph $G(n,p)$.
+Near the Lubetzky--Zhao replica-symmetric phase boundary and away from the
+exceptional target density $(d-1)/d$, we prove that the optimizer of the
+Chatterjee--Varadhan variational problem on the symmetry-breaking side is
+bipodal (two-block) and unique up to relabelling.
+Its block parameters depend analytically on $(p,r)$.
+We derive first-order expansions for the edge-density deficit and block
+parameters, together with a second-order expansion of the rate function
+governing the exponential decay of the upper-tail probability.
+These results also show that the conditioned random graph has an
+asymptotically bipodal structure.
+At the exceptional boundary point, where the nonexceptional theory
+degenerates, we construct an analytic curve approaching that point from the
+symmetry-breaking side along which the unique optimizers are nonconstant
+rank-one bipodal graphons.
+The optimizers approach their constant limits through two distinct
+mechanisms.  For each fixed nonexceptional target density, one block shrinks
+to zero measure as the phase boundary is approached, giving convergence in
+$L^1$ but not in $L^\infty$.
+Along the exceptional curve, both blocks remain macroscopic: their sizes
+tend to $1/2$ and all three block densities tend to $(d-1)/d$, yielding
+convergence in $L^\infty$.
+\end{abstract}
+
+\input{sections/intro}
+\input{sections/preliminaries}
+\input{sections/lz_boundary}
+\input{sections/local_reduction}
+\input{sections/nondegeneracy}
+\input{sections/local_optimizer}
+\input{sections/singular_endpoint}
+\input{sections/lean}
+\input{sections/conclusion}
+
+\paragraph{AI assistance.}
+AI assistance in this work involved GPT Pro 5.5 and 5.6,
+GPT Sol 5.6, GPT Astra 6.0, Claude Opus 4.8 and 5.0, and Claude Fable 5.0 and 5.1.
+The authors independently reviewed the text and verified every proof,
+and retained responsibility for the final writing and organization of the paper.
+
+We used the neural graphon representation of Kim, Baek, Lee, and
+Yang~\cite{KimBaekLeeYangGraphons}, together with numerical optimization
+algorithms, to explore optimizer structure, including bipodality near the
+Lubetzky--Zhao boundary and the rank-one family near the exceptional endpoint.
+The authors proposed these experiments, and AI assisted with code implementation and debugging.
+
+For the nonexceptional results in
+\Cref{sec:lz-boundary,sec:local-reduction,sec:nondegeneracy,sec:local-optimizer-structure},
+the main idea of applying the theorems of Kenyon, Radin, Ren, and
+Sadun~\cite{kenyon2014entropy} to establish bipodality in the variational
+problem originated with the authors.
+Near the exceptional endpoint in \Cref{sec:singular-endpoint},
+the authors also proposed constructing the rank-one bipodal family,
+motivated by the numerical experiments.
+These insights were developed into the proof arguments through human--AI collaboration.
+
+The Lean formalization was produced entirely by Claude Opus 4.8 and 5.0
+and Claude Fable 5.0 and 5.1 under the authors' direction.
+The authors checked the Lean definitions and theorem statements against
+those in the paper and reviewed the external inputs assumed as axioms.
+They also verified that the project built without errors and checked
+the versions of Lean (v4.33.1) and Mathlib (v4.33.1).
+
+\paragraph{Acknowledgments.}
+We would like to thank Jineon Baek,  Bartlomiej Kielak, Daniel Kr\'a\v{l}, and Joonkyung Lee for helpful discussions.
+S. Im was supported by a KIAS individual Grant (AP109501) at Korea Institute for Advanced Study. 
+S. Lim, T. Kim., and H. Yang were supported by the National Research Foundation of Korea (NRF)
+grant funded by the Korean Government (MSIT) (No.~RS-2023-00279680).
+
+\bibliographystyle{plain}
+\bibliography{cites}
+
+\appendix
+
+\input{sections/appendix_preliminaries}
+\input{sections/appendix_lz_boundary}
+\input{sections/appendix_local_reduction}
+\input{sections/appendix_local_optimizer}
+\input{sections/appendix_singular_endpoint}
+
+\end{document}

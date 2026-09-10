@@ -1,0 +1,2082 @@
+\section{The singular regular endpoint}
+\label{sec:singular-endpoint}
+
+We now prove \Cref{thm:endpoint-optimizers} in a more precise form.
+At $r_*=(d-1)/d$, the two scalar contact points coincide and the
+nonexceptional reduction no longer applies.  Following the strategy in
+\Cref{sec:proof-strategy}, we construct an analytic rank-one bipodal family
+and establish its global optimality and uniqueness along the associated
+parameter curve approaching $(\pc(r_*),r_*)$.
+
+Fix a finite simple $d$-regular graph $H$ with $d\ge2$,
+and write $m:=|E(H)|$ and $v:=|V(H)|=2m/d$.  Set
+\begin{equation*}
+  r_*=\frac{d-1}{d},
+  \qquad
+  p_*=\pc(r_*)
+  =\frac{d-1}{(d-1)+\exp(d/(d-1))},
+  \qquad
+  u_*:=\sqrt{r_*},
+  \qquad
+  P_*:=(p_*,r_*).
+\end{equation*}
+We write $\lambda$ for Lebesgue measure on $[0,1]$, and also for its
+product measure on $[0,1]^2$.
+In this section, a kernel means a measurable real-valued function of two
+variables; unlike a graphon, it need not be symmetric or take values in
+$[0,1]$.
+For a measurable function $g:[0,1]\to\mathbb R$, write $g\otimes g$ for
+the rank-one kernel $(g\otimes g)(x,y):=g(x)g(y)$.
+
+The following theorem is the main result of this section.
+
+\begin{theorem}[Optimality at the exceptional endpoint]
+\label{thm:endpoint-optimality}
+There exist $h_0>0$ and real-analytic functions
+$p_h,r_h,u_h,\alpha_h$, defined for $|h|<h_0$, such that
+\[
+  (p_0,r_0)=P_*,
+  \qquad
+  u_0=u_*,
+  \qquad
+  \alpha_0=\frac12,
+\]
+and the following holds.  For every $h\in(0,h_0)$ and every
+measurable set $A_h\subset[0,1]$ with $\lambda(A_h)=\alpha_h$, set
+\[
+  s_h:=u_h-h,
+  \qquad
+  t_h:=u_h+h,
+  \qquad
+  f_h:=s_h\1_{A_h}+t_h\1_{A_h^c},
+  \qquad
+  W_h:=f_h\otimes f_h.
+\]
+Then, $W_h$ is a nonconstant rank-one bipodal graphon satisfying $t(H,W_h)=r_h^m$,
+and it is the unique minimizer, up to measure-preserving relabelling, of
+$I_{p_h}$ among all graphons $W$ satisfying $t(H,W)\ge r_h^m$.  Moreover,
+\begin{equation*}
+  I_{p_h}(W_h)-J_{p_h}(r_h)
+  =-\frac{d^3}{3}h^4+O_d(h^6).
+\end{equation*}
+\end{theorem}
+
+The remainder of this section is devoted to proving
+\Cref{thm:endpoint-optimality}.
+
+\subsection{The rank-one stationary family near the exceptional endpoint}
+\label{sec:rank-one-stationary-family}
+
+In this subsection, we construct an analytic candidate family of bipodal
+graphons under the assumption that the optimizer is rank-one.
+This assumption is motivated, rather than imposed arbitrarily, by numerical
+exploration in \Cref{fig:bipodal-parameter-maps}, which suggested a curve of parameter pairs $(p,r)$
+approaching $P_*$ along which the apparent optimizers are rank-one.
+We therefore solve the KKT equations that are necessary for optimality within
+this rank-one class.  At this stage, the resulting family consists only of stationary
+candidates; the subsequent subsections establish their optimality and
+uniqueness along the corresponding parameter curve.
+
+Throughout this subsection, graphons are assumed to take values in a compact
+subinterval of $(0,1)$.  For a rank-one graphon $W=f\otimes f$ with
+measurable $f:[0,1]\to[0,1]$, this requires that, for some $\eta>0$,
+\[
+  \eta\le f\le1-\eta
+  \qquad\text{a.e.}
+\]
+This interiority condition is used only to construct the candidate family in
+this subsection.  It ensures that $W+\varepsilon U$ remains a graphon for every
+bounded symmetric function $U$ and all sufficiently small $|\varepsilon|$, so
+that stationarity can be tested in every bounded direction.  The subsequent
+optimality and uniqueness arguments impose no such restriction on competing
+graphons.  We say that $W$ is \emph{stationary} for
+$I_p-\mu t(H,\,\cdot\,)$ if
+\begin{equation}\label{eq:graphon-stationarity}
+  \left.\frac{d}{d\varepsilon}\right|_{\varepsilon=0}
+  \left[
+    I_p(W+\varepsilon U)
+    -\mu t(H,W+\varepsilon U)
+  \right]=0
+\end{equation}
+for every such $U$.
+For a rank-one graphon $W=f\otimes f$, we say that $W$ \emph{satisfies the
+KKT conditions} at $(p,r)$ with multiplier $\mu$, if \eqref{eq:graphon-stationarity}
+holds with $\mu\ge0$ and $t(H,W)=r^m$.  This is the graphon
+analogue of the usual first-order Karush--Kuhn--Tucker condition for
+constrained finite-dimensional optimization.
+
+To formulate the separate first-order condition for block proportion,
+for $\alpha\in(0,1)$ and $s,t\in(0,1)$, set
+\[
+  f_{\alpha,s,t}
+  :=s\1_{[0,\alpha]}+t\1_{(\alpha,1]},
+  \qquad
+  W_{\alpha,s,t}:=f_{\alpha,s,t}\otimes f_{\alpha,s,t}.
+\]
+Changing $\alpha$ moves the boundary between the two vertex classes.  Unlike
+the perturbations $W_{\alpha,s,t}+\varepsilon U$ used in graphon stationarity,
+replacing $\alpha$ by $\alpha+\varepsilon$, when $s\ne t$, changes the graphon
+by an amount bounded away from zero on a set whose measure tends to zero.
+Hence this variation is not small in $L^\infty$ and is not covered by graphon
+stationarity.  We therefore impose the separate condition
+\begin{equation}\label{eq:block-stationarity}
+  \left.\frac{d}{d\beta}\right|_{\beta=\alpha}
+  \left[
+    I_p(W_{\beta,s,t})-\mu t(H,W_{\beta,s,t})
+  \right]=0,
+\end{equation}
+obtained by varying the block proportion while keeping $s$ and $t$ fixed.
+
+The following lemma makes a structural reduction: it shows that bipodality is
+forced by the KKT conditions within the interior rank-one class.  The
+construction lemma later begins by seeking a bipodal family; this structural
+result justifies that choice and removes the need to assume bipodality in
+the accompanying local uniqueness assertion.  The proof reduces the stationarity condition
+\eqref{eq:graphon-stationarity} to a scalar equation and bounds the
+number of its roots.  For this reduction, define the \emph{$d$-th moment} of
+$f$ by
+\[
+  q(f):=\int_0^1 f(x)^d\,dx.
+\]
+Note that any rank-one graphon $W=f\otimes f$ satisfies
+$t(H,W)=q(f)^v$ depending only on $H$ through $d$ and $v$:
+\[
+  t(H,f\otimes f)
+  =\int_{[0,1]^v}\prod_{(i,j)\in E(H)}f(x_i)f(x_j)\,dx_1\cdots dx_v
+  =\int_{[0,1]^v}\prod_{i=1}^v f(x_i)^{d}\,dx_1\cdots dx_v
+  =q(f)^v.
+\]
+
+\begin{lemma}[Bipodality of stationary rank-one graphons]
+\label{lem:stationary-rank-one-bipodality}
+Let $p,r\in(0,1)$, let $\mu\ge0$, and let
+$f:[0,1]\to[0,1]$ be measurable.  Suppose that, for some $\eta>0$,
+\[
+  \eta\le f\le1-\eta
+  \qquad\text{a.e.},
+\]
+and that $f\otimes f$ satisfies the KKT conditions at $(p,r)$ with multiplier
+$\mu$.  If $f$ is not a.e.\ constant, then there exist $\alpha\in(0,1)$ and
+$0<s<t<1$ such that, after a measure-preserving relabelling,
+\[
+  f=f_{\alpha,s,t}
+  \qquad\text{a.e.}
+\]
+\end{lemma}
+
+\begin{proof}
+Set $\gamma:=\mu m q(f)^{v-2}$ and $F_{p,\gamma}(z):=J_p'(z)-\gamma z^{d-1}$.
+We first claim that
+\begin{equation}
+\label{eq:rank-one-kkt}
+  F_{p,\gamma}(f(x)f(y))=0
+  \quad\text{for a.e. }(x,y)\in[0,1]^2.
+\end{equation}
+Let $U$ be any bounded symmetric function on $[0,1]^2$ and set
+$W_\varepsilon=f\otimes f+\varepsilon U$.  The variation of $I_p$ is
+\[
+  \left.\frac{d}{d\varepsilon}I_p(W_\varepsilon)\right|_{\varepsilon=0}
+  =\iint J_p'(f(x)f(y))U(x,y)\,dx\,dy.
+\]
+Since $H$ is $d$-regular, differentiating one of the $m$ edge factors in
+$t(H,W_\varepsilon)$ gives
+\[
+  \left.\frac{d}{d\varepsilon}t(H,W_\varepsilon)\right|_{\varepsilon=0}
+  =\iint m q(f)^{v-2}f(x)^{d-1}f(y)^{d-1}
+  U(x,y)\,dx\,dy.
+\]
+Stationarity for every $U$ therefore yields
+\[
+  J_p'(f(x)f(y))
+  =\mu m q(f)^{v-2}f(x)^{d-1}f(y)^{d-1}
+  =\gamma\bigl(f(x)f(y)\bigr)^{d-1}
+\]
+for almost every $(x,y)$, proving
+\eqref{eq:rank-one-kkt}.
+
+We next show that $F_{p,\gamma}(z)=0$ has at most three
+solutions for $z\in(0,1)$.  Since $J_p''(z)=1/(z(1-z))$,
+\[
+  F_{p,\gamma}'(z)
+  =\frac1{z(1-z)}-\gamma(d-1)z^{d-2}.
+\]
+If $\gamma\le0$, then $F_{p,\gamma}'>0$ on $(0,1)$, so
+$F_{p,\gamma}$ has at most one zero.  If $\gamma>0$, the critical-point
+equation is
+\[
+  z^{d-1}(1-z)=\frac1{(d-1)\gamma}.
+\]
+The function $z\mapsto z^{d-1}(1-z)$ is strictly increasing on
+$(0,(d-1)/d)$ and strictly decreasing on $((d-1)/d,1)$.  Hence
+$F_{p,\gamma}'$ has at most two distinct zeros,
+and by Rolle's theorem, $F_{p,\gamma}$ has at most three distinct zeros.
+
+By Fubini's theorem, one can choose $y_0\in[0,1]$ such that
+\[
+  F_{p,\gamma}(f(x)f(y_0))=0
+  \qquad\text{for a.e. }x.
+\]
+The lower bound on $f$ gives $f(y_0)>0$.  Hence multiplication by
+$f(y_0)$ is injective, and the three-root bound for $F_{p,\gamma}$ implies
+that $f$ takes at most three values up to null sets.
+
+Suppose that it takes three distinct values $0<a<b<c<1$ up to null sets.
+Since \eqref{eq:rank-one-kkt} holds outside a null subset
+of $[0,1]^2$, each of
+\[
+  a^2,\qquad ab,\qquad ac,\qquad bc,\qquad c^2
+\]
+is a zero of $F_{p,\gamma}$.  They satisfy
+$a^2<ab<ac<bc<c^2$, contradicting the three-root bound.  Hence $f$ takes at
+most two values.
+Therefore, if $f$ is not a.e. constant, it has the form
+\[
+  f=s\1_A+t\1_{A^c}
+\]
+for some $0<s<t<1$ and measurable $A$ with $0<\lambda(A)<1$.  Setting
+$\alpha:=\lambda(A)$ and relabelling $A$ as $[0,\alpha]$ gives
+$f=f_{\alpha,s,t}$ almost everywhere.
+\end{proof}
+
+\Cref{lem:stationary-rank-one-bipodality} reduces the problem to a finite-dimensional
+one: after a measure-preserving relabelling, the factor of every nonconstant
+rank-one graphon satisfying the KKT conditions has the form
+$f_{\alpha,s,t}$ for some $\alpha\in(0,1)$ and $0<s<t<1$.  It does not,
+however, construct such graphons near $P_*$ or determine their parameters.
+The next lemma constructs this analytic family.
+Reparametrize $s$ and $t$ by
+\[
+  u:=\frac{s+t}{2},
+  \qquad
+  h:=\frac{t-s}{2},
+  \qquad
+  \gamma:=\mu m q(f_{\alpha,s,t})^{v-2}.
+\]
+Thus, $u$ is the midpoint of the two factor values, $|h|$ is half their
+separation, and $\gamma$ is the coefficient appearing in the scalar
+stationarity equation \eqref{eq:rank-one-kkt}.
+The three stationarity equations, evaluated at the three graphon values,
+determine $u,p,\gamma$; the block-proportion equation then determines
+$\alpha$, and the defining relation for $\gamma$ determines the multiplier $\mu$.
+Changing $h$ to $-h$ exchanges the two factor values and their proportions,
+while remaining quantities are unchanged.
+
+We denote the endpoint value of the coefficient $\gamma$ by
+\[
+  \gamma_*:=\left(\frac{d}{d-1}\right)^d=r_*^{-d}.
+\]
+
+\begin{lemma}[Analytic rank-one KKT family]
+\label{lem:rank-one-kkt-family}
+There exist $h_0>0$ and real-analytic functions
+\[
+  h\longmapsto(u_h,p_h,\gamma_h,\alpha_h),
+  \qquad \text{for } |h|<h_0
+\]
+such that
+\[
+  (u_0,p_0,\gamma_0,\alpha_0)
+  =\left(u_*,p_*,\gamma_*,\frac12\right),
+\]
+and the following properties hold.  First, for all $|h|<h_0$,
+\[
+  u_{-h}=u_h,\qquad p_{-h}=p_h,\qquad
+  \gamma_{-h}=\gamma_h,\qquad \alpha_{-h}=1-\alpha_h.
+\]
+Next, for $|h|<h_0$, define the two-valued factor and its rank-one graphon by
+\[
+  s_h:=u_h-h,
+  \qquad 
+  t_h:=u_h+h,
+  \qquad
+  f_h:=f_{\alpha_h,s_h,t_h}, 
+  \qquad
+  W_h:=f_h\otimes f_h,
+\]
+and define the $d$-th moment of $f_h$, the associated target density, and the
+Lagrange multiplier by
+\[
+  q_h:=q(f_h)=\alpha_hs_h^d+(1-\alpha_h)t_h^d,
+  \qquad
+  r_h:=q_h^{2/d}, 
+  \qquad
+  \mu_h:=\frac{\gamma_h}{m q_h^{v-2}}.
+\]
+The resulting functions $q_h,r_h,\mu_h$ are real analytic, and for all
+$|h|<h_0$, these quantities satisfy
+\[
+  0<p_h<r_h<1,
+  \qquad s_h,t_h\in(0,1),
+  \qquad \alpha_h\in(0,1),
+  \qquad \mu_h>0,
+  \qquad\text{and}\qquad
+  t(H,W_h)=r_h^m.
+\]
+Finally, for $0<|h|<h_0$, the nonconstant rank-one graphon $W_h$ satisfies
+the KKT conditions at $(p_h,r_h)$ with multiplier $\mu_h$, and
+\eqref{eq:block-stationarity} holds.  Conversely, in the precise
+sense stated below, let $W=f\otimes f$ be a nearby nonconstant rank-one
+graphon whose factor $f$ is bounded away from $0$ and $1$.  If $W$ satisfies
+the KKT conditions with multiplier $\mu$ and
+\eqref{eq:block-stationarity} holds, then $W$ agrees, up to
+measure-preserving relabelling, with a unique member $W_h$ indexed by
+$h\in(0,h_0)$, and $\mu=\mu_h$.
+\end{lemma}
+
+The graphons $W_h$ supplied by \Cref{lem:rank-one-kkt-family},
+with their measure-preserving relabellings, form the family used in
+\Cref{thm:endpoint-optimality}.  Before proving the lemma, we clarify its
+endpoint member and local uniqueness assertion.
+At $h=0$, the definitions in the lemma give
+\[
+  s_0=t_0=u_*,
+  \qquad
+  q_0=u_*^d,
+  \qquad
+  r_0=u_*^2=r_*,
+  \qquad
+  \mu_0=\frac1{m r_*^m},
+  \qquad
+  W_0\equiv r_*.
+\]
+Thus, $(p_0,r_0)=P_*$, so the family passes through the constant graphon
+$W_0\equiv r_*$ at the endpoint.  Also, the two factor values $s_0$ and
+$t_0$ coincide, as do the three values $s_0^2,s_0t_0,t_0^2$ taken by the
+graphon $W_0$.
+For the local uniqueness assertion, consider a graphon $W=f\otimes f$ and a
+multiplier $\mu$ appearing in the converse assertion of the lemma.  By
+\Cref{lem:stationary-rank-one-bipodality}, after a measure-preserving relabelling its
+factor has the form $f_{\alpha,s,t}$ with
+$\alpha\in(0,1)$ and $0<s<t<1$.  If
+$(s,t,p,r,\mu,\alpha)$ is sufficiently close to
+\[
+  \left(u_*,u_*,p_*,r_*,\frac1{m r_*^m},\frac12\right),
+\]
+then $h:=(t-s)/2$ belongs to $(0,h_0)$ and
+\[
+  (s,t,p,r,\mu,\alpha)
+  =(s_h,t_h,p_h,r_h,\mu_h,\alpha_h).
+\]
+
+\begin{proof}[Proof outline]
+Write
+\[
+  \ell(z):=\log\frac{1-z}{z},
+  \qquad
+  \ell_*:=\ell(p_*)=\frac{d}{d-1}-\log(d-1).
+\]
+By \Cref{lem:stationary-rank-one-bipodality}, every nonconstant rank-one graphon
+satisfying the KKT conditions has, after a measure-preserving relabelling, a
+two-valued factor.  Motivated by this reduction, we seek a family of the form
+\[
+  s:=u-h,
+  \qquad
+  t:=u+h,
+  \qquad
+  f:=f_{\alpha,s,t},
+  \qquad
+  W:=f\otimes f.
+\]
+Since $f\otimes f$ takes the three values $s^2,st,t^2$, the scalar
+stationarity equation \eqref{eq:rank-one-kkt} requires
+\begin{equation}\label{eq:three-value-kkt}
+  \ell(p)-\ell(s^2)=\gamma s^{2d-2},\qquad
+  \ell(p)-\ell(st)=\gamma(st)^{d-1},\qquad
+  \ell(p)-\ell(t^2)=\gamma t^{2d-2}.
+\end{equation}
+We therefore begin by solving this necessary system for $u,p,\gamma$ as
+functions of $h$; the block proportion $\alpha$ does not occur and will be
+determined later.
+At $h=0$, these equations have the endpoint solution $(u,p,\gamma)=(u_*,p_*,\gamma_*)$.
+For $h\ne0$, subtracting consecutive equations in \eqref{eq:three-value-kkt} eliminates
+$\ell(p)$ and expresses $\gamma$ as each of the two divided slopes across
+$s^2,st,t^2$.  Although each slope appears as $0/0$ at $h=0$, both extend
+analytically.  Let $A(u,h)$ denote the difference of the two divided slopes,
+so the system requires $A(u,h)=0$.  The symmetry $h\mapsto-h$ makes $A$ odd in $h$,
+and hence $A(u,h)=hB(u,h)$ for some analytic $B$.  A direct calculation shows that
+$B(u,0)$ has the unique nondegenerate zero $u=u_*$.  The analytic implicit
+function theorem therefore gives $h_0>0$ and a unique even analytic solution
+$u=u_h$ for $|h|<h_0$ satisfying $B(u_h,h)=A(u_h,h)=0$.  The common divided slope then defines the even function
+$\gamma=\gamma_h$, and the middle equation in
+\eqref{eq:three-value-kkt} determines the even function $p=p_h$.
+
+We now choose the block proportion $\alpha$ as a function of $h$.
+Once $\alpha$ is fixed, set
+\[
+  q:=\alpha s_h^d+(1-\alpha)t_h^d,
+  \qquad
+  r:=q^{2/d},
+  \qquad
+  \mu:=\frac{\gamma_h}{m q^{v-2}},
+  \qquad
+  f:=f_{\alpha,s_h,t_h},
+  \qquad
+  W:=f\otimes f.
+\]
+Also define the function
+\[
+  \mathcal M_h(z):=J_{p_h}(z)-\frac{\gamma_h}{d}z^d
+  \qquad (s_h^2 \le z \le t_h^2).
+\]
+Evaluating the derivative in \eqref{eq:block-stationarity} and
+solving the resulting linear equation gives
+\begin{equation}\label{eq:block-proportion-formula}
+  \alpha_h:=
+  \frac{\mathcal M_h(t_h^2)-\mathcal M_h(s_ht_h)}
+  {\left\{\mathcal M_h(t_h^2)-\mathcal M_h(s_ht_h)\right\}+
+  \left\{\mathcal M_h(s_h^2)-\mathcal M_h(s_ht_h)\right\}}.
+\end{equation}
+To analyse this quotient as $h\to0$, we factor $\mathcal M_h'$.  By
+\eqref{eq:three-value-kkt}, the three values
+$s_h^2,s_ht_h,t_h^2$ are zeros of $\mathcal M_h'$, and
+\begin{equation}\label{eq:mh-derivative-factorization}
+  \mathcal M_h'(z)
+  =(z-s_h^2)(z-s_ht_h)(z-t_h^2)R(h,z),
+\end{equation}
+where $R$ is jointly analytic near $(0,r_*)$.
+At $h=0$, the three zeros coalesce at $r_*$, and direct calculation gives
+\[
+  \mathcal M_0'(z)
+  =k_3(z-r_*)^3+O_d((z-r_*)^4),
+  \qquad
+  k_3:=\frac{d^5}{6(d-1)^2}>0.
+\]
+Thus $R(0,r_*)=k_3$.  Since every $z\in[s_h^2,t_h^2]$ satisfies
+$|z-r_*|=O_d(|h|)$, joint analyticity of $R$ gives
+\[
+  R(h,z)=k_3+O_d(|z-r_*|+|h|)=k_3+O_d(|h|).
+\]
+Substituting this into \eqref{eq:mh-derivative-factorization}
+and integrating over $[s_h^2,s_ht_h]$ and $[s_ht_h,t_h^2]$,
+and using the expansions of $s_h$ and $t_h$ in powers of $h$,
+show that the two differences in \eqref{eq:block-proportion-formula} vanish to order exactly four
+and have the same leading term.  Cancelling their common factor $h^4$ extends
+the quotient analytically to $h=0$, where it equals $1/2$.  Finally,
+$h\mapsto-h$ exchanges the two differences, so
+$\alpha_{-h}=1-\alpha_h$.  The resulting analytic function $\alpha_h$ then
+determines $q_h,r_h,\mu_h,f_h$, and $W_h$ analytically.
+
+The definitions of $q_h,r_h,\mu_h$ now give
+$t(H,W_h)=q_h^v=r_h^m$.  The three equations
+\eqref{eq:three-value-kkt} verify the stationarity condition
+\eqref{eq:graphon-stationarity}, while
+\eqref{eq:block-proportion-formula} verifies
+\eqref{eq:block-stationarity}.
+After decreasing $h_0$, continuity gives $0<p_h<r_h<1$,
+$s_h,t_h,\alpha_h\in(0,1)$, and $\gamma_h,q_h>0$, hence $\mu_h>0$.
+Thus, $(p_h,r_h)$ is admissible and $W_h$ is an interior bipodal graphon.
+
+Finally, \Cref{lem:stationary-rank-one-bipodality} reduces any nearby rank-one graphon family in the
+converse assertion to the same bipodal form that we selected in the beginning of the proof.
+Repeating the construction, uniqueness in the implicit function theorem and in the linear
+block-proportion equation forces the graphon, up to relabelling, to be
+$W_h$ for a unique $h>0$, with multiplier $\mu_h$.
+Full details are given in
+\Cref{app:rank-one-kkt-family}.
+\end{proof}
+
+\subsection{Comparison with the constant graphon}
+\label{sec:constant-graphon-comparison}
+
+The constant graphon $W\equiv r_h$ has $H$-density $r_h^m$ and is therefore
+feasible for the same constraint as $W_h$, where $W_h$ is the member of the
+analytic rank-one KKT family constructed in
+\Cref{lem:rank-one-kkt-family}.  We will prove that
+\[
+  I_{p_h}(W_h)<I_{p_h}(W\equiv r_h)=J_{p_h}(r_h),
+\]
+and compute the asymptotic expansion of the
+relative entropy difference for all sufficiently small $h>0$.  At $h=0$, the
+two graphons coincide, so their $I_{p_h}$-values are equal.  The symmetries in
+\Cref{lem:rank-one-kkt-family} make the relative entropy difference
+an even analytic function of $h$, and the calculation below shows that its
+leading term is of order $h^4$.  The sign of the difference for small $h>0$ is therefore
+determined by the coefficient of $h^4$.  To compute that coefficient, we
+first record the expansions of the parameters that will be used below.
+Write
+\[
+  \ell(z):=\log\frac{1-z}{z}, \qquad
+  \ell_*:=\ell(p_*)=\frac d{d-1}-\log(d-1), \qquad
+  \Lambda_h:=\ell(p_h)-\ell_*.
+\]
+Here, $\Lambda_h$ represents the slope of the affine difference
+\begin{equation}\label{eq:entropy-parameter-shift}
+  J_{p_h}(z)-J_{p_*}(z)=\Lambda_h z+J_{p_h}(0)-J_{p_*}(0).
+\end{equation}
+
+\begin{lemma}[Expansions along the rank-one KKT family]
+\label{lem:rank-one-parameter-expansions}
+The analytic family constructed in
+\Cref{lem:rank-one-kkt-family} satisfies
+\begin{equation}\label{eq:rank-one-parameter-expansions}
+\begin{aligned}
+  u_h&=u_*+\frac{5-3d}{6u_*}h^2+O_d(h^4),
+  &&&
+  \Lambda_h&=\frac{2d^3}{3(d-1)}h^2+O_d(h^4),\\
+  \alpha_h&=\frac12+\frac{2d^2u_*}{3(d-1)}h+O_d(h^3),
+  &&&
+  r_h&=r_*-\frac{2(4d-1)}3h^2+O_d(h^4).
+\end{aligned}
+\end{equation}
+\end{lemma}
+
+These expansions immediately locate the family relative to
+$P_*=(p_*,r_*)$.  For all sufficiently small $h>0$, the expansion of $r_h$
+gives $r_h<r_*$.  Moreover, $\Lambda_h>0$ implies the strict decrease of
+$\ell$, which gives $p_h<p_*$.
+
+\begin{proof}[Proof outline]
+The symmetries in \Cref{lem:rank-one-kkt-family} show that
+$u_h,\gamma_h$, and $\Lambda_h$ have expansions in even powers of $h$, while
+$\alpha_h-1/2$ has an expansion in odd powers.  Let $U_2, G_2, L_2$
+denote the quadratic coefficients of $u_h,\gamma_h$, and $\Lambda_h$,
+respectively, and substitute the expansions of $s_h^2,s_ht_h,t_h^2$ into
+\eqref{eq:three-value-kkt}.
+The middle equation at order $h^2$ relates $G_2$ and $L_2$,
+and either outer equation at order $h^3$ determines $G_2$,
+and the comparison at order $h^4$ relates $U_2$ and $G_2$.
+Solving these three equations gives the first two expansions in
+\eqref{eq:rank-one-parameter-expansions}.
+
+Now we determine the expansions of $\alpha_h$ and $r_h$.
+Since $R(h,z)$ is even in $h$, its Taylor expansion gives
+\[
+  R(h,z)=k_3+k_4(z-r_*)+O_d(h^2)
+  \quad (z\in[s_h^2,t_h^2]),
+  \qquad
+  k_4:=\frac{5d^6(d-2)}{24(d-1)^3}.
+\]
+Using this expansion and integrating the factorization
+\eqref{eq:mh-derivative-factorization} over $[s_h^2,s_ht_h]$ and
+$[s_ht_h,t_h^2]$ gives the two differences in \eqref{eq:block-proportion-formula}
+through order $h^5$.  Their asymmetry at order $h^5$ determines the linear
+term of $\alpha_h$.  The expansions of $q_h$ and $r_h$ then follow from
+their definitions.
+Full details are given in \Cref{app:rank-one-parameter-expansions}.
+\end{proof}
+
+We now turn to the comparison stated at the beginning of this subsection.
+
+\begin{lemma}[Comparison with the constant graphon]
+\label{lem:constant-graphon-comparison}
+For sufficiently small $h>0$,
+\[
+  I_{p_h}(W_h)-J_{p_h}(r_h)
+  =-\frac{d^3}{3}h^4+O_d(h^6).
+\]
+In particular, the constant graphon
+$W\equiv r_h$ is feasible but has strictly larger $I_{p_h}$-value for all
+sufficiently small $h>0$.
+\end{lemma}
+
+The affine identity \eqref{eq:entropy-parameter-shift} separates the change in $p$
+from the comparison at $p_*$:
+\[
+  I_{p_h}(W_h)-J_{p_h}(r_h)
+  =\{I_{p_*}(W_h)-J_{p_*}(r_h)\}+\Lambda_h\{e(W_h)-r_h\}.
+\]
+The second term is evaluated using \Cref{lem:rank-one-parameter-expansions}.
+For the first difference, we return to the supporting-line geometry of
+\Cref{thm:scalar-lz-boundary}.  Its proof obtains the quadratic separation
+in \eqref{eq:contact-quadratic-separation} by Taylor-expanding the difference between
+$\varphi_{\pc(r),d}(x)=J_{\pc(r)}(x^{1/d})$ and its tangent line $\ell_r(x)$
+near the two contact points.  We use the same approach at the exceptional
+endpoint, where these contacts coalesce.
+
+By the continuous extensions in \Cref{thm:scalar-lz-boundary},
+$\pc(r)\to p_*$ and $\sm(r)\to r_*$ as $r\to r_*$.  The tangent lines
+$\ell_r$ therefore extend continuously to the tangent of
+$\varphi_{p_*,d}$ at $x=r_*^d$:
+\[
+  \ell_{r_*}(x)=J_{p_*}(r_*)+\beta_d(x-r_*^d).
+\]
+Here $\beta_d$ denotes the slope of this tangent, which the chain rule gives as
+\[
+  \beta_d:=\varphi_{p_*,d}'(r_*^d)
+  =\frac{J_{p_*}'(r_*)}{d r_*^{d-1}}
+  =\frac{\gamma_*}{d}
+  =\frac{d^{d-1}}{(d-1)^d}.
+\]
+Following \eqref{eq:supporting-cost-gap}, define the \emph{supporting cost gap} by
+\begin{equation}\label{eq:endpoint-supporting-gap}
+  \Gamma_d(z)
+  :=\varphi_{p_*,d}(z^d)-\ell_{r_*}(z^d)
+  =J_{p_*}(z)-J_{p_*}(r_*)-\beta_d\{z^d-r_*^d\}
+  \qquad(0\le z\le1).
+\end{equation}
+Thus, $\Gamma_d$ is the continuous extension to $r=r_*$ of the function
+$g_r$ used there.  Its Taylor expansion describes the separation from
+the tangent at the merged contact; as shown below, the leading term is
+now quartic.
+
+By \eqref{eq:endpoint-supporting-gap}, we can express the cost difference
+at $p_*$ in terms of $\Gamma_d$ as
+\[
+  I_{p_*}(W_h)-J_{p_*}(r_h)
+  =\int\Gamma_d(W_h)-\Gamma_d(r_h)+\beta_d\left(\int W_h^d-r_h^d\right).
+\]
+Adding the affine correction from $p_*$ to $p_h$ gives
+\begin{equation}\label{eq:constant-comparison-decomposition}
+  I_{p_h}(W_h)-J_{p_h}(r_h)
+  =\int\Gamma_d(W_h)-\Gamma_d(r_h)
+  +\beta_d\left(\int W_h^d-r_h^d\right)
+  +\Lambda_h\{e(W_h)-r_h\}.
+\end{equation}
+Since $\int W_h^d=(\int f_h^d)^2=q_h^2=r_h^d$, the $d$-th moment term vanishes, and
+\begin{equation}\label{eq:constant-comparison-identity}
+  I_{p_h}(W_h)-J_{p_h}(r_h)
+  =\int\Gamma_d(W_h)-\Gamma_d(r_h) +\Lambda_h\{e(W_h)-r_h\}.
+\end{equation}
+The proof first evaluates $\Gamma_d$ by its quartic expansion,
+then expands all the parameters using \Cref{lem:rank-one-parameter-expansions}.
+
+\begin{proof}
+Tangency gives $\Gamma_d(r_*)=\Gamma_d'(r_*)=0$.  At the exceptional
+endpoint, direct differentiation further gives
+$\Gamma_d''(r_*)=\Gamma_d'''(r_*)=0$ and
+$\Gamma_d^{(4)}(r_*)=d^5/(d-1)^2>0$.
+Taylor's theorem therefore yields, as $z\to r_*$,
+\begin{equation}\label{eq:endpoint-gap-expansion}
+  \Gamma_d(z)
+  =\frac{d^5}{24(d-1)^2}(z-r_*)^4+O_d(|z-r_*|^5).
+\end{equation}
+By the parameter expansions in \eqref{eq:rank-one-parameter-expansions},
+\[
+  s_h^2-r_*=-2u_*h+O_d(h^2),
+  \qquad
+  t_h^2-r_*=2u_*h+O_d(h^2),
+  \qquad
+  s_ht_h-r_*=O_d(h^2),
+  \qquad
+  r_h-r_*=O_d(h^2).
+\]
+and each of the four rectangles determined by $A_h$ and $A_h^c$ in
+$[0,1]^2$ has area $1/4+O_d(h)$.
+Thus the quartic expansion and $u_*^2=(d-1)/d$ yield
+\begin{equation}\label{eq:family-gap-expansion}
+  \int\Gamma_d(W_h)=\frac{d^3}{3}h^4+O_d(h^6),
+  \qquad
+  \Gamma_d(r_h)=O_d(h^8).
+\end{equation}
+The first remainder improves from $O_d(h^5)$ to $O_d(h^6)$
+because $\int\Gamma_d(W_h)$ is an even analytic function of $h$.
+Finally, $e(W_h)=\{u_h+h(1-2\alpha_h)\}^2$ and the parameter expansions give
+\[
+  e(W_h)-r_h=-(d-1)h^2+O_d(h^4),
+  \qquad
+  \Lambda_h\{e(W_h)-r_h\}=-\frac{2d^3}{3}h^4+O_d(h^6).
+\]
+Substituting these expansions into \eqref{eq:constant-comparison-identity}
+proves the lemma.
+\end{proof}
+
+
+\subsection{Localization and rank-one reduction}
+\label{sec:localization-rank-one}
+
+We now take any feasible graphon $W$ satisfying
+$I_{p_h}(W)\le I_{p_h}(W_h)$ and prepare it for comparison with $W_h$.
+This has two stages.  First, the $I_{p_h}$-comparison forces $W$ to be close
+in $L^4$ to the constant graphon $W\equiv r_*$; this is the localization
+step.  Second, we choose a rank-one part $f\otimes f$ and write
+$W=f\otimes f+E$.  The first-stage $L^4$-localization then shows that the factor
+$f$ is close to $u_*$ and that the error $E$ is small.  The lower bound for
+the auxiliary Lagrangian difference obtained in
+\Cref{sec:auxiliary-lagrangian} will control the distributions of
+the values of $f$, while the arbitrary-graphon comparison in
+\Cref{sec:graphon-comparison} will control $E$.
+Thus, the decomposition is the form in which the localization is used in the
+remainder of the proof.
+
+For the first stage, we use the supporting cost gap $\Gamma_d$ from
+\eqref{eq:endpoint-supporting-gap}.  The mechanism is to bound
+$\int\Gamma_d(W)$ using the $I_{p_h}$-comparison and then convert that bound
+into an $L^4$-bound on $W-r_*$.  Its quartic expansion gives the required
+control near $r_*$; to extend this control to all of $[0,1]$, we also need
+strict positivity away from $r_*$.  This follows from the supporting-line
+interpretation above: by \Cref{lem:convexity-defect}, $\varphi_{p_*,d}$ is
+convex on $[0,1]$ and its tangent $\ell_{r_*}$ has no other contact.
+Therefore,
+\begin{equation}\label{eq:endpoint-gap-positivity}
+  \Gamma_d(u)\ge0,
+  \qquad
+  \Gamma_d(u)=0\iff u=r_*.
+\end{equation}
+This makes $\int\Gamma_d(W)$ a nonnegative measure of how far $W$ is from
+the constant graphon $W\equiv r_*$.  For $L^4$-localization, we use the
+stronger pointwise bound
+\begin{equation}\label{eq:endpoint-gap-quartic-bound}
+  \Gamma_d(u)\ge c_d|u-r_*|^4
+  \qquad(0\le u\le1)
+\end{equation}
+for some $c_d>0$.  Indeed, the ratio $\Gamma_d(u)/|u-r_*|^4$ has a positive
+limit at $r_*$ by \eqref{eq:endpoint-gap-expansion}, hence a
+positive lower bound in a neighbourhood of $r_*$.  On the compact complement
+of this neighbourhood, it has a positive minimum by continuity and
+\eqref{eq:endpoint-gap-positivity}.  This proves
+\eqref{eq:endpoint-gap-quartic-bound}, whose integral form is
+\[
+  \int\Gamma_d(W)\ge c_d\|W-r_*\|_4^4.
+\]
+Thus, $\int\Gamma_d(W)=O_d(h^4)$ implies the desired localization
+$\|W-r_*\|_4=O_d(h)$.
+
+To derive this integral bound from the $I_{p_h}$-comparison, we relate
+$I_{p_h}$ to the support cost gap $\Gamma_d$.  Repeating the calculation leading to
+\eqref{eq:constant-comparison-decomposition}, instead using $W$ and $W_h$, gives
+\begin{equation}\label{eq:graphon-cost-decomposition}
+  I_{p_h}(W)-I_{p_h}(W_h)
+  =\int\Gamma_d(W)-\int\Gamma_d(W_h)
+  +\beta_d\left(\int W^d-r_h^d\right)
+  +\Lambda_h\{e(W)-e(W_h)\}.
+\end{equation}
+The proof of the next lemma uses this decomposition to obtain the required
+bound on $\int\Gamma_d(W)$.
+Briefly, the $I_{p_h}$-comparison makes the right-hand side nonpositive.
+Using \eqref{eq:endpoint-gap-quartic-bound}, we absorb the edge-density
+correction into half of $\int\Gamma_d(W)$ and an $O_d(h^4)$ remainder.
+The remaining quantities $\int\Gamma_d(W)$ and $\int W^d-r_h^d$ are
+nonnegative, the latter by feasibility.  Since $\int\Gamma_d(W_h)=O_d(h^4)$,
+both must be $O_d(h^4)$, yielding the desired localization.
+
+The preceding discussion gives the first stage of localization, but this
+alone does not suffice for the later comparison with $W_h$, since $W$ need
+not be rank-one.  The lemma below therefore extracts a
+rank-one part $f\otimes f$ and writes the remainder as $E$.  For a symmetric
+kernel $K$ and a function $g$, write
+\[
+  (T_Kg)(x):=\int_0^1K(x,y)g(y)\,dy.
+\]
+The factor is chosen so that $T_E(f^{d-1})=0$.  This identity eliminates the
+terms linear in $E$ from the later moment and homomorphism-density expansions.
+The following lemma records both the localization and the rank-one reduction.
+
+\begin{lemma}[Localization and rank-one reduction]
+\label{lem:localization-rank-one}
+There exist $C_d,C_{d,m}>1$ and $h_0>0$ such that, for every
+$0<h<h_0$, every graphon $W$ satisfying $t(H,W)\ge r_h^m$ and
+$I_{p_h}(W)\le I_{p_h}(W_h)$ satisfies
+\begin{equation}\label{eq:graphon-quartic-localization}
+  \|W-r_*\|_4\le C_dh.
+\end{equation}
+Moreover, $W$ admits a decomposition $W=f\otimes f+E$ for some
+$f\in L^d([0,1])$ and $E\in L^2([0,1]^2)$ satisfying
+\begin{equation}\label{eq:rank-one-orthogonality}
+  T_W(f^{d-1})=q(f)f,
+  \qquad
+  T_E(f^{d-1})=0,
+  \qquad
+  q(f)>0,
+  \qquad
+  0\le f(x) \le 2
+  \quad\text{for a.e. }x.
+\end{equation}
+Also, the function $f$ is close to the constant function $u_*$, the error
+$E$ is small, the $d$-th moment $q(f)$ is close to $q_h$, and the
+homomorphism-density error is bounded by a cubic term in $\|E\|_2$:
+\begin{equation}\label{eq:rank-one-reduction-bounds}
+  \begin{gathered}
+  \|f-u_*\|_4\le C_dh,
+  \qquad
+  \|E\|_2 \le C_dh,
+  \qquad
+  \left|q(f)-q_h\right|\le C_dh^2,
+  \qquad
+  |t(H,W)-q(f)^v| \le C_{d,m} \|E\|_2^3.
+  \end{gathered}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We first localize $W$ in $L^4$ around the constant graphon $W\equiv r_*$,
+then construct its rank-one part $f\otimes f$ and an error $E$ satisfying
+$T_E(f^{d-1})=0$, and finally bound the moment and homomorphism-density
+errors.
+
+\medskip
+\noindent\emph{Localization of the graphon.}
+Combining the $I_{p_h}$-comparison with \eqref{eq:graphon-cost-decomposition} gives
+\[
+  0\ge I_{p_h}(W)-I_{p_h}(W_h)
+  =\int\Gamma_d(W)-\int\Gamma_d(W_h)
+  +\beta_d\left(\int W^d-r_h^d\right)
+  +\Lambda_h\{e(W)-e(W_h)\}.
+\]
+Generalized H\"older \eqref{eq:generalized-holder} and feasibility give $\int W^d\ge r_h^d$.
+To absrorb the edge-density correction, convexity and Taylor's theorem and
+\eqref{eq:endpoint-gap-quartic-bound} give
+\[
+  0\le u^d-r_*^d-d r_*^{d-1}(u-r_*)
+  \le C_d|u-r_*|^2
+  \le C_d\Gamma_d(u)^{1/2}
+  \qquad(0\le u\le1).
+\]
+Applying the upper bound to $W$ and the lower bound to $W_h$, then using
+$\int W_h^d=r_h^d$, yields
+\[
+  e(W)-e(W_h)
+  \ge\frac{\int W^d-r_h^d}{d r_*^{d-1}}
+   -C_d\int\Gamma_d(W)^{1/2}
+  \ge-C_d\int\Gamma_d(W)^{1/2}.
+\]
+By \eqref{eq:rank-one-parameter-expansions} and \eqref{eq:family-gap-expansion},
+we have $\Lambda_h=O_d(h^2)$ and $\int\Gamma_d(W_h)=O_d(h^4)$.
+Substitution into the cost comparison gives
+\begin{align*}
+  \beta_d \left(\int W^d-r_h^d\right)+\int\Gamma_d(W)
+  &\le C_dh^4+C_dh^2\int\Gamma_d(W)^{1/2}\\
+  &\le C_dh^4+C_dh^2\left(\int\Gamma_d(W)\right)^{1/2}\\
+  &\le \left(C_d+\frac{C_d^2}{2}\right)h^4+\frac12\int\Gamma_d(W).
+\end{align*}
+Absorbing the last term and using $\beta_d>0$ give
+\begin{equation}\label{eq:moment-and-cost-gap-bounds}
+  0\le\int W^d-r_h^d\le C_dh^4,
+  \qquad
+  0\le\int\Gamma_d(W)\le C_dh^4.
+\end{equation}
+Thus, as discussed above, using \eqref{eq:endpoint-gap-quartic-bound} and $\Gamma_d(W)=O_d(h^4)$
+gives the desired localization \eqref{eq:graphon-quartic-localization}.
+
+\medskip
+\noindent\emph{Construction of the decomposition.}
+We first construct $f$ and $E$ satisfying \eqref{eq:rank-one-orthogonality}.
+Put $d':=d/(d-1)$ so that $(1/d)+(1/d')=1$.
+To see the integral operator $T_W:L^{d'}\longrightarrow L^d$ is compact,
+choose finite-step graphons $S_n$ satisfying
+$\|W-S_n\|_d\to0$.  For each $n$, choose a finite partition
+$A_1^{(n)},\ldots,A_{N_n}^{(n)}$ of $[0,1]$ on whose rectangles $S_n$ is
+constant, and write
+\[
+  S_n(x,y)=\sum_{i,j=1}^{N_n}c_{ij}^{(n)}
+  \1_{A_i^{(n)}}(x)\1_{A_j^{(n)}}(y),
+  \qquad
+  (T_{S_n}g)(x)=\sum_{i=1}^{N_n} \left(\sum_{j=1}^{N_n}c_{ij}^{(n)}\int_{A_j^{(n)}}g\right) \1_{A_i^{(n)}}(x).
+\]
+Thus, the range of $T_{S_n}$ is contained in the span of the finitely many
+functions $\1_{A_1^{(n)}},\ldots,\1_{A_{N_n}^{(n)}}$, so $T_{S_n}$ is compact.
+Moreover, H\"older's inequality gives
+\[
+  \|(T_W-T_{S_n})g\|_d
+  \le\|W-S_n\|_d\|g\|_{d'}.
+\]
+Thus, $S_n\to W$ ensures that $T_{S_n}g\to T_Wg$ uniformly over
+$\|g\|_{d'}\le1$.  In other words, $T_{S_n}\to T_W$ in operator norm.
+Since the space of compact
+operators is closed in the operator norm, $T_W$ is compact.
+
+Now we consider the quadratic form
+\[
+  \mathcal Q_W(g):= \langle g,T_Wg\rangle =\iint W(x,y)g(x)g(y)\,dx\,dy
+  \qquad
+  (g \in L^{d'}([0,1]),\, \|g\|_{d'}\le1).
+\]
+Since $1<d'<\infty$, the closed unit ball of $L^{d'}$ is weakly compact,
+and the compactness of $T_W$ makes $\mathcal Q_W$ weakly continuous on this ball.
+Thus $\mathcal Q_W$ attains a maximum there at some $g_0$;
+let $\theta:=\mathcal Q_W(g_0)$ be the maximum.
+The localization bound on $W$ and H\"older's inequality give $\theta \in [r_*/2,1]$,
+after decreasing $h_0$, since
+\[
+  \frac{r_*}{2} \le r_*-\|W-r_*\|_1 \le \int W=\mathcal Q_W(1)\le\theta
+  = \mathcal Q_W(g_0)\le\|W\|_d\|g_0\|_{d'}^2\le 1.
+\]
+Since $W\ge0$, taking the absolute value cannot decrease $\mathcal Q_W$,
+and positivity of $\theta$ and homogeneity force every maximizer to have norm
+one.  We may therefore choose a maximizer $g_0\ge0$ with $\|g_0\|_{d'}=1$.
+
+Since \(d'>1\), the \(L^{d'}\)-unit sphere is smooth.  Therefore, applying the
+Lagrange-multiplier theorem to the maximization of $\mathcal Q_W$ on this sphere
+gives \(T_Wg_0=\mu g_0^{d'-1}\) for some constant \(\mu\). This gives
+\[
+  \theta=\mathcal Q_W(g_0)=\int g_0\,T_Wg_0
+  =\mu\int g_0^{d'}=\mu\|g_0\|_{d'}^{d'}=\mu.
+\]
+Hence $T_Wg_0=\theta g_0^{1/(d-1)}$.
+Define $f:=\theta^{1/2}g_0^{1/(d-1)}$ and, for the remainder of the proof,
+abbreviate $q:=q(f)=\int f^d=\theta^{d/2}>0$.  Then
+\begin{align*}
+  T_W(f^{d-1})
+  &=T_W(\theta^{(d-1)/2}g_0)
+  =\theta^{(d+1)/2}g_0^{1/(d-1)}
+  =\theta^{d/2}f=qf,
+  \\
+  T_{f\otimes f}(f^{d-1})
+  &=\left(\int f(y)^d\,dy\right)f
+  =qf.
+\end{align*}
+Let $E:=W-f\otimes f$.  Subtracting these identities gives $T_E(f^{d-1})=0$.
+Also, $\theta \in [r_*/2,1]$ implies $q = \theta^{d/2} \in [(r_*/2)^{d/2},1]$.
+Consequently, since $f\ge0$,
+\[
+  qf(x)=\int W(x,y)f(y)^{d-1}\,dy
+  \le\int f^{d-1}\le q^{(d-1)/d},
+  \qquad
+  0\le f(x)\le q^{-1/d}\le\sqrt{\frac{2}{r_*}} \le 2
+  \quad\text{for a.e. }x.
+\]
+
+\medskip
+\noindent\emph{Factor and error bounds.}
+Substituting $W=r_*+(W-r_*)$ into the first identity of
+\eqref{eq:rank-one-orthogonality} gives
+\[
+  qf=T_W(f^{d-1})
+  =r_*\int f^{d-1}+T_{W-r_*}(f^{d-1}).
+\]
+The second term on the right-hand side is small, since
+$\|T_{W-r_*}(f^{d-1})\|_4 \le\|W-r_*\|_4\|f^{d-1}\|_{4/3} \le C_d h$.
+Thus, to show that $f$ is close to $u_*$, it remains to compare the
+first term with $qu_*$.  Define $b$ by
+\[
+  b:=\frac{r_*\int f^{d-1}}q,
+  \qquad
+  f-b=q^{-1}T_{W-r_*}(f^{d-1}),
+  \qquad
+  \|f-b\|_4\le C_dh.
+\]
+The last inequality follows from the bound on the second term above and the
+uniform lower bound on $q$.  The uniform bounds on $f$ and $q$ also give a
+two-sided uniform bound on $b$:
+\[
+  \frac{q}{C_d}\le\int f^{d-1}\le q^{(d-1)/d},
+  \qquad
+  C_d^{-1}\le b\le C_d.
+\]
+Lipschitz continuity of $x\mapsto x^k$ for $k\in\{d-1,d\}$
+on a bounded interval and H\"older's inequality give
+\[
+  \left|\int f^k-b^k\right|
+  \le \|f^k-b^k\|_4
+  \le C_d\|f-b\|_4
+  \le C_dh
+  \qquad(k=d-1,d).
+\]
+Taking $k=d$ and $k=d-1$, respectively, and using
+$q=\int f^d$ and $qb=r_*\int f^{d-1}$ gives
+\[
+  |q-b^d|\le C_dh,
+  \qquad
+  |qb-r_*b^{d-1}|\le C_dh.
+\]
+Since $b$ is uniformly bounded away from zero and $r_*=u_*^2$, these bounds imply
+\[
+  |b^2-r_*| = \frac{\left| (qb-r_*b^{d-1})-b(q-b^d) \right|}{b^{d-1}} \le C_dh,
+  \qquad
+  |b-u_*| \le C_dh.
+\]
+Combining this with the bound on $f-b$ gives
+\[
+  \|f-u_*\|_4\le \|f-b\|_4+\|b-u_*\|_4\le C_dh.
+\]
+Finally, $E=W-(f\otimes f)$ is small since $W$ and $f \otimes f$ are both close to $r_*$ in $L^4$:
+\begin{equation*}
+  \|E\|_2\le\|E\|_4
+  \le \|W-r_*\|_4+\|(f\otimes f)-r_*\|_4
+  \le \|W-r_*\|_4+(\|f\|_4+u_*)\|f-u_*\|_4
+  \le C_dh.
+\end{equation*}
+
+\medskip
+\noindent\emph{Moment and homomorphism-density errors.}
+The binomial expansion of $W^d=(f\otimes f+E)^d$ gives
+\begin{equation*}
+  \left| \int W^d-q^2 \right|
+  = \left| \sum_{k=2}^d\binom dk\int(f\otimes f)^{d-k}E^k \right|
+  \le C_d\sum_{k=2}^d\int|E|^k \le C_d\|E\|_2^2.
+\end{equation*}
+The $k=0$ term cancels with $q^2$, and the $k=1$ term vanishes by orthogonality $T_E(f^{d-1})=0$.
+Together with the first bound in \eqref{eq:moment-and-cost-gap-bounds} and $q_h^2=r_h^d$,
+\[
+  |q-q_h| \le C_d\left|q^2-q_h^2\right|
+  \le C_d \left( \left| \int W^d-q^2 \right| + \left| \int W^d - r_h^d \right| \right)
+  \le C_dh^2.
+\]
+Also, expand $t(H,f\otimes f+E)$ according to the edges on which $E$ and $f\otimes f$ are used:
+\[
+  t(H,W)=\sum_{F\subseteq E(H)}\int
+  \prod_{\{i,j\}\in F}E(x_i,x_j)
+  \prod_{\{i,j\}\in E(H)\setminus F}f(x_i)f(x_j)\,d\mathbf x.
+\]
+The $F=\varnothing$ term corresponds to $t(H,f\otimes f)=q^v$, so it remains to bound
+the terms with $F\ne\varnothing$.
+If a vertex $i$ is incident to exactly one $E$-edge $\{i,j\}$, then integrating
+first in $x_i$ gives
+\[
+  \int E(x_i,x_j)f(x_i)^{d-1}\,dx_i
+  =T_E(f^{d-1})(x_j)=0,
+\]
+so that term vanishes.  Thus, every remaining nonzero term contains a cycle of
+$E$-edges, of length $\ell\ge3$ because $H$ is simple.  Since the other
+factors are uniformly bounded, we may bound them by a constant and integrate
+out all variables outside a chosen cycle.  Thus, the absolute value of the term
+is at most
+\[
+  C_{d,m}\int_{[0,1]^\ell}\prod_{k=1}^\ell|E(x_k,x_{k+1})|\,dx_1\cdots dx_\ell
+  \le C_{d,m}\|E\|_2^\ell\le C_{d,m}\|E\|_2^3,
+  \qquad x_{\ell+1}:=x_1,
+\]
+where repeated Cauchy--Schwarz gives the first norm bound, and the last one
+uses $\ell\ge3$ and the uniform boundedness of $\|E\|_2$.  Summing the
+absolute values of the finitely many terms gives
+\begin{equation*}
+  |t(H,W)-q^v|\le C_{d,m}\|E\|_2^3.
+\end{equation*}
+\end{proof}
+
+\subsection{A lower bound for the auxiliary Lagrangian difference}
+\label{sec:auxiliary-lagrangian}
+
+The aim of this subsection is to bound from below the difference between the
+value of an auxiliary Lagrangian associated with the factor $f$ and its value
+at the reference factor $f_h$.  Here $f$ comes from the
+decomposition $W=f\otimes f+E$, while $f_h$ is the factor defining
+$W_h=f_h\otimes f_h$.  By \Cref{lem:localization-rank-one}, every
+feasible graphon satisfying $I_{p_h}(W)\le I_{p_h}(W_h)$ admits such a
+decomposition, with $f$ close to $u_*$ and $E$ small.  Since $0\le f\le2$,
+the kernel $f\otimes f$ may take values larger than $1$ and need not be a
+graphon.  We therefore introduce an auxiliary Lagrangian that can be evaluated
+at both $f$ and $f_h$, temporarily leaving $E$ aside.  In
+\Cref{sec:graphon-comparison}, the resulting lower bound will be
+combined with estimates for $E$ to compare the actual graphons $W$ and $W_h$.
+
+The quantities in the auxiliary Lagrangian depend only on how frequently $f$
+takes each of its possible values.  Let $\lambda$ denote the Lebesgue
+probability measure on $[0,1]$, and define the distributions of the values of
+$f$ and $f_h$ by pushing $\lambda$ forward under these two functions:
+\begin{equation*}
+  \nu:=f_\#\lambda,
+  \qquad
+  \nu_h:=(f_h)_\#\lambda.
+\end{equation*}
+Thus, for every Borel set $B\subseteq[0,2]$,
+$\nu(B)=\lambda\{x:f(x)\in B\}$, and the analogous identity with $f_h$ holds
+for $\nu_h$.  Because $f(x)f(y)$ may exceed $1$, we use a particular auxiliary
+continuation $\widetilde J_{p_h}$ of $J_{p_h}$ from $[0,1]$ to $[0,4]$, defined
+below.  The first integral term in the auxiliary Lagrangian is then
+\[
+ \iint \widetilde J_{p_h}(f(x)f(y))\,dx\,dy.
+\]
+By the definition of $\nu$, the integral and the moment
+$q(f)$ can be written as
+\begin{equation*}
+  \iint \widetilde J_{p_h}(f(x)f(y))\,dx\,dy
+  =\iint \widetilde J_{p_h}(st)\,d\nu(s)d\nu(t),
+  \qquad
+  q(f)=\int s^d\,d\nu(s),
+\end{equation*}
+and the same identities hold with $f_h$ and $\nu_h$, with
+$q(f_h)=q_h$.  Although $f\otimes f$ need not be a graphon, the integral
+defining $t(H,\,\cdot\,)$ is still well defined for this bounded kernel.  Since
+$H$ is $d$-regular, the rank-one identity gives
+\begin{equation*}
+  t(H,f\otimes f)=q(f)^v,
+  \qquad
+  t(H,W_h)=q_h^v=r_h^m.
+\end{equation*}
+The auxiliary Lagrangian difference studied in this subsection is
+\begin{align*}
+  &\left[
+    \iint \widetilde J_{p_h}(f(x)f(y))\,dx\,dy
+    -\mu_h\{t(H,f\otimes f)-r_h^m\}
+  \right]
+  \\
+  &\qquad-
+  \left[
+    \iint \widetilde J_{p_h}(f_h(x)f_h(y))\,dx\,dy
+    -\mu_h\{t(H,f_h\otimes f_h)-r_h^m\}
+  \right]
+  \\
+  & {} = \left[
+    \iint \widetilde J_{p_h}(st)\,d\nu(s)d\nu(t)
+    -\mu_h\{q(f)^v-r_h^m\}
+  \right]
+  \\
+  &\qquad\quad-
+  \left[
+    \iint \widetilde J_{p_h}(st)\,d\nu_h(s)d\nu_h(t)
+    -\mu_h\{q_h^v-r_h^m\}
+  \right].
+\end{align*}
+The main conclusion, \Cref{lem:auxiliary-lagrangian-bound}, provides
+constants $a>0$ and $C_{d,m}\ge1$, independent of $\rho$ and $h$, with the
+following property.  For every sufficiently small $\rho>0$, one can choose
+$b_\rho>0$ so that, for all sufficiently small $h>0$, the above difference is
+bounded below by
+\begin{equation*}
+  \frac{a}{2}
+  \int_{\{|s-u_*|<\rho\}}(s-s_h)^2(s-t_h)^2\,d\nu(s)
+  +\frac{b_\rho}{2}\nu\{|s-u_*|\ge\rho\}
+  -C_{d,m}\{q(f)-q_h\}^2.
+\end{equation*}
+The integral in this lower bound measures the deviation, within a
+neighbourhood of $u_*$, from the two values $s_h,t_h$ taken by $f_h$.  The
+next term measures the mass outside that neighbourhood, and the final,
+possibly negative, term depends only on the difference between the $d$-th
+moments of $f$ and $f_h$.  This lower bound for the auxiliary Lagrangian
+difference is the conclusion sought in this subsection.  It does not yet
+compare the graphon costs of $W$ and $W_h$ or identify $f$ with $f_h$.  In
+\Cref{sec:graphon-comparison}, we restore the remainder $E$ and
+convert this bound on the auxiliary Lagrangian difference into a lower bound
+involving the actual cost and constraint value of $W$.  The resulting lower
+bound for the full-graphon Lagrangian difference is then used in
+\Cref{sec:endpoint-optimality-proof} to establish optimality and uniqueness.
+
+We now define $\widetilde J_{p_h}$.  Recall that
+$\Lambda_h=\ell(p_h)-\ell_*$.  First set
+\[
+  \widetilde\Gamma_d(u)=
+  \begin{cases}
+    \Gamma_d(u),&0\le u\le1,\\
+    \Gamma_d(1)+(u-1)^2,&1<u\le4,
+  \end{cases}
+\]
+and for $0 \le u \le 4$, define
+\begin{equation}\label{eq:entropy-continuation}
+  \widetilde J_{p_*}(u)
+  :=J_{p_*}(r_*)+\beta_d(u^d-r_*^d)
+  +\widetilde\Gamma_d(u),
+  \qquad
+  \widetilde J_{p_h}(u)
+  :=\widetilde J_{p_*}(u)+\Lambda_hu+J_{p_h}(0)-J_{p_*}(0).
+\end{equation}
+On $[0,1]$, this definition agrees with $J_{p_h}$ by
+\eqref{eq:entropy-parameter-shift} and \eqref{eq:endpoint-supporting-gap}.  For
+$1<u\le4$, however, we do not use the relative-entropy formula; instead,
+\eqref{eq:entropy-continuation} means explicitly that
+\[
+  \widetilde J_{p_h}(u)
+  =J_{p_*}(r_*)+\beta_d(u^d-r_*^d)+\Gamma_d(1)+(u-1)^2
+   +\Lambda_hu+J_{p_h}(0)-J_{p_*}(0).
+\]
+Thus $\widetilde J_{p_h}$ is a real-valued continuous function on $[0,4]$,
+but its values above $1$ are only auxiliary and are not relative entropies.
+Write
+$K_h(x,y):=\widetilde J_{p_h}(xy)$ for the associated kernel on $[0,2]^2$.
+The following lemma gives H\"older continuity and uniform bounds for
+$\widetilde J_{p_h}$ and $K_h$.
+\begin{lemma}[Uniform control of auxiliary continuation and kernel]
+\label{lem:continuation-kernel-bounds}
+There are $C_d\ge1$ and $h_0>0$ such that, whenever $0\le h<h_0$,
+$u,u'\in[0,4]$, and $x,x',y\in[0,2]$,
+\begin{equation}\label{eq:continuation-kernel-bounds}
+  \begin{aligned}
+    |\widetilde J_{p_h}(u)-\widetilde J_{p_h}(u')|&\le C_d|u-u'|^{1/2},
+    & \|\widetilde J_{p_h}-\widetilde J_{p_*}\|_{L^\infty([0,4])}&\le C_dh^2,
+    & \|\widetilde J_{p_h}\|_{L^\infty([0,4])}&\le C_d,
+    \\
+    |K_h(x,y)-K_h(x',y)| &\le C_d|x-x'|^{1/2},
+    & \|K_h-K_0\|_{L^\infty([0,2]^2)}&\le C_dh^2,
+    & \|K_h\|_{L^\infty([0,2]^2)}&\le C_d.
+  \end{aligned}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+On $[0,1]$, the only non-Lipschitz terms in
+$\widetilde J_{p_*}=J_{p_*}$ are $u\log u$ and
+$(1-u)\log(1-u)$.  If $0\le u'\le u\le1$,
+\[
+  |u\log u-u'\log u'|
+  \le\int_{u'}^u|1+\log t|\,dt
+  \le C_d\int_{u'}^ut^{-1/2}\,dt
+  \le C_d|u-u'|^{1/2},
+\]
+with the same bound for $(1-u)\log(1-u)$.
+On $[1,4]$, $\widetilde J_{p_*}$ is a polynomial and hence Lipschitz.
+If $u\le1\le u'$, 
+\[
+  |\widetilde J_{p_*}(u)-\widetilde J_{p_*}(u')|
+  \le |\widetilde J_{p_*}(u)-\widetilde J_{p_*}(1)|
+    +|\widetilde J_{p_*}(1)-\widetilde J_{p_*}(u')|
+  \le C_d\{|1-u|^{1/2}+|u'-1|^{1/2}\}
+  \le C_d|u-u'|^{1/2},
+\]
+by continuity at $1$.
+Thus $\widetilde J_{p_*}$ is $1/2$-H\"older continuous on $[0,4]$.
+The definition \eqref{eq:entropy-continuation} gives
+\[
+  \widetilde J_{p_h}(u)-\widetilde J_{p_h}(u')
+  =\widetilde J_{p_*}(u)-\widetilde J_{p_*}(u')
+  +\Lambda_h(u-u'),
+  \qquad
+  \widetilde J_{p_h}(u)-\widetilde J_{p_*}(u)
+  =\Lambda_hu+J_{p_h}(0)-J_{p_*}(0).
+\]
+By \eqref{eq:rank-one-parameter-expansions}, $\Lambda_h=O_d(h^2)$.
+Since $p_h=(1+e^{\ell_*+\Lambda_h})^{-1}$ and
+$J_p(0)=-\log(1-p)$, we also have
+$J_{p_h}(0)-J_{p_*}(0)=O_d(h^2)$.
+Together with $|u-u'|\le2|u-u'|^{1/2}$ on $[0,4]$, these estimates give the
+desired bounds: the first identity proves the $1/2$-H\"older continuity of
+$\widetilde J_{p_h}$, while the second proves the uniform bound of
+$\widetilde J_{p_h}-\widetilde J_{p_*}$.
+The uniform bound of $\widetilde J_{p_h}$ follows from the uniform bounds of
+$\widetilde J_{p_*}$ and $\widetilde J_{p_h}-\widetilde J_{p_*}$.
+The three bounds for $K_h$ follow from the corresponding bounds for
+$\widetilde J_{p_h}$ by taking $u=xy$ and, for the H\"older estimate,
+$u'=x'y$.
+\end{proof}
+
+The auxiliary Lagrangian comparison uses the following moment and deviation
+quantities.  Since $f_h=f_{\alpha_h,s_h,t_h}$, the distribution of
+its values has the explicit form
+\begin{equation*}
+  \nu_h=\alpha_h\delta_{s_h}+(1-\alpha_h)\delta_{t_h},
+\end{equation*}
+where $\delta_x$ denotes the Dirac mass at $x$.
+For any probability measure $\xi$ on $[0,2]$, write $m_d(\xi)$ for its
+$d$-th moment and $\Delta_h(\xi)$ for the defect of this moment relative to
+$q_h$:
+\begin{equation*}
+  m_d(\xi):=\int x^d\,d\xi(x),
+  \qquad
+  \Delta_h(\xi):=m_d(\xi)-q_h.
+\end{equation*}
+For the two measures fixed above, $m_d(\nu)=q(f)$ and
+$m_d(\nu_h)=q_h$.
+In this notation, the rank-one identities above become
+\begin{equation*}
+  t(H,f\otimes f)=m_d(\nu)^v,
+  \qquad
+  t(H,W_h)=m_d(\nu_h)^v=q_h^v.
+\end{equation*}
+In addition to the moment defect, the lower bound controls two further ways in
+which $\nu$ may differ from $\nu_h$.  Within a neighbourhood of $u_*$, $\nu$
+may assign mass to values other than $s_h$ and $t_h$; outside that
+neighbourhood, it may have nonzero mass.  To record these two deviations, for
+$\rho>0$, define the central neighbourhood and the tail region in $[0,2]$ by
+\[
+  \mathcal N_\rho:=(u_*-\rho,u_*+\rho),
+  \qquad
+  \mathcal T_\rho:=[0,2]\setminus\mathcal N_\rho.
+\]
+We always choose $\rho_0>0$ below small enough that
+$\overline{\mathcal N_{\rho_0}}\subset(0,1)$.
+For $h>0$, set $Q_h(x):=(x-s_h)(x-t_h)$, and for any probability measure
+$\xi$ on $[0,2]$ define
+\[
+  A_{h,\rho}(\xi)
+  :=\int_{\mathcal N_\rho}Q_h(x)^2\,d\xi(x).
+\]
+Here $A_{h,\rho}(\xi)$ measures deviation from the two factor values $s_h$
+and $t_h$ within the central neighbourhood, whereas $\xi(\mathcal T_\rho)$ is
+the mass outside that neighbourhood.  For the
+decomposition furnished by \Cref{lem:localization-rank-one},
+Chebyshev's inequality gives, for every fixed $\rho>0$, a constant
+$C_{d,\rho}\ge1$ such that
+\begin{equation}\label{eq:factor-tail-mass}
+  \nu(\mathcal T_\rho)
+  \le \rho^{-4}\|f-u_*\|_4^4
+  \le C_{d,\rho}h^4.
+\end{equation}
+
+We now turn to the proof of the lower bound for the auxiliary Lagrangian
+difference.  For any probability measure $\xi$ on $[0,2]$, define the
+auxiliary factor functional
+$\mathcal J_h$ and, using $q_h^v=r_h^m$, the auxiliary Lagrangian
+$\mathcal L_h$ by
+\[
+  \mathcal J_h(\xi)
+  :=\iint K_h(x,y)\,d\xi(x)d\xi(y),
+  \qquad
+  \mathcal L_h(\xi)
+  :=\mathcal J_h(\xi)-\mu_h\{m_d(\xi)^v-q_h^v\}.
+\]
+Put $\sigma:=\xi-\nu_h$.  Expanding $\mathcal L_h(\xi)$ around $\nu_h$
+produces a term linear in $\sigma$, a term quadratic in $\sigma$, and a Taylor
+remainder depending on $\Delta_h(\xi)$.  The definition of $\mu_h$ and the
+identity $m=dv/2$ give
+$\mu_hvq_h^{v-1}=2\gamma_hq_h/d$.  To express the linear term, define the
+first-variation potential $\Psi_h$ by
+\begin{equation}\label{eq:first-variation}
+  \Psi_h(x):=2\int K_h(x,y)\,d\nu_h(y)
+  -\frac{2\gamma_hq_h}{d}x^d-\kappa_h,
+\end{equation}
+where $\kappa_h$ is chosen so that $\Psi_h(s_h)=0$.
+Since $\int d\sigma=0$ and $\int x^d\,d\sigma=\Delta_h(\xi)$, we have
+\begin{equation*}
+  \mathcal J_h(\xi)-\mathcal J_h(\nu_h)
+    -\mu_h\{m_d(\xi)^v-q_h^v\}
+  =\int\Psi_h\,d\sigma+\iint K_h\,d\sigma d\sigma
+    -\Bigl[\mu_h\{(q_h+\Delta_h(\xi))^v-q_h^v\}
+      -\frac{2\gamma_hq_h}{d}\Delta_h(\xi)\Bigr].
+\end{equation*}
+Since $m_d(\nu_h)=q_h$, the left-hand side is precisely
+$\mathcal L_h(\xi)-\mathcal L_h(\nu_h)$.  Using
+$\mu_hvq_h^{v-1}=2\gamma_hq_h/d$, the bracket can be rewritten as
+\[
+  \mu_h\Bigl\{(q_h+\Delta_h(\xi))^v-q_h^v
+  -vq_h^{v-1}\Delta_h(\xi)\Bigr\}.
+\]
+This is the Taylor remainder after the constant and linear terms have been
+removed, so its absolute value is at most
+$C_{d,m}\Delta_h(\xi)^2$.  The other two terms in the expansion are
+$\int\Psi_h\,d\sigma$, which is linear in $\sigma$ and is therefore called the
+first-variation term, and $\iint K_h\,d\sigma d\sigma$, which is quadratic in
+$\sigma$.  We next obtain a positive lower bound for the first-variation term
+and control how negative the quadratic kernel term can be.
+
+The reference measure $\nu_h$ is supported on $\{s_h,t_h\}$.  Our choice of
+$\kappa_h$ gives $\Psi_h(s_h)=0$, while the block-proportion condition
+\eqref{eq:block-stationarity}, satisfied by $W_h$ by
+\Cref{lem:rank-one-kkt-family}, gives $\Psi_h(t_h)=0$.  For $x$ in a
+neighbourhood of $u_*$, all products in the following formula lie in $(0,1)$,
+so differentiating \eqref{eq:first-variation} yields
+\[
+  \Psi_h'(x)
+  =2\left[
+    \alpha_hs_hJ_{p_h}'(xs_h)
+    +(1-\alpha_h)t_hJ_{p_h}'(xt_h)
+  \right]-2\gamma_hq_hx^{d-1}.
+\]
+At $x=s_h$ and $x=t_h$, the rank-one KKT equation and
+$m_d(\nu_h)=q_h$ give
+\[
+  \Psi_h'(x)
+  =2\gamma_hq_hx^{d-1}-2\gamma_hq_hx^{d-1}
+  =0 \qquad (x\in\{s_h,t_h\}).
+\]
+Hence $\Psi_h$ has double zeros at $s_h$ and $t_h$.
+The following lemma turns these zeros into the two bounds needed below: near
+$u_*$, the first variation controls the distance from $s_h$ and $t_h$, while
+outside that neighbourhood it imposes a fixed positive penalty.
+
+\begin{lemma}[First variation lower bound]
+\label{lem:first-variation-bound}
+There exist $\rho_0>0$ and $a>0$ with the following property.  For every
+$0<\rho<\rho_0$, one can choose $b_\rho,h_\rho>0$ so that, for all
+$0<h<h_\rho$,
+\begin{equation*}
+  \Psi_h(x)\ge a Q_h(x)^2
+  \quad(x\in\mathcal N_\rho),
+  \qquad
+  \Psi_h(x)\ge b_\rho
+  \quad(x\in\mathcal T_\rho).
+\end{equation*}
+\end{lemma}
+
+\begin{proof}
+The central bound comes from the four equalities
+$\Psi_h(s_h)=\Psi_h'(s_h)=\Psi_h(t_h)=\Psi_h'(t_h)=0$: they force
+$\Psi_h$ to contain the factor $Q_h^2$, with a positive quotient near $u_*$.
+The tail bound then follows from the strict positivity of the limiting
+potential away from $u_*$ and uniform convergence as $h\to0$.
+
+At $h=0$ one has $\nu_0=\delta_{u_*}$, $\gamma_0=d\beta_d$, and
+$q_0=u_*^d$.  Since $\kappa_0$ is chosen so that
+$\Psi_0(u_*)=0$, substituting these values into
+\eqref{eq:first-variation} and using
+\eqref{eq:entropy-continuation} gives
+\begin{equation}\label{eq:endpoint-first-variation}
+  \Psi_0(x)=2\widetilde\Gamma_d(u_*x).
+\end{equation}
+Near $x=u_*$, $\widetilde\Gamma_d=\Gamma_d$, and using
+\eqref{eq:endpoint-gap-expansion} and
+$u_*=((d-1)/d)^{1/2}$ gives
+\begin{equation*}
+  \Psi_0(x)
+  =2\Gamma_d(r_*+u_*(x-u_*))
+  =\frac{d^3}{12}(x-u_*)^4+O_d((x-u_*)^5).
+\end{equation*}
+To obtain a lower bound that remains uniform as the two zeros approach one
+another, apply analytic division, on a neighbourhood of $u_*$, to $\Psi_h(x)$
+by the monic polynomial $Q_h(x)^2$.  This gives
+\[
+  \Psi_h(x)=Q_h(x)^2D_h(x)+S_h(x),
+  \qquad \deg_xS_h\le3,
+\]
+where $D_h(x)$ is jointly analytic in $(h,x)$ and the coefficients of
+$S_h(x)$ are analytic in $h$.  For every $h\ne0$, the four equalities above
+make this remainder vanish at $s_h,t_h$, with multiplicity two;
+hence $S_h(x)$ is identically zero.  By analyticity, it also vanishes at
+$h=0$.  Thus
+\[
+  \Psi_h(x)=Q_h(x)^2D_h(x).
+\]
+At $h=0$ and $x=u_*$, the Taylor expansion of $\Psi_0$ gives
+\[
+  D_0(u_*)=\frac{d^3}{12}.
+\]
+By continuity, after decreasing $\rho_0$ and $h_\rho$, we therefore have
+$D_h(x)\ge d^3/24$ for $0<h<h_\rho$ and $x\in\mathcal N_\rho$.  Thus the
+lower bound holds with $a:=d^3/24$.
+
+It remains to bound the tail.
+By \eqref{eq:endpoint-first-variation}, $\widetilde\Gamma_d\ge0$, with equality
+only at $r_*$.  Therefore, $\Psi_0\ge0$, with equality only at $u_*$.
+Since $\mathcal T_\rho$ is compact and $u_* \notin \mathcal T_\rho$,
+the minimum of $\Psi_0$ on $\mathcal T_\rho$ is positive.  Let $b_\rho$ be
+half of this minimum:
+\[
+  b_\rho:=\frac12\min_{x\in\mathcal T_\rho}\Psi_0(x)>0.
+\]
+Writing out $\nu_h=\alpha_h\delta_{s_h}+(1-\alpha_h)\delta_{t_h}$ in
+\eqref{eq:first-variation} gives
+\[
+  \Psi_h(x)-\Psi_0(x)
+  =2\alpha_h\{K_h(x,s_h)-K_0(x,u_*)\}
+  +2(1-\alpha_h)\{K_h(x,t_h)-K_0(x,u_*)\}
+  -\frac{2}{d}(\gamma_hq_h-\gamma_0q_0)x^d-(\kappa_h-\kappa_0).
+\]
+By \Cref{lem:continuation-kernel-bounds} and the convergence
+$s_h,t_h\to u_*$, we have
+\[
+  \|K_h(\,\cdot\,,s_h)-K_0(\,\cdot\,,u_*)\|_\infty
+  +\|K_h(\,\cdot\,,t_h)-K_0(\,\cdot\,,u_*)\|_\infty
+  \longrightarrow0.
+\]
+Also, $\alpha_h\to1/2$, $\gamma_hq_h\to\gamma_0q_0$, and
+$\kappa_h\to\kappa_0$ imply $\|\Psi_h-\Psi_0\|_\infty\to0$.
+Decreasing $h_\rho$ so that $\|\Psi_h-\Psi_0\|_\infty\le b_\rho$,
+we get $\Psi_h\ge b_\rho$ on $\mathcal T_\rho$.
+\end{proof}
+
+Because $\Psi_h$ vanishes at the two points supporting $\nu_h$, we have
+$\int\Psi_h\,d\sigma=\int\Psi_h\,d\xi$.  The preceding lemma therefore makes
+the first-variation term nonnegative and quantifies its size.  The quadratic
+term $\iint K_h\,d\sigma d\sigma$, however, need not be nonnegative.  The
+following lemma controls its possible negative contribution when both
+variables lie in $\mathcal N_\rho$.
+
+\begin{lemma}[Central kernel bound]
+\label{lem:central-kernel-bound}
+Let $a>0$ be the constant from
+\Cref{lem:first-variation-bound}.
+There exist $\rho_0>0$ and $C_d\ge1$ with the following property.  For every
+$0<\rho<\rho_0$, one can choose $h_\rho>0$ so that the following holds.  Let
+$0<h<h_\rho$, let $\xi$ be any probability measure on $[0,2]$, and put
+$\sigma:=\xi-\nu_h$.  Then
+\begin{equation}\label{eq:central-kernel-bound}
+  \iint_{\mathcal N_\rho^2}K_h\,d\sigma d\sigma
+  \ge{}-\frac a2A_{h,\rho}(\xi)
+  -C_d\left\{\Delta_h(\xi)^2+\xi(\mathcal T_\rho)^2\right\}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We interpolate $K_h$ in the variables $x^d$ and $y^d$ at the two reference
+values $s_h^d,t_h^d$.  This separates the kernel into a part controlled by
+the total mass and the $d$-th moment of $\sigma$, two parts containing one
+factor of $Q_h$, and a remainder containing $Q_h(x)Q_h(y)$.  The first part
+is controlled by $\Delta_h(\xi)$ and $\xi(\mathcal T_\rho)$.  The factors of
+$Q_h$ allow the other three parts to be controlled by $A_{h,\rho}(\xi)$
+together with these same two quantities.
+
+To carry out this decomposition, for a function $F$ of $(x,y)$ define the
+interpolation and remainder operators in the first variable by
+\begin{equation}\label{eq:moment-interpolation}
+  (I_h^xF)(x,y)
+  :=\frac{t_h^d-x^d}{t_h^d-s_h^d}F(s_h,y)
+  +\frac{x^d-s_h^d}{t_h^d-s_h^d}F(t_h,y),
+  \quad
+  (R_h^xF)(x,y):=F(x,y)-(I_h^xF)(x,y),
+\end{equation}
+and define $I_h^y,R_h^y$ analogously.  The two interpolation operators
+commute.  We handle their limiting behaviour at $h=0$ below using divided
+differences.
+Apply the exact identity
+\begin{equation*}
+  K_h=I_h^xI_h^yK_h+R_h^xI_h^yK_h
+   +I_h^xR_h^yK_h+R_h^xR_h^yK_h.
+\end{equation*}
+Denote the first term by $P_h(x,y)$.  Since it is affine in each of $x^d$
+and $y^d$, it can be written as
+\[
+  P_h(x,y)=p_{00,h}+p_{d0,h}x^d+p_{0d,h}y^d+p_{dd,h}x^dy^d.
+\]
+The second term vanishes at $x=s_h,t_h$ and, after
+division by $Q_h(x)$, is affine in $y^d$.
+The third term is the symmetric counterpart.
+The last term vanishes at both $x=s_h,t_h$ and $y=s_h,t_h$.
+Thus, for suitable functions $u_{0,h},u_{d,h},v_{0,h},v_{d,h}$ and
+$\Theta_h$, the identity becomes
+\begin{equation*}
+  K_h(x,y)
+  =P_h(x,y)+Q_h(x)\{u_{0,h}(x)+u_{d,h}(x)y^d\}
+  +Q_h(y)\{v_{0,h}(y)+v_{d,h}(y)x^d\}
+  +Q_h(x)Q_h(y)\Theta_h(x,y).
+\end{equation*}
+
+We next show that all the terms in this decomposition remain uniformly
+controlled as $s_h$ and $t_h$ approach one another.  Pass to the coordinates
+$w=x^d$ and $z=y^d$.
+Choose $\rho_0$ and $h_\rho$ so small that
+$\mathcal N_{\rho_0}$ lies
+in a fixed compact interval $\mathcal U\subset(0,1)$
+and $\{s_h,t_h\} \subset \mathcal N_{\rho}$.
+For a function $F$ analytic on a neighbourhood of $\mathcal U^2$, define
+\[
+  \widehat F(w,z):=F(w^{1/d},z^{1/d}),
+  \qquad
+  \widehat{\mathcal U}:=\{w:w^{1/d}\in\mathcal U\}.
+\]
+Then, $\widehat F$ is also analytic on a neighbourhood of
+$\widehat{\mathcal U}^2$.  In particular, its derivatives are uniformly
+bounded on $\widehat{\mathcal U}^2$.
+In these coordinates, $I_h^x$ and $I_h^y$ are ordinary linear interpolants
+at $s_h^d,t_h^d$.  At $h=0$, these interpolation points both equal $u_*^d$, and
+the interpolants converge to the corresponding tangent lines.  Thus,
+although the individual coefficients in \eqref{eq:moment-interpolation}
+contain $(t_h^d-s_h^d)^{-1}$, the combined interpolants and remainders have
+convergent limits.  The divided-difference formulas below make this precise.
+
+For fixed $y\in\mathcal U$, formula \eqref{eq:moment-interpolation} gives
+\begin{equation*}
+  \frac{R_h^xF(x,y)}{Q_h(x)}
+  =\frac{x^d-s_h^d}{x-s_h}\frac{x^d-t_h^d}{x-t_h}
+    \widehat F[s_h^d,x^d,t_h^d;y^d],
+\end{equation*}
+where the bracket denotes the second divided difference in the first
+variable, with the second variable fixed at $y^d$.
+The first two factors are polynomial sums and extend continuously to $x=s_h$
+and $x=t_h$; for example,
+\[
+  \frac{x^d-s_h^d}{x-s_h}
+  =\sum_{j=0}^{d-1}x^{d-1-j}s_h^j
+  \le d.
+\]
+The divided difference has the integral representation and uniform bound:
+\[
+\begin{aligned}
+  \widehat F[s_h^d,x^d,t_h^d;y^d]
+  &=\int_0^1\int_0^{1-\theta}
+    \partial_w^2\widehat F
+    \!\left((1-\theta-\tau)s_h^d+\theta x^d+\tau t_h^d,y^d\right)\,d\tau\,d\theta,\\
+  \left|\widehat F[s_h^d,x^d,t_h^d;y^d]\right|
+  &\le \frac12\sup_{(w,z)\in\widehat{\mathcal U}^2}
+    |\partial_w^2\widehat F(w,z)|.
+\end{aligned}
+\]
+Consequently, the quotient $R_h^xF/Q_h$ extends continuously whenever any of
+$\{s_h,x,t_h\}$ coincide.
+
+We now apply the formula in both variables, taking $F=K_h$.  On
+$\mathcal U^2$, all products $xy$ lie in $(0,1)$, so $K_h(x,y)=J_{p_h}(xy)$
+and $K_h$ depends analytically on $(h,x,y)$.  Using brackets for the
+successive second divided differences in the two variables, the last term in
+the decomposition above is given exactly by
+\[
+  \Theta_h(x,y)
+  =\prod_{c\in\{s_h,t_h\}}
+    \frac{x^d-c^d}{x-c}\frac{y^d-c^d}{y-c}
+    \widehat K_h[s_h^d,x^d,t_h^d;\,s_h^d,y^d,t_h^d].
+\]
+The successive integral representations show that this expression extends
+jointly continuously when interpolation points coincide, including at
+$h=0$.  The analogous lower-order divided-difference formulas and the uniform
+derivative bounds on $\widehat K_h$ give a single $C_d\ge1$ such that
+\[
+  \max\bigl\{|p_{ij,h}|,|u_{i,h}(x)|,|v_{i,h}(y)|\bigr\}\le C_d
+  \qquad  (i,j\in\{0,d\},\,0<h<h_0,\,x,y\in\mathcal N_{\rho_0}).
+\]
+The bounds for the one-variable functions remain valid when $x$ or $y$ equals
+$s_h$ or $t_h$, by continuous extension.
+
+The sign of the last term in the kernel decomposition is controlled by the
+limiting value of $\Theta_h$.  Evaluating the jointly continuous extension at
+$h=0$ and $x=y=u_*$ gives
+\[
+  \Theta_0(u_*,u_*)
+  =\frac{(d u_*^{d-1})^4}{4}
+    \left.\partial_w^2\partial_z^2 \widehat K_0(w,z)\right|_{(w,z)=(u_*^d,u_*^d)}.
+\]
+By \eqref{eq:entropy-continuation},
+\[
+  \widehat K_0(w,z)
+  =\widetilde J_{p_*}((wz)^{1/d})
+  =J_{p_*}(r_*)+\beta_d(wz-r_*^d)
+    +\widetilde\Gamma_d\bigl((wz)^{1/d}\bigr).
+\]
+Since $\widetilde\Gamma_d=\Gamma_d$ near $r_*$ and
+$\Gamma_d^{(j)}(r_*)=0$ for $1\le j\le3$, the chain rule leaves only the
+$\Gamma_d^{(4)}(r_*)$ term, giving
+\[
+  \Theta_0(u_*,u_*)
+  =\frac{(d u_*^{d-1})^4}{4} \left(\frac{u_*^{2-d}}{d}\right)^4 \Gamma_d^{(4)}(r_*)
+  =\frac{d^3}{4}.
+\]
+By the joint continuity of $\Theta_h(x,y)$ at $(h,x,y)=(0,u_*,u_*)$,
+after decreasing $\rho_0$ and $h_\rho$, we also have
+\[
+  \sup_{0<h<h_\rho}
+  \left\|\Theta_h-\frac{d^3}{4}\right\|_{L^\infty(\mathcal N_\rho^2)}
+  \le\frac a4.
+\]
+
+We now integrate the kernel decomposition against $\sigma\otimes\sigma$.
+Since the support of $\nu_h$ lies in $\mathcal N_\rho$, we have
+$\sigma(\mathcal N_\rho)=-\xi(\mathcal T_\rho)$,
+$\int |Q_h|\,d\nu_h=0$, and
+\begin{gather*}
+  |\sigma(\mathcal N_\rho)|^2
+  +\left|\int_{\mathcal N_\rho}x^d\,d\sigma(x)\right|^2
+  =\xi(\mathcal T_\rho)^2
+   +\left|\Delta_h(\xi)-\int_{\mathcal T_\rho}x^d\,d\xi(x)\right|^2
+  \le C_d\bigl\{\Delta_h(\xi)^2+\xi(\mathcal T_\rho)^2\bigr\}, \\
+  \left(\int_{\mathcal N_\rho}|Q_h|\,d|\sigma|\right)^2
+  =\left(\int_{\mathcal N_\rho}|Q_h|\,d\xi\right)^2
+  \le\int_{\mathcal N_\rho}Q_h^2\,d\xi
+  =A_{h,\rho}(\xi).
+\end{gather*}
+Here the first estimate uses $x^d\le2^d$ on $[0,2]$, while the second uses
+Cauchy--Schwarz.
+Using these estimates together with the uniform bounds on the coefficients
+and one-variable functions gives
+\begin{gather*}
+  \left|\iint_{\mathcal N_\rho^2}P_h\,d\sigma d\sigma\right|
+  \le C_d\bigl(\Delta_h(\xi)^2+\xi(\mathcal T_\rho)^2\bigr), \\
+  \left|\iint_{\mathcal N_\rho^2}Q_h(x)\{u_{0,h}(x)+u_{d,h}(x)y^d\}\,d\sigma(x)d\sigma(y)\right|
+  \le \frac a8A_{h,\rho}(\xi)+C_d\bigl\{\Delta_h(\xi)^2+\xi(\mathcal T_\rho)^2\bigr\}, \\
+  \left|\iint_{\mathcal N_\rho^2}Q_h(y)\{v_{0,h}(y)+v_{d,h}(y)x^d\}\,d\sigma(x)d\sigma(y)\right|
+  \le \frac a8A_{h,\rho}(\xi)+C_d\bigl\{\Delta_h(\xi)^2+\xi(\mathcal T_\rho)^2\bigr\}, \\
+  \iint_{\mathcal N_\rho^2}Q_h(x)Q_h(y)\Theta_h(x,y) \,d\sigma(x)d\sigma(y)
+  \ge \iint_{\mathcal N_\rho^2}Q_h(x)Q_h(y) \left(\Theta_h(x,y)-\frac{d^3}{4}\right) \,d\sigma(x)d\sigma(y)
+  \ge -\frac{a}{4} A_{h,\rho}(\xi).
+\end{gather*}
+In the last line, the omitted constant part is the nonnegative square
+\[
+  \frac{d^3}{4}
+  \left(\int_{\mathcal N_\rho}Q_h(x)\,d\sigma(x)\right)^2.
+\]
+The second and third bounds use
+$uv \le (a/8)u^2+(2/a)v^2$.
+Combining these bounds gives \eqref{eq:central-kernel-bound}.
+\end{proof}
+
+We now combine the preceding estimates to obtain a lower bound for the
+auxiliary Lagrangian difference $\mathcal L_h(\nu)-\mathcal L_h(\nu_h)$.
+This is the conclusion announced at the beginning of this subsection and is
+recorded in the following lemma.
+
+\begin{lemma}[Lower bound for the auxiliary Lagrangian difference]
+\label{lem:auxiliary-lagrangian-bound}
+There exist $\rho_0>0$, $a>0$, and $C_{d,m}\ge1$ such that
+for every $0<\rho<\rho_0$, one can choose $b_\rho,h_\rho>0$ with the following property.
+Let $0<h<h_\rho$, and let $W$ satisfy the hypotheses of
+\Cref{lem:localization-rank-one}.  Write $W=f\otimes f+E$ for the
+decomposition furnished there, and let $\nu$ be the distribution of the
+values of $f$.  Then
+\begin{equation}\label{eq:auxiliary-lagrangian-bound}
+\begin{aligned}
+  \mathcal L_h(\nu)-\mathcal L_h(\nu_h)
+  &=\mathcal J_h(\nu)-\mathcal J_h(\nu_h)
+    -\mu_h\{m_d(\nu)^v-q_h^v\}\\
+  &\ge \frac{a}{2} A_{h,\rho}(\nu)
+    +\frac{b_\rho}{2} \nu(\mathcal T_\rho)
+    -C_{d,m}\Delta_h(\nu)^2.
+\end{aligned}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We combine the positive first-variation bound with the lower bound for the
+quadratic kernel term.  The central part follows from
+\Cref{lem:central-kernel-bound} with $\xi=\nu$; the parts meeting the
+tail are controlled by the uniform bounds on $K_h$ and then absorbed using the
+small tail mass from \eqref{eq:factor-tail-mass}.
+
+Put $\sigma:=\nu-\nu_h$.  Applying the expansion following
+\eqref{eq:first-variation} with $\xi=\nu$, and using
+$\int \Psi_h\,d\nu_h=0$ and Taylor's theorem, gives
+\begin{equation*}
+  \mathcal L_h(\nu)-\mathcal L_h(\nu_h)
+  =\mathcal J_h(\nu)-\mathcal J_h(\nu_h)
+    -\mu_h\{m_d(\nu)^v-q_h^v\}
+  \ge\int\Psi_h\,d\nu+\iint K_h\,d\sigma d\sigma
+    -C_{d,m}\Delta_h(\nu)^2.
+\end{equation*}
+The central and tail bounds in \Cref{lem:first-variation-bound}
+give $\rho_0$, $a$, $b_\rho$, and $h_\rho$ such that
+\[
+  \int\Psi_h\,d\nu
+  \ge a A_{h,\rho}(\nu)+b_\rho\nu(\mathcal T_\rho)
+  \qquad
+  (0<h<h_\rho,\, 0<\rho<\rho_0).
+\]
+Now we bound the double integral.  Split the quadratic term according to
+$\mathcal N_\rho$ and $\mathcal T_\rho$:
+\[
+  \iint K_h\,d\sigma d\sigma
+  =\iint_{\mathcal N_\rho^2}K_h\,d\sigma d\sigma
+   +2\iint_{\mathcal N_\rho\times\mathcal T_\rho}K_h\,d\sigma d\sigma
+   +\iint_{\mathcal T_\rho^2}K_h\,d\sigma d\sigma .
+\]
+The mixed rectangles have equal integrals by the symmetry of $K_h$ and
+Fubini's theorem, since the continued kernel is bounded on $[0,2]^2$.
+The central-kernel bound \eqref{eq:central-kernel-bound} controls the
+first integral.  It remains to control the two parts meeting
+$\mathcal T_\rho$.
+After decreasing $h_\rho$, we have
+$\{s_h,t_h\}\subset\mathcal N_\rho$, and hence
+$\sigma(\mathcal N_\rho)=-\nu(\mathcal T_\rho)$ and $\sigma=\nu$ on
+$\mathcal T_\rho$.  Thus, for $y\in\mathcal T_\rho$,
+\[
+\begin{aligned}
+  \int_{\mathcal N_\rho}K_h(x,y)\,d\sigma(x)
+  &=\int_{\mathcal N_\rho}
+    \{K_h(x,y)-K_h(u_h,y)\}\,d\sigma(x)
+    -\nu(\mathcal T_\rho) K_h(u_h,y).
+\end{aligned}
+\]
+Since $|\sigma|\le\nu+\nu_h$, the H\"older bound in
+\Cref{lem:continuation-kernel-bounds}, together with
+\eqref{eq:rank-one-reduction-bounds} and
+\eqref{eq:rank-one-parameter-expansions}, gives
+\begin{equation*}
+\begin{aligned}
+  \left|\int_{\mathcal N_\rho}
+    \{K_h(x,y)-K_h(u_h,y)\}\,d\sigma(x)\right|
+  \le C_d\int_{\mathcal N_\rho}|x-u_h|^{1/2}\,d(\nu+\nu_h)(x)
+  \le C_d\left\{\|f-u_h\|_4^{1/2}+h^{1/2}\right\}
+  \le C_dh^{1/2}.
+\end{aligned}
+\end{equation*}
+The uniform bound on $K_h$ from
+\Cref{lem:continuation-kernel-bounds} therefore gives
+\[
+  \left|\int_{\mathcal N_\rho}K_h(x,y)\,d\sigma(x)\right|
+  \le C_dh^{1/2}+C_d\nu(\mathcal T_\rho).
+\]
+Integrating over $y\in\mathcal T_\rho$ and using the same uniform bound on
+$K_h$ gives the two remaining estimates:
+\[
+  \left|2\iint_{\mathcal N_\rho\times\mathcal T_\rho} K_h\,d\sigma d\sigma\right|
+  \le C_dh^{1/2}\nu(\mathcal T_\rho)+C_d\nu(\mathcal T_\rho)^2,
+  \qquad
+  \left|\iint_{\mathcal T_\rho^2}K_h\,d\sigma d\sigma\right|
+  \le C_d\nu(\mathcal T_\rho)^2.
+\]
+Combining the first-variation, central, mixed, and tail bounds gives
+\begin{equation*}
+  \mathcal J_h(\nu)-\mathcal J_h(\nu_h)
+    -\mu_h\{m_d(\nu)^v-q_h^v\}
+  \ge\frac{a}{2}A_{h,\rho}(\nu)+b_\rho\nu(\mathcal T_\rho)
+  -C_{d,m}\Delta_h(\nu)^2-C_d\nu(\mathcal T_\rho)^2
+    -C_dh^{1/2}\nu(\mathcal T_\rho).
+\end{equation*}
+Using the tail bound \eqref{eq:factor-tail-mass}, decrease $h_\rho$ so that
+$C_dh^{1/2}\le b_\rho/4$ and $C_d\nu(\mathcal T_\rho)\le b_\rho/4$.
+Then, \eqref{eq:auxiliary-lagrangian-bound} follows.
+\end{proof}
+
+\subsection{The arbitrary-graphon comparison}
+\label{sec:graphon-comparison}
+
+We now restore the remainder $E$ and convert the lower bound for the auxiliary
+Lagrangian difference into the corresponding bound for the Lagrangian
+difference between the actual graphons $W$ and $W_h$.
+By \Cref{lem:localization-rank-one}, every feasible graphon satisfying
+$I_{p_h}(W)\le I_{p_h}(W_h)$ can be written as $W=f\otimes f+E$, while
+\Cref{lem:auxiliary-lagrangian-bound} controls the auxiliary Lagrangian
+difference between $f$ and $f_h$.  The next lemma estimates the contribution
+of $E$ and gives the required full-graphon bound.
+
+\begin{lemma}[Lower bound for the full-graphon Lagrangian difference]
+\label{lem:graphon-lagrangian-bound}
+There exist $\rho_0>0$ and $C_{d,m}\ge1$ such that for
+every $0<\rho<\rho_0$, one can choose $C_{d,\rho}\ge1$ and $h_\rho>0$ with
+the following property.  Let $0<h<h_\rho$, and let $W$ satisfy the hypotheses of
+\Cref{lem:localization-rank-one}.  Write $W=f\otimes f+E$ for the
+decomposition provided there, and let $\nu$ be the distribution of the
+values of $f$.  Then,
+\begin{equation}\label{eq:graphon-lagrangian-bound}
+\begin{aligned}
+  &\left[I_{p_h}(W)-\mu_h\{t(H,W)-r_h^m\}\right]
+   -\left[I_{p_h}(W_h)-\mu_h\{t(H,W_h)-r_h^m\}\right]\\
+  &\qquad\qquad\qquad\qquad\qquad\qquad\qquad=I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}\\
+  &\qquad\qquad\qquad\qquad\qquad\qquad\qquad
+  \ge C_{d,\rho}^{-1}\!\left[A_{h,\rho}(\nu)+\nu(\mathcal T_\rho)+\|E\|_2^2\right]
+  -C_{d,m}\Delta_h(\nu)^2.
+\end{aligned}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Put $q:=q(f)=m_d(\nu)$ and
+$\Omega_\rho:=\{x:f(x)\in\mathcal N_\rho\}$.  Then
+$\lambda(\Omega_\rho^c)=\nu(\mathcal T_\rho)$.
+Combining the localization results in \Cref{lem:localization-rank-one}
+and \eqref{eq:factor-tail-mass}, we may use throughout the proof
+\begin{equation}\label{eq:graphon-comparison-estimates}
+  \begin{gathered}
+    \nu(\mathcal T_\rho)\le C_{d,\rho}h^4,
+    \qquad |\Delta_h(\nu)|\le C_dh^2,
+    \qquad \|E\|_2\le C_dh,
+    \qquad \|f-u_*\|_4\le C_dh,\\
+    |t(H,W)-q^v|\le C_{d,m}\|E\|_2^3,
+    \qquad \lambda(\Omega_\rho)\ge\frac12,
+    \qquad 0\le f\le2,
+    \qquad \|E\|_\infty\le5.
+  \end{gathered}
+\end{equation}
+The bound on $\lambda(\Omega_\rho)$ follows from
+$\lambda(\Omega_\rho^c)=\nu(\mathcal T_\rho)$, while the last bound uses
+$0\le W\le1$ and $0\le f\le2$.
+Since
+\[
+  \mathcal J_h(\nu)
+  =\iint\widetilde J_{p_h}(f(x)f(y))\,dx\,dy,
+  \qquad
+  \mathcal J_h(\nu_h)=I_{p_h}(W_h),
+\]
+and $t(H,W_h)=q_h^v=r_h^m$, the full-graphon Lagrangian difference has the
+exact decomposition
+\begin{equation*}
+\begin{aligned}
+  &I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}\\
+  &\quad=\bigl[\mathcal L_h(\nu)-\mathcal L_h(\nu_h)\bigr]
+  +\iint\{J_{p_h}(W(x,y))-\widetilde J_{p_h}(f(x)f(y))\}\,dx\,dy\\
+  &\qquad-\mu_h\{t(H,W)-q^v\}.
+\end{aligned}
+\end{equation*}
+The first term is controlled by \Cref{lem:auxiliary-lagrangian-bound}, and
+the last by the homomorphism-density estimate in
+\eqref{eq:rank-one-reduction-bounds}.  It remains to bound the middle
+double integral over its central, mixed, and tail--tail parts.
+
+We first consider the central square $\Omega_\rho^2$.  Decrease $\rho_0$ so
+that $f(x)f(y)$ lies in a fixed closed subinterval of $(0,1)$ whenever
+$x,y\in\Omega_\rho$.  Put
+\[
+  \|E\|_{2,G}
+  :=\left( \iint_G E(x,y)^2\,dx\,dy \right)^{1/2},
+  \qquad G \subset[0,1]^2.
+\]
+On $\Omega_\rho^2$, the identity $\mathcal M_h'(xy)=J_{p_h}'(xy)-\gamma_h(xy)^{d-1}$ yields
+the decomposition of the integrand:
+\begin{equation*}
+  J_{p_h}(W)-J_{p_h}(f\otimes f)
+  = \bigl[ J_{p_h}(W)-J_{p_h}(f\otimes f) -(J_{p_h})'(f\otimes f)E \bigr]
+  +\mathcal M_h'(f\otimes f)E
+      +\gamma_h(f\otimes f)^{d-1}E.
+\end{equation*}
+In this step, we bound the integrals of these three terms on $\Omega_\rho^2$ separately.
+Since $J_{p_h}''(z)=1/(z(1-z))\ge4$, strong convexity gives the first bound
+\[
+  \iint_{\Omega_\rho^2}
+  \{J_{p_h}(W)-J_{p_h}(f\otimes f)-(J_{p_h})'(f\otimes f)E\}
+  \ge2\|E\|_{2,\Omega_\rho^2}^2.
+\]
+For the second bound, we divide $\mathcal M_h'$ by $Q_h$ in each variable and write
+\[
+  \mathcal M_h'(xy)=Q_h(x)U_h(x,y)+Q_h(y)V_h(x,y)+C_h(x,y),
+\]
+where $C_h$ has degree at most one in each variable.  The factorization
+\eqref{eq:mh-derivative-factorization} then gives
+$\mathcal M_h'=0$ on $\{s_h,t_h\}^2$.  Since $Q_h$ also vanishes there,
+the bilinear remainder $C_h$ must vanish identically.
+At $h=0$, $\mathcal M_0'(xy)$ is an analytic multiple of $(xy-r_*)^3$ and
+$Q_0(z)=(z-u_*)^2$, so $U_0$ and $V_0$ vanish at $(u_*,u_*)$.  By
+joint continuity, after decreasing $\rho_0$ and $h_\rho$, we may ensure that
+$|U_h|$ and $|V_h|$ are at most $\sqrt{a/4}$ on $\mathcal N_\rho^2$, and
+\[
+  |\mathcal M_h'(xy)|
+  \le\sqrt{\frac a4}
+    \{|Q_h(x)|+|Q_h(y)|\}
+  \qquad(x,y\in\mathcal N_\rho,\ 0<h<h_\rho).
+\]
+Then, $uv \le (1/4)u^2+v^2$ and
+$(u+v)^2\le 2(u^2+v^2)$ give
+\begin{align*}
+  \left|\iint_{\Omega_\rho^2} \{\mathcal M_h'(f(x)f(y))\} E(x,y)\,dx\,dy\right|
+  &\le \frac{1}{4} \iint_{\Omega_\rho^2} \frac{a}{4}\{|Q_h(x)|+|Q_h(y)|\}^2 \,dx\,dy + \|E\|_{2,\Omega_\rho^2}^2 \\
+  &\le \frac{a}{16} \iint_{\Omega_\rho^2} 2|Q_h(x)|^2+2|Q_h(y)|^2 \,dx\,dy + \|E\|_{2,\Omega_\rho^2}^2 \\
+  &\le \frac a4 A_{h,\rho}(\nu) + \|E\|_{2,\Omega_\rho^2}^2.
+\end{align*}
+For the third bound, the orthogonality in \eqref{eq:rank-one-orthogonality} moves
+the remaining linear term to the tail--tail square:
+\[
+  \left| \iint_{\Omega_\rho^2}\gamma_h(f(x)f(y))^{d-1}E(x,y)\,dx\,dy \right|
+  = \left| \iint_{(\Omega_\rho^c)^2}\gamma_h(f(x)f(y))^{d-1}E(x,y)\,dx\,dy \right|
+  \le C_d \nu(\mathcal T_\rho)^2.
+\]
+Combining the three bounds gives
+\begin{equation*}
+  \iint_{\Omega_\rho^2} \{J_{p_h}(W)-J_{p_h}(f\otimes f)\}
+  \ge \|E\|_{2,\Omega_\rho^2}^2 -\frac a4 A_{h,\rho}(\nu)-C_d\nu(\mathcal T_\rho)^2.
+\end{equation*}
+
+We next consider the mixed rectangles.  For almost every $x$, the
+orthogonality in
+\eqref{eq:rank-one-orthogonality}, together with
+\eqref{eq:graphon-comparison-estimates}, gives
+\begin{equation*}
+  u_*^{d-1}\left|\int_{\Omega_\rho}E(x,y)\,dy\right|
+  \le\int_{\Omega_\rho}
+    |f(y)^{d-1}-u_*^{d-1}|\,|E(x,y)|\,dy
+  +\int_{\Omega_\rho^c}f(y)^{d-1}|E(x,y)|\,dy
+  \le C_{d,\rho}h.
+\end{equation*}
+Consequently, if $\overline W_x:= (\int_{\Omega_\rho}W(x,y)\,dy)/\lambda(\Omega_\rho)$,
+then
+\begin{equation*}
+  |\overline W_x-u_*f(x)|
+  \le |f(x)|\left|
+    \frac1{\lambda(\Omega_\rho)}\int_{\Omega_\rho} (f(y)-u_*)\,dy\right|
+    +\frac1{\lambda(\Omega_\rho)}\left|\int_{\Omega_\rho}E(x,y)\,dy\right|
+  \le C_{d,\rho}h.
+\end{equation*}
+Since $\overline W_x\in[0,1]$, we have
+$J_{p_h}(\overline W_x)=\widetilde J_{p_h}(\overline W_x)$.
+By Jensen's and H\"older's inequalities, with
+\eqref{eq:continuation-kernel-bounds} and
+\eqref{eq:graphon-comparison-estimates},
+\begin{equation*}
+\begin{aligned}
+&\int_{\Omega_\rho}
+  \{J_{p_h}(W(x,y))-\widetilde J_{p_h}(f(x)f(y))\}\,dy\\
+&\quad\ge \lambda(\Omega_\rho) \left\{J_{p_h}(\overline W_x)-\widetilde J_{p_h}(u_*f(x))\right\}
+-\int_{\Omega_\rho} \left\{\widetilde J_{p_h}(f(x)f(y))-\widetilde J_{p_h}(u_*f(x))\right\}\,dy\\
+&\quad\ge-C_d |\overline W_x - u_*f(x)|^{1/2} -C_d\int_{\Omega_\rho}|f(y)-u_*|^{1/2}\,dy \ge-C_{d,\rho}h^{1/2} \ge -\frac{b_\rho}{16}.
+\end{aligned}
+\end{equation*}
+Integrating this bound over $x\in\Omega_\rho^c$ yields
+\begin{equation*}
+\begin{aligned}
+  2\iint_{\Omega_\rho^c\times \Omega_\rho}
+  \{J_{p_h}(W)-\widetilde J_{p_h}(f\otimes f)\}
+  \ge -\frac{b_\rho}{8}\nu(\mathcal T_\rho).
+\end{aligned}
+\end{equation*}
+
+It remains to consider the tail--tail square.  The uniform bound in
+\eqref{eq:continuation-kernel-bounds} gives
+\[
+  \iint_{(\Omega_\rho^c)^2}
+  \{J_{p_h}(W)-\widetilde J_{p_h}(f\otimes f)\}
+  \ge-C_d\nu(\mathcal T_\rho)^2.
+\]
+
+Combining all bounds with \eqref{eq:auxiliary-lagrangian-bound}
+and $|t(H,W)-q^v|\le C_{d,m}\|E\|_2^3$ gives
+\begin{equation*}
+\begin{aligned}
+  I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}
+  &\ge\frac a4 A_{h,\rho}(\nu)
+    +\frac{3b_\rho}{8}\nu(\mathcal T_\rho)
+    +\|E\|_{2,\Omega_\rho^2}^2\\
+  &\quad-C_{d,m}\Delta_h(\nu)^2
+    -C_d\nu(\mathcal T_\rho)^2
+    -C_{d,m}\|E\|_2^3.
+\end{aligned}
+\end{equation*}
+Since $\|E\|_\infty\le5$ and
+$\lambda([0,1]^2\setminus\Omega_\rho^2)\le2\nu(\mathcal T_\rho)$, choose
+$C_{d,\rho}\ge1$ so that $50C_{d,\rho}^{-1}\le b_\rho/16$.  Then
+\begin{equation*}
+  \|E\|_{2,\Omega_\rho^2}^2
+  \ge C_{d,\rho}^{-1}\|E\|_{2,\Omega_\rho^2}^2
+  =C_{d,\rho}^{-1}\left(
+    \|E\|_2^2-\|E\|_{2,[0,1]^2\setminus\Omega_\rho^2}^2\right)
+  \ge C_{d,\rho}^{-1}\|E\|_2^2
+    -50C_{d,\rho}^{-1}\nu(\mathcal T_\rho)
+  \ge C_{d,\rho}^{-1}\|E\|_2^2
+    -\frac{b_\rho}{16}\nu(\mathcal T_\rho).
+\end{equation*}
+By \eqref{eq:graphon-comparison-estimates}, we may also decrease $h_\rho$ so that
+$C_d\nu(\mathcal T_\rho)\le b_\rho/16$ and $C_{d,m}\|E\|_2\le C_{d,\rho}^{-1}/2$.
+Consequently,
+\begin{equation*}
+  I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}
+  \ge\frac a4 A_{h,\rho}(\nu)
+  +\frac{b_\rho}{4}\nu(\mathcal T_\rho)
+  +\frac{1}{2}C_{d,\rho}^{-1}\|E\|_2^2
+  -C_{d,m}\Delta_h(\nu)^2.
+\end{equation*}
+Increasing $C_{d,\rho}$ if necessary proves \eqref{eq:graphon-lagrangian-bound}.
+\end{proof}
+
+\subsection{Proof of the endpoint theorem}
+\label{sec:endpoint-optimality-proof}
+
+We finish by applying the lower bound for the full-graphon Lagrangian
+difference to the decomposition supplied by the localization and rank-one
+reduction.
+
+\begin{proof}[Proof of \Cref{thm:endpoint-optimality}]
+\Cref{lem:rank-one-kkt-family} provides the real-analytic map
+$h\mapsto(p_h,r_h,u_h,\alpha_h)$ for $|h|<h_0$, with the desired endpoint
+values at $h=0$.  For every measurable $A_h\subset[0,1]$ of measure
+$\alpha_h$, the corresponding factor is $f_{\alpha_h,s_h,t_h}$, up to measure-preserving relabelling.
+Since $t_h-s_h=2h\ne0$ for $h>0$, the resulting graphon $W_h$ is
+nonconstant, rank-one, and bipodal, and the same lemma gives
+$t(H,W_h)=r_h^m$.  Its comparison with the constant graphon follows from
+\Cref{lem:constant-graphon-comparison}.
+
+It remains to prove optimality and uniqueness.
+Fix $0<\rho<\rho_0$ and $0<h<h_\rho$ as in \Cref{lem:graphon-lagrangian-bound}.
+Assume $I_{p_h}(W)\le I_{p_h}(W_h)$ and $W$ is feasible.
+By \Cref{lem:localization-rank-one}, write
+\[
+  W=f\otimes f+E,
+  \qquad
+  T_E(f^{d-1})=0,
+  \qquad
+  q:=q(f).
+\]
+Let $\nu$ be the distribution of the values of $f$, so that $q=m_d(\nu)$ and
+$\Delta_h(\nu)=q-q_h$.  Applying \Cref{lem:graphon-lagrangian-bound} gives
+\eqref{eq:graphon-lagrangian-bound}.  Its left-hand side is nonpositive:
+\[
+  I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}
+  \le I_{p_h}(W)-I_{p_h}(W_h)\le0,
+\]
+because $W$ is feasible and $\mu_h>0$.  Comparing this upper bound with the
+lower bound in \eqref{eq:graphon-lagrangian-bound}, and increasing the
+constant if necessary, gives $C_{d,m,\rho}\ge1$ such that
+\[
+  A_{h,\rho}(\nu)+\nu(\mathcal T_\rho)+\|E\|_2^2
+  \le C_{d,m,\rho}^2\Delta_h(\nu)^2,
+  \qquad
+  \|E\|_2\le C_{d,m,\rho}|\Delta_h(\nu)|.
+\]
+Combining the homomorphism-density bound in
+\eqref{eq:rank-one-reduction-bounds} with Taylor's theorem gives
+\begin{equation*}
+\begin{aligned}
+  \left|t(H,W)-r_h^m-vq_h^{v-1}\Delta_h(\nu)\right|
+  \le 
+  |t(H,W)-q^v|
+    +\left|(q_h+\Delta_h(\nu))^v-q_h^v
+      -vq_h^{v-1}\Delta_h(\nu)\right|
+  \le C_{d,m,\rho}\Delta_h(\nu)^2.
+\end{aligned}
+\end{equation*}
+Since $q_h$ stays bounded away from zero, the linear term in the preceding
+estimate dominates the quadratic error when $\Delta_h(\nu)<0$.  Feasibility
+would then be violated, so, after decreasing $h_\rho$, we have
+$\Delta_h(\nu)\ge0$.  The localization estimate
+\eqref{eq:rank-one-reduction-bounds}, together with the positive lower
+bounds for $q_h$ and $\mu_h$, allows us to decrease $h_\rho$ further so that
+\[
+  C_{d,m,\rho}\Delta_h(\nu)\le\frac14vq_h^{v-1},
+  \qquad
+  C_{d,m,\rho}\Delta_h(\nu)\le\frac14\mu_hvq_h^{v-1}.
+\]
+This yields
+\begin{equation*}
+  \mu_h\{t(H,W)-r_h^m\}-C_{d,m,\rho}\Delta_h(\nu)^2
+  \ge\frac12\mu_hvq_h^{v-1}\Delta_h(\nu).
+\end{equation*}
+Substituting this into \eqref{eq:graphon-lagrangian-bound} gives
+\begin{equation*}
+  I_{p_h}(W)-I_{p_h}(W_h)
+  \ge
+  \left(\frac12\mu_hvq_h^{v-1}\Delta_h(\nu)
+    +C_{d,m,\rho}^{-1}
+    \left[A_{h,\rho}(\nu)+\nu(\mathcal T_\rho)+\|E\|_2^2\right]\right)
+  \ge0.
+\end{equation*}
+The left-hand side is nonpositive by the upper bound above, so equality holds
+throughout.  Consequently,
+\begin{equation*}
+  \Delta_h(\nu)=0,
+  \qquad A_{h,\rho}(\nu)=0,
+  \qquad \nu(\mathcal T_\rho)=0,
+  \qquad E=0\quad\text{a.e.}.
+\end{equation*}
+Since $A_{h,\rho}(\nu)=0$ and $\nu(\mathcal T_\rho)=0$,
+$\nu$ is supported on $\{s_h,t_h\}$, and $\Delta_h(\nu)=0$ implies
+$\nu=\alpha_h\delta_{s_h}+(1-\alpha_h)\delta_{t_h}$.
+Moreover, $E\equiv0$ implies that $W=f\otimes f$ and $W$ is a measure-preserving relabelling of $W_h$.
+\end{proof}

@@ -1,0 +1,559 @@
+\section{Technical proofs for the singular endpoint}
+\label{app:endpoint-calculations}
+
+This appendix contains the analytic and asymptotic calculations underlying
+the rank-one KKT family constructed in
+\Cref{sec:rank-one-stationary-family}.  We use the notation fixed there but
+reproduce below all structural equations needed in the proofs.
+
+\subsection{Proof of the analytic rank-one KKT family}
+\label{app:rank-one-kkt-family}
+
+\begin{proof}[Proof of \Cref{lem:rank-one-kkt-family}]
+We first solve the graphon stationarity equation while leaving the block
+proportion $\alpha_h$ unspecified.  For a rank-one graphon $W=f\otimes f$,
+put $q:=\int_0^1 f^d$.  Since $H$ is $d$-regular, the first variations in a
+bounded symmetric direction $U$ are
+\[
+  \left.\frac{d}{d\varepsilon}\right|_{\varepsilon=0}
+  I_p(f\otimes f+\varepsilon U)
+  =\iint J_p'(f(x)f(y))U(x,y)\,dx\,dy
+\]
+and
+\[
+  \left.\frac{d}{d\varepsilon}\right|_{\varepsilon=0}
+  t(H,f\otimes f+\varepsilon U)
+  =\iint m q^{v-2}f(x)^{d-1}f(y)^{d-1}U(x,y)\,dx\,dy.
+\]
+Thus, on writing $\gamma:=\mu m q^{v-2}$, stationarity for
+$I_p-\mu t(H,\,\cdot\,)$ is equivalent to
+\begin{equation}\label{eq:rank-one-kkt-proof}
+  J_p'(f(x)f(y))
+  =\mu m q^{v-2}\bigl(f(x)f(y)\bigr)^{d-1}
+  =\gamma\bigl(f(x)f(y)\bigr)^{d-1}
+  \quad\text{for a.e. }(x,y)\in[0,1]^2.
+\end{equation}
+For the family under construction, we first regard $\gamma_h$ as an
+independent scalar coefficient, so the graphon stationarity equations do not
+involve $q_h$ or $\alpha_h$.  Evaluating
+\eqref{eq:rank-one-kkt-proof} on the two diagonal blocks and
+the cross block, and using $J'_{p_h}(z)=\ell(p_h)-\ell(z)$, gives
+\begin{equation}\label{eq:three-value-kkt-proof}
+  \ell(p_h)-\ell(s_h^2)=\gamma_hs_h^{2d-2},\qquad
+  \ell(p_h)-\ell(s_ht_h)=\gamma_h(s_ht_h)^{d-1},\qquad
+  \ell(p_h)-\ell(t_h^2)=\gamma_ht_h^{2d-2}.
+\end{equation}
+We first solve \eqref{eq:three-value-kkt-proof} for
+$u_h,\gamma_h,p_h$, and then impose stationarity under variation of the block
+proportion to determine $\alpha_h$ and the derived quantities
+$q_h,r_h,\mu_h$.
+Recall that $s_h=u_h-h$ and $t_h=u_h+h$.  Subtracting consecutive equations
+eliminates $\ell(p_h)$ and gives
+\begin{equation}\label{eq:kkt-divided-slopes}
+  \frac{\ell(s_ht_h)-\ell(s_h^2)}
+       {s_h^{2d-2}-(s_ht_h)^{d-1}}
+  =\frac{\ell(t_h^2)-\ell(s_ht_h)}
+       {(s_ht_h)^{d-1}-t_h^{2d-2}}
+  =\gamma_h
+\end{equation}
+for $h\ne0$.
+At $h=0$, both quotients have the
+indeterminate form $0/0$; the function $D$ introduced below shows that each
+has a removable singularity and extends analytically to $h=0$.
+Define the difference of the two quotients by
+\begin{equation*}
+\begin{aligned}
+  A(u,h)
+  &:=\frac{\ell(st)-\ell(s^2)}
+            {s^{2d-2}-(st)^{d-1}}
+    -\frac{\ell(t^2)-\ell(st)}
+            {(st)^{d-1}-t^{2d-2}}
+\end{aligned}
+\end{equation*}
+where $s=u-h$ and $t=u+h$.
+Thus, the equation to solve is $A(u,h)=0$ with respect to $u$.
+To analyse
+the removable value at $h=0$, introduce
+\[
+  D(x,y):=\frac{\ell(y)-\ell(x)}{x^{d-1}-y^{d-1}}
+\]
+and extend it analytically across the diagonal.  The function $D(x,y)$ is
+symmetric, and its diagonal value is
+\[
+  D(z,z)
+  =\frac{-\ell'(z)}{(d-1)z^{d-2}}
+  =\frac1{(d-1)z^{d-1}(1-z)}
+  =:g_d(z).
+\]
+Differentiating $D(z,z)=g_d(z)$ and using symmetry gives
+\[
+  \partial_xD(z,z)=\partial_yD(z,z)=\frac12g_d'(z).
+\]
+Since
+\[
+  (s^2,st)\big|_{h=0}=(u^2,u^2),
+  \qquad
+  \left.\frac{d}{dh}(s^2,st)\right|_{h=0}=(-2u,0),
+\]
+we have
+\[
+  \left.D(s^2,st)\right|_{h=0}=g_d(u^2),
+\]
+and the chain rule gives
+\[
+  \left.\frac{d}{dh}D(s^2,st)\right|_{h=0}
+  =\partial_xD(u^2,u^2)(-2u)+\partial_yD(u^2,u^2)\cdot0
+  =-u g_d'(u^2).
+\]
+Thus, locally uniformly for $u$ near $u_*$, the Taylor expansion for the first
+divided slope is
+\[
+  \frac{\ell(st)-\ell(s^2)}{s^{2d-2}-(st)^{d-1}}
+  =g_d(u^2)-uh\,g_d'(u^2)+O_d(h^2).
+\]
+Replacing $h$ by $-h$ exchanges the two divided slopes.  Hence the second
+Taylor expansion is
+\[
+  \frac{\ell(t^2)-\ell(st)}{(st)^{d-1}-t^{2d-2}}
+  =g_d(u^2)+uh\,g_d'(u^2)+O_d(h^2).
+\]
+Subtracting the two expansions gives
+\[
+  A(u,h)=-2uh\,g_d'(u^2)+O_d(h^2).
+\]
+Interchanging $h$ and $-h$ exchanges $s$ and $t$, and hence changes the sign
+of $A(u,h)$.  Thus, $A(u,h)$ is odd in $h$, so its expansion contains no
+even powers of $h$.  Consequently, the last remainder improves to
+\begin{equation*}
+  A(u,h)=-2uh\,g_d'(u^2)+O_d(h^3).
+\end{equation*}
+We now observe that the quotient
+\[
+  B(u,h):=\frac{A(u,h)}{h}
+\]
+has a removable singularity at $h=0$.  Its analytic extension is even in
+$h$ and, by the preceding expansion, satisfies
+\[
+  B(u,0)=-2u g_d'(u^2).
+\]
+For $h\ne0$, the equations $A(u,h)=0$ and $B(u,h)=0$ are equivalent.
+Now fix a small interval $U\subset(0,1)$ containing $u_*$.  Since $u>0$ on
+$U$, the explicit formula for $g_d$ gives
+\[
+  B(u,0)=0
+  \quad\Longleftrightarrow\quad
+  g_d'(u^2)=0
+  \quad\Longleftrightarrow\quad
+  \frac1{1-u^2}=\frac{d-1}{u^2}
+  \quad\Longleftrightarrow\quad
+  u=\sqrt{\frac{d-1}{d}}=u_*.
+\]
+Thus, $u_*$ is the unique zero of $B(u,0)$ in $U$.  This zero is
+nondegenerate: since $g_d'(u_*^2)=0$ and $g_d''(u_*^2)\ne0$,
+\[
+  \partial_uB(u_*,0)
+  =-2g_d'(u_*^2)-4u_*^2g_d''(u_*^2)
+  =-4u_*^2g_d''(u_*^2)\ne0.
+\]
+The analytic implicit function theorem therefore gives a unique analytic
+solution $u_h$ near $u_*$ satisfying $B(u_h,h)=0$ and $u_0=u_*$.  Since $B$
+is even in $h$, uniqueness implies $u_{-h}=u_h$.  Hence $u_h$ is analytic
+in $h^2$ and
+\[
+  u_h=u_*+O_d(h^2).
+\]
+Since $B(u_h,h)=0$, the first two expressions in
+\eqref{eq:kkt-divided-slopes} agree.  We define $\gamma_h$ to be
+their common value, using their analytic extensions at $h=0$.  The middle KKT
+equation in \eqref{eq:three-value-kkt-proof} then gives
+\[
+  \ell(p_h)=\gamma_h(s_ht_h)^{d-1}+\ell(s_ht_h).
+\]
+Since $\ell$ is one-to-one, this identity determines a unique $p_h$.
+Combining this definition of $\gamma_h$ with the middle equation recovers the
+first and third equations in \eqref{eq:three-value-kkt-proof}, so all three
+KKT equations are satisfied.
+The analyticity of $D$ and the formulas above show that
+$\gamma_h$ and $p_h$ are even and analytic in $h^2$.  At $h=0$,
+the analytic extension of either quotient in
+\eqref{eq:kkt-divided-slopes} gives
+\[
+  \gamma_0=g_d(u_*^2)=\gamma_*.
+\]
+The middle KKT equation in \eqref{eq:three-value-kkt-proof} then gives
+\[
+  \ell(p_0)=\gamma_*u_*^{2(d-1)}+\ell(u_*^2)=\ell_*,
+\]
+which implies $p_0=p_*$. 
+We have therefore constructed the unique analytic family
+$(u_h,p_h,\gamma_h)$ near $(u_*,p_*,\gamma_*)$.
+Define
+\[
+  \mathcal M_h(z):=J_{p_h}(z)-\frac{\gamma_h}{d}z^d.
+\]
+At the endpoint, direct differentiation gives
+\begin{equation}\label{eq:endpoint-entropy-derivatives}
+  J_{p_*}'(r_*)=\gamma_*r_*^{d-1},\qquad
+  J_{p_*}''(r_*)=\gamma_*(d-1)r_*^{d-2},\qquad
+  J_{p_*}^{(3)}(r_*)=\gamma_*(d-1)(d-2)r_*^{d-3}.
+\end{equation}
+Equation \eqref{eq:three-value-kkt-proof} says precisely that
+$s_h^2,s_ht_h,t_h^2$ are critical points of $\mathcal M_h$.
+By \eqref{eq:endpoint-entropy-derivatives},
+the first three derivatives of $\mathcal M_0$ vanish at $r_*$.
+Direct differentiation gives its Taylor expansion
+\begin{equation}\label{eq:mh-cubic-derivative}
+  \mathcal M_0'(z)
+  =k_3(z-r_*)^3+O_d((z-r_*)^4),
+  \qquad
+  k_3:=\frac{d^5}{6(d-1)^2}.
+\end{equation}
+
+We next determine the block proportion.  For fixed $p,s,t$, and $\mu$, its
+stationarity condition at $\alpha$ is
+\begin{equation}\label{eq:block-stationarity-proof}
+  \left.\frac{d}{d\beta}\right|_{\beta=\alpha}
+  \left\{I_p(W_{\beta,s,t})-\mu t(H,W_{\beta,s,t})\right\}=0.
+\end{equation}
+For a provisional $\alpha$ near $1/2$, apply this condition with
+$p=p_h$, $s=s_h$, $t=t_h$, and set
+\[
+  q:=\alpha s_h^d+(1-\alpha)t_h^d,
+  \qquad
+  \mu:=\frac{\gamma_h}{m q^{v-2}}.
+\]
+Holding $\mu$ fixed, the expression differentiated in
+\eqref{eq:block-stationarity-proof} is
+\[
+  \beta^2J_{p_h}(s_h^2)
+  +2\beta(1-\beta)J_{p_h}(s_ht_h)
+  +(1-\beta)^2J_{p_h}(t_h^2)
+  -\mu\{\beta s_h^d+(1-\beta)t_h^d\}^v,
+\]
+where we used
+\[
+  t(H,W_{\beta,s_h,t_h})
+  =\{\beta s_h^d+(1-\beta)t_h^d\}^v.
+\]
+Its derivative at $\beta=\alpha$ vanishes precisely when
+\[
+  0=2\alpha\{J_{p_h}(s_h^2)-J_{p_h}(s_ht_h)\}
+  -2(1-\alpha)\{J_{p_h}(t_h^2)-J_{p_h}(s_ht_h)\}
+  -\mu v q^{v-1}(s_h^d-t_h^d).
+\]
+Since $v=2m/d$, the definitions give
+\[
+  \frac{\mu v q^{v-1}}2
+  =\frac{\gamma_h q}{d},
+\]
+while direct expansion gives
+\begin{equation}\label{eq:block-moment-identity}
+  q(s_h^d-t_h^d)
+  =\alpha\{s_h^{2d}-(s_ht_h)^d\}
+   -(1-\alpha)\{t_h^{2d}-(s_ht_h)^d\}.
+\end{equation}
+Using the preceding two identities, the block-proportion condition becomes
+the linear equation
+\begin{equation}\label{eq:block-proportion-balance}
+  \alpha\{\mathcal M_h(s_h^2)-\mathcal M_h(s_ht_h)\}
+  =(1-\alpha)\{\mathcal M_h(t_h^2)-\mathcal M_h(s_ht_h)\}.
+\end{equation}
+Whenever its denominator is nonzero, its solution is
+\begin{equation}\label{eq:block-proportion-formula-proof}
+  \alpha_h
+  :=\frac{\left\{\mathcal M_h(t_h^2)-\mathcal M_h(s_ht_h)\right\}}
+  {\left\{\mathcal M_h(s_h^2)-\mathcal M_h(s_ht_h)\right\}
+   +\left\{\mathcal M_h(t_h^2)-\mathcal M_h(s_ht_h)\right\}}.
+\end{equation}
+Because $p_h,\gamma_h$, and $u_h$ are even in $h$, one has
+\[
+  \mathcal M_{-h}=\mathcal M_h,
+  \qquad
+  s_{-h}=t_h,
+  \qquad
+  t_{-h}=s_h.
+\]
+Thus, changing $h$ to $-h$ exchanges the two differences in
+\eqref{eq:block-proportion-formula-proof}, and consequently
+\[
+  \alpha_{-h}=1-\alpha_h.
+\]
+
+It remains to verify the endpoint value $\alpha_0$
+by extending \eqref{eq:block-proportion-formula-proof} analytically through $h=0$.
+To control the two differences in \eqref{eq:block-proportion-formula-proof} as
+$h\to0$, we factor $\mathcal M_h'$ at its three critical points.  Let
+\[
+  D_h(z):=(z-s_h^2)(z-s_ht_h)(z-t_h^2)
+\]
+be the monic cubic polynomial with these roots.  Analytic Weierstrass division
+with divisor $D_h$ gives
+\[
+  \mathcal M_h'(z)=D_h(z)R(h,z)+P_h(z),
+  \qquad \deg_z P_h\le2,
+\]
+where $R$ is jointly analytic in $(h,z)$ near $(0,r_*)$, and the coefficients
+of $P_h$ are analytic in $h$.  For $h\ne0$, the polynomial $P_h$ vanishes at
+the three distinct
+roots of $D_h$ and is therefore identically zero.  Its coefficients also
+vanish at $h=0$ by analyticity.  Hence
+\begin{equation}\label{eq:mh-factorization-proof}
+  \mathcal M_h'(z)
+  =(z-s_h^2)(z-s_ht_h)(z-t_h^2)R(h,z).
+\end{equation}
+By \eqref{eq:mh-cubic-derivative}, $R(0,r_*)=k_3$.  Writing
+$z=s_ht_h+x$, set
+\[
+  a:=s_ht_h-s_h^2=2hs_h,
+  \qquad
+  b:=t_h^2-s_ht_h=2ht_h.
+\]
+The three critical points then correspond to $x=-a,0,b$.  Therefore,
+uniformly for $|x|\le2|h|$,
+\[
+  \mathcal M_h'(s_ht_h+x)
+  =x(x+a)(x-b)\{k_3+O_d(h)\}.
+\]
+Since $a=2u_*h+O_d(h^2)$ and $b=2u_*h+O_d(h^2)$, integration from $x=0$ to
+$x=-a$ and to $x=b$ gives
+\begin{align*}
+  \mathcal M_h(s_h^2)-\mathcal M_h(s_ht_h)
+  &=-\frac{k_3}{12}a^3(a+2b)+O_d(h^5)
+    =-\frac{2d^3}{3}h^4+O_d(h^5),\\
+  \mathcal M_h(t_h^2)-\mathcal M_h(s_ht_h)
+  &=-\frac{k_3}{12}b^3(b+2a)+O_d(h^5)
+    =-\frac{2d^3}{3}h^4+O_d(h^5).
+\end{align*}
+Both differences are analytic and vanish to order exactly four.  Dividing
+the numerator and denominator in \eqref{eq:block-proportion-formula-proof} by $h^4$
+therefore shows that $\alpha_h$ extends analytically through $h=0$, and
+the limiting value is $\alpha_0=1/2$. 
+
+Now define
+\[
+  q_h:=\alpha_hs_h^d+(1-\alpha_h)t_h^d,
+  \qquad
+  r_h:=q_h^{2/d},
+  \qquad
+  \mu_h:=\frac{\gamma_h}{m q_h^{v-2}}.
+\]
+The definitions and the analyticity proved above show that $q_h$ is analytic.
+The symmetry identities give $q_{-h}=q_h$.  Since $q_0>0$, the derived
+functions $r_h=q_h^{2/d}$ and $\mu_h=\gamma_h/(m q_h^{v-2})$ are also analytic
+and even.  Evaluating at $h=0$ gives
+\[
+  q_0=u_*^d,
+  \qquad
+  r_0=r_*,
+  \qquad
+  \mu_0=\frac{\gamma_*}{m(u_*^d)^{v-2}}
+  =\frac1{m r_*^m}.
+\]
+After decreasing $h_0$, continuity also ensures
+\[
+  0<p_h<r_h<1,\qquad 0<s_h,t_h<1,\qquad
+  0<\alpha_h<1,\qquad \mu_h>0
+  \quad (|h|<h_0),
+\]
+so all the candidates above are valid graphons at admissible parameter
+values.
+The rank-one identity also gives
+\[
+  t(H,W_{\alpha_h,s_h,t_h})=q_h^v=r_h^m.
+\]
+To verify stationarity, let $U$ be any bounded measurable symmetric function
+on $[0,1]^2$.  The first-variation formulas above give
+\[
+\begin{aligned}
+  &\left.\frac{d}{d\varepsilon}\right|_{\varepsilon=0}
+  \left[I_{p_h}(W_h+\varepsilon U)
+    -\mu_h t(H,W_h+\varepsilon U)\right]\\
+  &\qquad=\iint\left[
+    J_{p_h}'(f_h(x)f_h(y))
+    -\mu_h m q_h^{v-2}f_h(x)^{d-1}f_h(y)^{d-1}
+  \right]U(x,y)\,dx\,dy.
+\end{aligned}
+\]
+The product $f_h(x)f_h(y)$ takes only the three values
+$s_h^2,s_ht_h,t_h^2$.  For each such value $z$, the corresponding equation in
+\eqref{eq:three-value-kkt-proof} gives
+\[
+  J_{p_h}'(z)=\gamma_hz^{d-1}
+  =\mu_h m q_h^{v-2}z^{d-1}.
+\]
+Hence the integrand in the first-variation formula vanishes almost everywhere,
+so $W_h$ is stationary under every such $U$.  Thus
+$W_h$ satisfies the KKT conditions at $(p_h,r_h)$ with multiplier $\mu_h$, and
+\eqref{eq:block-proportion-balance} is precisely
+\eqref{eq:block-stationarity-proof}.
+
+It remains to prove local uniqueness.
+Suppose $W$ is a nonconstant rank-one graphon satisfying the KKT conditions at
+$(p,r)$ with multiplier $\mu$.
+By \Cref{lem:stationary-rank-one-bipodality}, write
+\[
+  W = W_{\alpha,s,t} = f_{\alpha,s,t}\otimes f_{\alpha,s,t},
+  \qquad
+  h:=\frac{t-s}{2},
+  \qquad
+  u:=\frac{s+t}{2},
+  \qquad
+  q:=\alpha s^d+(1-\alpha)t^d,
+  \qquad
+  \gamma:=\mu m q^{v-2}.
+\]
+Applying \eqref{eq:rank-one-kkt-proof} to the three values
+$s^2,st,t^2$ gives \eqref{eq:three-value-kkt-proof} with
+$(p_h,\gamma_h,s_h,t_h)$ replaced by $(p,\gamma,s,t)$.  Equality of the two
+corresponding divided slopes then gives $B(u,h)=0$.  The local uniqueness
+obtained above gives a neighbourhood
+of $(u_*,0)$ in which this equation has the unique solution $u=u_h$ for each
+fixed $h$.  Hence $s=s_h$ and $t=t_h$, and either quotient in
+\eqref{eq:kkt-divided-slopes} forces $\gamma=\gamma_h$.  The
+middle KKT equation then forces $p=p_h$.  Finally,
+condition \eqref{eq:block-stationarity-proof} is the linear equation
+\eqref{eq:block-proportion-balance}; its denominator is
+$-4d^3h^4/3+O_d(h^5)$ and is therefore nonzero for $h\ne0$ sufficiently small.
+Thus, it has the unique solution \eqref{eq:block-proportion-formula-proof}, namely
+$\alpha=\alpha_h$.  It follows that $q=q_h$ and hence that $r=r_h$ and
+$\mu=\gamma_h/(m q_h^{v-2})=\mu_h$.  This proves the stated local uniqueness.
+\end{proof}
+
+\subsection{Proof of the parameter expansions}
+\label{app:rank-one-parameter-expansions}
+
+\begin{proof}[Proof of \Cref{lem:rank-one-parameter-expansions}]
+Since $u_h$, $\gamma_h$, and $\ell(p_h)$ are analytic in $h^2$, write
+\[
+  u_h=u_*+U_2h^2+O_d(h^4),
+  \qquad
+  \gamma_h=\gamma_*+G_2h^2+O_d(h^4),
+  \qquad
+  \ell(p_h)=\ell_*+L_2h^2+O_d(h^4).
+\]
+Define
+\[
+  \mathcal L_h(z):=J_{p_h}'(z)-\gamma_hz^{d-1}.
+\]
+The triple-contact identities
+\eqref{eq:endpoint-entropy-derivatives} show that $\mathcal L_0$ and
+its first two derivatives vanish at $r_*$.  Direct differentiation gives
+\[
+  \mathcal L_0^{(3)}(r_*)=\frac{d^5}{(d-1)^2},
+  \qquad
+  \mathcal L_0^{(4)}(r_*)=\frac{5d^6(d-2)}{(d-1)^3},
+\]
+and hence
+\begin{align}\label{eq:kkt-quartic-expansion}
+  \mathcal L_0(z)
+  &=\frac{d^5}{6(d-1)^2}(z-r_*)^3
+    +\frac{5d^6(d-2)}{24(d-1)^3}(z-r_*)^4
+    +O_d((z-r_*)^5).
+\end{align}
+Moreover,
+\begin{align}\label{eq:kkt-parameter-shift}
+  \mathcal L_h(z)
+  &=\mathcal L_0(z)+\{\ell(p_h)-\ell_*\}
+    -(\gamma_h-\gamma_*)z^{d-1}.
+\end{align}
+
+Since $r_*=u_*^2$, the definitions $s_h=u_h-h$ and $t_h=u_h+h$ give
+\begin{equation*}
+\begin{aligned}
+  s_h^2&=r_*-2u_*h+(1+2u_*U_2)h^2+O_d(h^3),\\
+  s_ht_h&=r_*+(2u_*U_2-1)h^2+O_d(h^4),\\
+  t_h^2&=r_*+2u_*h+(1+2u_*U_2)h^2+O_d(h^3).
+\end{aligned}
+\end{equation*}
+We substitute these three roots into \eqref{eq:kkt-parameter-shift} and
+use the equations $\mathcal L_h(s_h^2)=\mathcal L_h(s_ht_h)
+=\mathcal L_h(t_h^2)=0$.  For the middle root,
+$s_ht_h-r_*=O_d(h^2)$, so comparison at order $h^2$ gives
+\[
+  L_2=G_2r_*^{d-1}.
+\]
+For either outer root, the terms of order $h^3$ then give
+\[
+  \frac{4}{3}u_*^3\frac{d^5}{(d-1)^2}
+  -2u_*(d-1)r_*^{d-2}G_2=0.
+\]
+Therefore
+\[
+  G_2=\frac{2d^{d+2}}{3(d-1)^d},
+  \qquad
+  L_2=\frac{2d^3}{3(d-1)}.
+\]
+At order $h^4$, subtracting the middle-root equation from either outer-root
+equation cancels the unknown fourth-order coefficients of $\ell(p_h)$ and
+$\gamma_h$ and gives
+\[
+  \frac{d^5}{(d-1)^2}u_*^2(1+2u_*U_2)
+  +\frac53\frac{d^6(d-2)}{(d-1)^3}u_*^4
+  =G_2(d-1)r_*^{d-3}\{(d-2)u_*^2+r_*\}.
+\]
+Using $u_*^2=r_*=(d-1)/d$ and the value of $G_2$, we obtain
+\[
+  U_2=\frac{5-3d}{6u_*}.
+\]
+This proves the stated expansions of $u_h$ and $\ell(p_h)$; the calculation
+also gives the intermediate expansion of $\gamma_h$ stated above.
+
+We next compute the first nonzero term of $\alpha_h$.  Set
+\[
+  a:=s_ht_h-s_h^2=2hs_h,
+  \qquad
+  b:=t_h^2-s_ht_h=2ht_h.
+\]
+The factorization \eqref{eq:mh-factorization-proof} and the symmetries
+$\mathcal M_{-h}=\mathcal M_h$ and $D_{-h}=D_h$ show that $R$ is even in
+$h$.  At $h=0$, \eqref{eq:kkt-quartic-expansion} gives
+\[
+  R(0,z)=k_3+k_4(z-r_*)+O_d((z-r_*)^2),
+  \qquad
+  k_4:=\frac{5d^6(d-2)}{24(d-1)^3}.
+\]
+Consequently, uniformly for $|x|\le2|h|$,
+\[
+  \mathcal M_h'(s_ht_h+x)
+  =x(x+a)(x-b)\{k_3+k_4x+O_d(h^2)\}.
+\]
+Integrating from $x=0$ to $x=-a$ and to $x=b$ gives
+\begin{align*}
+  \mathcal M_h(s_h^2)-\mathcal M_h(s_ht_h)
+  &=-\frac{k_3}{12}a^3(a+2b)
+    +\frac{k_4}{60}a^4(3a+5b)+O_d(h^6),\\
+  \mathcal M_h(t_h^2)-\mathcal M_h(s_ht_h)
+  &=-\frac{k_3}{12}b^3(b+2a)
+    -\frac{k_4}{60}b^4(3b+5a)+O_d(h^6).
+\end{align*}
+By the expansion of $u_h$,
+\[
+  a=2u_*h-2h^2+O_d(h^3),
+  \qquad
+  b=2u_*h+2h^2+O_d(h^3).
+\]
+Substitution yields
+\begin{align*}
+  \mathcal M_h(s_h^2)-\mathcal M_h(s_ht_h)
+  &=-\frac{2d^3}{3}h^4
+    +\frac{8u_*d^5}{9(d-1)}h^5+O_d(h^6),\\
+  \mathcal M_h(t_h^2)-\mathcal M_h(s_ht_h)
+  &=-\frac{2d^3}{3}h^4
+    -\frac{8u_*d^5}{9(d-1)}h^5+O_d(h^6).
+\end{align*}
+Substituting these expressions into \eqref{eq:block-proportion-formula-proof} and using
+$\alpha_{-h}=1-\alpha_h$ gives
+\[
+  \alpha_h=\frac12+\frac{2d^2u_*}{3(d-1)}h+O_d(h^3).
+\]
+
+Finally, substituting the expansions of $u_h$ and $\alpha_h$ into
+\[
+  q_h=\alpha_h(u_h-h)^d+(1-\alpha_h)(u_h+h)^d
+\]
+and expanding by the binomial theorem gives
+\[
+  q_h=u_*^d-\frac{d(4d-1)}3u_*^{d-2}h^2+O_d(h^4).
+\]
+The stated expansion of $r_h=q_h^{2/d}$ now follows by Taylor expansion.
+\end{proof}

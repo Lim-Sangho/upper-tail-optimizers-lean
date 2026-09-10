@@ -1,0 +1,72 @@
+\section{Lean formalization}\label{sec:lean-formalization}
+
+\hy{Make sure that we use the most recent version of Lean 4 and Mathlib. The old versions
+have a bug. Also, the repository should be different from our work repository. Some statistics
+about formalisation would be useful. Axioms assumed need to be explained clearly. Also,
+when preparing the public repository, make sure that we clean up the Lean code by refactoring
+and removing dead code etc, make sure that the comments inside the code are consistent with
+the paper, and also that the documentations, i.e., md files, are clear and up to date. We
+can do most of these using Claude or Codex. We also have to double-check the statements
+of theorems and definitions in the Lean code. Finally, there is a good chance that
+Lean formalization deviates from the paper in some places. We need to try to minimize this,
+but if it happens, we should clearly explain the differences in the documentation.}
+A substantial part of the paper has been formalized in Lean 4 using Mathlib;
+the code is available in the
+\href{https://github.com/Lim-Sangho/upper-tail-optimizers-lean}{online
+repository}.  It contains no unproved \texttt{sorry} placeholders.  Its
+purpose is to machine-check the deterministic graphon arguments underlying our
+results.  It does not formalize the Chatterjee--Varadhan large deviation
+principle, and hence does not cover the probabilistic consequences stated in
+the introduction.
+
+\paragraph{Nonexceptional theory.}
+The main results away from the exceptional density are formalized, ending in
+\Cref{thm:nonexceptional-optimizers}.  This includes the construction and analysis
+of the Lubetzky--Zhao boundary in
+\Cref{sec:lz-boundary}, the reduction to a one-dimensional problem in
+\Cref{sec:local-reduction}, the positivity of $A_H$ in
+\Cref{sec:nondegeneracy}, the uniqueness and analyticity results and the
+edge-density and rate-function expansions proved in
+\Cref{sec:local-optimizer-structure}, and the parameter expansions derived in
+Appendix~\ref{app:bipodal-parameter-expansions}.
+Appendix~\ref{app:krrs-analytic-extension}
+is also formalized, so the two-sided extension of the KRR--S parametrization,
+\Cref{thm:krrs-analytic-extension}, is proved within the formal development rather than assumed.
+Two qualifications.  This part of the formalization treats the $d$-regular case
+needed for our main results, rather than the more general $d$-starlike
+formulation of \Cref{thm:krrs-analytic-extension}.  And the replica-symmetric half of
+\Cref{thm:local-optimizer-structure} is formalized on the window $\pc(r)\le p<p_*$ rather than
+on the full range $\pc(r)\le p<r$ for which we state it; this has no effect on
+\Cref{thm:local-optimizer-structure} itself, whose neighborhood already forces $p<p_*$.
+
+\paragraph{Exceptional endpoint.}
+\Cref{sec:singular-endpoint} is formalized, including its terminal
+theorem.  The analytic construction of the rank-one family converging to the
+constant endpoint, its parameter expansions and its strict improvement over
+the constant graphon, the localization and rank-one reduction, the rank-one
+factor comparison, and the arbitrary-graphon comparison are all
+machine-checked, and \Cref{thm:endpoint-optimality} is proved in both of its
+clauses, global optimality and uniqueness up to measure-preserving relabelling.
+Both conclusions include the construction of this family rather than
+assuming its prior existence.  \Cref{thm:endpoint-optimizers} is
+assembled from these results as a single formal statement.
+
+\paragraph{External results.}
+The only mathematical results assumed as axioms are the standard graphon
+compactness, continuity, and lower-semicontinuity properties used in the paper;
+the generalized H\"older inequality \eqref{eq:generalized-holder}; the
+Lubetzky--Zhao criterion \Cref{thm:lz-criterion}; and two published
+entropy-maximization results
+of Kenyon, Radin, Ren, and Sadun
+\cite[Theorems~1.1 and~3.3]{kenyon2014entropy}.  Each is assumed with the
+standing hypotheses of its source, and all other statements described
+above are derived from these results inside Lean.  One reading of the quoted
+statements is worth recording: as in \Cref{sec:preliminaries} and
+Appendix~\ref{app:krrs-analytic-extension}, we take the positive-surplus region of
+\cite[Theorem~1.1]{kenyon2014entropy} to be open, since the analyticity of the
+parameter maps on it presupposes as much, and that openness is what turns the
+per-$\eps$ threshold $\tau_0(\eps)$ into the surplus window
+\eqref{eq:krrs-uniform-domain} valid on a neighbourhood of $\eps_0$.  The
+repository also contains a separate development, of the $p\downarrow0$ boundary
+for triangles, which carries an assumption of its own; nothing described here
+depends on it.

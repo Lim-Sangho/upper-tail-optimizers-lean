@@ -1,0 +1,181 @@
+-- Root module / import manifest for the formalisation of `paper/bipodal_optimizer.tex`
+-- The deterministic results from Sections 1–7 and the appendices, with the scope and
+-- statement differences recorded in FORMALISATION.md, and the worked instances.
+-- The imports below are in dependency order and double as the reading order.
+-- Sections 1–3 of `paper/bipodal_optimizer.tex`: external inputs, the scalar entropy layer, and the
+-- Lubetzky–Zhao boundary curve (Theorem 3.1).
+import UpperTailOptimizers.Graphon.RegularGraph
+import UpperTailOptimizers.LZBoundary.Jp
+import UpperTailOptimizers.LZBoundary.Phi
+import UpperTailOptimizers.LZBoundary.PhiConvex
+import UpperTailOptimizers.Graphon.Basic
+import UpperTailOptimizers.Graphon.Bipodal
+import UpperTailOptimizers.Graphon.ScalarEntropy
+import UpperTailOptimizers.Graphon.BipodalBridge
+import UpperTailOptimizers.Graphon.CutMetric
+import UpperTailOptimizers.Graphon.ExternalInputs
+import UpperTailOptimizers.LZBoundary.Arc
+import UpperTailOptimizers.LZBoundary.Uniqueness
+import UpperTailOptimizers.LZBoundary.ContactMaps
+import UpperTailOptimizers.LZBoundary.ContactMono
+import UpperTailOptimizers.LZBoundary.ContactBridge
+import UpperTailOptimizers.LZBoundary.AnalyticEntropy
+import UpperTailOptimizers.LZBoundary.Existence
+import UpperTailOptimizers.LZBoundary.Curve
+-- Section 4 of `paper/bipodal_optimizer.tex`: the local reduction
+import UpperTailOptimizers.Graphon.JpConvexity
+import UpperTailOptimizers.Graphon.Functionals
+import UpperTailOptimizers.Graphon.HomDensity
+import UpperTailOptimizers.Graphon.CutContinuity
+import UpperTailOptimizers.Graphon.Attainment
+import UpperTailOptimizers.Nondegeneracy.PowBounds
+import UpperTailOptimizers.Nondegeneracy.ArcBounds
+-- Appendix A of `paper/bipodal_optimizer.tex`: the compact-uniform KRR-S theorem.  (The two-block
+-- polynomial layer `Nondegeneracy.TDensityExpansion` is shared with Section 5.)
+import UpperTailOptimizers.Nondegeneracy.TDensityExpansion
+import UpperTailOptimizers.KRRS.Chart
+-- The rewritten Appendix A: the two KRR-S theorem statements (`Inputs`) and the
+-- finite-dimensional calculus they are combined with.
+import UpperTailOptimizers.KRRS.Reduced
+import UpperTailOptimizers.KRRS.Inputs
+import UpperTailOptimizers.KRRS.PsiNondeg
+import UpperTailOptimizers.KRRS.SCalc
+import UpperTailOptimizers.KRRS.TCalc
+import UpperTailOptimizers.KRRS.TCalcAB
+import UpperTailOptimizers.KRRS.CChart
+import UpperTailOptimizers.KRRS.Stationarity
+import UpperTailOptimizers.KRRS.LocalMax
+import UpperTailOptimizers.KRRS.SigmaLink
+import UpperTailOptimizers.KRRS.Family
+import UpperTailOptimizers.KRRS.BaseZero
+import UpperTailOptimizers.KRRS.Main
+import UpperTailOptimizers.LocalReduction.Main
+-- Section 5 of `paper/bipodal_optimizer.tex`: universal non-degeneracy
+import UpperTailOptimizers.Nondegeneracy.ScalarLower
+import UpperTailOptimizers.Nondegeneracy.GraphonLower
+import UpperTailOptimizers.Nondegeneracy.BipodalUpper
+import UpperTailOptimizers.Nondegeneracy.QuadraticUpper
+import UpperTailOptimizers.Nondegeneracy.BoundaryExcess
+import UpperTailOptimizers.Nondegeneracy.AnalyticTools
+import UpperTailOptimizers.Nondegeneracy.AnalyticExcess
+-- Section 6 of `paper/bipodal_optimizer.tex`: the local structure theorem
+import UpperTailOptimizers.LocalOptimizer.Basic
+import UpperTailOptimizers.LocalOptimizer.ReplicaSymmetric
+import UpperTailOptimizers.LocalOptimizer.ScalarCritical
+import UpperTailOptimizers.LocalOptimizer.SymmetryBreaking
+import UpperTailOptimizers.LocalOptimizer.Analytic
+import UpperTailOptimizers.LocalOptimizer.ParameterAsymptotics
+import UpperTailOptimizers.LocalOptimizer.Main
+-- Theorem 1.5: a direct corollary of the Section 6 theorem
+import UpperTailOptimizers.LocalOptimizer.Global
+-- Local uniqueness in the analytic implicit function theorem, used by the Section 7 family
+-- below.
+import UpperTailOptimizers.LZBoundary.AnalyticImplicitUnique
+-- Section 7 of `paper/bipodal_optimizer.tex` (the `\input` of `singular_endpoint.tex`): the
+-- singular regular endpoint `r_* = (d-1)/d`, where the two Lubetzky–Zhao contacts coalesce.
+import UpperTailOptimizers.SingularEndpoint.Defs
+import UpperTailOptimizers.SingularEndpoint.LogSlope
+import UpperTailOptimizers.SingularEndpoint.Quotient
+import UpperTailOptimizers.SingularEndpoint.TaylorTail
+import UpperTailOptimizers.SingularEndpoint.Interp2
+import UpperTailOptimizers.SingularEndpoint.PowInterp
+import UpperTailOptimizers.SingularEndpoint.Interp3
+import UpperTailOptimizers.SingularEndpoint.Interp4
+import UpperTailOptimizers.SingularEndpoint.CubicInt
+import UpperTailOptimizers.SingularEndpoint.Sandwich
+import UpperTailOptimizers.SingularEndpoint.RankOneLinear
+import UpperTailOptimizers.SingularEndpoint.FamilyEqs
+import UpperTailOptimizers.SingularEndpoint.FamilySystem
+import UpperTailOptimizers.SingularEndpoint.FamilyBase
+import UpperTailOptimizers.SingularEndpoint.FamilyAnalytic
+import UpperTailOptimizers.SingularEndpoint.FamilyDeriv
+import UpperTailOptimizers.SingularEndpoint.FamilyExists
+import UpperTailOptimizers.SingularEndpoint.FamilySymm
+import UpperTailOptimizers.SingularEndpoint.FamilyUnique
+import UpperTailOptimizers.SingularEndpoint.Jacobian3
+import UpperTailOptimizers.SingularEndpoint.Contact
+import UpperTailOptimizers.SingularEndpoint.FkktDeriv
+import UpperTailOptimizers.SingularEndpoint.Fkkt4
+import UpperTailOptimizers.SingularEndpoint.LstarTaylor
+import UpperTailOptimizers.SingularEndpoint.LogOdds
+import UpperTailOptimizers.SingularEndpoint.Bipodality
+import UpperTailOptimizers.SingularEndpoint.Identities
+import UpperTailOptimizers.SingularEndpoint.Factor
+import UpperTailOptimizers.SingularEndpoint.RankOne
+import UpperTailOptimizers.SingularEndpoint.KernelOp
+import UpperTailOptimizers.SingularEndpoint.FactorContraction
+import UpperTailOptimizers.SingularEndpoint.FactorLpBridge
+import UpperTailOptimizers.SingularEndpoint.FactorFix
+import UpperTailOptimizers.SingularEndpoint.FactorSolution
+import UpperTailOptimizers.SingularEndpoint.FactorStability
+import UpperTailOptimizers.SingularEndpoint.FactorHDensity
+import UpperTailOptimizers.SingularEndpoint.FactorMain
+import UpperTailOptimizers.SingularEndpoint.Gap
+import UpperTailOptimizers.SingularEndpoint.Quartic
+import UpperTailOptimizers.SingularEndpoint.GamQuartic
+import UpperTailOptimizers.SingularEndpoint.Continuation
+import UpperTailOptimizers.SingularEndpoint.JpTilde
+import UpperTailOptimizers.SingularEndpoint.FirstVariationBound
+import UpperTailOptimizers.SingularEndpoint.PsiTilde
+import UpperTailOptimizers.SingularEndpoint.TailScalar
+import UpperTailOptimizers.SingularEndpoint.DistributionMeasure
+import UpperTailOptimizers.SingularEndpoint.DistributionVariance
+import UpperTailOptimizers.SingularEndpoint.DistributionLocal
+import UpperTailOptimizers.SingularEndpoint.KernelInterp
+import UpperTailOptimizers.SingularEndpoint.KernelTheta
+import UpperTailOptimizers.SingularEndpoint.PowFirstOrder
+import UpperTailOptimizers.SingularEndpoint.KernelError
+import UpperTailOptimizers.SingularEndpoint.DistributionGap
+import UpperTailOptimizers.SingularEndpoint.DistributionQuant
+import UpperTailOptimizers.SingularEndpoint.DistributionWindow
+import UpperTailOptimizers.SingularEndpoint.DistributionAbsorption
+import UpperTailOptimizers.SingularEndpoint.DistributionFinal
+import UpperTailOptimizers.SingularEndpoint.DistributionUnique
+import UpperTailOptimizers.SingularEndpoint.MuExpansion
+import UpperTailOptimizers.SingularEndpoint.Localization
+import UpperTailOptimizers.SingularEndpoint.L4Bound
+import UpperTailOptimizers.SingularEndpoint.Family
+import UpperTailOptimizers.SingularEndpoint.RowSign
+import UpperTailOptimizers.SingularEndpoint.MfunSandwich
+import UpperTailOptimizers.SingularEndpoint.Alpha
+import UpperTailOptimizers.SingularEndpoint.FamilyBuild
+import UpperTailOptimizers.SingularEndpoint.FamilyRates
+import UpperTailOptimizers.SingularEndpoint.FamilyQuadratic
+import UpperTailOptimizers.SingularEndpoint.Expansions
+import UpperTailOptimizers.SingularEndpoint.GamTaylor
+import UpperTailOptimizers.SingularEndpoint.Trapezoid
+import UpperTailOptimizers.SingularEndpoint.Order4
+import UpperTailOptimizers.SingularEndpoint.Order4Right
+import UpperTailOptimizers.SingularEndpoint.IncrementSum
+import UpperTailOptimizers.SingularEndpoint.Order5
+import UpperTailOptimizers.SingularEndpoint.EdgeGap
+import UpperTailOptimizers.SingularEndpoint.StrictImprovement
+import UpperTailOptimizers.SingularEndpoint.FamilyLocalization
+import UpperTailOptimizers.SingularEndpoint.OrderFactor
+import UpperTailOptimizers.SingularEndpoint.MfunAnalytic
+import UpperTailOptimizers.SingularEndpoint.FirstVariation
+import UpperTailOptimizers.SingularEndpoint.CostGap
+import UpperTailOptimizers.SingularEndpoint.FamilyContinuity
+import UpperTailOptimizers.SingularEndpoint.GamAverage
+import UpperTailOptimizers.SingularEndpoint.GamRVal
+import UpperTailOptimizers.SingularEndpoint.Forced
+import UpperTailOptimizers.SingularEndpoint.TwoValued
+import UpperTailOptimizers.SingularEndpoint.EssRange
+import UpperTailOptimizers.SingularEndpoint.Terminal
+import UpperTailOptimizers.SingularEndpoint.TerminalTwoValued
+import UpperTailOptimizers.SingularEndpoint.TerminalUnique
+import UpperTailOptimizers.SingularEndpoint.FactorTail
+import UpperTailOptimizers.SingularEndpoint.LdSharp
+import UpperTailOptimizers.SingularEndpoint.GraphonComparison
+import UpperTailOptimizers.SingularEndpoint.LocalizationMain
+import UpperTailOptimizers.SingularEndpoint.GraphonComparisonMain
+import UpperTailOptimizers.SingularEndpoint.JpConvexGap
+import UpperTailOptimizers.SingularEndpoint.RowWindow
+import UpperTailOptimizers.SingularEndpoint.RowJensen
+import UpperTailOptimizers.SingularEndpoint.LagrangeBridge
+import UpperTailOptimizers.SingularEndpoint.GraphonComparisonMaster
+import UpperTailOptimizers.SingularEndpoint.SingularEndpointOptimality
+import UpperTailOptimizers.SingularEndpoint.BipodalTransport
+import UpperTailOptimizers.SingularEndpoint.CdfTransport
+import UpperTailOptimizers.SingularEndpoint.IntroSingularEndpointOptimizers
+import UpperTailOptimizers.LocalOptimizer.Instances

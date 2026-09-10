@@ -1,0 +1,662 @@
+\section{Proof of the extended KRR--S theorem}\label{app:krrs-analytic-extension}
+
+We first recall two results from~\cite{kenyon2014entropy} needed for the
+proof of \Cref{thm:krrs-analytic-extension}.
+Their Theorem~1.1 describes the optimizer parameters only for
+\(\vartheta:=\tau-\eps^m>0\).  The rest of the appendix constructs their
+two-sided analytic continuation and verifies that it agrees with those
+optimizer parameters where they are defined.
+
+\begin{theorem}[{\cite[Theorem~1.1]{kenyon2014entropy}}]
+\label{thm:krrs-bipodality}
+Let \(H\) be a \(d\)-starlike graph with \(m\ge2\) edges, and let
+\(\eps\in(0,1)\setminus\{(d-1)/d\}\).  There exists
+\(\tau_0(\eps)>\eps^m\) such that, whenever
+\(\eps^m<\tau<\tau_0(\eps)\), the entropy maximizer subject to
+\[
+  e(W)=\eps,
+  \qquad
+  t(H,W)=\tau
+\]
+is unique up to relabelling and is bipodal.  Its parameters
+\((q_{11},q_{12},q_{22},c)\) are jointly real-analytic in \((\eps,\tau)\) on
+the region
+\[
+  \left\{(\eps,\tau):
+    \eps\ne\frac{d-1}{d},\quad
+    \eps^m<\tau<\tau_0(\eps)\right\}.
+\]
+For each fixed nonexceptional \(\eps\), as \(\tau\downarrow\eps^m\),
+\[
+  q_{22}\longrightarrow\eps,
+  \qquad
+  q_{12}\longrightarrow\zeta_d(\eps),
+  \qquad
+  q_{11}\longrightarrow a_d(\eps),
+  \qquad
+  c=O(\tau-\eps^m),
+\]
+where \(a_d(\eps)\in(0,1)\) satisfies
+\[
+  S_0'\bigl(a_d(\eps)\bigr)
+  =2S_0'\bigl(\zeta_d(\eps)\bigr)-S_0'(\eps).
+\]
+\end{theorem}
+
+Note that since \(S_0'\) is a strictly decreasing bijection from \((0,1)\) onto
+\(\mathbb R\), the preceding equation uniquely determines \(a_d(\eps)\).
+
+\begin{theorem}[{\cite[Theorem~3.3]{kenyon2014entropy}}]
+\label{thm:krrs-cross-density}
+For every \(d\ge2\) and \(\eps\in(0,1)\), the function
+\(z\mapsto\psi_d(\eps,z)\) has a unique critical point, denoted
+\(\zeta_d(\eps)\).  The map \(\zeta_d:(0,1)\to(0,1)\) is strictly decreasing,
+has nowhere-vanishing derivative, and is an involution.  Its unique fixed
+point is \((d-1)/d\).
+\end{theorem}
+
+We also remark that \(\zeta_d(\eps)\) is the unique maximizer of
+\(z\mapsto\psi_d(\eps,z)\) over \((0,1)\); see
+\cite[Section~4]{kenyon2014entropy}.
+
+Before proving \Cref{thm:krrs-analytic-extension}, we clarify what must be added to
+\Cref{thm:krrs-bipodality}.  Although the latter states the threshold
+\(\tau_0(\eps)\) pointwise, its joint-analyticity assertion implies that, for
+every nonexceptional \(\eps_0\), there are a neighbourhood \(U\) of \(\eps_0\)
+and \(\Delta>0\) such that the theorem statement holds uniformly for
+\(U\times(0,\Delta)\).  It does not, however, provide an analytic extension
+through \(\vartheta=0\).  The main purpose of the proof is to construct this
+two-sided jointly analytic extension, which is needed for the boundary
+analysis in
+\Cref{thm:positive-second-variation,thm:local-optimizer-structure}.
+
+\begin{proof}[Proof of \Cref{thm:krrs-analytic-extension}]
+Let $\eps_*:=\frac{d-1}{d}$
+and fix
+\[
+  \eps_0\in(0,1)\setminus\{\eps_*\},
+  \qquad
+  z_0:=\zeta_d(\eps_0).
+\]
+By the involution and fixed-point assertions in
+\Cref{thm:krrs-cross-density}, \(z_0\ne\eps_0\).  Set
+\(a_0:=a_d(\eps_0)\), so that
+\begin{equation}\label{eq:krrs-small-block-limit}
+  S_0'(a_0)=2S_0'(z_0)-S_0'(\eps_0).
+\end{equation}
+By \Cref{thm:krrs-bipodality}, the parameters converge to
+\begin{equation}\label{eq:krrs-parameter-limits}
+  (q_{11},q_{12},q_{22},c)\longrightarrow(a_0,z_0,\eps_0,0).
+\end{equation}
+
+\paragraph{1. Nondegeneracy of the scalar maximizer.}
+For fixed \(\eps\), put
+\begin{align}
+  \mathcal N_\eps(z)
+  &:=2\bigl[S_0(z)-S_0(\eps)-S_0'(\eps)(z-\eps)\bigr],\label{eq:krrs-entropy-remainder}\\
+  \mathcal D_\eps(z)
+  &:=z^d-\eps^d-d\eps^{d-1}(z-\eps).\label{eq:krrs-moment-remainder}
+\end{align}
+Thus, \(\psi_d(\eps,z)=\mathcal N_\eps(z)/\mathcal D_\eps(z)\) when
+\(z\ne\eps\).  We claim that
+\begin{equation}\label{eq:krrs-scalar-nondegeneracy}
+  \partial_z^2\psi_d(\eps_0,z_0)<0.
+\end{equation}
+To see this, \(z_0\) is an interior maximizer, so its second derivative is
+nonpositive.  Suppose for contradiction that it vanishes.  The third
+derivative must then vanish as well, since an interior local maximum cannot
+have a first nonzero derivative of odd order.  At \((\eps_0,z_0)\) we have
+\(z_0\ne\eps_0\), and hence the identity
+\(\mathcal N_{\eps_0}=\psi_d(\eps_0,\cdot)\mathcal D_{\eps_0}\) holds.  Since the first three derivatives of \(\psi_d\)
+at \(z_0\) would vanish, by differentiating this identity we would obtain
+\begin{equation}\label{eq:krrs-ratio-derivatives}
+  \mathcal N_{\eps_0}''(z_0)
+    =\psi_d(\eps_0,z_0)\mathcal D_{\eps_0}''(z_0),
+  \qquad
+  \mathcal N_{\eps_0}'''(z_0)
+    =\psi_d(\eps_0,z_0)\mathcal D_{\eps_0}'''(z_0).
+\end{equation}
+The relevant derivatives are
+\begin{align*}
+  \mathcal N_\eps''(z)&=-\frac1{z(1-z)},
+  &
+  \mathcal N_\eps'''(z)&=\frac{1-2z}{z^2(1-z)^2},\\
+  \mathcal D_\eps''(z)&=d(d-1)z^{d-2},
+  &
+  \mathcal D_\eps'''(z)&=d(d-1)(d-2)z^{d-3}.
+\end{align*}
+If \(d=2\), then \(\mathcal D_{\eps_0}'''\equiv0\), so the second identity
+in \eqref{eq:krrs-ratio-derivatives} gives
+\(\mathcal N_{\eps_0}'''(z_0)=0\), hence \(z_0=1/2=\eps_*\).  If
+\(d\ge3\), divide the second identity in
+\eqref{eq:krrs-ratio-derivatives} by the first; the division is legitimate
+because both sides of the first equal
+\(\mathcal N_{\eps_0}''(z_0)=-1/(z_0(1-z_0))\ne0\), and it yields
+\[
+  \frac{2z_0-1}{z_0(1-z_0)}=\frac{d-2}{z_0},
+\]
+hence again \(z_0=(d-1)/d=\eps_*\).  In either case, this implies $\eps_0 = (d-1)/d$,
+contrary to the choice of \(\eps_0\).  This proves
+\eqref{eq:krrs-scalar-nondegeneracy}.
+
+\paragraph{2. An analytic parametrization of the two constraints.}
+Write a bipodal graphon, with the first pode of size \(c\), as
+\[
+  W(a,b,q,c),
+  \qquad
+  (a,b,q)=(q_{11},q_{12},q_{22}).
+\]
+Its edge density is
+\[
+  \mathcal E(a,b,q,c)
+  =c^2a+2c(1-c)b+(1-c)^2q.
+\]
+For prescribed edge density \(\eps\), solve this equation exactly for \(q\):
+\begin{equation}\label{eq:krrs-edge-constraint}
+  q=Q(\eps,a,b,c)
+  :=\frac{\eps-c^2a-2c(1-c)b}{(1-c)^2}.
+\end{equation}
+The function \(Q\) is real-analytic near
+\((\eps_0,a_0,z_0,0)\), and
+\begin{equation}\label{eq:krrs-large-block-expansion}
+  Q(\eps,a,b,c)
+  =\eps+2(\eps-b)c+(3\eps-2b-a)c^2+O(c^3).
+\end{equation}
+Define the edge-constrained \(H\)-density and entropy by
+\begin{align*}
+  \widehat{\mathcal T}(\eps,a,b,c)
+    &:=t\bigl(H,W(a,b,Q(\eps,a,b,c),c)\bigr),\\
+  \widehat{\mathcal S}(\eps,a,b,c)
+    &:=c^2S_0(a)+2c(1-c)S_0(b)
+       +(1-c)^2S_0\bigl(Q(\eps,a,b,c)\bigr).
+\end{align*}
+
+Let \(n_1\) and \(n_d\) be the numbers of vertices of \(H\) of degrees
+\(1\) and \(d\), respectively, and put \(v=n_1+n_d\).  Then
+\(n_1+dn_d=2m\), and \(n_d>0\).  Expanding the homomorphism-density sum
+according to the set of vertices assigned to the first pode gives
+\begin{align}
+  \left.\partial_c\widehat{\mathcal T}(\eps,a,b,c)\right|_{c=0}
+  &=\sum_{x\in V(H)}b^{\deg(x)}\eps^{m-\deg(x)}
+    -v\eps^m+2m\eps^{m-1}(\eps-b)\notag\\
+  &=n_d\eps^{m-d}
+      \bigl[b^d-\eps^d-d\eps^{d-1}(b-\eps)\bigr].
+      \label{eq:krrs-density-derivative}
+\end{align}
+To verify the first equality, consider first an assignment in which \(x\) is
+the unique vertex in the first pode.  Its contribution to
+\(\widehat{\mathcal T}\) is
+\[
+  c(1-c)^{v-1}b^{\deg(x)}
+  Q(\eps,a,b,c)^{m-\deg(x)},
+\]
+whose derivative at \(c=0\) is
+\(b^{\deg(x)}\eps^{m-\deg(x)}\).  Summing over \(x\in V(H)\) gives the first
+term.  If at least two vertices are assigned to the first pode, the
+corresponding summand contains a factor \(c^k\) for some \(k\ge2\), while
+all its other factors are analytic near \(c=0\); hence its derivative at
+\(c=0\) vanishes.  Finally, the all-second-pode assignment contributes
+\((1-c)^vQ(\eps,a,b,c)^m\).  Since \(Q(\eps,a,b,0)=\eps\) and
+\(\partial_cQ|_{c=0}=2(\eps-b)\), its derivative at \(c=0\) is
+\[
+  -v\eps^m+m\eps^{m-1}\,2(\eps-b).
+\]
+This verifies the first equality in \eqref{eq:krrs-density-derivative}.
+The second equality follows from the two identities for \(n_1,n_d\) above.
+
+Set
+\begin{equation}\label{eq:krrs-density-coefficient}
+  \mathcal A(\eps,b)
+  :=n_d\eps^{m-d}\mathcal D_\eps(b),
+\end{equation}
+which is equal to $\left.\partial_c\widehat{\mathcal T}(\eps,a,b,c)\right|_{c=0}$ by \eqref{eq:krrs-density-derivative}.
+Strict convexity of \(u\mapsto u^d\) gives
+\(\mathcal D_\eps(b)>0\) whenever \(b\ne\eps\).  In particular,
+\(\mathcal A(\eps_0,z_0)>0\).  The analytic implicit function theorem,
+applied to
+\[
+  \widehat{\mathcal T}(\eps,a,b,c)=\eps^m+\vartheta,
+\]
+gives neighbourhoods of \((\eps_0,a_0,z_0,0)\) and a unique
+real-analytic function
+\begin{equation}\label{eq:krrs-density-constraint}
+  c=C(\eps,a,b,\vartheta),
+  \qquad
+  C(\eps,a,b,0)=0,
+\end{equation}
+that solves the \(H\)-density constraint.  After shrinking the
+neighbourhood, \(Q\) and \(C\) take values in \((0,1)\) whenever
+\(\vartheta>0\) and \((\eps,a,b)\) is sufficiently close to the base point:
+for \(Q\), this follows by continuity and
+\(Q(\eps_0,a_0,z_0,0)=\eps_0\in(0,1)\), while for \(C\) it follows from
+\(C(\eps,a,b,0)=0\) together with
+\(\partial_\vartheta C(\eps,a,b,0)=1/\mathcal A(\eps,b)>0\), obtained by
+differentiating the constraint in \(\vartheta\).
+
+Substitute \eqref{eq:krrs-density-constraint} into the entropy and write
+\begin{equation}\label{eq:krrs-constrained-entropy}
+  \Sigma(\eps,a,b,\vartheta)
+  :=\widehat{\mathcal S}
+       \bigl(\eps,a,b,C(\eps,a,b,\vartheta)\bigr).
+\end{equation}
+Since \(\Sigma(\eps,a,b,0)=S_0(\eps)\), there exists a real-analytic function \(L\) such that
+\begin{equation}\label{eq:krrs-entropy-quotient}
+  \Sigma(\eps,a,b,\vartheta)
+  =S_0(\eps)+\vartheta L(\eps,a,b,\vartheta),
+  \qquad
+  L(\eps,a,b,\vartheta)
+  :=\int_0^1
+     \partial_\vartheta\Sigma(\eps,a,b,t\vartheta)\,dt.
+\end{equation}
+For \(\vartheta\ne0\), \(L\) agrees with
+\((\Sigma-S_0(\eps))/\vartheta\), while the integral formula defines its
+real-analytic extension to \(\vartheta=0\).
+
+Using \(Q(\eps,a,b,0)=\eps\) and
+\(\partial_cQ(\eps,a,b,0)=2(\eps-b)\), since the term \(c^2S_0(a)\) makes no contribution to the first derivative, direct differentiation gives
+\begin{equation}\label{eq:krrs-entropy-derivative}
+  \begin{aligned}
+  \left.\partial_c\widehat{\mathcal S}(\eps,a,b,c)\right|_{c=0}
+  &=2S_0(b)-2S_0(\eps)+2S_0'(\eps)(\eps-b)\\
+  &=2\bigl[S_0(b)-S_0(\eps)-S_0'(\eps)(b-\eps)\bigr]\\
+  &=\mathcal N_\eps(b).
+  \end{aligned}
+\end{equation}
+
+Differentiating the \(H\)-density constraint with respect to \(\vartheta\) at
+\(\vartheta=0\), and using
+\eqref{eq:krrs-density-derivative} and \eqref{eq:krrs-density-coefficient}, gives
+\[
+  \mathcal A(\eps,b)\,\partial_\vartheta C(\eps,a,b,0)=1,
+  \qquad
+  \partial_\vartheta C(\eps,a,b,0)=\frac{1}{\mathcal A(\eps,b)}.
+\]
+Moreover, \eqref{eq:krrs-entropy-quotient} gives
+\(L(\eps,a,b,0)=\partial_\vartheta\Sigma(\eps,a,b,0)\).  Hence, the chain rule
+and \eqref{eq:krrs-entropy-derivative} yield the boundary identity
+\begin{equation}\label{eq:krrs-quotient-boundary}
+  \begin{aligned}
+  L(\eps,a,b,0)
+  &=\left.\partial_c\widehat{\mathcal S}(\eps,a,b,c)\right|_{c=0}
+    \partial_\vartheta C(\eps,a,b,0)\\
+  &=\frac{\mathcal N_\eps(b)}{\mathcal A(\eps,b)}
+   =\frac{\psi_d(\eps,b)}{n_d\eps^{m-d}}.
+  \end{aligned}
+\end{equation}
+Thus, the coefficient \(L(\eps,a,b,0)\) of \(\vartheta\) in the Taylor
+expansion of the entropy \(\Sigma(\eps,a,b,\vartheta)\) about \(\vartheta=0\) is
+independent of \(a=q_{11}\).
+
+\paragraph{3. Construction of a two-sided analytic solution of the
+stationarity equations.}
+We next retain exactly the second-order information needed to recover the
+otherwise invisible parameter \(a=q_{11}\).
+
+We use the following elementary analytic factorization fact.  Let \(f\) be
+real-analytic near a point of the hyperplane \(\{x_j=0\}\) and suppose
+\(\partial_{x_j}^{\,i}f=0\) on that hyperplane for \(0\le i<k\).  Then
+\(f=x_j^{k}g\) with \(g\) real-analytic.  For \(k=1\), one may take
+\[
+  g(x)=\int_0^1
+    (\partial_jf)(x_1,\dots,tx_j,\dots,x_n)\,dt.
+\]
+The general case follows by iteration.  We apply this factorization in the
+\(c\)-variable with \(k=3\).  For each of \(\widehat{\mathcal T}\) and
+\(\widehat{\mathcal S}\), the difference from its second-order Taylor
+polynomial at \(c=0\) has vanishing \(c\)-derivatives of orders \(0,1,2\) on
+\(\{c=0\}\).  Hence, these differences can be written as
+\(c^3R_{\mathcal T}\) and \(c^3R_{\mathcal S}\), respectively, with
+\(R_{\mathcal T}\) and \(R_{\mathcal S}\) real-analytic.  Writing the
+second-order Taylor coefficients in the form justified below gives
+real-analytic functions \(B_0,B_1,R_0,R_1\), depending on \((\eps,b)\), such
+that
+\begin{align}
+  \widehat{\mathcal T}(\eps,a,b,c)
+  &=\eps^m+\mathcal A(\eps,b)c
+    +\bigl[B_0(\eps,b)+B_1(\eps,b)a\bigr]c^2
+    +c^3R_{\mathcal T}(\eps,a,b,c),
+    \label{eq:krrs-density-expansion}\\
+  \widehat{\mathcal S}(\eps,a,b,c)
+  &=S_0(\eps)+\mathcal N_\eps(b)c
+    +\bigl[S_0(a)+R_0(\eps,b)+R_1(\eps,b)a\bigr]c^2
+    +c^3R_{\mathcal S}(\eps,a,b,c).
+    \label{eq:krrs-entropy-expansion}
+\end{align}
+We now verify the stated form of the second-order coefficients in
+\eqref{eq:krrs-density-expansion} and \eqref{eq:krrs-entropy-expansion}.  By
+\eqref{eq:krrs-large-block-expansion}, write
+\[
+  Q(\eps,a,b,c)=\eps+q_1c+q_2c^2+O(c^3),
+  \qquad q_1=2(\eps-b),\quad q_2=3\eps-2b-a.
+\]
+Thus, \(q_1\) is independent of \(a\), whereas \(q_2\) is affine in \(a\).
+In the homomorphism-density expansion, the contribution at order \(c^2\)
+from assignments with no vertex in the first pode depends linearly on
+\(q_2\), while all its remaining terms depend only on \(q_1\).  An assignment
+with one vertex in the first pode already carries a factor \(c\), so its
+coefficient at order \(c^2\) depends only on \(q_1\).  An assignment with
+exactly two vertices in the first pode contains at most one factor \(a\),
+because \(H\) is simple and those two vertices support at most one edge.
+Finally, assignments with at least three vertices in the first pode are
+divisible by \(c^3\).  Hence, the coefficient of \(c^2\) in
+\(\widehat{\mathcal T}\) is affine in \(a\), which proves
+\eqref{eq:krrs-density-expansion}.
+
+For \(\widehat{\mathcal S}\), the term \(c^2S_0(a)\) is the only possible
+nonlinear dependence on \(a\).  To see this, \(2c(1-c)S_0(b)\) is independent of
+\(a\), and the coefficient of \(c^2\) in the remaining term is
+\[
+  [c^2]\,(1-c)^2S_0(Q)
+  =S_0(\eps)-2S_0'(\eps)q_1+S_0'(\eps)q_2
+    +\frac12S_0''(\eps)q_1^2.
+\]
+Since \(q_1\) is independent of \(a\) and \(q_2\) is affine in \(a\), this
+coefficient is affine in \(a\).  This proves
+\eqref{eq:krrs-entropy-expansion}.
+
+Under the constraint
+\(\widehat{\mathcal T}(\eps,a,b,c)=\eps^m+\vartheta\), solving
+\eqref{eq:krrs-density-expansion} for
+\(c=C(\eps,a,b,\vartheta)\) as a power series in \(\vartheta\) gives
+\begin{equation}\label{eq:krrs-block-size-expansion}
+  \begin{aligned}
+    C(\eps,a,b,\vartheta)
+    &=\frac{\vartheta}{\mathcal A(\eps,b)}
+      -\frac{B_0(\eps,b)+B_1(\eps,b)a}
+             {\mathcal A(\eps,b)^3}\,\vartheta^2
+      +O(\vartheta^3).
+  \end{aligned}
+\end{equation}
+Substituting \eqref{eq:krrs-block-size-expansion} into
+\eqref{eq:krrs-entropy-expansion} and recalling
+\eqref{eq:krrs-entropy-quotient} gives
+\begin{equation}\label{eq:krrs-quotient-expansion}
+  L(\eps,a,b,\vartheta)
+  =\frac{\mathcal N_\eps(b)}{\mathcal A(\eps,b)}
+    +\vartheta M(\eps,a,b)+O(\vartheta^2),
+\end{equation}
+where
+\begin{equation}\label{eq:krrs-second-coefficient}
+  M(\eps,a,b)
+  =\frac{S_0(a)+R_0(\eps,b)+R_1(\eps,b)a}
+         {\mathcal A(\eps,b)^2}
+   -\frac{\mathcal N_\eps(b)
+          [B_0(\eps,b)+B_1(\eps,b)a]}
+         {\mathcal A(\eps,b)^3}.
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:krrs-coefficient-concavity}
+  \partial_a^2M(\eps,a,b)
+  =\frac{S_0''(a)}{\mathcal A(\eps,b)^2}<0.
+\end{equation}
+
+By \eqref{eq:krrs-quotient-boundary}, \(\partial_aL(\eps,a,b,0)=0\); hence, by the
+analytic factorization fact above, there is a unique analytic function
+\(\mathcal F_1\) satisfying
+\begin{equation}\label{eq:krrs-small-block-stationarity}
+  \partial_aL(\eps,a,b,\vartheta)
+  =\vartheta\mathcal F_1(\eps,a,b,\vartheta).
+\end{equation}
+Also put
+\begin{equation}\label{eq:krrs-cross-block-stationarity}
+  \mathcal F_2(\eps,a,b,\vartheta)
+  :=\partial_bL(\eps,a,b,\vartheta).
+\end{equation}
+For fixed \((\eps,\vartheta)\) with \(\vartheta>0\), every interior local
+maximizer \((a,b)\) of
+\[
+  (a,b)\longmapsto\Sigma(\eps,a,b,\vartheta)
+\]
+satisfies \(\mathcal F_1=\mathcal F_2=0\).  To verify this,
+\eqref{eq:krrs-entropy-quotient} gives
+\(\partial_a\Sigma=\vartheta^2\mathcal F_1\) and
+\(\partial_b\Sigma=\vartheta\mathcal F_2\).
+
+We next show that \((\mathcal F_1,\mathcal F_2)\) vanishes at
+\((\eps_0,a_0,z_0,0)\) and that its Jacobian with respect to \((a,b)\) is
+invertible there.  These are the hypotheses needed to solve the system
+\(\mathcal F_1=\mathcal F_2=0\) locally for \((a,b)\) as analytic functions
+of \((\eps,\vartheta)\).  First,
+\(\mathcal F_2(\eps_0,a_0,z_0,0)=0\) by
+\eqref{eq:krrs-quotient-boundary} and the critical-point property of \(z_0\).  For
+fixed \(\eps=\eps_0\) and sufficiently small \(\vartheta>0\), let
+\(W_\vartheta\) be the entropy maximizer supplied by
+\Cref{thm:krrs-bipodality} for \(\tau=\eps_0^m+\vartheta\).  Denote its bipodal
+parameters by \((a,b,q,c)(\vartheta)\), after relabelling so that the first
+pode is the one whose size \(c(\vartheta)\) tends to zero as
+\(\vartheta\downarrow0\).  By \eqref{eq:krrs-parameter-limits}, they converge to
+\((a_0,z_0,\eps_0,0)\), so they eventually lie in the neighbourhood
+parametrized above.  Since \(W_\vartheta\) has edge density \(\eps_0\),
+solving the edge constraint for \(q\) gives
+\(q=Q(\eps_0,a,b,c)\).  Its \(H\)-density is
+\(\eps_0^m+\vartheta\); hence the local uniqueness assertion in
+\eqref{eq:krrs-density-constraint} gives
+\(c=C(\eps_0,a,b,\vartheta)\).  Therefore
+\(s(W_\vartheta)=\Sigma(\eps_0,a,b,\vartheta)\).  For sufficiently small
+\(\vartheta>0\), the three edge-probability parameters lie in \((0,1)\) by
+\eqref{eq:krrs-parameter-limits}, while \(c\in(0,1)\) because a null pode would give
+zero surplus.  Hence, by continuity of \(C\) and \(Q\), every sufficiently
+nearby pair \((\tilde a,\tilde b)\), with \(c\) and \(q\) supplied by \(C\)
+and \(Q\), yields an admissible bipodal graphon with the same two constraints
+and entropy \(\Sigma(\eps_0,\tilde a,\tilde b,\vartheta)\).  Since
+\(W_\vartheta\) maximizes entropy among all graphons with these constraints,
+\((a,b)(\vartheta)\) is an interior local maximizer of
+\(\Sigma(\eps_0,\cdot,\cdot,\vartheta)\) and therefore satisfies
+\(\mathcal F_1=\mathcal F_2=0\).  Passage to the limit
+\(\vartheta\downarrow0\) gives
+\begin{equation}\label{eq:krrs-boundary-stationarity}
+  \mathcal F_1(\eps_0,a_0,z_0,0)
+  =\mathcal F_2(\eps_0,a_0,z_0,0)=0.
+\end{equation}
+Equations \eqref{eq:krrs-small-block-stationarity} and \eqref{eq:krrs-quotient-expansion} give
+\[
+  \mathcal F_1(\eps,a,b,0)=\partial_aM(\eps,a,b),
+\]
+while \eqref{eq:krrs-cross-block-stationarity} and \eqref{eq:krrs-quotient-boundary} give
+\[
+  \mathcal F_2(\eps,a,b,0)
+  =\frac{\partial_z\psi_d(\eps,b)}{n_d\eps^{m-d}}.
+\]
+Differentiating these identities at \((\eps_0,a_0,z_0)\), and using
+\eqref{eq:krrs-coefficient-concavity} and \eqref{eq:krrs-scalar-nondegeneracy}, gives
+\begin{align}
+  \partial_a\mathcal F_1(\eps_0,a_0,z_0,0)
+  &=\frac{S_0''(a_0)}{\mathcal A(\eps_0,z_0)^2}\ne0,
+    \label{eq:krrs-jacobian-aa}\\
+  \partial_a\mathcal F_2(\eps_0,a_0,z_0,0)
+  &=0,
+    \label{eq:krrs-jacobian-ba}\\
+  \partial_b\mathcal F_2(\eps_0,a_0,z_0,0)
+  &=\frac{\partial_z^2\psi_d(\eps_0,z_0)}
+          {n_d\eps_0^{m-d}}\ne0.
+    \label{eq:krrs-jacobian-bb}
+\end{align}
+The Jacobian of \((\mathcal F_1,\mathcal F_2)\) with respect to \((a,b)\)
+is therefore triangular with nonzero diagonal.  The analytic implicit
+function theorem now gives an open interval \(U_{\mathrm{IFT}}\ni\eps_0\),
+a number \(\Delta_{\mathrm{IFT}}>0\), an open neighbourhood
+\(V_{\mathrm{IFT}}\) of \((a_0,z_0)\), and real-analytic functions
+\begin{equation}\label{eq:krrs-stationary-densities}
+  a_*(\eps,\vartheta),\qquad b_*(\eps,\vartheta)
+  \quad
+  ((\eps,\vartheta)\in
+    U_{\mathrm{IFT}}\times(-\Delta_{\mathrm{IFT}},
+                             \Delta_{\mathrm{IFT}}))
+\end{equation}
+taking values in \(V_{\mathrm{IFT}}\), with
+\[
+  (a_*(\eps_0,0),b_*(\eps_0,0))=(a_0,z_0).
+\]
+For each \((\eps,\vartheta)\) in this rectangle,
+\[
+  \mathcal F_i\bigl(\eps,a_*(\eps,\vartheta),
+    b_*(\eps,\vartheta),\vartheta\bigr)=0
+  \qquad(i=1,2),
+\]
+and \((a_*(\eps,\vartheta),b_*(\eps,\vartheta))\) is the unique solution in
+\(V_{\mathrm{IFT}}\) of this system.  Define
+\begin{align}
+  c_*(\eps,\vartheta)
+  &:=C\bigl(\eps,a_*(\eps,\vartheta),
+                 b_*(\eps,\vartheta),\vartheta\bigr),\label{eq:krrs-block-size-map}\\
+  q_*(\eps,\vartheta)
+  &:=Q\bigl(\eps,a_*(\eps,\vartheta),
+                 b_*(\eps,\vartheta),c_*(\eps,\vartheta)\bigr).
+                 \label{eq:krrs-large-block-map}
+\end{align}
+After shrinking \(U_{\mathrm{IFT}}\) and \(\Delta_{\mathrm{IFT}}\) so that
+these compositions are defined, all four functions are real-analytic on the
+two-sided rectangle
+\(U_{\mathrm{IFT}}\times(-\Delta_{\mathrm{IFT}},\Delta_{\mathrm{IFT}})\).
+At \(\vartheta=0\), equations \eqref{eq:krrs-density-constraint} and
+\eqref{eq:krrs-edge-constraint} give
+\[
+  c_*(\eps,0)=0,
+  \qquad
+  q_*(\eps,0)=\eps.
+\]
+Moreover, \(\mathcal F_2(\eps,a_*(\eps,0),b_*(\eps,0),0)=0\) and
+\eqref{eq:krrs-quotient-boundary} show that
+\(b_*(\eps,0)\) is a critical point of
+\(z\mapsto\psi_d(\eps,z)\).  The uniqueness assertion in
+\Cref{thm:krrs-cross-density} shows that this critical point is
+unique, so, after shrinking \(U_{\mathrm{IFT}}\),
+\begin{equation}\label{eq:krrs-cross-block-limit}
+  b_*(\eps,0)=\zeta_d(\eps)
+  \qquad(\eps\in U_{\mathrm{IFT}}).
+\end{equation}
+In particular, this also proves directly that \(\zeta_d\) is real-analytic
+locally away from \(\eps_*\).
+
+\paragraph{4. Identification with the entropy-maximizer parameters.}
+Let \(\Omega^+\) denote the domain on which
+\Cref{thm:krrs-bipodality} supplies jointly real-analytic bipodal optimizer
+parameters, expressed in the coordinates \((\eps,\vartheta)\) with
+\(\tau=\eps^m+\vartheta\).  For each nonexceptional \(\eps\), this domain is
+specified by
+\(\eps^m<\tau<\tau_0(\eps)\) for a threshold \(\tau_0(\eps)>\eps^m\)
+depending on \(\eps\), so the fibre of
+\(\Omega^+\) over each nonexceptional \(\eps\) is an interval
+\begin{equation}\label{eq:krrs-domain-fibres}
+  \{\vartheta:(\eps,\vartheta)\in\Omega^+\}
+  =(0,h(\eps)),
+  \qquad
+  h(\eps):=\tau_0(\eps)-\eps^m>0.
+\end{equation}
+Since the theorem states that the parameter map is
+real-analytic on \(\Omega^+\), this domain is open (real-analytic maps are,
+by definition, defined on open sets).
+
+Choose \(\vartheta^\sharp\in(0,h(\eps_0))\).  Openness at
+\((\eps_0,\vartheta^\sharp)\) gives an open interval
+\(U_{\mathrm{KRR}}\ni\eps_0\) such that
+\((\eps,\vartheta^\sharp)\in\Omega^+\) for every
+\(\eps\in U_{\mathrm{KRR}}\).  The interval property
+\eqref{eq:krrs-domain-fibres} then implies
+\begin{equation}\label{eq:krrs-uniform-domain}
+  U_{\mathrm{KRR}}\times(0,\vartheta^\sharp)
+  \subseteq\Omega^+.
+\end{equation}
+Thus, the same interval \(0<\vartheta<\vartheta^\sharp\) lies in the domain of
+\Cref{thm:krrs-bipodality} for every \(\eps\in U_{\mathrm{KRR}}\).  This
+conclusion uses only the theorem statement and not any localization argument
+from its proof.
+
+Shrink to an open interval \(U\ni\eps_0\) whose closure is contained in
+\[
+  U_{\mathrm{IFT}}\cap U_{\mathrm{KRR}}
+  \cap\bigl((0,1)\setminus\{\eps_*\}\bigr),
+\]
+and choose
+\[
+  0<\Delta<\min\{\Delta_{\mathrm{IFT}},\vartheta^\sharp\}.
+\]
+By \Cref{thm:krrs-bipodality}, throughout
+\(U\times(0,\Delta)\) the entropy maximizer is unique up to relabelling and
+bipodal.  For each \((\eps,\vartheta)\) in this set, let
+\(W^+_{\eps,\vartheta}\) be a representative of this maximizer, with its
+podes labelled so that the first pode has size \(c^+\) and
+\(c^+\to0\) as \(\vartheta\downarrow0\).  The corresponding parameter map
+\begin{equation}\label{eq:krrs-optimizer-map}
+  (a^+,b^+,q^+,c^+)(\eps,\vartheta)
+\end{equation}
+is real-analytic.
+
+It remains to identify the optimizer parameter map
+\eqref{eq:krrs-optimizer-map} with the two-sided analytic solution of the
+stationarity equations constructed in
+\eqref{eq:krrs-stationary-densities}--\eqref{eq:krrs-large-block-map}.  At \(\eps=\eps_0\), the
+one-sided limits in \Cref{thm:krrs-bipodality} and
+\eqref{eq:krrs-parameter-limits} show that the parameters in
+\eqref{eq:krrs-optimizer-map} lie in the local solution neighbourhoods
+for all sufficiently small \(\vartheta>0\).  Choose one such
+\(\vartheta_1\in(0,\Delta)\).  The three edge-probability parameters have
+limits \(a_0,z_0,\eps_0\in(0,1)\), and \(c^+(\eps_0,\vartheta_1)\in(0,1)\)
+because a bipodal graphon with a null pode is constant and has surplus
+\(0\); after taking \(\vartheta_1\) sufficiently small, all four parameters
+therefore lie in \((0,1)\).  By continuity, the same is true on a nonempty
+open neighbourhood \(\mathcal O\subset U\times(0,\Delta)\) of
+\((\eps_0,\vartheta_1)\), and all parameters there remain in those
+neighbourhoods.
+
+For every \((\eps,\vartheta)\in\mathcal O\), we repeat the constraint and
+local-maximality argument used to prove \eqref{eq:krrs-boundary-stationarity}.  The edge
+constraint gives \(q^+=Q(\eps,a^+,b^+,c^+)\), and the local uniqueness in
+\eqref{eq:krrs-density-constraint} gives
+\(c^+=C(\eps,a^+,b^+,\vartheta)\).  Since
+\(W^+_{\eps,\vartheta}\) maximizes entropy, it is locally maximal among the
+nearby bipodal competitors supplied by \(C\) and \(Q\).  Hence
+\(\mathcal F_1=\mathcal F_2=0\) at
+\((\eps,a^+,b^+,\vartheta)\), and the local uniqueness obtained above gives
+\begin{equation}\label{eq:krrs-map-agreement}
+  (a^+,b^+,q^+,c^+)
+  =(a_*,b_*,q_*,c_*)
+  \qquad\text{on }\mathcal O.
+\end{equation}
+Both sides of \eqref{eq:krrs-map-agreement} are real-analytic on
+\(U\times(0,\Delta)\), which is a product of intervals and hence connected.
+The one-sided limits in \Cref{thm:krrs-bipodality} hold as
+\(\vartheta\downarrow0\) for each fixed \(\eps\), but are not asserted to be
+uniform in \(\eps\).  Thus, the argument based on these limits initially
+identifies the two parameter maps only on \(\mathcal O\).  The identity
+theorem for real-analytic functions extends this equality to all of the
+connected set \(U\times(0,\Delta)\).  Consequently,
+\((a_*,b_*,q_*,c_*)\) is the desired two-sided real-analytic extension of the
+optimizer parameter map \eqref{eq:krrs-optimizer-map}.
+
+Since \(\overline U\) avoids \(\eps_*\), the fixed-point assertion in
+\Cref{thm:krrs-cross-density} gives
+\(\zeta_d(\eps)\ne\eps\), and hence
+\(\mathcal D_\eps(\zeta_d(\eps))>0\), for every \(\eps\in\overline U\).
+Finally, since \(C(\eps,a,b,0)\equiv0\), the partial derivatives
+\(\partial_aC\) and \(\partial_bC\) vanish at \(\vartheta=0\).
+Differentiating \eqref{eq:krrs-block-size-map} with respect to \(\vartheta\) at
+\(\vartheta=0\) therefore yields
+\[
+  \partial_\vartheta c_*(\eps,0)
+  =\partial_\vartheta C\bigl(
+     \eps,a_*(\eps,0),b_*(\eps,0),0\bigr).
+\]
+Equations \eqref{eq:krrs-block-size-expansion} and \eqref{eq:krrs-cross-block-limit} now give
+\begin{equation}\label{eq:krrs-block-size-derivative}
+  \partial_\vartheta c_*(\eps,0)
+  =\frac{1}{n_d\eps^{m-d}
+       \mathcal D_\eps(\zeta_d(\eps))}>0.
+\end{equation}
+Moreover, \(c_*\) is analytic on an open rectangle containing the compact
+set \(\overline U\times[-\Delta,\Delta]\) and vanishes on
+\(\{\vartheta=0\}\), so \(\partial_\vartheta c_*\) is bounded there, and
+the mean value theorem gives, uniformly for \(\eps\in U\),
+\[
+  c_*(\eps,\vartheta)=O(\vartheta)
+  \qquad(\vartheta\to0).
+\]
+Finally, \(c_*(\eps,\vartheta)\) takes values in \((0,1)\) when
+\(\eps\in U\) and \(0<\vartheta<\Delta\): this follows, after shrinking
+\(\Delta\) once more, from \eqref{eq:krrs-block-size-derivative} and
+\(c_*(\eps,0)=0\).
+
+Together with \eqref{eq:krrs-cross-block-limit} and the boundary identities for
+\(q_*\) and \(c_*\), this proves every assertion of
+\Cref{thm:krrs-analytic-extension}.
+\end{proof}
