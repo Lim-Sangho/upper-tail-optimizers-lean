@@ -81,16 +81,17 @@ variable {d : ℕ}
 
 /-! ## The central window -/
 
-/-- **The coalescence window `𝓝_ρ`** of `sec:auxiliary-lagrangian`: the interval of
-radius `ρ` around the singular endpoint value `u_*`.  The two atoms of the candidate law sit inside
-it once `h` is small, and the tail-uniform estimates of `lem:auxiliary-lagrangian-bound` are
-stated for integrals over it.
+/-- **The closed coalescence window** `[u_* - ρ, u_* + ρ]` around the singular endpoint value
+`u_*`.  The two atoms of the candidate law sit inside it once `h` is small, and the closed-window
+estimates of this development are stated for integrals over it.
 
-**Deviation.**  The paper writes `𝓝_ρ := (u_* - ρ, u_* + ρ)`, an *open* interval;
-this is `Set.Icc`, the closed one.  Nothing downstream changes: the two differ by a two-point
-set, so every integral, every measure and every `ε_ρ(ν)` agrees, while each pointwise estimate
-"for all `x ∈ 𝓝_ρ`" is proved here on the larger closed interval and so is stronger.  The
-closed form is kept because `isCompact_centralWindow` is used to extract uniform bounds. -/
+**Deviation.**  The paper's `𝓝_ρ := (u_* - ρ, u_* + ρ)` of `sec:auxiliary-lagrangian` is the
+*open* interval `openWindow d ρ`.  A pointwise estimate "for all `x ∈ 𝓝_ρ`" proved on the closed
+interval is stronger, but integrals and tail masses over the two sets differ for measures with
+atoms at `u_* ± ρ`, such as the law of a factor, so the closed-window integral estimates do not
+imply the open-window ones.  The paper's lemmas with the open window are `first_variation_bound`,
+`central_kernel_bound`, `auxiliary_lagrangian_bound` and `graphon_lagrangian_bound`.  The closed
+form is kept here because `isCompact_centralWindow` is used to extract uniform bounds. -/
 def centralWindow (d : ℕ) (ρ : ℝ) : Set ℝ := Set.Icc (uStar d - ρ) (uStar d + ρ)
 
 /-- The window is compact, being a closed bounded interval. -/

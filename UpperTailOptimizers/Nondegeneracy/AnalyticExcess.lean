@@ -15,8 +15,8 @@ The quantitative two-sided bound `C δ² ≤ G_r(δ) ≤ C' δ²` was establishe
 `Nondegeneracy/BoundaryExcess.lean` without any Kenyon–Radin–Ren–Sadun input.  The
 missing analytic structure enters through `kenyonRadinRenSadunAnalytic`
 (the analytic-parametrization clause of the paper's `thm:krrs-analytic-extension`, itself proved in
-`KRRS/Main.lean` from the two transcribed KRR–S axioms `krrs_thm33` and `krrs_thm11`
-of `KRRS/Inputs.lean`): near each
+`KRRS/Main.lean`, with the Kenyon–Radin–Ren–Sadun theorems it uses proved in `KRRS/Psi*` and
+`Bipodality/`): near each
 `r₀ ∈ K` the entropy envelope, hence the boundary excess, agrees for `0 < δ` small
 with the **chart function**
 
@@ -618,7 +618,7 @@ theorem boundaryExcess_chart_full {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     obtain ⟨-, -, ⟨-, hU2, -, -⟩⟩ := hball _ (hmemball r 0 hr (by rw [abs_zero]; exact hρ0.le))
     -- `kenyonRadinRenSadunAnalytic` also pins `q₁₂(r,0)` as the off-diagonal maximizer of
     -- `ψ_d(r,·)` and `q₁₁(r,0)` by the KRR–S boundary relation; Section 5 uses neither
-    obtain ⟨b1, b2, b3, b4, b5, -, -⟩ := hbdry r hU2
+    obtain ⟨b1, b2, b3, b4, b5, -⟩ := hbdry r hU2
     exact ⟨b1, b2, b3, b4, b5⟩
   · intro r δ hr hδ0 hδρ
     obtain ⟨-, -, -, hcIcc, hW⟩ := hmax r hr δ hδ0 hδρ
@@ -736,8 +736,9 @@ with second-variation coefficient `A_H` (the definition `AH`, a chart-independen
 limit) that is **real-analytic at every `r ∈ K`** and **uniformly positive**
 (`A_H ≥ CA > 0` on `K`, i.e. bounded away from zero).  Consumes `generalized_holder`
 (through the quadratic lower bound and the chart) together with the footprint of
-`kenyonRadinRenSadunAnalytic` (`thm:krrs-analytic-extension`, analytic-parametrization clause): the two
-transcribed KRR–S axioms `krrs_thm33` and `krrs_thm11`.  No cut axiom is used. -/
+`kenyonRadinRenSadunAnalytic` (`thm:krrs-analytic-extension`, analytic-parametrization clause):
+`generalized_holder` and the four cut axioms, which enter through the existence of fixed-density
+entropy maximizers in `Bipodality/Existence.lean`. -/
 theorem boundaryExcess_taylor {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     {K : Set ℝ} (hK : K ⊆ M.U) (hKc : IsCompact K) (hKne : K.Nonempty)
     (hKex : ∀ r ∈ K, r ≠ rStar d)

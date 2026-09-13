@@ -25,10 +25,10 @@ graph at `x = r^d`.
 **`thm:krrs-analytic-extension` (Kenyon–Radin–Ren–Sadun)** used to live here, as the two
 monolithic axioms `kenyonRadinRenSadun` and `kenyonRadinRenSadunAnalytic`.  Both are now
 **theorems**, proved in `UpperTailOptimizers/KRRS/Main.lean` following Appendix A of
-`paper/bipodal_optimizer.tex`, from the two KRR–S inputs of
-`UpperTailOptimizers/KRRS/Inputs.lean` (`krrs_thm11`, `krrs_thm33`), which package
-the parts of Theorems 1.1 and 3.3 used here, together with the maximizer
-characterisation and the open-region assumption explained there. They cannot be stated here:
+`paper/bipodal_optimizer.tex`.  Neither Kenyon–Radin–Ren–Sadun statement it uses is assumed:
+their Theorem 3.3 is `krrs_thm33` (`UpperTailOptimizers/KRRS/Inputs.lean`), and their
+Theorem 1.1 is proved for `d`-regular graphs in `UpperTailOptimizers/Bipodality/`, from
+`generalized_holder` and the four cut axioms of this file.  They cannot be stated here:
 their proofs need the two-block graphon
 layer of `Graphon/BipodalBridge.lean` and `Nondegeneracy/TDensityExpansion.lean`,
 both of which are downstream of this file.
@@ -114,7 +114,7 @@ noncomputable def phiVar {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGrap
 the convex minorant of `x ↦ J_p(x^{1/d})`; the latter is expressed in
 supporting-line form.
 
-As for the Kenyon–Radin–Ren–Sadun inputs (`KRRS/Inputs.lean`), the paper's standing
+The paper's standing
 assumptions `2 ≤ d` and `1 ≤ |E(H)|` are carried explicitly: without them the statement is
 *refutable inside Lean*.  Instantiating at an empty vertex type with `d = 0` makes every
 graphon feasible (the empty product gives `t(H,W) = 1 = r^0`), so `Φ_H(p,r) = 0 ≠ J_p(r)`,

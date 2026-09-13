@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage{fancyhdr}
-\usepackage[british]{babel}
+\usepackage[american]{babel}
 
 \usepackage{amssymb, amsmath, amsthm, amsfonts, enumerate}
 \usepackage{amsmath,setspace,scalefnt}
@@ -12,6 +12,7 @@
 \usepackage{hyperref}
 %\usepackage[notref,notcite]{showkeys}
 \usepackage{enumitem,verbatim}%,itemize
+\usepackage{array,booktabs,longtable}
 \usepackage{multicol}
 \usepackage{float}
 \usepackage{aliascnt}
@@ -75,7 +76,7 @@
 \newcommand{\argmax}{\operatorname*{argmax}}
 \newcommand{\jp}{J_p}
 \newcommand{\ip}{I_p}
-\newcommand{\sH}{\sigma_H}
+\newcommand{\sH}{S_H}
 \newcommand{\PhiH}{\Phi_H}
 \newcommand{\zr}{\zeta_d}
 \newcommand{\sm}{s_{\mathrm M}}
@@ -227,10 +228,10 @@ Erd\H{o}s--R\'enyi random graph $G(n,p)$.
 Near the Lubetzky--Zhao replica-symmetric phase boundary and away from the
 exceptional target density $(d-1)/d$, we prove that the optimizer of the
 Chatterjee--Varadhan variational problem on the symmetry-breaking side is
-bipodal (two-block) and unique up to relabelling.
+bipodal (two-block) and unique up to relabeling.
 Its block parameters depend analytically on $(p,r)$.
-We derive first-order expansions for the edge-density deficit and block
-parameters, together with a second-order expansion of the rate function
+We derive a first-order expansion for the edge-density deficit,
+together with a second-order expansion of the rate function
 governing the exponential decay of the upper-tail probability.
 These results also show that the conditioned random graph has an
 asymptotically bipodal structure.
@@ -250,14 +251,12 @@ convergence in $L^\infty$.
 \input{sections/intro}
 \input{sections/preliminaries}
 \input{sections/lz_boundary}
-\input{sections/local_reduction}
-\input{sections/nondegeneracy}
-\input{sections/local_optimizer}
-\input{sections/singular_endpoint}
+\input{sections/nonexceptional}
+\input{sections/singular}
 \input{sections/lean}
 \input{sections/conclusion}
 
-\paragraph{AI assistance.}
+\paragraph{AI disclosure.}
 AI assistance in this work involved GPT Pro 5.5 and 5.6,
 GPT Sol 5.6, GPT Astra 6.0, Claude Opus 4.8 and 5.0, and Claude Fable 5.0 and 5.1.
 The authors independently reviewed the text and verified every proof,
@@ -270,7 +269,7 @@ Lubetzky--Zhao boundary and the rank-one family near the exceptional endpoint.
 The authors proposed these experiments, and AI assisted with code implementation and debugging.
 
 For the nonexceptional results in
-\Cref{sec:lz-boundary,sec:local-reduction,sec:nondegeneracy,sec:local-optimizer-structure},
+\Cref{sec:lz-boundary,sec:nonexceptional-endpoint},
 the main idea of applying the theorems of Kenyon, Radin, Ren, and
 Sadun~\cite{kenyon2014entropy} to establish bipodality in the variational
 problem originated with the authors.
@@ -283,13 +282,12 @@ The Lean formalization was produced entirely by Claude Opus 4.8 and 5.0
 and Claude Fable 5.0 and 5.1 under the authors' direction.
 The authors checked the Lean definitions and theorem statements against
 those in the paper and reviewed the external inputs assumed as axioms.
-They also verified that the project built without errors and checked
-the versions of Lean (v4.33.1) and Mathlib (v4.33.1).
+They also verified that the project built without errors.
 
 \paragraph{Acknowledgments.}
 We would like to thank Jineon Baek,  Bartlomiej Kielak, Daniel Kr\'a\v{l}, and Joonkyung Lee for helpful discussions.
 S. Im was supported by a KIAS individual Grant (AP109501) at Korea Institute for Advanced Study. 
-S. Lim, T. Kim., and H. Yang were supported by the National Research Foundation of Korea (NRF)
+S. Lim, T. Kim, and H. Yang were supported by the National Research Foundation of Korea (NRF)
 grant funded by the Korean Government (MSIT) (No.~RS-2023-00279680).
 
 \bibliographystyle{plain}
@@ -297,10 +295,10 @@ grant funded by the Korean Government (MSIT) (No.~RS-2023-00279680).
 
 \appendix
 
+\input{sections/appendix_notation}
 \input{sections/appendix_preliminaries}
 \input{sections/appendix_lz_boundary}
-\input{sections/appendix_local_reduction}
-\input{sections/appendix_local_optimizer}
+\input{sections/appendix_nonexceptional_endpoint}
 \input{sections/appendix_singular_endpoint}
 
 \end{document}

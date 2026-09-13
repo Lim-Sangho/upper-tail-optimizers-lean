@@ -217,8 +217,8 @@ a.e. with the two-block kernel of parameters `θ` composed with a measure-preser
 relabelling `σ`, then its edge density, `H`-density and entropy are the block formulas
 `bipEdge θ`, `bipTd H θ`, `bipEnt θ`.
 
-This is what lets the derivation read the chart off an arbitrary maximizer — the one
-supplied by `KRRSOptimizer.optimizer` — with no measure-isomorphism argument: the
+This is what lets the derivation read the chart off an arbitrary bipodal maximizer — such as
+the one produced in `Bipodality/Bipodal.lean` — with no measure-isomorphism argument: the
 relabelled block `σ⁻¹(A)` has the same measure as `A`. -/
 theorem bipodal_transfer {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)
     [DecidableRel H.Adj] {θ : Theta} (h11 : θ.1 ∈ Set.Icc (0:ℝ) 1)

@@ -1,0 +1,351 @@
+\subsection{Localization and rank-one reduction}
+\label{sec:localization-rank-one}
+
+We now take any feasible graphon $W$ satisfying
+$I_{p_h}(W)\le I_{p_h}(W_h)$ and prepare it for comparison with $W_h$.
+This has two stages.  First, the $I_{p_h}$-comparison forces $W$ to be close
+in $L^4$ to the constant graphon $W\equiv r_*$; this is the localization
+step.  Second, we choose a rank-one part $f\otimes f$ and write
+$W=f\otimes f+E$.  The first-stage $L^4$-localization then shows that the factor
+$f$ is close to $u_*$ and that the error $E$ is small.  The lower bound for
+the auxiliary Lagrangian difference obtained in
+\Cref{sec:auxiliary-lagrangian} will control the distributions of
+the values of $f$, while the arbitrary-graphon comparison in
+\Cref{sec:graphon-comparison} will control $E$.
+Thus, the decomposition is the form in which the localization is used in the
+remainder of the proof.
+
+For the first stage, we use the supporting cost gap $\Gamma_d$ from
+\eqref{eq:endpoint-supporting-gap}.  The mechanism is to bound
+$\int\Gamma_d(W)$ using the $I_{p_h}$-comparison and then convert that bound
+into an $L^4$-bound on $W-r_*$.  Its quartic expansion gives the required
+control near $r_*$; to extend this control to all of $[0,1]$, we also need
+strict positivity away from $r_*$.  This follows from the supporting-line
+interpretation above: by \Cref{lem:convexity-defect}, $\varphi_{p_*,d}$ is
+convex on $[0,1]$ and its tangent $\ell_{r_*}$ has no other contact.
+Therefore,
+\begin{equation}\label{eq:endpoint-gap-positivity}
+  \Gamma_d(z)\ge0,
+  \qquad
+  \Gamma_d(z)=0\iff z=r_*.
+\end{equation}
+This makes $\int\Gamma_d(W)$ a nonnegative measure of how far $W$ is from
+the constant graphon $W\equiv r_*$.  For $L^4$-localization, we use the
+stronger pointwise bound
+\begin{equation}\label{eq:endpoint-gap-quartic-bound}
+  \Gamma_d(z)\ge c_d|z-r_*|^4
+  \qquad(0\le z\le1)
+\end{equation}
+for some $c_d>0$.  Indeed, the ratio $\Gamma_d(z)/|z-r_*|^4$ has a positive
+limit at $r_*$ by \eqref{eq:endpoint-gap-expansion}, hence a
+positive lower bound in a neighborhood of $r_*$.  On the compact complement
+of this neighborhood, it has a positive minimum by continuity and
+\eqref{eq:endpoint-gap-positivity}.  This proves
+\eqref{eq:endpoint-gap-quartic-bound}, whose integral form is
+\[
+  \int\Gamma_d(W)\ge c_d\|W-r_*\|_4^4.
+\]
+Thus, $\int\Gamma_d(W)=O_d(h^4)$ implies the desired localization
+$\|W-r_*\|_4=O_d(h)$.
+
+To derive this integral bound from the $I_{p_h}$-comparison, we relate
+$I_{p_h}$ to the support cost gap $\Gamma_d$.  Repeating the calculation leading to
+\eqref{eq:constant-comparison-decomposition}, instead using $W$ and $W_h$, gives
+\begin{equation}\label{eq:graphon-cost-decomposition}
+  I_{p_h}(W)-I_{p_h}(W_h)
+  =\int\Gamma_d(W)-\int\Gamma_d(W_h)
+  +\beta_d\left(\int W^d-r_h^d\right)
+  +\Lambda_h\{e(W)-e(W_h)\}.
+\end{equation}
+The proof of the next lemma uses this decomposition to obtain the required
+bound on $\int\Gamma_d(W)$.
+Briefly, the $I_{p_h}$-comparison makes the right-hand side nonpositive.
+Using \eqref{eq:endpoint-gap-quartic-bound}, we absorb the edge-density
+correction into half of $\int\Gamma_d(W)$ and an $O_d(h^4)$ remainder.
+The remaining quantities $\int\Gamma_d(W)$ and $\int W^d-r_h^d$ are
+nonnegative, the latter by feasibility.  Since $\int\Gamma_d(W_h)=O_d(h^4)$,
+both must be $O_d(h^4)$, yielding the desired localization.
+
+The preceding discussion gives the first stage of localization, but this
+alone does not suffice for the later comparison with $W_h$, since $W$ need
+not be rank-one.  The lemma below therefore extracts a
+rank-one part $f\otimes f$ and writes the remainder as $E$.  For a symmetric
+kernel $K$ and a function $g$, write
+\[
+  (T_Kg)(x):=\int_0^1K(x,y)g(y)\,dy.
+\]
+The factor is chosen so that $T_E(f^{d-1})=0$.  This identity eliminates the
+terms linear in $E$ from the later moment and homomorphism-density expansions.
+The following lemma records both the localization and the rank-one reduction.
+
+\begin{lemma}[Localization and rank-one reduction]
+\label{lem:localization-rank-one}
+There exist $C_d,C_{d,m}>1$ and $h_0>0$ such that, for every
+$0<h<h_0$, every graphon $W$ satisfying $t(H,W)\ge r_h^m$ and
+$I_{p_h}(W)\le I_{p_h}(W_h)$ satisfies
+\begin{equation}\label{eq:graphon-quartic-localization}
+  \|W-r_*\|_4\le C_dh.
+\end{equation}
+Moreover, $W$ admits a decomposition $W=f\otimes f+E$ for some
+$f\in L^d([0,1])$ and $E\in L^2([0,1]^2)$ satisfying
+\begin{equation}\label{eq:rank-one-orthogonality}
+  T_W(f^{d-1})=q(f)f,
+  \qquad
+  T_E(f^{d-1})=0,
+  \qquad
+  q(f)>0,
+  \qquad
+  0\le f(x) \le 2
+  \quad\text{for a.e. }x.
+\end{equation}
+Also, the function $f$ is close to the constant function $u_*$, the error
+$E$ is small, the $d$-th moment $q(f)$ is close to $q_h$, and the
+homomorphism-density error is bounded by a cubic term in $\|E\|_2$:
+\begin{equation}\label{eq:rank-one-reduction-bounds}
+  \begin{gathered}
+  \|f-u_*\|_4\le C_dh,
+  \qquad
+  \|E\|_2 \le C_dh,
+  \qquad
+  \left|q(f)-q_h\right|\le C_dh^2,
+  \qquad
+  |t(H,W)-q(f)^v| \le C_{d,m} \|E\|_2^3.
+  \end{gathered}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We first localize $W$ in $L^4$ around the constant graphon $W\equiv r_*$,
+then construct its rank-one part $f\otimes f$ and an error $E$ satisfying
+$T_E(f^{d-1})=0$, and finally bound the moment and homomorphism-density
+errors.
+
+\medskip
+\noindent\emph{Localization of the graphon.}
+Combining the $I_{p_h}$-comparison with \eqref{eq:graphon-cost-decomposition} gives
+\[
+  0\ge I_{p_h}(W)-I_{p_h}(W_h)
+  =\int\Gamma_d(W)-\int\Gamma_d(W_h)
+  +\beta_d\left(\int W^d-r_h^d\right)
+  +\Lambda_h\{e(W)-e(W_h)\}.
+\]
+Generalized H\"older \eqref{eq:generalized-holder} and feasibility give $\int W^d\ge r_h^d$.
+To absorb the edge-density correction, convexity, Taylor's theorem, and
+\eqref{eq:endpoint-gap-quartic-bound} give
+\[
+  0\le z^d-r_*^d-d r_*^{d-1}(z-r_*)
+  \le C_d|z-r_*|^2
+  \le C_d\Gamma_d(z)^{1/2}
+  \qquad(0\le z\le1).
+\]
+Applying the upper bound to $W$ and the lower bound to $W_h$, then using
+$\int W_h^d=r_h^d$, yields
+\[
+  e(W)-e(W_h)
+  \ge\frac{\int W^d-r_h^d}{d r_*^{d-1}}
+   -C_d\int\Gamma_d(W)^{1/2}
+  \ge-C_d\int\Gamma_d(W)^{1/2}.
+\]
+By \eqref{eq:rank-one-parameter-expansions} and \eqref{eq:family-gap-expansion},
+we have $\Lambda_h=O_d(h^2)$ and $\int\Gamma_d(W_h)=O_d(h^4)$.
+Substitution into the cost comparison gives
+\begin{align*}
+  \beta_d \left(\int W^d-r_h^d\right)+\int\Gamma_d(W)
+  &\le C_dh^4+C_dh^2\int\Gamma_d(W)^{1/2}\\
+  &\le C_dh^4+C_dh^2\left(\int\Gamma_d(W)\right)^{1/2}\\
+  &\le \left(C_d+\frac{C_d^2}{2}\right)h^4+\frac12\int\Gamma_d(W).
+\end{align*}
+Absorbing the last term and using $\beta_d>0$ give
+\begin{equation}\label{eq:moment-and-cost-gap-bounds}
+  0\le\int W^d-r_h^d\le C_dh^4,
+  \qquad
+  0\le\int\Gamma_d(W)\le C_dh^4.
+\end{equation}
+Thus, as discussed above, using \eqref{eq:endpoint-gap-quartic-bound} and $\int\Gamma_d(W)=O_d(h^4)$
+gives the desired localization \eqref{eq:graphon-quartic-localization}.
+
+\medskip
+\noindent\emph{Construction of the decomposition.}
+We first construct $f$ and $E$ satisfying \eqref{eq:rank-one-orthogonality}.
+Put $d':=d/(d-1)$ so that $(1/d)+(1/d')=1$.
+To see the integral operator $T_W:L^{d'}\longrightarrow L^d$ is compact,
+choose finite-step graphons $S_n$ satisfying
+$\|W-S_n\|_d\to0$.  For each $n$, choose a finite partition
+$A_1^{(n)},\ldots,A_{N_n}^{(n)}$ of $[0,1]$ on whose rectangles $S_n$ is
+constant, and write
+\[
+  S_n(x,y)=\sum_{i,j=1}^{N_n}c_{ij}^{(n)}
+  \1_{A_i^{(n)}}(x)\1_{A_j^{(n)}}(y),
+  \qquad
+  (T_{S_n}g)(x)=\sum_{i=1}^{N_n} \left(\sum_{j=1}^{N_n}c_{ij}^{(n)}\int_{A_j^{(n)}}g\right) \1_{A_i^{(n)}}(x).
+\]
+Thus, the range of $T_{S_n}$ is contained in the span of the finitely many
+functions $\1_{A_1^{(n)}},\ldots,\1_{A_{N_n}^{(n)}}$, so $T_{S_n}$ is compact.
+Moreover, H\"older's inequality gives
+\[
+  \|(T_W-T_{S_n})g\|_d
+  \le\|W-S_n\|_d\|g\|_{d'}.
+\]
+Thus, $S_n\to W$ ensures that $T_{S_n}g\to T_Wg$ uniformly over
+$\|g\|_{d'}\le1$.  In other words, $T_{S_n}\to T_W$ in operator norm.
+Since the space of compact
+operators is closed in the operator norm, $T_W$ is compact.
+
+Now we consider the quadratic form
+\[
+  \mathcal Q_W(g):= \langle g,T_Wg\rangle =\iint W(x,y)g(x)g(y)\,dx\,dy
+  \qquad
+  (g \in L^{d'}([0,1]),\, \|g\|_{d'}\le1).
+\]
+Since $1<d'<\infty$, the closed unit ball of $L^{d'}$ is weakly compact,
+and the compactness of $T_W$ makes $\mathcal Q_W$ weakly continuous on this ball.
+Thus $\mathcal Q_W$ attains a maximum there at some $g_0$;
+let $\theta:=\mathcal Q_W(g_0)$ be the maximum.
+The localization bound on $W$ and H\"older's inequality give $\theta \in [r_*/2,1]$,
+after decreasing $h_0$, since
+\[
+  \frac{r_*}{2} \le r_*-\|W-r_*\|_1 \le \int W=\mathcal Q_W(1)\le\theta
+  = \mathcal Q_W(g_0)\le\|W\|_d\|g_0\|_{d'}^2\le 1.
+\]
+Since $W\ge0$, taking the absolute value cannot decrease $\mathcal Q_W$,
+and positivity of $\theta$ and homogeneity force every maximizer to have norm
+one.  We may therefore choose a maximizer $g_0\ge0$ with $\|g_0\|_{d'}=1$.
+
+Since \(d'>1\), the \(L^{d'}\)-unit sphere is smooth.  Therefore, applying the
+Lagrange-multiplier theorem to the maximization of $\mathcal Q_W$ on this sphere
+gives \(T_Wg_0=\mu g_0^{d'-1}\) for some constant \(\mu\). This gives
+\[
+  \theta=\mathcal Q_W(g_0)=\int g_0\,T_Wg_0
+  =\mu\int g_0^{d'}=\mu\|g_0\|_{d'}^{d'}=\mu.
+\]
+Hence $T_Wg_0=\theta g_0^{1/(d-1)}$.
+Define $f:=\theta^{1/2}g_0^{1/(d-1)}$ and, for the remainder of the proof,
+abbreviate $q:=q(f)=\int f^d=\theta^{d/2}>0$.  Then
+\begin{align*}
+  T_W(f^{d-1})
+  &=T_W(\theta^{(d-1)/2}g_0)
+  =\theta^{(d+1)/2}g_0^{1/(d-1)}
+  =\theta^{d/2}f=qf,
+  \\
+  T_{f\otimes f}(f^{d-1})
+  &=\left(\int f(y)^d\,dy\right)f
+  =qf.
+\end{align*}
+Let $E:=W-f\otimes f$.  Subtracting these identities gives $T_E(f^{d-1})=0$.
+Also, $\theta \in [r_*/2,1]$ implies $q = \theta^{d/2} \in [(r_*/2)^{d/2},1]$.
+Consequently, since $f\ge0$,
+\[
+  qf(x)=\int W(x,y)f(y)^{d-1}\,dy
+  \le\int f^{d-1}\le q^{(d-1)/d},
+  \qquad
+  0\le f(x)\le q^{-1/d}\le\sqrt{\frac{2}{r_*}} \le 2
+  \quad\text{for a.e. }x.
+\]
+
+\medskip
+\noindent\emph{Factor and error bounds.}
+Substituting $W=r_*+(W-r_*)$ into the first identity of
+\eqref{eq:rank-one-orthogonality} gives
+\[
+  qf=T_W(f^{d-1})
+  =r_*\int f^{d-1}+T_{W-r_*}(f^{d-1}).
+\]
+The second term on the right-hand side is small, since
+$\|T_{W-r_*}(f^{d-1})\|_4 \le\|W-r_*\|_4\|f^{d-1}\|_{4/3} \le C_d h$.
+Thus, to show that $f$ is close to $u_*$, it remains to compare the
+first term with $qu_*$.  Define $b$ by
+\[
+  b:=\frac{r_*\int f^{d-1}}q,
+  \qquad
+  f-b=q^{-1}T_{W-r_*}(f^{d-1}),
+  \qquad
+  \|f-b\|_4\le C_dh.
+\]
+The last inequality follows from the bound on the second term above and the
+uniform lower bound on $q$.  The uniform bounds on $f$ and $q$ also give a
+two-sided uniform bound on $b$:
+\[
+  \frac{q}{C_d}\le\int f^{d-1}\le q^{(d-1)/d},
+  \qquad
+  C_d^{-1}\le b\le C_d.
+\]
+Lipschitz continuity of $x\mapsto x^k$ for $k\in\{d-1,d\}$
+on a bounded interval and H\"older's inequality give
+\[
+  \left|\int f^k-b^k\right|
+  \le \|f^k-b^k\|_4
+  \le C_d\|f-b\|_4
+  \le C_dh
+  \qquad(k=d-1,d).
+\]
+Taking $k=d$ and $k=d-1$, respectively, and using
+$q=\int f^d$ and $qb=r_*\int f^{d-1}$ gives
+\[
+  |q-b^d|\le C_dh,
+  \qquad
+  |qb-r_*b^{d-1}|\le C_dh.
+\]
+Since $b$ is uniformly bounded away from zero and $r_*=u_*^2$, these bounds imply
+\[
+  |b^2-r_*| = \frac{\left| (qb-r_*b^{d-1})-b(q-b^d) \right|}{b^{d-1}} \le C_dh,
+  \qquad
+  |b-u_*| \le C_dh.
+\]
+Combining this with the bound on $f-b$ gives
+\[
+  \|f-u_*\|_4\le \|f-b\|_4+\|b-u_*\|_4\le C_dh.
+\]
+Finally, $E=W-(f\otimes f)$ is small since $W$ and $f \otimes f$ are both close to $r_*$ in $L^4$:
+\begin{equation*}
+  \|E\|_2\le\|E\|_4
+  \le \|W-r_*\|_4+\|(f\otimes f)-r_*\|_4
+  \le \|W-r_*\|_4+(\|f\|_4+u_*)\|f-u_*\|_4
+  \le C_dh.
+\end{equation*}
+
+\medskip
+\noindent\emph{Moment and homomorphism-density errors.}
+The binomial expansion of $W^d=(f\otimes f+E)^d$ gives
+\begin{equation*}
+  \left| \int W^d-q^2 \right|
+  = \left| \sum_{k=2}^d\binom dk\int(f\otimes f)^{d-k}E^k \right|
+  \le C_d\sum_{k=2}^d\int|E|^k \le C_d\|E\|_2^2.
+\end{equation*}
+The $k=0$ term cancels with $q^2$, and the $k=1$ term vanishes by orthogonality $T_E(f^{d-1})=0$.
+Together with the first bound in \eqref{eq:moment-and-cost-gap-bounds} and $q_h^2=r_h^d$,
+\[
+  |q-q_h| \le C_d\left|q^2-q_h^2\right|
+  \le C_d \left( \left| \int W^d-q^2 \right| + \left| \int W^d - r_h^d \right| \right)
+  \le C_dh^2.
+\]
+Also, expand $t(H,f\otimes f+E)$ according to the edges on which $E$ and $f\otimes f$ are used:
+\[
+  t(H,W)=\sum_{F\subseteq E(H)}\int
+  \prod_{\{i,j\}\in F}E(x_i,x_j)
+  \prod_{\{i,j\}\in E(H)\setminus F}f(x_i)f(x_j)\,d\mathbf x.
+\]
+The $F=\varnothing$ term corresponds to $t(H,f\otimes f)=q^v$, so it remains to bound
+the terms with $F\ne\varnothing$.
+If a vertex $i$ is incident to exactly one $E$-edge $\{i,j\}$, then integrating
+first in $x_i$ gives
+\[
+  \int E(x_i,x_j)f(x_i)^{d-1}\,dx_i
+  =T_E(f^{d-1})(x_j)=0,
+\]
+so that term vanishes.  Thus, every remaining nonzero term contains a cycle of
+$E$-edges, of length $\ell\ge3$ because $H$ is simple.  Since the other
+factors are uniformly bounded, we may bound them by a constant and integrate
+out all variables outside a chosen cycle.  Thus, the absolute value of the term
+is at most
+\[
+  C_{d,m}\int_{[0,1]^\ell}\prod_{k=1}^\ell|E(x_k,x_{k+1})|\,dx_1\cdots dx_\ell
+  \le C_{d,m}\|E\|_2^\ell\le C_{d,m}\|E\|_2^3,
+  \qquad x_{\ell+1}:=x_1,
+\]
+where repeated Cauchy--Schwarz gives the first norm bound, and the last one
+uses $\ell\ge3$ and the uniform boundedness of $\|E\|_2$.  Summing the
+absolute values of the finitely many terms gives
+\begin{equation*}
+  |t(H,W)-q^v|\le C_{d,m}\|E\|_2^3.
+\end{equation*}
+\end{proof}

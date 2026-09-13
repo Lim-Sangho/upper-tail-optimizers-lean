@@ -72,7 +72,7 @@ Define the difference of the two quotients by
 \end{equation*}
 where $s=u-h$ and $t=u+h$.
 Thus, the equation to solve is $A(u,h)=0$ with respect to $u$.
-To analyse
+To analyze
 the removable value at $h=0$, introduce
 \[
   D(x,y):=\frac{\ell(y)-\ell(x)}{x^{d-1}-y^{d-1}}
@@ -191,7 +191,7 @@ Define
 \[
   \mathcal M_h(z):=J_{p_h}(z)-\frac{\gamma_h}{d}z^d.
 \]
-At the endpoint, direct differentiation gives
+At the singular endpoint, direct differentiation gives
 \begin{equation}\label{eq:endpoint-entropy-derivatives}
   J_{p_*}'(r_*)=\gamma_*r_*^{d-1},\qquad
   J_{p_*}''(r_*)=\gamma_*(d-1)r_*^{d-2},\qquad
@@ -279,7 +279,7 @@ Thus, changing $h$ to $-h$ exchanges the two differences in
   \alpha_{-h}=1-\alpha_h.
 \]
 
-It remains to verify the endpoint value $\alpha_0$
+It remains to verify the singular-endpoint value $\alpha_0$
 by extending \eqref{eq:block-proportion-formula-proof} analytically through $h=0$.
 To control the two differences in \eqref{eq:block-proportion-formula-proof} as
 $h\to0$, we factor $\mathcal M_h'$ at its three critical points.  Let
@@ -406,7 +406,7 @@ Applying \eqref{eq:rank-one-kkt-proof} to the three values
 $s^2,st,t^2$ gives \eqref{eq:three-value-kkt-proof} with
 $(p_h,\gamma_h,s_h,t_h)$ replaced by $(p,\gamma,s,t)$.  Equality of the two
 corresponding divided slopes then gives $B(u,h)=0$.  The local uniqueness
-obtained above gives a neighbourhood
+obtained above gives a neighborhood
 of $(u_*,0)$ in which this equation has the unique solution $u=u_h$ for each
 fixed $h$.  Hence $s=s_h$ and $t=t_h$, and either quotient in
 \eqref{eq:kkt-divided-slopes} forces $\gamma=\gamma_h$.  The

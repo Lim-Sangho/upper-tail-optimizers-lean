@@ -86,8 +86,8 @@ theorem partialC_That_zero {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGr
 `0 ≤ b ≠ ε` (`Afun_pos`); and `partialC 𝒯̂` is continuous, being analytic
 (`analyticAt_partialC` applied to `analyticAt_That`).
 
-This is the nondegeneracy that both `KRRS/BaseZero.lean` and `KRRS/Main.lean` feed to
-`F_eq_zero_of_maximizer` along their parameter curves. -/
+This is the nondegeneracy that `Bipodality/Optimal.lean` feeds to `F_eq_zero_of_maximizer`
+(`KRRS/MaximizerStationary.lean`). -/
 theorem eventually_partialC_That_ne_zero {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] {d : ℕ} (hd : 2 ≤ d)
     (hreg : ∀ v, H.degree v = d) (hm : 2 ≤ H.edgeFinset.card) {ε b : ℝ} (a : ℝ)

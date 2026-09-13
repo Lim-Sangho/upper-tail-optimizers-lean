@@ -34,9 +34,16 @@ import UpperTailOptimizers.Nondegeneracy.ArcBounds
 -- polynomial layer `Nondegeneracy.TDensityExpansion` is shared with Section 5.)
 import UpperTailOptimizers.Nondegeneracy.TDensityExpansion
 import UpperTailOptimizers.KRRS.Chart
--- The rewritten Appendix A: the two KRR-S theorem statements (`Inputs`) and the
--- finite-dimensional calculus they are combined with.
+-- The rewritten Appendix A: the KRR-S cross density (`Inputs`, proved), the
+-- finite-dimensional calculus, and the bipodality of maximizers (`Bipodality`, proved).
 import UpperTailOptimizers.KRRS.Reduced
+import UpperTailOptimizers.KRRS.PsiSymmetry
+import UpperTailOptimizers.KRRS.PsiRatio
+import UpperTailOptimizers.KRRS.PsiIntegral
+import UpperTailOptimizers.KRRS.PsiCritical
+import UpperTailOptimizers.KRRS.PsiUnique
+import UpperTailOptimizers.KRRS.PsiCompare
+import UpperTailOptimizers.KRRS.PsiExists
 import UpperTailOptimizers.KRRS.Inputs
 import UpperTailOptimizers.KRRS.PsiNondeg
 import UpperTailOptimizers.KRRS.SCalc
@@ -47,7 +54,36 @@ import UpperTailOptimizers.KRRS.Stationarity
 import UpperTailOptimizers.KRRS.LocalMax
 import UpperTailOptimizers.KRRS.SigmaLink
 import UpperTailOptimizers.KRRS.Family
-import UpperTailOptimizers.KRRS.BaseZero
+import UpperTailOptimizers.KRRS.MaximizerStationary
+import UpperTailOptimizers.KRRS.BasePoint
+import UpperTailOptimizers.KRRS.FamilyCore
+import UpperTailOptimizers.Bipodality.Concavity
+import UpperTailOptimizers.Bipodality.Existence
+import UpperTailOptimizers.Bipodality.Efficiency
+import UpperTailOptimizers.Bipodality.Cross
+import UpperTailOptimizers.Bipodality.GapQuadratic
+import UpperTailOptimizers.Bipodality.SliceBounds
+import UpperTailOptimizers.Bipodality.FamilyEntropy
+import UpperTailOptimizers.Bipodality.KernelBounds
+import UpperTailOptimizers.Bipodality.StarTerms
+import UpperTailOptimizers.Bipodality.StarReduction
+import UpperTailOptimizers.Bipodality.CrossDefect
+import UpperTailOptimizers.Bipodality.Structure
+import UpperTailOptimizers.Bipodality.Competitors
+import UpperTailOptimizers.Bipodality.PinnedDensity
+import UpperTailOptimizers.Bipodality.Correction
+import UpperTailOptimizers.Bipodality.EulerLagrange
+import UpperTailOptimizers.Bipodality.PinnedRow
+import UpperTailOptimizers.Bipodality.Multipliers
+import UpperTailOptimizers.Bipodality.QualRegions
+import UpperTailOptimizers.Bipodality.QualFamily
+import UpperTailOptimizers.Bipodality.RowReplace
+import UpperTailOptimizers.Bipodality.RowBalance
+import UpperTailOptimizers.Bipodality.Pointwise
+import UpperTailOptimizers.Bipodality.Contraction
+import UpperTailOptimizers.Bipodality.Bipodal
+import UpperTailOptimizers.Bipodality.BipodalUniform
+import UpperTailOptimizers.Bipodality.Optimal
 import UpperTailOptimizers.KRRS.Main
 import UpperTailOptimizers.LocalReduction.Main
 -- Section 5 of `paper/bipodal_optimizer.tex`: universal non-degeneracy
@@ -185,4 +221,10 @@ import UpperTailOptimizers.SingularEndpoint.SingularEndpointOptimality
 import UpperTailOptimizers.SingularEndpoint.BipodalTransport
 import UpperTailOptimizers.SingularEndpoint.CdfTransport
 import UpperTailOptimizers.SingularEndpoint.IntroSingularEndpointOptimizers
+import UpperTailOptimizers.SingularEndpoint.ContinuationKernelBounds
+import UpperTailOptimizers.SingularEndpoint.NonlinearLagrangian
+import UpperTailOptimizers.SingularEndpoint.LocalizationRankOne
+import UpperTailOptimizers.SingularEndpoint.FirstVariationCentralKernel
+import UpperTailOptimizers.SingularEndpoint.AuxiliaryLagrangianBound
+import UpperTailOptimizers.SingularEndpoint.GraphonLagrangianBound
 import UpperTailOptimizers.LocalOptimizer.Instances

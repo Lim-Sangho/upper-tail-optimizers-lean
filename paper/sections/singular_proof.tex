@@ -1,0 +1,94 @@
+\subsection{Proof of the singular-endpoint theorem}
+\label{sec:singular-proof}
+
+We finish by applying the lower bound for the full-graphon Lagrangian
+difference to the decomposition supplied by the localization and rank-one
+reduction.
+
+\begin{proof}[Proof of \Cref{thm:singular-endpoint}]
+\Cref{lem:rank-one-kkt-family} provides the real-analytic map
+$h\mapsto(p_h,r_h,u_h,\alpha_h)$ for $|h|<h_0$, with the desired
+values at $h=0$.  For every measurable $A_h\subset[0,1]$ of measure
+$\alpha_h$, the corresponding factor is $f_{\alpha_h,s_h,t_h}$, up to measure-preserving relabeling.
+Since $t_h-s_h=2h\ne0$ for $h>0$, the resulting graphon $W_h$ is
+nonconstant, rank-one, and bipodal, and the same lemma gives
+$t(H,W_h)=r_h^m$.  Its comparison with the constant graphon and
+the inequality $p_h<\pc(r_h)$ follow from \Cref{lem:constant-graphon-comparison}.
+
+It remains to prove optimality and uniqueness.
+Fix $0<\rho<\rho_0$ and $0<h<h_\rho$ as in \Cref{lem:graphon-lagrangian-bound}.
+Assume $I_{p_h}(W)\le I_{p_h}(W_h)$ and $W$ is feasible.
+By \Cref{lem:localization-rank-one}, write
+\[
+  W=f\otimes f+E,
+  \qquad
+  T_E(f^{d-1})=0,
+  \qquad
+  q:=q(f).
+\]
+Let $\nu$ be the distribution of the values of $f$, so that $q=m_d(\nu)$ and
+$\Delta_h(\nu)=q-q_h$.  Applying \Cref{lem:graphon-lagrangian-bound} gives
+\eqref{eq:graphon-lagrangian-bound}.  Its left-hand side is nonpositive:
+\[
+  I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}
+  \le I_{p_h}(W)-I_{p_h}(W_h)\le0,
+\]
+because $W$ is feasible and $\mu_h>0$.  Comparing this upper bound with the
+lower bound in \eqref{eq:graphon-lagrangian-bound}, and increasing the
+constant if necessary, gives $C_{d,m,\rho}\ge1$ such that
+\[
+  A_{h,\rho}(\nu)+\nu(\mathcal T_\rho)+\|E\|_2^2
+  \le C_{d,m,\rho}^2\Delta_h(\nu)^2,
+  \qquad
+  \|E\|_2\le C_{d,m,\rho}|\Delta_h(\nu)|.
+\]
+Combining the homomorphism-density bound in
+\eqref{eq:rank-one-reduction-bounds} with Taylor's theorem gives
+\begin{equation*}
+\begin{aligned}
+  \left|t(H,W)-r_h^m-vq_h^{v-1}\Delta_h(\nu)\right|
+  \le 
+  |t(H,W)-q^v|
+    +\left|(q_h+\Delta_h(\nu))^v-q_h^v
+      -vq_h^{v-1}\Delta_h(\nu)\right|
+  \le C_{d,m,\rho}\Delta_h(\nu)^2.
+\end{aligned}
+\end{equation*}
+Since $q_h$ stays bounded away from zero, the linear term in the preceding
+estimate dominates the quadratic error when $\Delta_h(\nu)<0$.  Feasibility
+would then be violated, so, after decreasing $h_\rho$, we have
+$\Delta_h(\nu)\ge0$.  The localization estimate
+\eqref{eq:rank-one-reduction-bounds}, together with the positive lower
+bounds for $q_h$ and $\mu_h$, allows us to decrease $h_\rho$ further so that
+\[
+  C_{d,m,\rho}\Delta_h(\nu)\le\frac14vq_h^{v-1},
+  \qquad
+  C_{d,m,\rho}\Delta_h(\nu)\le\frac14\mu_hvq_h^{v-1}.
+\]
+This yields
+\begin{equation*}
+  \mu_h\{t(H,W)-r_h^m\}-C_{d,m,\rho}\Delta_h(\nu)^2
+  \ge\frac12\mu_hvq_h^{v-1}\Delta_h(\nu).
+\end{equation*}
+Substituting this into \eqref{eq:graphon-lagrangian-bound} gives
+\begin{equation*}
+  I_{p_h}(W)-I_{p_h}(W_h)
+  \ge
+  \left(\frac12\mu_hvq_h^{v-1}\Delta_h(\nu)
+    +C_{d,m,\rho}^{-1}
+    \left[A_{h,\rho}(\nu)+\nu(\mathcal T_\rho)+\|E\|_2^2\right]\right)
+  \ge0.
+\end{equation*}
+The left-hand side is nonpositive by the upper bound above, so equality holds
+throughout.  Consequently,
+\begin{equation*}
+  \Delta_h(\nu)=0,
+  \qquad A_{h,\rho}(\nu)=0,
+  \qquad \nu(\mathcal T_\rho)=0,
+  \qquad E=0\quad\text{a.e.}
+\end{equation*}
+Since $A_{h,\rho}(\nu)=0$ and $\nu(\mathcal T_\rho)=0$,
+$\nu$ is supported on $\{s_h,t_h\}$, and $\Delta_h(\nu)=0$ implies
+$\nu=\alpha_h\delta_{s_h}+(1-\alpha_h)\delta_{t_h}$.
+Moreover, $E\equiv0$ implies that $W=f\otimes f$ and $W$ is a measure-preserving relabeling of $W_h$.
+\end{proof}

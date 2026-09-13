@@ -8,22 +8,24 @@ $(n)_k=n(n-1)\cdots(n-k+1)$,
 \]
 Our primary interest is the following two questions raised by Chatterjee and Varadhan~\cite{ChatterjeeVaradhanLDP} in the context of the upper-tail large deviation problem: (1) what is the probability that $X_H$ is at least $(1+\delta)\mathbb{E}[X_H]$ for some fixed $\delta>0$?; (2) what is the typical structure of $G(n,p)$ conditioned on this event?
 
-
-This upper-tail problem has been studied extensively; see, for example,
-\cite{BhattacharyaDembo2021,ChatterjeeMissingLog,DeMarcoKahnTriangles, Janson2004uppertail, JansonRucinskiInfamous,Raz2020Cycles, Sileikis2020Stars}.
+This upper-tail problem and its variants have been studied extensively; see, for example,
+\cite{BhattacharyaDembo2021,ChatterjeeMissingLog,DeMarcoKahnTriangles,
+ganguly2024upper,Janson2004uppertail,JansonRucinskiInfamous,Raz2020Cycles,Sileikis2020Stars,Vu2001}.
 However, even when $H$ is a triangle, the problem is difficult and not
 completely understood.  Existing results take different forms in the sparse
 and dense regimes.  For the sparse results below, $\delta>0$ is fixed while
-$n\to\infty$ and $p=p(n)\to0$.
-The polynomial concentration results of Kim and Vu~\cite{KimVu2000} shows that the probability that $X_{K_3}\ge(1+\delta)\mathbb{E}[X_{K_3}]$ lies between $\exp(-O(n^2p^2 \log(1/p)))$ and $\exp(-\Omega(n^2p^2))$. 
+$n\to\infty$ and $p=p(n)\to0$.  Regarding the first question,
+Kim and Vu~\cite{KimVu2004} showed that the probability that
+$X_{K_3}\ge(1+\delta)\mathbb{E}[X_{K_3}]$ lies between
+$\exp(-O_\delta(n^2p^2 \log(1/p)))$ and $\exp(-\Omega_\delta(n^2p^2))$ whenever $p\ge\log n/n$.
 Chatterjee~\cite{ChatterjeeMissingLog} and, independently, DeMarco and
-Kahn~\cite{DeMarcoKahnTriangles} determined the correct order when $p\ge \log n/n$ by showing that 
+Kahn~\cite{DeMarcoKahnTriangles} determined the correct order when $p \ge C_\delta \log n/n$ by showing that 
 \[
   \mathbb{P}\bigl(X_{K_3}\ge(1+\delta)\mathbb{E}[X_{K_3}]\bigr)
   =\exp\bigl(-\Theta_\delta(n^2p^2\log(1/p))\bigr).
 \]
-Here and throughout the paper, $\log$ denotes the natural logarithm.  These results
-determine the order of the exponent, but not its leading constant.  Chatterjee
+These results determine the order of the exponent,
+but not its leading constant.  Chatterjee
 and Dembo~\cite{ChatterjeeDemboNonlinear} subsequently proved a nonlinear
 large-deviation principle which, when $p$ does not decay too quickly, reduces
 the upper-tail problem to a weighted-graph relative-entropy variational
@@ -37,20 +39,24 @@ principle, obtained, for $n^{-1/42}\log n\le p\ll1$,
   \exp\left[
     -\left(
       \min\left\{\frac{\delta^{2/3}}2,\frac{\delta}{3}\right\}
-      +o(1)
+      +o_\delta(1)
     \right)n^2p^2\log(1/p)
   \right].
 \]
 This determines the exact leading constant.  It applies, however, over a
 narrower range of $p$, since $n^{-1/42}\log n\allowbreak\gg(\log n)/n$.
-Afterward, a series of works
-established sharp upper-tail asymptotics for broader classes of graphs \(H\)
-and in progressively sparser regimes; see
-\cite{Augeri2020, BasakBasu2023, BhattacharyaGangulyLubetzkyZhao,CookDembo2020,CookDemboPham2024, Eldan2018}.
+More generally, upper-tail bounds and asymptotics have been established
+for broader classes of graphs \(H\) and across a range of sparse regimes;
+see \cite{Augeri2020,BasakBasu2023,BhattacharyaGangulyLubetzkyZhao,
+CookDembo2020,CookDemboPham2024,DeMarcoKahnCliques,Eldan2018,HarelMoussetSamotij2022}.
+For the second question,  Cook and Dembo~\cite{CookDembo2024Structure}
+showed that, in suitable sparse regimes, graphs conditioned on upper-tail
+events typically resemble an Erd\H{o}s--R\'enyi graph with a planted clique
+and/or a planted complete bipartite graph.
 
-In the dense regime, primarily considered in this paper, $p$ is a fixed constant.
-In this case, it is convenient to formulate the upper-tail event in
-terms of homomorphism densities.  For a graph $G$ on $n$ vertices, define
+In this paper, we primarily consider the dense regime, in which $p$ is a fixed constant.
+In this regime, it is convenient to frame the upper-tail event using
+homomorphism densities.  For a graph $G$ on $n$ vertices, define
 \[
   t(H,G):=\frac{\hom(H,G)}{n^{|V(H)|}},
 \]
@@ -72,27 +78,28 @@ The count event in the first paragraph corresponds asymptotically to the
 choice $r^{|E(H)|}=(1+\delta)p^{|E(H)|}$. In this paper,
 a central role is played by the relative-entropy function
 \[
-  J_p(u) = u \log \frac{u}{p} + (1-u) \log \frac{1-u}{1-p},
+  J_p(z) = z \log \frac{z}{p} + (1-z) \log \frac{1-z}{1-p}.
 \]
-with the convention $0\log0=0$.  This is the large-deviation cost per edge of
-raising the edge density from $p$ to $u$.  In this notation, Lubetzky and
+Throughout the paper, $\log$ denotes the natural logarithm and we use the
+convention $0\log0=0$.  The quantity $J_p(z)$ is the large-deviation cost per edge of
+raising the edge density from $p$ to $z$.  In this notation, Lubetzky and
 Zhao~\cite{lubetzky2015large} showed that if the point $(r^2, J_p(r))$ lies on
 the convex minorant of $x \mapsto J_p(x^{1/2})$, then
 \[
   \mathbb{P}(\mathcal E_{K_3,r})
-  =\exp(-J_p(r)n^2/2+o(n^2)),
+  =\exp(-J_p(r)n^2/2+o_{p,r}(n^2)),
 \]
 and they extended this result to general regular graphs $H$.
 
 
 Conditioned on $\mathcal E_{H,r}$, the typical structure of $G(n,p)$ can take one of two forms: either it looks like an Erd\H{o}s--R\'enyi graph with a higher edge density (called the \emph{replica-symmetric phase}), or its edges are clustered (called the \emph{symmetry-breaking phase}).
 Chatterjee and Varadhan~\cite{ChatterjeeVaradhanLDP} showed that, depending on the parameters, both structures can occur.
-Lubetzky and Zhao~\cite{lubetzky2015large} determined exactly when the replica-symmetric phase occurs and when the symmetry-breaking phase occurs in terms of the function $J_p(u)$ defined above for every $d$-regular graph $H$.
+Lubetzky and Zhao~\cite{lubetzky2015large} determined exactly when the replica-symmetric phase occurs and when the symmetry-breaking phase occurs in terms of the function $J_p(z)$ defined above for every $d$-regular graph $H$.
 \begin{theorem}[Lubetzky--Zhao criterion, informal version~\cite{lubetzky2015large}]\label{thm:lz-criterion-informal}
   Let $H$ be a $d$-regular graph with $d \geq 2$, and let $0<p<r<1$. If the point $(r^d, J_p(r))$ lies on the convex minorant of the function $x\mapsto J_p(x^{1/d})$, then the typical structure of $G(n,p)$ conditioned on $\mathcal E_{H,r}$ is like an Erd\H{o}s--R\'enyi graph with edge density $r$, i.e., $(p, r)$ is in the replica-symmetric phase. Otherwise, the typical structure of $G(n,p)$ conditioned on $\mathcal E_{H,r}$ is clustered, i.e., $(p, r)$ is in the symmetry-breaking phase.
 \end{theorem}
 See \Cref{thm:lz-criterion} for the formal statement.
-The result of Lubetzky and Zhao also yields that the probability of $\mathcal{E}_{H, r}$ is $\exp(-J_p(r)n^2/2 + o(n^2))$ when $(p, r)$ is in the replica-symmetric phase.
+The result of Lubetzky and Zhao also yields that the probability of $\mathcal{E}_{H, r}$ is $\exp(-J_p(r)n^2/2 + o_{H,p,r}(n^2))$ when $(p, r)$ is in the replica-symmetric phase.
 However, in the symmetry-breaking phase, neither the manner in which the
 edges cluster nor, in general, the leading exponential decay rate of
 $\mathbb P(\mathcal E_{H,r})$ is known.
@@ -105,10 +112,10 @@ neural graphon representation of Kim, Baek, Lee, and
 Yang~\cite{KimBaekLeeYangGraphons} provide further evidence for an
 affirmative answer to this question; see \Cref{fig:neural-bipodal-patterns}.
 
-Our main contribution is a step towards resolving this bipodality question
+Our main contribution is a step toward resolving this bipodality question
 and has two complementary parts.  Away from the exceptional density
 $r_*=(d-1)/d$, we prove bipodality and uniqueness throughout a nontrivial
-neighbourhood of the phase boundary on the symmetry-breaking side.  At $r_*$,
+neighborhood of the phase boundary on the symmetry-breaking side.  At $r_*$,
 where this nondegenerate local theory breaks down, we instead find a family of
 balanced bipodal optimizers along an analytic curve approaching the phase boundary.
 The Lubetzky--Zhao phase boundary can be written as $p=\pc(r)$,
@@ -123,10 +130,10 @@ which vanishes exactly on the boundary and is positive on the symmetry-breaking 
   Let $H$ be a $d$-regular graph with $d \geq 2$, and let $\pc(r)$ be the Lubetzky--Zhao boundary curve.
   Set $r_*=(d-1)/d$.
   \begin{enumerate}[label=(\alph*)]
-    \item Let $r_0\in(0,1)\setminus\{r_*\}$.  There exists an open
-    neighbourhood $U$ of $(\pc(r_0),r_0)$ such that, for every
+    \item \label{thm:main-results-informal-a} Let $r_0\in(0,1)\setminus\{r_*\}$.  There exists an open
+    neighborhood $U$ of $(\pc(r_0),r_0)$ such that, for every
     $(p,r)\in U$ with $p<\pc(r)$, the typical structure of $G(n,p)$
-    conditioned on $\mathcal E_{H,r}$ is bipodal.  After labelling the
+    conditioned on $\mathcal E_{H,r}$ is bipodal.  After labeling the
     smaller block first, its relative size and the three edge densities are
     uniquely determined and depend analytically on $(p,r)$.
     The relative size of the smaller block tends to zero as $(p,r)$
@@ -136,13 +143,13 @@ which vanishes exactly on the boundary and is positive on the symmetry-breaking 
     \[
       \mathbb P(\mathcal E_{H,r})
       =\exp\left[-\left(J_p(r)-\frac{\lambda(p,r)^2}{2A_H(r)}
-        +O(\lambda(p,r)^3)\right)\frac{n^2}{2}+o(n^2)\right],
+        +O_{H,U}(\lambda(p,r)^3)\right)\frac{n^2}{2}+o_{H,p,r}(n^2)\right],
     \]
-    with the implied constants uniform on $U$, where
-    $A_H:(0,1)\setminus\{r_*\}\to(0,\infty)$ is an analytic function that
-    depends only on $r$ and $H$.
+    where $A_H:(0,1)\setminus\{r_*\}\to(0,\infty)$ is analytic.
+    The $O_{H,U}$-term is uniform for $(p,r)\in U$, while the $o_{H,p,r}$-term
+    is taken as $n\to\infty$ with $H,p,r$ fixed.
 
-    \item There exists an analytic curve $h\mapsto(p_h,r_h)$ of
+    \item \label{thm:main-results-informal-b} There exists an analytic curve $h\mapsto(p_h,r_h)$ of
     symmetry-breaking parameters approaching the exceptional boundary point:
     \[
       (p_h,r_h)\longrightarrow(\pc(r_*),r_*)
@@ -150,7 +157,7 @@ which vanishes exactly on the boundary and is positive on the symmetry-breaking 
     \]
     Along this curve, the typical structure of $G(n,p_h)$ conditioned on
     $\mathcal E_{H,r_h}$ is described by a unique nonconstant bipodal graphon
-    $W_h$, up to relabelling.  As $h\downarrow0$, both block proportions
+    $W_h$, up to relabeling.  As $h\downarrow0$, both block proportions
     tend to $1/2$, while all three edge densities tend to $r_*$.
   \end{enumerate}
 \end{theorem}
@@ -160,7 +167,7 @@ boundary.  Away from $r_*$, one pode shrinks to measure zero while the other
 occupies almost all of $[0,1]$ and its within-pode density tends to $r$.  The
 densities involving the shrinking pode need not tend to $r$, but the regions
 on which they occur have vanishing measure.  The optimizer therefore converges
-to $W\equiv r$ in $L^1$, and hence in cut distance, but generally not in
+to $W\equiv r$ in $L^1$, and hence in cut distance, but not in
 $L^\infty$.  At $r_*$, neither pode disappears: their sizes tend to $1/2$, while
 both within-pode densities and the cross density tend to $r_*$.  Thus, the
 exceptional optimizer converges in $L^\infty$ by homogenization of two
@@ -175,13 +182,15 @@ A \emph{graphon} is a symmetric measurable function $W:[0,1]^2\to[0,1]$.
 We write $\W_0$ for the space of all graphons.
 Graphons are limit objects for dense graphs; see~\cite{LovaszGraphLimits}.
 For a graphon $W$, define the \emph{edge density}, \emph{homomorphism density}, and \emph{relative entropy} by 
-\begin{align*}
+\begin{equation}\label{eq:graphon-quantities}
+  \begin{aligned}
   e(W) & =\int_{[0,1]^2}W(x,y)\,dx\,dy,
   \\
   t(H,W) & =\int_{[0,1]^{|V(H)|}}\prod_{ij\in E(H)}W(x_i,x_j)\prod_{i\in V(H)}dx_i,
   \\
   I_p(W) & =\int_{[0,1]^2}J_p(W(x,y))\,dx\,dy.
-\end{align*}
+  \end{aligned}
+\end{equation}
 For $0<p<r<1$ and a graph $H$, define the Chatterjee--Varadhan variational problem~\cite{ChatterjeeVaradhanLDP} by
 \begin{equation}\label{eq:graphon-variational-problem}
     \inf_{W\in\W_0} I_p(W)\quad \text{subject to } t(H,W)\ge r^{|E(H)|}.
@@ -194,7 +203,7 @@ set.  This set is nonempty because the constant graphon $W\equiv r$ is
 feasible.  Standard compactness, continuity, and lower-semicontinuity results
 for graphons imply that the infimum is attained, so $\W_H(p,r)$ is nonempty~\cite[Theorem~2.7]{lubetzky2015large}.
 The cut distance $\delta_\square$ measures the difference between two graphons
-after allowing measure-preserving relabellings; its formal definition, together
+after allowing measure-preserving relabelings; its formal definition, together
 with the graphon-topological facts used above, is given in
 \Cref{sec:graphons}.  A graph $G$ can be viewed as its associated step graphon
 $W_G$, in which case $t(H,G)=t(H,W_G)$.
@@ -221,9 +230,7 @@ The first conclusion gives the leading exponential decay rate of the
 upper-tail probability, while the second says that, conditional on the
 upper-tail event, the graphon of a typical $G(n,p)$ is close in cut distance
 to some optimizer in $\W_H(p,r)$, with probability tending exponentially fast
-to one.
-
-In variational terms, the Lubetzky--Zhao criterion stated informally in
+to one.  In variational terms, the Lubetzky--Zhao criterion stated informally in
 \Cref{thm:lz-criterion-informal} takes the following form.
 \begin{theorem}[Lubetzky--Zhao criterion~\cite{lubetzky2015large}]\label{thm:lz-criterion}
     Let $H$ be a $d$-regular graph with $d\ge2$ and let $0<p<r<1$.
@@ -232,25 +239,29 @@ In variational terms, the Lubetzky--Zhao criterion stated informally in
 A graphon $W$ is called \emph{bipodal} if there is a measurable set $A\subseteq[0,1]$ such that, writing $B=[0,1]\setminus A$, the graphon $W$ is almost everywhere equal to a constant on each of the three sets $A\times A$, $(A\times B)\cup(B\times A)$, and $B\times B$; see \Cref{sec:graphons}.
 Thus, in the graphon formulation, the question of Lubetzky and Zhao asks
 whether every minimizer of~\eqref{eq:graphon-variational-problem} in the
-symmetry-breaking phase is bipodal.  The precise version of our result away
-from the exceptional density is as follows.
+symmetry-breaking phase is bipodal.  The following theorem gives a local
+affirmative answer away from the exceptional density.  Combined with the
+Chatterjee--Varadhan theorem above, it provides the upper-tail probability
+asymptotics and the bipodal description of the conditioned random graph
+stated in Theorem~\hyperref[thm:main-results-informal-a]{\ref*{thm:main-results-informal}~\ref*{thm:main-results-informal-a}}
 
 \begin{theorem}\label{thm:nonexceptional-optimizers}
     Let $H$ be a $d$-regular graph with $d\ge2$.
-    If $r_0 \in (0, 1)\setminus\{(d-1)/d\}$, then there exists an open neighbourhood $U$ of $(\pc(r_0), r_0)$ such that for any $(p, r)\in U$ with $p<\pc(r)$, the minimizer of~\eqref{eq:graphon-variational-problem} is unique up to relabelling and bipodal.
+    If $r_0 \in (0, 1)\setminus\{(d-1)/d\}$, then there exists
+    an open neighborhood $U$ of $(\pc(r_0), r_0)$ such that for
+    any $(p, r)\in U$ with $p<\pc(r)$, the minimizer of~\eqref{eq:graphon-variational-problem}
+    is unique up to relabeling, nonconstant, and bipodal.
+    For every fixed $r$ with $(\pc(r),r)\in U$, the size of its smaller
+    block tends to zero as $p\uparrow\pc(r)$.
     Furthermore, the unique optimizer $W_{p, r}$ satisfies
       \[
-    e(W_{p,r})=r-\frac{\lambda(p,r)}{A_H(r)}+O(\lambda(p,r)^2),
+    e(W_{p,r})=r-\frac{\lambda(p,r)}{A_H(r)}+O_{H,U}(\lambda(p,r)^2),
     \qquad
     \Phi_H(p,r)=J_p(r)-\frac{\lambda(p,r)^2}{2A_H(r)}
-      +O(\lambda(p,r)^3),
+      +O_{H,U}(\lambda(p,r)^3),
   \]
     where $A_H:(0,1) \setminus\{(d-1)/d\} \to (0, \infty)$ is an analytic function.
 \end{theorem}
-Together with the Chatterjee--Varadhan theorem above, this gives
-the asymptotic formula for the upper-tail probability and the
-bipodal description of the conditioned random graph stated in
-\Cref{thm:main-results-informal}(a).
 
 To explain why the exceptional density requires a separate argument,
 consider $H=K_3$, for which $d=2$ and the exceptional density is $1/2$.
@@ -267,7 +278,6 @@ at most $C_r\lambda(p,r)^2$ for $p$ sufficiently close to $\pc(r)$.
 For this fixed $r$, the coefficient of $\lambda(p,r)$ is finite and
 $\lambda(p,r)\to0$, so the expansion implies $c(p,r)\to0$: the smaller
 block disappears.
-
 The difficulty arises when $r$ also tends to $1/2$ as the phase boundary is
 approached.  The factor $(2r-1)^2$ in the denominator then tends to zero,
 and our estimates for $A_{K_3}(r)$ do not determine whether the full
@@ -289,16 +299,19 @@ Let $H$ be a $d$-regular graph with $d\ge2$.  There exist $h_0>0$, an
 analytic curve $h\mapsto(p_h,r_h)$ for $0<h<h_0$, and nonconstant rank-one
 bipodal graphons $W_h$ such that
 \[
+  p_h < \pc(r_h),
+  \qquad
   (p_h,r_h)\longrightarrow
   \left(\pc\left(\frac{d-1}{d}\right),\frac{d-1}{d}\right)
-  \qquad(h\downarrow0).
+  \qquad
+  (h\downarrow0).
 \]
 The graphon $W_h$ satisfies
 \[
   t(H,W_h)=r_h^{|E(H)|},
 \]
 and is the unique minimizer of \eqref{eq:graphon-variational-problem}, up to
-measure-preserving relabelling, at $(p_h,r_h)$.  As $h\downarrow0$, the sizes
+measure-preserving relabeling, at $(p_h,r_h)$.  As $h\downarrow0$, the sizes
 of its two blocks both converge to $1/2$, while its two within-block densities
 and its cross density all converge to $(d-1)/d$.  Consequently, $W_h$
 converges in $L^\infty$ to the constant graphon $W\equiv(d-1)/d$.
@@ -307,7 +320,7 @@ converges in $L^\infty$ to the constant graphon $W\equiv(d-1)/d$.
 \subsection{Proof strategy}\label{sec:proof-strategy}
 The proofs of \Cref{thm:nonexceptional-optimizers,thm:endpoint-optimizers}
 use the supporting-line geometry underlying the Lubetzky--Zhao boundary,
-but they identify the graphon optimizers by different methods.
+but identify the optimizers using different strategies.
 Let $r_*=(d-1)/d$ be the exceptional density.
 
 \begin{enumerate}[label=(\roman*),leftmargin=2.2em]
@@ -315,89 +328,85 @@ Let $r_*=(d-1)/d$ be the exceptional density.
 For $r\ne r_*$, we first prove a quadratic lower bound for the gap between
 the scalar function $x\mapsto J_{\pc(r)}(x^{1/d})$ and its supporting line
 at $x=r^d$.  This line also touches the curve at $x=\sm(r)^d$, with
-$\sm(r)\ne r$.  In \Cref{sec:lz-boundary}, we show that the gap is at least a
+$\sm(r)\ne r$.  Then, we show that the gap is at least a
 positive constant times the squared distance from $x$ to the nearer of
 these two contact points.  The same positive constant works for every $r$
 in a fixed closed interval contained in $(0,1)$ that does not contain
 $r_*$.  We exclude $r_*$ because there the two contacts merge and the gap
 vanishes to fourth order, so a quadratic lower bound no longer holds.
+See \Cref{sec:lz-boundary}.
 
 We next reduce the choice of an optimizing graphon to the choice of its
-edge density.  In \Cref{sec:local-reduction}, we show that every optimizer
+edge density.  We show that every optimizer
 has exactly the required $H$-density $r^{|E(H)|}$, and that its edge density
-approaches $r$ from below as $p\uparrow\pc(r)$.  We can therefore write its
-edge density as $r-\delta$, where $\delta>0$ is small.  For each such
-$\delta$, minimizing $I_p$ among graphons with these two prescribed
-densities is equivalent to maximizing graphon entropy.\footnote{The graphon
-entropy is $s(W)=-\frac12\int_{[0,1]^2}[W\log W+(1-W)\log(1-W)]\,dx\,dy$,
-with the convention $0\log0=0$.}
-The theorem of Kenyon, Radin, Ren, and Sadun
-\mbox{(KRR--S)}~\cite{kenyon2014entropy} shows that maximizing graphon
-entropy under the constraints $e(W)=r-\delta$ and
-$t(H,W)=r^{|E(H)|}$ yields a unique bipodal graphon, up to relabelling.
+approaches $r$ from below as $p\uparrow\pc(r)$, so that we can constrain its
+edge density at $r-\delta$, where $\delta>0$, the edge-density deficit, is sufficiently small.
+By using the relative entropy identity \eqref{eq:relative-entropy-identity},
+for each fixed $p$, $r$, and $\delta$, minimizing $I_p$ among graphons with the
+two constraints $e(W)=r-\delta$ and $t(H,W)=r^{|E(H)|}$ is equivalent to maximizing
+graphon entropy in \eqref{eq:graphon-entropy}.
+The theorem of Kenyon, Radin, Ren, and Sadun \mbox{(KRR--S)}~\cite{kenyon2014entropy}
+shows that maximizing graphon entropy under these two constraints
+yields a unique bipodal graphon, up to relabeling, for sufficiently small $\delta>0$.
 Thus, each $\delta$ selects one bipodal candidate for the original relative
 entropy minimization problem.  Write $W_\delta$ for this bipodal candidate.
-It is specified by four parameters: the size of its smaller block, the two
-within-block edge densities, and the cross-block edge density.  It remains
-to choose the $\delta$ for which $W_\delta$ has the least relative entropy.
+See \Cref{sec:local-reduction}.
 
-To make this choice, we compare the candidates with the constant graphon
-$W\equiv r$, which has the same $H$-density.  At $p=\pc(r)$, the constant
-graphon is optimal, so reducing the edge density by $\delta$ incurs an
-extra relative entropy cost.  The scalar gap bound above, combined with
-generalized H\"older's inequality, shows that this extra cost is at least
-a positive multiple of $\delta^2$.  We also construct a bipodal graphon
-with the prescribed densities whose extra cost is at most another
-multiple of $\delta^2$.  Since the four parameters of $W_\delta$ depend
-analytically on $\delta$ and $r$, these two bounds show
-that its extra cost has leading term $\frac12A_H(r)\delta^2$, with a
-positive analytic coefficient $A_H(r)$; see \Cref{sec:nondegeneracy}.
+It remains to prove that the minimizing deficit $\delta$ is unique and to
+derive the expansions of the corresponding edge density and relative entropy.
+For fixed $r$, we first compute the extra cost of $W_\delta$ at $p=\pc(r)$,
+compared to the constant graphon $W\equiv r$,
+since changing $p$ adds only an explicit linear correction in $\delta$, as shown below.
+The constant graphon is optimal there, so the comparison quantifies
+the cost of lowering the edge density while keeping the same $H$-density.
+For sufficiently small $\delta>0$, the scalar gap bound and generalized
+H\"older's inequality give a quadratic lower bound on this extra cost.
+We also obtain a quadratic upper bound by constructing a graphon with
+the same densities and an extra cost of order $\delta^2$; $W_\delta$ has no
+greater cost because it minimizes relative entropy under these constraints.
+The analytic bipodal parametrization then gives the leading Taylor term
+$\frac12A_H(r)\delta^2$, where $A_H(r)>0$ is the second derivative of the
+extra cost at $\delta=0$ and is analytic in $r$.
+See \Cref{sec:nonexceptional-quadratic-growth}.
 
-To use this boundary calculation when $p<\pc(r)$, we make the dependence
-of the excess cost on $p$ explicit.  For fixed $r$ and $\delta$, the
-candidate $W_\delta$ does not depend on $p$, since it maximizes graphon
-entropy under constraints that involve only $r$ and $\delta$.  The relative
-entropy identity \eqref{eq:relative-entropy-identity} gives the exact relation
+We now shift this boundary calculation to $p<\pc(r)$, where the constant graphon is no longer optimal.
+The relative entropy identity \eqref{eq:relative-entropy-identity} gives, for $p<\pc(r)$,
 \[
   I_p(W_\delta)-J_p(r)
   =\bigl[I_{\pc(r)}(W_\delta)-J_{\pc(r)}(r)\bigr]
    -\lambda(p,r)\delta.
 \]
-The bracketed term is the excess cost at the boundary, analysed in the
+The bracketed term is the excess cost at the boundary, analyzed in the
 previous paragraph; the term $-\lambda(p,r)\delta$ is the correction
-caused by changing $p$.  Inserting the boundary expansion therefore gives
-the total excess cost at $p<\pc(r)$:
+caused by changing $p$.  Inserting the previous boundary calculation gives
 \[
   I_p(W_\delta)-J_p(r)
-  =\frac12A_H(r)\delta^2-\lambda(p,r)\delta+O(\delta^3)
+  =-\lambda(p,r)\delta+\frac12A_H(r)\delta^2+O_{H,r}(\delta^3)
   \qquad(\delta\downarrow0,\ r\text{ fixed}).
 \]
-The linear term favours a reduction in edge density, while the quadratic
+The linear term favors a reduction in edge density, while the quadratic
 term penalizes it.  Balancing the two gives a minimizing value of $\delta$
 with leading term $\lambda(p,r)/A_H(r)$.  Strict convexity makes this
 minimizing value unique, and hence also makes the graphon optimizer unique
-up to relabelling.  The analytic implicit function theorem shows that the
-minimizing $\delta$ depends analytically on $(p,r)$.  Evaluating the four
+up to relabeling.  The analytic implicit function theorem shows that the
+minimizing $\delta$ depends analytically on $(p,r)$.  Evaluating the
 parameters of $W_\delta$ at the minimizing value of $\delta$ determines
-the optimizing graphon.  Evaluating $I_p(W_\delta)$ at the same value
-gives the expansion of the minimum relative entropy; see
-\Cref{sec:local-optimizer-structure}.
+the optimizing graphon; the parameters also depend analytically on $(p,r)$
+due to the KRR--S theorem.  Evaluating $I_p(W_\delta)$ at the same value
+gives the expansion of the minimum relative entropy.
+See \Cref{sec:nonexceptional-proof}.
 
 \item \emph{Exceptional case (\Cref{thm:endpoint-optimizers}).}
-For $r\ne r_*$, the supporting line to the curve
-$x\mapsto J_{\pc(r)}(x^{1/d})$ touches it at two distinct points,
-$x=r^d$ and $x=\sm(r)^d$.  As $r\to r_*$, these contact points merge at
-$x=r_*^d$.  At $r=r_*$, the vertical gap between the curve and its
-supporting line vanishes to fourth order at this point.
-Since the KRR--S theorem does not cover this density, we develop a separate
-argument in \Cref{sec:singular-endpoint}.
+At $r=r_*$, the curve $x\mapsto J_{\pc(r_*)}(x^{1/d})$ has a supporting
+line at $x=r_*^d$, and the gap between the curve and this line vanishes
+to fourth order there.  Since the KRR--S theorem does not cover this density,
+we develop a separate argument in \Cref{sec:singular-endpoint}.
 
 We first seek a family of candidate graphons of the product form $W(x,y)=f(x)f(y)$
 for the original relative entropy minimization problem.
-Such graphons are called \emph{rank-one}.
 Here $f$ assigns a weight to each vertex, and the edge probability is the
 product of the two vertex weights.  This form simplifies the $H$-density:
-since every vertex of $H$ has degree $d$,
+since $H$ is $d$-regular,
 \[
   t(H,W)=\left(\int_0^1 f(x)^d\,dx\right)^{|V(H)|}.
 \]
@@ -409,85 +418,81 @@ satisfying the required $H$-density constraint.
 To determine the candidate graphons, we impose necessary conditions for a
 constrained minimum: the derivative of the relative entropy must vanish
 under differentiable perturbations that keep the $H$-density fixed.
-These are the \emph{stationarity conditions}.  For nonconstant graphons of
+These are the \emph{stationarity conditions}.  For nonconstant $W$ of
 this product form with $f$ bounded away from $0$ and $1$, the resulting equations
-force $f$ to take exactly two values.  The sets on which $f$ takes these
-values become the two blocks of the graphon.  We also impose stationarity
-under changes of block size.  We use $h>0$ to denote half the difference
-between the two values of $f_h$.  The stationarity conditions for the
+force $f$ to take exactly two values, thus $W$ is bipodal.  We also impose
+stationarity under changes of block size.  We use $h>0$ to denote half the difference
+between the two values of $f$.  The stationarity conditions for the
 graphon values and for changes in block size together determine the two
-values of $f_h$, the block sizes, and $p_h$ as analytic functions of $h$
-near $0$.
-We obtain $W_h(x,y)=f_h(x)f_h(y)$ and define $r_h$ by
-$t(H,W_h)=r_h^{|E(H)|}$; see \Cref{sec:rank-one-stationary-family}.
-As $h\downarrow0$, the block sizes tend to $1/2$ and the parameter pair
-$(p_h,r_h)$ approaches $(\pc(r_*),r_*)$.
+values of $f$, the block sizes, and $p$ as analytic functions of $h$
+near $0$.  We define $r$ by $t(H,W)=r^{|E(H)|}$ and parametrize the resulting
+family by $h \mapsto (f_h,W_h,p_h,r_h)$; see \Cref{sec:rank-one-stationary-family}.
+
+By construction, the block sizes tend to $1/2$ and the parameter pair
+$(p_h,r_h)$ approaches $(\pc(r_*),r_*)$ as $h\downarrow0$.
 We then show that $W_h$ has lower relative entropy, by a quantity of order
-$h^4$, than the constant graphon $W\equiv r_h$ with the same $H$-density;
-see \Cref{sec:constant-graphon-comparison}.
+$h^4$, than the constant graphon $W\equiv r_h$ with the same $H$-density.
+See \Cref{sec:constant-graphon-comparison}.
 
 It remains to show that $W_h$ is the unique optimizer among all graphons.
 Take any graphon $W$ satisfying the density constraint
 $t(H,W)\ge r_h^{|E(H)|}$ and having relative entropy
 $I_{p_h}(W)\le I_{p_h}(W_h)$.  We must prove that $W$ agrees with $W_h$ up to
-relabelling.  The fourth-order supporting gap described above provides
+relabeling.  The fourth-order supporting gap described above provides
 the first step: together with the density constraint and this relative entropy
 comparison, it gives
 \begin{equation}\label{eq:intro-quartic-localization}
   \int_{[0,1]^2}|W(x,y)-r_*|^4\,dx\,dy\le C_d h^4.
 \end{equation}
-Thus, every such competitor is within $O(h)$ of the constant graphon
-$r_*$ in the $L^4$-norm.  The localization estimate
-\eqref{eq:intro-quartic-localization}, proved in
-\Cref{sec:localization-rank-one}, allows us to carry out the relative
-entropy comparison below.
-
-We can now compare such a $W$ with $W_h$ more precisely.  We write
+Thus, every such competitor is within $O_d(h)$ of the constant graphon
+$r_*$ in the $L^4$-norm.  To compare such $W$ with $W_h$ more precisely, we write
 $W(x,y)=f(x)f(y)+E(x,y)$, separating a product part from a remainder $E$.
-We choose $f$ so that replacing $W$ by its product part changes the
-$H$-density by at most a cubic quantity in the $L^2$-norm of $E$:
+We choose $f$ so that the difference between the $H$-densities of $W$
+and its product part is at most a cubic quantity in the $L^2$-norm of $E$:
 \begin{equation}\label{eq:intro-density-error}
   \left|t(H,W)-\left(\int_0^1 f(x)^d\,dx\right)^{|V(H)|}\right|
   \le C_H\|E\|_2^3.
 \end{equation}
 For this choice of $f$, the localization bound
 \eqref{eq:intro-quartic-localization} gives
-$\|f-\sqrt{r_*}\|_4=O(h)$ and $\|E\|_2=O(h)$.
-These two bounds provide the smallness needed to control the higher-order
-terms in the relative entropy comparison.
+$\|f-\sqrt{r_*}\|_4=O_d(h)$ and $\|E\|_2=O_d(h)$.
+These bounds provide the smallness needed to control the higher-order
+terms in the following entropy comparison.
+See \Cref{sec:localization-rank-one}.
 
 We then establish a lower bound for the relative entropy difference
 $I_{p_h}(W)-I_{p_h}(W_h)$ that accounts both for the remainder $E$
-and for deviations of $f$ from the two values
-$s_h<t_h$ taken by $f_h$.  Combining this bound with the density
-constraint and the cubic estimate
+and for deviations of $f$ from the two distinct values
+$s_h$ and $t_h$ taken by $f_h$.  Combining this bound with the density
+constraint and the cubic bound
 \eqref{eq:intro-density-error} shows that, for sufficiently
-small $h$, $I_{p_h}(W)\ge I_{p_h}(W_h)$, with equality only if
+small $h$, $I_{p_h}(W)\ge I_{p_h}(W_h)$, with equality if and only if
 \[
-  E=0\ \text{a.e.},\qquad
-  f(x)\in\{s_h,t_h\}\ \text{a.e.},\qquad
+  E(x,y)=0 \quad \text{a.e.},\qquad
+  f(x)\in\{s_h,t_h\} \quad \text{a.e.},\qquad
   \int_0^1 f(x)^d\,dx=\int_0^1 f_h(x)^d\,dx.
 \]
 Our assumption $I_{p_h}(W)\le I_{p_h}(W_h)$ therefore forces all three
 conditions.  The first two say that $W$ itself has the product form,
-with the same two factor values as $W_h$.  The last condition fixes the
-block sizes: since $s_h$ and $t_h$ are distinct, their proportions are
-uniquely determined by the integral of $f^d$.
-Thus, $W$ agrees with $W_h$ up to relabelling.  This proves optimality
-and uniqueness along the constructed curve; see
-\Cref{sec:auxiliary-lagrangian,sec:graphon-comparison,sec:endpoint-optimality-proof}.
+with the same two factor values as $W_h$.  The last condition fixes the block sizes.
+Thus, $W$ agrees with $W_h$ up to relabeling.  This proves optimality
+and uniqueness along the constructed curve.
+See \Cref{sec:auxiliary-lagrangian,sec:graphon-comparison,sec:singular-proof}.
 \end{enumerate}
 
 \paragraph{Organization.}
 \Cref{sec:preliminaries} records the graphon preliminaries and the
-entropy-maximization results.  The nonexceptional argument occupies
-\Cref{sec:lz-boundary,sec:local-reduction,sec:nondegeneracy,sec:local-optimizer-structure},
-and \Cref{sec:singular-endpoint} proves the exceptional result.
+entropy-maximization results.  \Cref{sec:lz-boundary} analyzes the phase
+boundary, and \Cref{sec:nonexceptional-endpoint,sec:singular-endpoint}
+prove the nonexceptional and exceptional results, respectively.
 \Cref{sec:lean-formalization} describes our Lean 4 formalization,
 including its scope and assumptions.
 \Cref{sec:concluding-remarks} discusses further directions.
-Appendices~\ref{app:krrs-analytic-extension}, \ref{app:lz-scalar-geometry},
-\ref{app:bipodal-parameter-expansions}, and \ref{app:local-reduction} contain,
-respectively, the derivation of the two-sided KRR--S parametrization, the
-scalar convex-analysis proofs, the bipodal parameter expansions, and
-proofs supporting the one-dimensional reduction.
+Appendix~\ref{app:notation} collects the notation and asymptotic conventions
+used throughout the paper.  Technical arguments deferred from the main text
+appear in Appendices~\ref{app:krrs-analytic-extension}, \ref{app:lz-scalar-geometry},
+\ref{app:nonexceptional-proofs}, and
+\ref{app:endpoint-calculations}, which contain, respectively, the derivation of the
+two-sided KRR--S parametrization, the scalar convex-analysis proofs,
+the reduction proofs and bipodal parameter expansions for nonexceptional endpoints,
+and the construction and parameter calculations for the singular-endpoint family.

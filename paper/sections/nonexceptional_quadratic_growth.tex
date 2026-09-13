@@ -1,0 +1,327 @@
+\subsection{The quadratic cost of an edge-density deficit}\label{sec:nonexceptional-quadratic-growth}
+
+At the phase boundary, we show that the reduced objective
+$I_{\pc(r),r}(\eps)$ increases quadratically from the constant-graphon
+cost as the edge density $\eps$ decreases from $r$, while the $H$-density
+remains fixed at $r^m$.  We express this in terms of the edge-density deficit
+\[
+  \delta:=r-\eps.
+\]
+Note that by \Cref{lem:edge-density-deficit}, $\delta>0$ for every optimizer on the
+symmetry-breaking side.
+Fix $r_0\in(0,1)\setminus\{r_*\}$ and let $I$ be the open interval containing $r_0$
+supplied by \Cref{lem:fixed-density-bipodality}, with compact closure in
+$(0,1)\setminus\{r_*\}$.  We may shrink $I$ around $r_0$ below; all estimates
+are uniform for $r\in I$.
+At the boundary value $p=\pc(r)$, define the boundary excess
+\begin{equation}\label{eq:boundary-excess}
+  G_r(\delta)=I_{\pc(r),r}(r-\delta)-J_{\pc(r)}(r)
+  \qquad (0<\delta<\rho_0),
+\end{equation}
+with $\rho_0$ as in \Cref{lem:fixed-density-bipodality}; that lemma ensures
+that $I_{\pc(r),r}(r-\delta)$ is finite throughout this range.  The value
+at $\delta=0$ belongs instead to the analytic extension $G(r,\delta)$
+constructed in \Cref{thm:positive-second-variation}; it is not part of the domain of $G_r$.
+Thus, $G_r(\delta)$ measures this additional cost relative to the constant
+graphon.  More precisely, we will prove that
+\[
+  G_r(\delta)=\frac12A_H(r)\delta^2+O_{H,I}(\delta^3)
+  \qquad (\delta\downarrow0),
+  \qquad A_H(r)>0.
+\]
+
+For $r\in I$, recall that $\sm(r)$ is the second contact density associated
+with the boundary point $(\pc(r),r)$.  Let $\ell_r$ be the supporting line to
+the graph of $x\mapsto J_{\pc(r)}(x^{1/d})$ at $x=r^d$:
+\[
+  \ell_r(x)=J_{\pc(r)}(r)
+  +\frac{J_{\pc(r)}'(r)}{d r^{d-1}}(x-r^d)
+  \qquad (0 \le x \le 1).
+\]
+Define the \emph{supporting cost gap} by
+\begin{equation}\label{eq:supporting-cost-gap}
+  g_r(z)=J_{\pc(r)}(z)-\ell_r(z^d)
+  \qquad (0\le z\le1).
+\end{equation}
+Since $\ell_r$ is a supporting line, $g_r\ge0$.  We claim that there is
+$\gamma_{d,I}>0$ such that, uniformly for $r\in I$,
+\begin{equation}\label{eq:supporting-gap-quadratic-bound}
+  g_r(z)\ge \gamma_{d,I}\,\dist(z,\{r,\sm(r)\})^2.
+\end{equation}
+Apply \eqref{eq:contact-quadratic-separation} on $\overline I$.
+The contact densities are uniformly bounded below by some $\eta_{d,I}>0$,
+and for $z\in[0,1]$ and $v\in\{r,\sm(r)\}$,
+\[
+  |z^d-v^d|
+  =
+  |z-v|\,(z^{d-1}+z^{d-2}v+\cdots+v^{d-1})
+  \ge
+  \eta_{d,I}^{d-1}|z-v|.
+\]
+Taking the minimum over the two contact densities proves
+\eqref{eq:supporting-gap-quadratic-bound}.
+
+\begin{lemma}[Scalar quadratic lower bound]\label{lem:scalar-quadratic-bound}
+There exist constants $C_{d,I}>0$ and $\delta_0>0$ such that, for every
+$r\in I$, the following holds.  If $0<\delta<\delta_0$ and $X$ is a random variable with
+values in $[0,1]$ satisfying
+$\EE X=r-\delta$ and
+$\EE X^d\ge r^d$,
+then
+\begin{equation}\label{eq:scalar-quadratic-bound}
+  \EE J_{\pc(r)}(X)\ge J_{\pc(r)}(r)+C_{d,I}\delta^2.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The slope of $\ell_r$ is positive, because $\pc(r)<r$.  Hence
+\[
+  \EE\ell_r(X^d)
+  =   \ell_r(\EE X^d)
+  \ge \ell_r(r^d)
+  =   J_{\pc(r)}(r).
+\]
+Using \eqref{eq:supporting-cost-gap},
+\[
+  \EE g_r(X)
+  =   \bigl(\EE J_{\pc(r)}(X)-\EE \ell_r(X^d)\bigr)
+  \le \bigl(\EE J_{\pc(r)}(X)-J_{\pc(r)}(r)\bigr).
+\]
+It remains to show $\EE g_r(X)\ge C_{d,I}\delta^2$.
+Set $s:=\sm(r)$ and
+\[
+  k:=\frac{s^d-r^d}{s-r}
+  =s^{d-1}+s^{d-2}r+\cdots+r^{d-1}
+  \ge\eta_{d,I}^{d-1}>0.
+\]
+Let $Y$ be the measurable nearest-point projection of $X$ onto $\{r,s\}$,
+with ties assigned to $r$.  Since $Y\in\{r,s\}$, we have
+$Y^d-r^d=k(Y-r)$.  Using $\EE X=r-\delta$ and the fact that
+$z\mapsto z^d$ is $d$-Lipschitz on $[0,1]$, we obtain
+\begin{align*}
+  0\le\EE X^d-r^d
+  &\le\EE Y^d-r^d+d\,\EE|X-Y|\\
+  &=k\bigl(\EE(Y-X)-\delta\bigr)+d\,\EE|X-Y|\\
+  &\le(k+d)\EE|X-Y|-k\delta.
+\end{align*}
+Hence
+\[
+  \EE|X-Y|\ge\frac{k}{k+d}\delta
+  \ge\frac{\eta_{d,I}^{d-1}}{d+\eta_{d,I}^{d-1}}\delta.
+\]
+Since $|X-Y|=\dist(X,\{r,s\})$, the bound
+\eqref{eq:supporting-gap-quadratic-bound} and Cauchy--Schwarz give
+\[
+  \EE g_r(X)\ge\gamma_{d,I}\,\EE|X-Y|^2
+  \ge\gamma_{d,I}\bigl(\EE|X-Y|\bigr)^2
+  \ge C_{d,I}\delta^2,
+\]
+where $C_{d,I}:=\gamma_{d,I}\bigl(\eta_{d,I}^{d-1}/(d+\eta_{d,I}^{d-1})\bigr)^2>0$.
+\end{proof}
+
+\begin{corollary}[Quadratic lower bound for graphons]\label{prop:graphon-quadratic-bound}
+For every $r\in I$ and $0<\delta<\delta_0$, if $e(W)=r-\delta$ and
+$t(H,W)\ge r^m$, then
+\begin{equation}\label{eq:graphon-quadratic-bound}
+  I_{\pc(r)}(W)
+  \ge
+  J_{\pc(r)}(r)+C_{d,I}\delta^2,
+\end{equation}
+with $C_{d,I}$ and $\delta_0$ as in \Cref{lem:scalar-quadratic-bound}.
+\end{corollary}
+
+\begin{proof}
+Let $X=W(U,V)$, where $(U,V)$ is uniformly distributed on $[0,1]^2$.  Then
+$\EE X=e(W)=r-\delta$.  By the generalized H\"older inequality
+\eqref{eq:generalized-holder} and feasibility,
+\[
+  \EE X^d=\int W^d\ge t(H,W)^{d/m} \ge r^d.
+\]
+By \Cref{lem:scalar-quadratic-bound}, we conclude the proof.
+\end{proof}
+
+We now prove that the preceding quadratic lower bound has
+the correct order.  For small $\delta>0$, we construct a bipodal graphon with
+edge density $r-\delta$, $H$-density $r^m$, and $I_{\pc(r)}$-value only
+$O_{H,I}(\delta^2)$ above that of the constant graphon.  The construction starts
+from the constant graphon $r$, makes a small block, uses the second contact density
+$s=\sm(r)$ on the cross edges, and then adjusts the large-block density to
+restore the two constraints.
+
+\begin{lemma}[Quadratic upper bound]\label{lem:bipodal-quadratic-bound}
+After shrinking $I$ around $r_0$, there exist constants $C_{H,I}>0$ and
+$\delta_0>0$ such that, for every $r\in I$ and $0<\delta<\delta_0$, there is a bipodal graphon
+$V_\delta$ satisfying $e(V_\delta)=r-\delta$, $t(H,V_\delta)=r^m$,
+and
+\begin{equation}\label{eq:bipodal-quadratic-bound}
+  I_{\pc(r)}(V_\delta)
+  \le
+  J_{\pc(r)}(r)+C_{H,I}\delta^2.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Fix $a\in(0,1)$; we take $a=1/2$ at the end.
+For $r$ near $r_0$, put $s=\sm(r)$ and let $V_{r,c,q}$ have block size $c$
+and edge densities $a,s,q$ on the small block, cross edges, and large block,
+respectively.  To solve the two constraints, define
+\[
+  F(r,\delta,c,q)
+  :=\bigl(e(V_{r,c,q})-(r-\delta),\,t(H,V_{r,c,q})-r^m\bigr).
+\]
+The density formulas are polynomial in $c,a,s,q$, so they define $F$ also
+for real $c$ near $0$.  Since $\sm$ is analytic near $r_0$, this extension
+is analytic and satisfies $F(r,0,0,r)=0$.
+
+Writing $n=|V(H)|=2m/d$, the assignments with zero or one vertex in the
+small block give
+\begin{align*}
+  e(V_{r,c,q})&=c^2a+2c(1-c)s+(1-c)^2q,\\
+  t(H,V_{r,c,q})&=(1-c)^nq^m
+  +nc(1-c)^{n-1}s^dq^{m-d}+O_H(c^2).
+\end{align*}
+Thus, with
+\[
+  D_d(r,s):=\frac{s^d-r^d}{d r^{d-1}}-(s-r)>0,
+\]
+where positivity follows from strict convexity and $s\ne r$, the Jacobian is
+\begin{gather*}
+  \partial_{(c,q)}F(r,0,0,r)=
+  \begin{pmatrix}
+    2(s-r) & 1 \\
+    \frac{2m}{d}r^{m-d}(s^d-r^d) & m r^{m-1}
+  \end{pmatrix},\\
+  \det\partial_{(c,q)}F(r,0,0,r)=-2m r^{m-1}D_d(r,s)<0.
+\end{gather*}
+The analytic implicit function theorem at $(r_0,0,0,r_0)$ therefore gives
+jointly analytic functions $c(r,\delta)$ and $q(r,\delta)$ near $(r_0,0)$.
+Local uniqueness and $F(r,0,0,r)=0$ give $c(r,0)=0$ and $q(r,0)=r$, while
+\begin{equation}\label{eq:comparison-graphon-constraints}
+  e(V_{r,c(r,\delta),q(r,\delta)})=r-\delta,
+  \qquad
+  t(H,V_{r,c(r,\delta),q(r,\delta)})=r^m.
+\end{equation}
+Shrink $I$ and choose $\delta_0>0$ so that
+$\overline I\times[-\delta_0,\delta_0]$ lies in this analytic domain.
+Differentiating the constraints at $\delta=0$ and using the Jacobian gives,
+with uniform Taylor remainders,
+\begin{equation}\label{eq:comparison-block-size}
+  c(r,\delta)=\frac{\delta}{2D_d(r,s)}+O_{H,I,a}(\delta^2),
+\end{equation}
+\begin{equation}\label{eq:comparison-block-density}
+  q(r,\delta)=r-\frac{2(s^d-r^d)}{d r^{d-1}}c(r,\delta)
+  +O_{H,I,a}(c(r,\delta)^2).
+\end{equation}
+Since $D_d(r,\sm(r))$ is bounded above and away from zero on $\overline I$,
+we may decrease $\delta_0$ so that $0<c(r,\delta)<1/2$ and $0<q(r,\delta)<1$
+for every $r\in I$ and $0<\delta<\delta_0$.
+Hence $V_\delta:=V_{r,c(r,\delta),q(r,\delta)}$ is a graphon with the required
+densities.
+
+It remains to estimate its cost.  Abbreviate
+$c=c(r,\delta)$, $q=q(r,\delta)$.  Since $q-r=O_{H,I,a}(c)$ and all edge
+densities and $\pc(r)$ stay away from $0$ and $1$, Taylor's theorem gives
+\begin{align*}
+  I_{\pc(r)}(V_\delta)-J_{\pc(r)}(r)
+  &=J_{\pc(r)}'(r)(q-r)+2c\{J_{\pc(r)}(s)-J_{\pc(r)}(r)\}
+    +O_{H,I,a}(c^2)\\
+  &=2c\left\{J_{\pc(r)}(s)-J_{\pc(r)}(r)
+    -\frac{J_{\pc(r)}'(r)}{d r^{d-1}}(s^d-r^d)\right\}
+    +O_{H,I,a}(c^2).
+\end{align*}
+The bracket vanishes because $\ell_r$ touches the scalar curve at both
+$r^d$ and $s^d$; see (M3)--(M4) of \Cref{thm:scalar-lz-boundary}.
+Thus the cost difference is $O_{H,I,a}(c^2)=O_{H,I,a}(\delta^2)$ by
+\eqref{eq:comparison-block-size}.  Taking $a=1/2$ proves
+\eqref{eq:bipodal-quadratic-bound}.
+\end{proof}
+
+Recall that the boundary excess \eqref{eq:boundary-excess} is defined only for
+$\delta>0$, because the Kenyon--Radin--Ren--Sadun regime of \Cref{thm:krrs-analytic-extension}
+requires a strictly positive $H$-density excess $\tau-\eps^m$.  The theorem
+below therefore produces, in addition to the quadratic expansion, the
+real-analytic \emph{extension} of $G_r$ to a two-sided neighborhood of
+$\delta=0$; it is that extension whose $\delta$-derivatives appear in
+\Cref{sec:nonexceptional-proof}.
+
+\begin{theorem}[Universal positivity of the scalar second variation]\label{thm:positive-second-variation}
+After shrinking $I$ around $r_0$, there exist $\overline\delta>0$, an open
+set $\mathcal N$ containing $I\times(-\overline\delta,\overline\delta)$,
+and a real-analytic
+function $G:\mathcal N\to\RR$ such that
+\begin{equation}\label{eq:boundary-excess-extension}
+  G(r,\delta)=G_r(\delta)
+  \qquad(r\in I,\ 0<\delta<\overline\delta).
+\end{equation}
+Setting $A_H(r):=\partial_\delta^2G(r,0)$, the following hold.
+\begin{enumerate}[label=(\roman*)]
+  \item $G(r,0)=0$ and $\partial_\delta G(r,0)=0$ for every $r\in I$.
+  \item $A_H$ is real-analytic on $I$ and satisfies $A_H(r)\ge a_0>0$
+  there for some constant $a_0$.
+  \item There is $C_2\ge1$, depending only on $H,I$, such that
+  \begin{equation}\label{eq:boundary-excess-curvature}
+    \bigl|\partial_\delta^2G(r,\delta)-A_H(r)\bigr|\le C_2|\delta|
+    \qquad(r\in I,\ |\delta|<\overline\delta).
+  \end{equation}
+  \item Consequently the boundary excess has the expansion
+  \begin{equation}\label{eq:boundary-excess-expansion}
+    G_r(\delta)=\frac12A_H(r)\delta^2+O_{H,I}(\delta^3)
+    \qquad(r\in I,\ 0<\delta<\overline\delta).
+  \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Use the single analytic parameter map from
+\Cref{thm:krrs-analytic-extension} chosen in the proof of
+\Cref{lem:fixed-density-bipodality}.  Evaluating it at
+\[
+  (\eps,\vartheta)=(r-\delta,\,r^m-(r-\delta)^m)
+\]
+gives jointly analytic parameters $(q_{11},q_{12},q_{22},c)$ near $(r_0,0)$,
+including small negative $\delta$.  Define
+\[
+  G(r,\delta):=
+  c^2J_{\pc(r)}(q_{11})+2c(1-c)J_{\pc(r)}(q_{12})
+  +(1-c)^2J_{\pc(r)}(q_{22})-J_{\pc(r)}(r).
+\]
+The three edge-density parameters and $\pc(r)$ stay in $(0,1)$ near
+$(r_0,0)$, so $G$ is analytic there.  For $\delta>0$, this is the cost of
+the fixed-density optimizer minus the constant-graphon cost, by
+\eqref{eq:reduced-objective-attainment}.  At $\delta=0$, the parameters have
+$c=0$ and $q_{22}=r$, giving $G(r,0)=0$.
+Shrink $I$ and choose $\overline\delta>0$ so that
+$\overline I\times[-\overline\delta,\overline\delta]$ lies in the analytic
+domain and the preceding upper and lower bounds apply throughout the
+positive half of this rectangle.
+
+For $r\in I$ and $0<\delta<\overline\delta$, the fixed-density optimizer
+satisfies \Cref{prop:graphon-quadratic-bound} and has no greater cost than
+the graphon in \Cref{lem:bipodal-quadratic-bound}.  Consequently,
+\[
+  C_{d,I}\delta^2\le G_r(\delta)\le C_{H,I}\delta^2.
+\]
+Together with analyticity and $G(r,0)=0$, this gives
+$\partial_\delta G(r,0)=0$ and
+\[
+  A_H(r)=\partial_\delta^2G(r,0)
+  =\lim_{\delta\downarrow0}\frac{2G_r(\delta)}{\delta^2}>0.
+\]
+Thus $A_H$ is positive and analytic near $r_0$; after shrinking $I$,
+continuity gives $A_H(r)\ge a_0:=A_H(r_0)/2>0$ for all $r\in I$.
+
+The continuous function $|\partial_\delta^3G|$ is bounded on the closed
+rectangle above.  Taking $C_2\ge1$ larger than this bound, the mean value
+theorem gives \eqref{eq:boundary-excess-curvature}.  Taylor's theorem then
+gives \eqref{eq:boundary-excess-expansion}, with remainder bounded by
+$C_2|\delta|^3/6$.  All bounds are uniform for $r\in I$.
+\end{proof}
+
+The function $A_H$ does not depend on the chosen neighborhood or analytic
+extension: any two extensions agree for small positive $\delta$, where
+both equal \eqref{eq:boundary-excess}, and hence their second derivatives
+at $\delta=0$ agree.  Since $r_0$ was arbitrary, these local functions
+define a positive real-analytic function
+\begin{equation}\label{eq:second-variation-domain}
+  A_H:(0,1)\setminus\{r_*\}\longrightarrow(0,\infty).
+\end{equation}

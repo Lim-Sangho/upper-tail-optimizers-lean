@@ -1,15 +1,16 @@
 \section{Proof of the extended KRR--S theorem}\label{app:krrs-analytic-extension}
 
-We first recall two results from~\cite{kenyon2014entropy} needed for the
-proof of \Cref{thm:krrs-analytic-extension}.
+We first record the results from~\cite{kenyon2014entropy} needed for the
+proof of \Cref{thm:krrs-analytic-extension}, restricting throughout to
+$d$-regular graphs.
 Their Theorem~1.1 describes the optimizer parameters only for
-\(\vartheta:=\tau-\eps^m>0\).  The rest of the appendix constructs their
+\(\vartheta:=\tau-\eps^m>0\).  The rest of this section constructs their
 two-sided analytic continuation and verifies that it agrees with those
 optimizer parameters where they are defined.
 
-\begin{theorem}[{\cite[Theorem~1.1]{kenyon2014entropy}}]
+\begin{theorem}[{KRR--S bipodality for regular graphs, \cite[Theorem~1.1]{kenyon2014entropy}}]
 \label{thm:krrs-bipodality}
-Let \(H\) be a \(d\)-starlike graph with \(m\ge2\) edges, and let
+Let \(H\) be a \(d\)-regular graph with \(d\ge2\) and \(m\ge2\) edges, and let
 \(\eps\in(0,1)\setminus\{(d-1)/d\}\).  There exists
 \(\tau_0(\eps)>\eps^m\) such that, whenever
 \(\eps^m<\tau<\tau_0(\eps)\), the entropy maximizer subject to
@@ -18,9 +19,11 @@ Let \(H\) be a \(d\)-starlike graph with \(m\ge2\) edges, and let
   \qquad
   t(H,W)=\tau
 \]
-is unique up to relabelling and is bipodal.  Its parameters
-\((q_{11},q_{12},q_{22},c)\) are jointly real-analytic in \((\eps,\tau)\) on
-the region
+is unique up to relabeling and is bipodal.  Let $c$ be the size of the smaller block,
+and let $q_{11},q_{12},q_{22}$ denote the edge probabilities within the smaller block (of size $c$),
+between the two blocks, and within the larger block (of size $1-c$), respectively.
+Then, its parameters \((c, q_{11},q_{12},q_{22})\) are jointly
+real-analytic in \((\eps,\tau)\) on the region
 \[
   \left\{(\eps,\tau):
     \eps\ne\frac{d-1}{d},\quad
@@ -28,66 +31,62 @@ the region
 \]
 For each fixed nonexceptional \(\eps\), as \(\tau\downarrow\eps^m\),
 \[
-  q_{22}\longrightarrow\eps,
+  q_{11}\longrightarrow a_d(\eps),
   \qquad
   q_{12}\longrightarrow\zeta_d(\eps),
   \qquad
-  q_{11}\longrightarrow a_d(\eps),
+  q_{22}\longrightarrow\eps,
   \qquad
-  c=O(\tau-\eps^m),
+  c=O_{H,\eps}(\tau-\eps^m),
 \]
-where \(a_d(\eps)\in(0,1)\) satisfies
-\[
-  S_0'\bigl(a_d(\eps)\bigr)
-  =2S_0'\bigl(\zeta_d(\eps)\bigr)-S_0'(\eps).
-\]
+where \(a_d(\eps)\in(0,1)\) and \(\zeta_d(\eps)\ne\eps\).
 \end{theorem}
 
-Note that since \(S_0'\) is a strictly decreasing bijection from \((0,1)\) onto
-\(\mathbb R\), the preceding equation uniquely determines \(a_d(\eps)\).
-
-\begin{theorem}[{\cite[Theorem~3.3]{kenyon2014entropy}}]
+\begin{theorem}[{KRR--S cross density for regular graphs, \cite[Theorem~3.3]{kenyon2014entropy}}]
 \label{thm:krrs-cross-density}
 For every \(d\ge2\) and \(\eps\in(0,1)\), the function
 \(z\mapsto\psi_d(\eps,z)\) has a unique critical point, denoted
-\(\zeta_d(\eps)\).  The map \(\zeta_d:(0,1)\to(0,1)\) is strictly decreasing,
-has nowhere-vanishing derivative, and is an involution.  Its unique fixed
-point is \((d-1)/d\).
+\(\zeta_d(\eps)\), at which it attains its maximum on \((0,1)\).
+The map \(\zeta_d:(0,1)\to(0,1)\) is strictly decreasing, and is an involution, i.e.,
+$\eps=\zeta_d(\zeta_d(\eps))$.  Its unique fixed point is \((d-1)/d\).
 \end{theorem}
 
-We also remark that \(\zeta_d(\eps)\) is the unique maximizer of
-\(z\mapsto\psi_d(\eps,z)\) over \((0,1)\); see
-\cite[Section~4]{kenyon2014entropy}.
+\begin{remark}\label{rmk:krrs-omitted-identity}
+We omit the identity \(S_0'(q_{11})=2S_0'(q_{12})-S_0'(q_{22})\)
+asserted in \cite[Theorem~1.1]{kenyon2014entropy} and the claim in
+\cite[Theorem~3.3]{kenyon2014entropy} that $\zeta_d'$ is nowhere zero.
+Neither assertion is used in our subsequent arguments.
+In place of the identity for $q_{11}$, we use only that its limiting value
+$a_d(\eps)$ lies in $(0,1)$.
+\end{remark}
 
 Before proving \Cref{thm:krrs-analytic-extension}, we clarify what must be added to
 \Cref{thm:krrs-bipodality}.  Although the latter states the threshold
 \(\tau_0(\eps)\) pointwise, its joint-analyticity assertion implies that, for
-every nonexceptional \(\eps_0\), there are a neighbourhood \(U\) of \(\eps_0\)
+every nonexceptional \(\eps_0\), there are a neighborhood \(U\) of \(\eps_0\)
 and \(\Delta>0\) such that the theorem statement holds uniformly for
 \(U\times(0,\Delta)\).  It does not, however, provide an analytic extension
-through \(\vartheta=0\).  The main purpose of the proof is to construct this
+through \(\vartheta=0\).  The main purpose of the following proof is to construct this
 two-sided jointly analytic extension, which is needed for the boundary
 analysis in
-\Cref{thm:positive-second-variation,thm:local-optimizer-structure}.
+\Cref{thm:positive-second-variation,thm:nonexceptional-endpoint}.
 
 \begin{proof}[Proof of \Cref{thm:krrs-analytic-extension}]
-Let $\eps_*:=\frac{d-1}{d}$
+Let $\eps_*:=r_*=(d-1)/d$
 and fix
 \[
   \eps_0\in(0,1)\setminus\{\eps_*\},
   \qquad
-  z_0:=\zeta_d(\eps_0).
+  a_0:=a_d(\eps_0).
+  \qquad
+  z_0:=\zeta_d(\eps_0),
 \]
-By the involution and fixed-point assertions in
-\Cref{thm:krrs-cross-density}, \(z_0\ne\eps_0\).  Set
-\(a_0:=a_d(\eps_0)\), so that
-\begin{equation}\label{eq:krrs-small-block-limit}
-  S_0'(a_0)=2S_0'(z_0)-S_0'(\eps_0).
-\end{equation}
-By \Cref{thm:krrs-bipodality}, the parameters converge to
+By \Cref{thm:krrs-bipodality}, \(z_0\ne\eps_0\) and the parameters converge to
 \begin{equation}\label{eq:krrs-parameter-limits}
   (q_{11},q_{12},q_{22},c)\longrightarrow(a_0,z_0,\eps_0,0).
 \end{equation}
+The local Taylor remainders below are uniform on sufficiently small fixed
+neighborhoods of this base point, chosen in terms of $H$ and $\eps_0$.
 
 \paragraph{1. Nondegeneracy of the scalar maximizer.}
 For fixed \(\eps\), put
@@ -162,6 +161,8 @@ The function \(Q\) is real-analytic near
   Q(\eps,a,b,c)
   =\eps+2(\eps-b)c+(3\eps-2b-a)c^2+O(c^3).
 \end{equation}
+Here the remainder has an absolute constant, uniformly for
+$(\eps,a,b)\in[0,1]^3$ and $|c|\le1/2$.
 Define the edge-constrained \(H\)-density and entropy by
 \begin{align*}
   \widehat{\mathcal T}(\eps,a,b,c)
@@ -210,14 +211,14 @@ Set
   :=n_d\eps^{m-d}\mathcal D_\eps(b),
 \end{equation}
 which is equal to $\left.\partial_c\widehat{\mathcal T}(\eps,a,b,c)\right|_{c=0}$ by \eqref{eq:krrs-density-derivative}.
-Strict convexity of \(u\mapsto u^d\) gives
+Strict convexity of \(z\mapsto z^d\) gives
 \(\mathcal D_\eps(b)>0\) whenever \(b\ne\eps\).  In particular,
 \(\mathcal A(\eps_0,z_0)>0\).  The analytic implicit function theorem,
 applied to
 \[
   \widehat{\mathcal T}(\eps,a,b,c)=\eps^m+\vartheta,
 \]
-gives neighbourhoods of \((\eps_0,a_0,z_0,0)\) and a unique
+gives neighborhoods of \((\eps_0,a_0,z_0,0)\) and a unique
 real-analytic function
 \begin{equation}\label{eq:krrs-density-constraint}
   c=C(\eps,a,b,\vartheta),
@@ -225,7 +226,7 @@ real-analytic function
   C(\eps,a,b,0)=0,
 \end{equation}
 that solves the \(H\)-density constraint.  After shrinking the
-neighbourhood, \(Q\) and \(C\) take values in \((0,1)\) whenever
+neighborhood, \(Q\) and \(C\) take values in \((0,1)\) whenever
 \(\vartheta>0\) and \((\eps,a,b)\) is sufficiently close to the base point:
 for \(Q\), this follows by continuity and
 \(Q(\eps_0,a_0,z_0,0)=\eps_0\in(0,1)\), while for \(C\) it follows from
@@ -364,7 +365,7 @@ Under the constraint
     &=\frac{\vartheta}{\mathcal A(\eps,b)}
       -\frac{B_0(\eps,b)+B_1(\eps,b)a}
              {\mathcal A(\eps,b)^3}\,\vartheta^2
-      +O(\vartheta^3).
+      +O_{H,\eps_0}(\vartheta^3).
   \end{aligned}
 \end{equation}
 Substituting \eqref{eq:krrs-block-size-expansion} into
@@ -373,7 +374,7 @@ Substituting \eqref{eq:krrs-block-size-expansion} into
 \begin{equation}\label{eq:krrs-quotient-expansion}
   L(\eps,a,b,\vartheta)
   =\frac{\mathcal N_\eps(b)}{\mathcal A(\eps,b)}
-    +\vartheta M(\eps,a,b)+O(\vartheta^2),
+    +\vartheta M(\eps,a,b)+O_{H,\eps_0}(\vartheta^2),
 \end{equation}
 where
 \begin{equation}\label{eq:krrs-second-coefficient}
@@ -422,10 +423,10 @@ of \((\eps,\vartheta)\).  First,
 fixed \(\eps=\eps_0\) and sufficiently small \(\vartheta>0\), let
 \(W_\vartheta\) be the entropy maximizer supplied by
 \Cref{thm:krrs-bipodality} for \(\tau=\eps_0^m+\vartheta\).  Denote its bipodal
-parameters by \((a,b,q,c)(\vartheta)\), after relabelling so that the first
+parameters by \((a,b,q,c)(\vartheta)\), after relabeling so that the first
 pode is the one whose size \(c(\vartheta)\) tends to zero as
 \(\vartheta\downarrow0\).  By \eqref{eq:krrs-parameter-limits}, they converge to
-\((a_0,z_0,\eps_0,0)\), so they eventually lie in the neighbourhood
+\((a_0,z_0,\eps_0,0)\), so they eventually lie in the neighborhood
 parametrized above.  Since \(W_\vartheta\) has edge density \(\eps_0\),
 solving the edge constraint for \(q\) gives
 \(q=Q(\eps_0,a,b,c)\).  Its \(H\)-density is
@@ -435,7 +436,7 @@ solving the edge constraint for \(q\) gives
 \(s(W_\vartheta)=\Sigma(\eps_0,a,b,\vartheta)\).  For sufficiently small
 \(\vartheta>0\), the three edge-probability parameters lie in \((0,1)\) by
 \eqref{eq:krrs-parameter-limits}, while \(c\in(0,1)\) because a null pode would give
-zero surplus.  Hence, by continuity of \(C\) and \(Q\), every sufficiently
+zero excess.  Hence, by continuity of \(C\) and \(Q\), every sufficiently
 nearby pair \((\tilde a,\tilde b)\), with \(c\) and \(q\) supplied by \(C\)
 and \(Q\), yields an admissible bipodal graphon with the same two constraints
 and entropy \(\Sigma(\eps_0,\tilde a,\tilde b,\vartheta)\).  Since
@@ -474,7 +475,7 @@ Differentiating these identities at \((\eps_0,a_0,z_0)\), and using
 The Jacobian of \((\mathcal F_1,\mathcal F_2)\) with respect to \((a,b)\)
 is therefore triangular with nonzero diagonal.  The analytic implicit
 function theorem now gives an open interval \(U_{\mathrm{IFT}}\ni\eps_0\),
-a number \(\Delta_{\mathrm{IFT}}>0\), an open neighbourhood
+a number \(\Delta_{\mathrm{IFT}}>0\), an open neighborhood
 \(V_{\mathrm{IFT}}\) of \((a_0,z_0)\), and real-analytic functions
 \begin{equation}\label{eq:krrs-stationary-densities}
   a_*(\eps,\vartheta),\qquad b_*(\eps,\vartheta)
@@ -535,7 +536,7 @@ parameters, expressed in the coordinates \((\eps,\vartheta)\) with
 \(\tau=\eps^m+\vartheta\).  For each nonexceptional \(\eps\), this domain is
 specified by
 \(\eps^m<\tau<\tau_0(\eps)\) for a threshold \(\tau_0(\eps)>\eps^m\)
-depending on \(\eps\), so the fibre of
+depending on \(\eps\), so the fiber of
 \(\Omega^+\) over each nonexceptional \(\eps\) is an interval
 \begin{equation}\label{eq:krrs-domain-fibres}
   \{\vartheta:(\eps,\vartheta)\in\Omega^+\}
@@ -572,10 +573,10 @@ and choose
   0<\Delta<\min\{\Delta_{\mathrm{IFT}},\vartheta^\sharp\}.
 \]
 By \Cref{thm:krrs-bipodality}, throughout
-\(U\times(0,\Delta)\) the entropy maximizer is unique up to relabelling and
+\(U\times(0,\Delta)\) the entropy maximizer is unique up to relabeling and
 bipodal.  For each \((\eps,\vartheta)\) in this set, let
 \(W^+_{\eps,\vartheta}\) be a representative of this maximizer, with its
-podes labelled so that the first pode has size \(c^+\) and
+podes labeled so that the first pode has size \(c^+\) and
 \(c^+\to0\) as \(\vartheta\downarrow0\).  The corresponding parameter map
 \begin{equation}\label{eq:krrs-optimizer-map}
   (a^+,b^+,q^+,c^+)(\eps,\vartheta)
@@ -588,16 +589,16 @@ stationarity equations constructed in
 \eqref{eq:krrs-stationary-densities}--\eqref{eq:krrs-large-block-map}.  At \(\eps=\eps_0\), the
 one-sided limits in \Cref{thm:krrs-bipodality} and
 \eqref{eq:krrs-parameter-limits} show that the parameters in
-\eqref{eq:krrs-optimizer-map} lie in the local solution neighbourhoods
+\eqref{eq:krrs-optimizer-map} lie in the local solution neighborhoods
 for all sufficiently small \(\vartheta>0\).  Choose one such
 \(\vartheta_1\in(0,\Delta)\).  The three edge-probability parameters have
 limits \(a_0,z_0,\eps_0\in(0,1)\), and \(c^+(\eps_0,\vartheta_1)\in(0,1)\)
-because a bipodal graphon with a null pode is constant and has surplus
+because a bipodal graphon with a null pode is constant and has excess
 \(0\); after taking \(\vartheta_1\) sufficiently small, all four parameters
 therefore lie in \((0,1)\).  By continuity, the same is true on a nonempty
-open neighbourhood \(\mathcal O\subset U\times(0,\Delta)\) of
+open neighborhood \(\mathcal O\subset U\times(0,\Delta)\) of
 \((\eps_0,\vartheta_1)\), and all parameters there remain in those
-neighbourhoods.
+neighborhoods.
 
 For every \((\eps,\vartheta)\in\mathcal O\), we repeat the constraint and
 local-maximality argument used to prove \eqref{eq:krrs-boundary-stationarity}.  The edge
@@ -648,7 +649,7 @@ set \(\overline U\times[-\Delta,\Delta]\) and vanishes on
 \(\{\vartheta=0\}\), so \(\partial_\vartheta c_*\) is bounded there, and
 the mean value theorem gives, uniformly for \(\eps\in U\),
 \[
-  c_*(\eps,\vartheta)=O(\vartheta)
+  c_*(\eps,\vartheta)=O_{H,U}(\vartheta)
   \qquad(\vartheta\to0).
 \]
 Finally, \(c_*(\eps,\vartheta)\) takes values in \((0,1)\) when

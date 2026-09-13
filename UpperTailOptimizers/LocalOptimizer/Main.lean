@@ -2,11 +2,13 @@ import UpperTailOptimizers.LocalOptimizer.Analytic
 import UpperTailOptimizers.LZBoundary.Curve
 
 /-!
-# `thm:local-optimizer-structure`: local structure of regular-graph optimizers
+# `thm:nonexceptional-endpoint`: local structure of regular-graph optimizers
 
-`local_structure` assembles Theorem 6.1 in global boundary coordinates, including
-the coefficient and analytic-family properties. `main_bipodal_optimizer` in
-`Global.lean` is its introduction corollary. The proof starts with the two sides:
+`local_structure` assembles `thm:nonexceptional-endpoint` (Theorem 4.1) in global boundary
+coordinates, including the coefficient and analytic-family properties; its `analyticFamily`
+field states parts (b)–(d), with the smaller-pode convention `0 < c < 1/2`, on one window.
+`main_bipodal_optimizer` in `Global.lean` is its introduction corollary. The proof starts with
+the two sides:
 
 * `replica_symmetric_unique` — part (a), `p ≥ pc(r)`: the constant graphon `W ≡ r` is the
   unique optimizer;
@@ -163,7 +165,7 @@ theorem replica_symmetric_unique_global {d : ℕ} (hd : 2 ≤ d)
 
 open Filter Topology
 
-/-- **The global second-variation coefficient `A_H`** (Theorem 6.1), stated against the
+/-- **The global second-variation coefficient `A_H`** (`thm:nonexceptional-endpoint`), stated against the
 global boundary curve `pcGlobal` and therefore independent of any chosen Lubetzky–Zhao boundary arc:
 `A_H(r) = lim_{δ↓0} 2 (𝓕_{pc(r),r}(r-δ) - J_{pc(r)}(r))/δ²`. -/
 noncomputable def AHGlobal {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)
@@ -188,7 +190,7 @@ theorem lambdaDisp_eq_lambdaGlobal {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d
     (hr : r ∈ M.U) : lambdaDisp M p r = lambdaGlobal d p r := by
   simp only [lambdaDisp, lambdaGlobal, pcGlobal_eq_pc hd M hr]
 
-/-! ## The global coefficient in Theorem 6.1
+/-! ## The global coefficient in `thm:nonexceptional-endpoint`
 
 The coefficient is analytic and positive at every nonexceptional density. These
 properties are included in `local_structure` and inherited by Theorem 1.5. -/
@@ -228,7 +230,7 @@ theorem analyticAt_AHGlobal_and_pos {d : ℕ} (hd : 2 ≤ d)
   exact lt_of_lt_of_le hCA (hlow r hrK)
 
 /-- The conclusions presented in Theorem 1.5, including the global coefficient.
-The replica-symmetric clause is retained from Theorem 6.1(a). -/
+The replica-symmetric clause is retained from `thm:nonexceptional-endpoint`(a). -/
 structure NonexceptionalOptimizers {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] (d : ℕ) (r₀ : ℝ) : Prop where
   coefficient : ∀ r : ℝ, 0 < r → r < 1 → r ≠ rStar d →
@@ -255,10 +257,21 @@ structure NonexceptionalOptimizers {V : Type*} [Fintype V] [DecidableEq V]
             |phiVar H p r - (Jp p r - lambdaGlobal d p r ^ 2 / (2 * AHGlobal H d r))|
               ≤ C * lambdaGlobal d p r ^ 3)
 
-/-- Theorem 6.1: optimizer structure and asymptotics, the positive analytic global
-coefficient, and the analytic bipodal family. The two parameter windows can be
-intersected. The family includes quantitative block-size bounds; the explicit
-smaller-block convention and limit retain the qualifications in FORMALISATION.md. -/
+/-- **`thm:nonexceptional-endpoint`**: optimizer structure and asymptotics, with the positive
+analytic global coefficient.
+
+* `window` (inherited from `NonexceptionalOptimizers`) carries parts (a)–(c) on
+  `|r - r₀| < ρ`, `|p - pc(r)| < η`.
+* `analyticFamily` carries parts (b)–(d) for **one** analytic bipodal family
+  `Dl, q₁₁, q₁₂, q₂₂, c` on **one** window `|r - r₀| < ρ`, `pc(r) - η < p < pc(r)`: analyticity
+  of `Φ_H`, of the edge density `r - Dl` and of the four parameters; the optimizer `B` with first
+  pode `[0, c]`, uniqueness up to relabelling, the edge-density and value expansions with one
+  constant `Cd`; the smaller-pode convention `0 < c < 1/2` at every point of the window; and
+  `c → 0` as `p ↑ pc(r)` for every `r` of the window.
+
+Both windows are of the form "`|r - r₀| < ρ` and `p` within `η` of `pc(r)`", so all clauses hold on
+their intersection; part (a) holds on the whole replica-symmetric range by
+`replica_symmetric_unique_global`. -/
 structure LocalOptimizerStructure {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] (d : ℕ) (r₀ : ℝ)
     : Prop extends NonexceptionalOptimizers H d r₀ where
@@ -268,7 +281,10 @@ structure LocalOptimizerStructure {V : Type*} [Fintype V] [DecidableEq V]
         (∀ r : ℝ, |r - r₀| < ρ → r ≠ rStar d ∧ 0 < r ∧ r < 1 ∧
           cc r 0 = 0 ∧ q22 r 0 = r ∧ q11 r 0 ∈ Set.Ioo (0:ℝ) 1 ∧
           q12 r 0 ∈ Set.Ioo (0:ℝ) 1 ∧ q12 r 0 ≠ r ∧
-          AnalyticAt ℝ (fun s : ℝ => q12 s 0) r) ∧
+          AnalyticAt ℝ (fun s : ℝ => q12 s 0) r ∧
+          Tendsto (fun p : ℝ => cc (r - Dl (p, r))
+              (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card))
+            (𝓝[<] (pcGlobal d r)) (𝓝 0)) ∧
         ∀ r : ℝ, |r - r₀| < ρ → ∀ p : ℝ, pcGlobal d r - η < p → p < pcGlobal d r →
           0 < p ∧ p < r ∧ 0 < AHGlobal H d r ∧ 0 < lambdaGlobal d p r ∧ 0 < Dl (p, r) ∧
           AnalyticAt ℝ Dl (p, r) ∧
@@ -291,10 +307,12 @@ structure LocalOptimizerStructure {V : Type*} [Fintype V] [DecidableEq V]
                 ∀ᵐ z ∂gμ, W.toFun z.1 z.2 = Wstar.toFun (σ z.1) (σ z.2)) ∧
           |Dl (p, r) - lambdaGlobal d p r / AHGlobal H d r| ≤ Cd * lambdaGlobal d p r ^ 2 ∧
           Dl (p, r) ≤ Cd * lambdaGlobal d p r ∧
+          |phiVar H p r - (Jp p r - lambdaGlobal d p r ^ 2 / (2 * AHGlobal H d r))|
+            ≤ Cd * lambdaGlobal d p r ^ 3 ∧
           ∃ ε θ : ℝ, ε = r - Dl (p, r) ∧
             θ = r ^ H.edgeFinset.card - ε ^ H.edgeFinset.card ∧
             q11 ε θ ∈ Set.Icc (0:ℝ) 1 ∧ q12 ε θ ∈ Set.Icc (0:ℝ) 1 ∧
-            q22 ε θ ∈ Set.Icc (0:ℝ) 1 ∧ cc ε θ ∈ Set.Icc (0:ℝ) 1 ∧
+            q22 ε θ ∈ Set.Icc (0:ℝ) 1 ∧ cc ε θ ∈ Set.Ioo (0:ℝ) (1 / 2) ∧
             |cc ε θ| ≤ L * Dl (p, r) ∧
             |q22 ε θ - r| ≤ L * Dl (p, r) ∧
             |q12 ε θ - q12 r 0| ≤ L * Dl (p, r) ∧
@@ -304,9 +322,10 @@ structure LocalOptimizerStructure {V : Type*} [Fintype V] [DecidableEq V]
               (∀ᵐ z ∂gμ, B.toFun z.1 z.2
                 = bipodalValue (Set.Icc 0 (cc ε θ)) (q11 ε θ) (q12 ε θ) (q22 ε θ) z))
 
-/-- **Theorem 6.1**, assembled in the global boundary coordinates.
+/-- **`thm:nonexceptional-endpoint`**, assembled in the global boundary coordinates.
 The arc is constructed internally. Theorem 1.5 is the projection onto
-`NonexceptionalOptimizers`, with no additional analytic or optimization argument. -/
+`NonexceptionalOptimizers`, with no additional analytic or optimization argument.  The
+`analyticFamily` field is `bipodal_family_smallBlock` in global coordinates. -/
 theorem local_structure {d : ℕ} (hd : 2 ≤ d)
     {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
     (hreg : ∀ v, H.degree v = d) (hm : 1 ≤ H.edgeFinset.card)
@@ -328,10 +347,12 @@ theorem local_structure {d : ℕ} (hd : 2 ≤ d)
     exact hmain r (lt_of_lt_of_le hrρ (min_le_left _ _)) p hpη
   · obtain ⟨M, hrU, hrne⟩ := scalar_lz_boundary_arcs hd hr₀0 hr₀1 hr₀ex
     obtain ⟨ρ, η, L, Cd, hρ, hη, hL, hCd, Dl, q11, q12, q22, cc, hbase, hfamily⟩ :=
-      bipodal_family hd M H hreg hm hrU hrne
+      bipodal_family_smallBlock hd M H hreg hm hrU hrne
     refine ⟨ρ, η, L, Cd, hρ, hη, hL, hCd, Dl, q11, q12, q22, cc, ?_, ?_⟩
     · intro r hr
-      exact (hbase r hr).2
+      obtain ⟨hrU', hrest⟩ := hbase r hr
+      rw [pcGlobal_eq_pc hd M hrU']
+      exact hrest
     · intro r hr p hp_lo hp_hi
       have hrU' : r ∈ M.U := (hbase r hr).1
       rw [pcGlobal_eq_pc hd M hrU'] at hp_lo hp_hi

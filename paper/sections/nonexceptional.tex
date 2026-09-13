@@ -1,0 +1,59 @@
+\section{Optimizers near nonexceptional endpoints}
+\label{sec:nonexceptional-endpoint}
+
+In this section, we prove \Cref{thm:nonexceptional-optimizers} in a more precise form.
+We first use \Cref{sec:local-reduction} to reduce the graphon variational
+problem on the symmetry-breaking side to a one-variable problem in the edge
+density.  We then establish the quadratic growth of the reduced objective
+at the phase boundary in \Cref{sec:nonexceptional-quadratic-growth}.
+Finally, in \Cref{sec:nonexceptional-proof}, we minimize the reduced
+objective on the symmetry-breaking side to complete the proof.
+First-order refinements for the individual bipodal parameters are derived in
+\Cref{app:bipodal-parameter-expansions}.
+
+Recall the log-odds displacement
+\[
+  \lambda(p,r)=
+  \log\frac{1-p}{p}-\log\frac{1-\pc(r)}{\pc(r)}.
+\]
+Thus, $\lambda(\pc(r),r)=0$, and $\lambda(p,r)>0$ is equivalent to
+$p<\pc(r)$.  The following theorem is the main result of this section.
+The remainder of this section is devoted to the proof of this theorem.
+
+\begin{theorem}[Optimizers near nonexceptional endpoints]\label{thm:nonexceptional-endpoint}
+Let $H$ be a fixed $d$-regular graph with $d\ge2$, and let
+$r_0\in(0,1)\setminus\{r_*\}$.
+There exist $\rho,\eta>0$ such that
+\[
+  U:=\{(p,r): |p-\pc(r)|<\eta,\ |r-r_0|<\rho\}
+\]
+is an open neighborhood of $(\pc(r_0),r_0)$ on which, with $p < \pc(r)$,
+the minimizer of~\eqref{eq:graphon-variational-problem}
+is unique up to relabeling, nonconstant, and bipodal.
+Let $W_{p,r}$ denote the unique optimizer.
+Write $c(p,r)\in(0,1/2)$ for the size of its smaller block,
+$q_{11}(p,r)$ and $q_{22}(p,r)$ for the edge densities within the
+smaller and larger blocks, respectively, and $q_{12}(p,r)$ for the
+cross-block edge density.  The six functions
+\[
+  q_{11}(p,r),\quad q_{12}(p,r),\quad q_{22}(p,r),\quad
+  c(p,r),\quad e(W_{p,r}),\quad \Phi_H(p,r)
+\]
+are real-analytic on $U\cap\{(p,r):p<\pc(r)\}$.
+For fixed $r$ with $|r-r_0|<\rho$, the smaller block vanishes:
+\[
+  c(p,r)\to0 \qquad (p \uparrow\pc(r)).
+\]
+Moreover, the edge density and minimum relative entropy satisfy
+\begin{equation}\label{eq:optimizer-expansion}
+  e(W_{p,r})=r-\frac{\lambda(p,r)}{A_H(r)}+O_{H,U}(\lambda(p,r)^2),
+  \qquad
+  \Phi_H(p,r)=J_p(r)-\frac{\lambda(p,r)^2}{2A_H(r)}+O_{H,U}(\lambda(p,r)^3),
+\end{equation}
+where $A_H$ is positive and real-analytic, and the remainders are uniform
+for $(p,r)\in U$ with $p<\pc(r)$.
+\end{theorem}
+
+\input{sections/nonexceptional_local_reduction}
+\input{sections/nonexceptional_quadratic_growth}
+\input{sections/nonexceptional_proof}

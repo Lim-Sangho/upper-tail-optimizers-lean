@@ -36,16 +36,16 @@ infimum is attained.  See, for example,
 \begin{proof}[Proof of \Cref{lem:convexity-defect}]
 Differentiating the definition of $h_{p,d}$ and using
 \[
-  J_p'(u)=\log\frac{u(1-p)}{(1-u)p},
+  J_p'(z)=\log\frac{z(1-p)}{(1-z)p},
   \qquad
-  J_p''(u)=\frac1{u(1-u)},
+  J_p''(z)=\frac1{z(1-z)},
   \qquad
-  J_p'''(u)=\frac{2u-1}{u^2(1-u)^2}
+  J_p'''(z)=\frac{2z-1}{z^2(1-z)^2}
 \]
 gives
 \[
-  h_{p,d}'(u)=(2-d)J_p''(u)+uJ_p'''(u)
-  =\frac{d(u-r_*)}{u(1-u)^2}.
+  h_{p,d}'(z)=(2-d)J_p''(z)+zJ_p'''(z)
+  =\frac{d(z-r_*)}{z(1-z)^2}.
 \]
 The denominator is positive.  Hence, $h_{p,d}'$ is negative before $r_*$ and
 positive after $r_*$, which proves that $h_{p,d}$ is strictly decreasing on
@@ -77,28 +77,28 @@ the minimum point, $h_{p,d}\ge0$ throughout $(0,1)$ in this case.
 
 Now suppose that $p<p_*$.  Then, $h_{p,d}(r_*)<0$.  The alternative expression
 \[
-  h_{p,d}(u)=\frac1{1-u}-(d-1)J_p'(u)
+  h_{p,d}(z)=\frac1{1-z}-(d-1)J_p'(z)
 \]
-shows that $h_{p,d}(u)\to+\infty$ as $u\downarrow0$ and as $u\uparrow1$.
-At the left endpoint $J_p'(u)\to-\infty$, while at the right endpoint
-$1/(1-u)$ dominates the logarithmic divergence of $J_p'(u)$.  The intermediate
+shows that $h_{p,d}(z)\to+\infty$ as $z\downarrow0$ and as $z\uparrow1$.
+At the left endpoint $J_p'(z)\to-\infty$, while at the right endpoint
+$1/(1-z)$ dominates the logarithmic divergence of $J_p'(z)$.  The intermediate
 value theorem and the strict monotonicity on either side of $r_*$ therefore
 give unique zeros $u_-(p)<r_*<u_+(p)$.  The same monotonicity gives the stated
 sign of $h_{p,d}$ on the three intervening intervals.
 
 It remains to translate this sign information into curvature of
-$\varphi_{p,d}$.  For $u=x^{1/d}$, the chain rule gives
+$\varphi_{p,d}$.  For $z=x^{1/d}$, the chain rule gives
 \[
-  \varphi_{p,d}'(x)=\frac{J_p'(u)}{d u^{d-1}},
+  \varphi_{p,d}'(x)=\frac{J_p'(z)}{d z^{d-1}},
   \qquad
   \varphi_{p,d}''(x)
-  =\frac{uJ_p''(u)-(d-1)J_p'(u)}{d^2u^{2d-1}}
-  =\frac{h_{p,d}(u)}{d^2u^{2d-1}}.
+  =\frac{zJ_p''(z)-(d-1)J_p'(z)}{d^2z^{2d-1}}
+  =\frac{h_{p,d}(z)}{d^2z^{2d-1}}.
 \]
 The denominator is positive, so $\varphi_{p,d}''(x)$ has the same sign as
-$h_{p,d}(u)$.  When $p\ge p_*$, this proves convexity on $(0,1)$, and
+$h_{p,d}(z)$.  When $p\ge p_*$, this proves convexity on $(0,1)$, and
 continuity extends it to $[0,1]$.  When $p<p_*$, the change of variables
-$x=u^d$ converts the three sign intervals for $h_{p,d}$ into precisely the
+$x=z^d$ converts the three sign intervals for $h_{p,d}$ into precisely the
 convexity and concavity intervals stated in the lemma.
 \end{proof}
 
@@ -119,7 +119,7 @@ Finally we record the analytic dependence on $p$ and the monotonicity of the
 two contacts.
 
 We begin with one elementary tangency observation: if an affine
-function $L$ lies below a differentiable function $\varphi$ in a neighbourhood
+function $L$ lies below a differentiable function $\varphi$ in a neighborhood
 of an interior point $t$, and if $L(t)=\varphi(t)$, then the slope of $L$ is
 $\varphi'(t)$.
 
@@ -175,7 +175,7 @@ Lemma~\ref{lem:two-point-convex-minorant} gives
   \qquad
   \widehat\varphi(1)=\varphi(1),
 \]
-because the only convex combination of points of $[0,1]$ with barycentre
+because the only convex combination of points of $[0,1]$ with barycenter
 $0$ (respectively, $1$) is supported at $0$ (respectively, $1$).
 Consequently, the affine function $L$ extends continuously to $[a,b]$, and
 \[
@@ -355,12 +355,12 @@ By the chain rule, we have
   =0. \label{eq:contact-derivative-system}
 \end{align}
 
-If $u=x^{1/d}$, then
+If $z=x^{1/d}$, then
 \[
-  \partial_p\varphi_{p,d}(x)=\frac{p-u}{p(1-p)},
+  \partial_p\varphi_{p,d}(x)=\frac{p-z}{p(1-p)},
   \qquad
   \partial_p\varphi_{p,d}'(x)=
-  -\frac1{p(1-p)d\,u^{d-1}}.
+  -\frac1{p(1-p)d\,z^{d-1}}.
 \]
 Writing $u_a=a^{1/d}$ and $u_b=b^{1/d}$, this gives
 \[
@@ -375,7 +375,7 @@ and
   \frac1{p(1-p)}
   \left(\frac{u_b^d-u_a^d}{d u_a^{d-1}}-(u_b-u_a)\right)>0.
 \]
-The last inequality comes from the strict convexity of $u\mapsto u^d$.
+The last inequality comes from the strict convexity of $z\mapsto z^d$.
 As the second row of \eqref{eq:contact-derivative-system} gives
 \[
   -\varphi''(a)(b-a)\frac{da}{dp}+\partial_pF_2=0,
@@ -427,7 +427,7 @@ $1/(d u_a^{d-1})$ terms cancel and we get
     -\frac1{d u_b^{d-1}}
   \right).
 \]
-The secant slope of the strictly convex function $u\mapsto u^d$ from $u_a$ to
+The secant slope of the strictly convex function $z\mapsto z^d$ from $u_a$ to
 $u_b$ is strictly smaller than its derivative at the right endpoint $u_b$:
 \[
   \frac{u_b^d-u_a^d}{u_b-u_a}<d u_b^{d-1}.
@@ -442,7 +442,7 @@ $r_*$ as $p\uparrow p_*$.  At $p=p_*$, Lemma~\ref{lem:convexity-defect} gives
 $h_{p_*,d}(r_*)=0$, while $h_{p_*,d}$ is strictly decreasing on $(0,r_*)$ and
 strictly increasing on $(r_*,1)$.  Hence
 \[
-  h_{p_*,d}(u)>0\qquad\text{for every }u\ne r_*.
+  h_{p_*,d}(z)>0\qquad (z\ne r_*).
 \]
 Fix $\varepsilon>0$ small enough that $r_*-\varepsilon$ and
 $r_*+\varepsilon$ lie in $(0,1)$.  By
@@ -480,11 +480,11 @@ $A=B=r_*^d$.
 Taking positive $d$th roots gives
 $u_a(p)\to r_*$ and $u_b(p)\to r_*$ as $p\uparrow p_*$.
 
-It remains to consider $p\downarrow0$.  For every fixed $u\in(0,1)$,
+It remains to consider $p\downarrow0$.  For every fixed $z\in(0,1)$,
 \[
-  h_{p,d}(u)
+  h_{p,d}(z)
   =
-  \frac1{1-u}-(d-1)\log\frac{u(1-p)}{(1-u)p}
+  \frac1{1-z}-(d-1)\log\frac{z(1-p)}{(1-z)p}
   \longrightarrow -\infty.
 \]
 If $0<\eps<r_*$, then $h_{p,d}(\eps)<0$ for all sufficiently small $p$.  Since
@@ -534,8 +534,8 @@ $\sm(r)\ne r$.  This proves (M1).
 \end{proof}
 
 \begin{proof}[Proof of \textup{(M3)} and \textup{(M4)}]
-Fix $r\in(0,1)\setminus\{r_*\}$ and put $p_0=\pc(r)$.  The affine part of the
-convex minorant of $\varphi_{p_0,d}$ joins
+Fix $r\in(0,1)\setminus\{r_*\}$.  The affine part of the
+convex minorant of $\varphi_{\pc(r),d}$ joins
 \[
   \bigl(r^d,J_{\pc(r)}(r)\bigr)
   \quad\text{and}\quad

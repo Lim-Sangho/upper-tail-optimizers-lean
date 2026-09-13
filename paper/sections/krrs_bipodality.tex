@@ -1,0 +1,801 @@
+% =====================================================================
+%  Not \input anywhere.  A self-contained proof of the
+%  bipodality statement of [KRR-S, Theorem 1.1] for d-regular H,
+%  written as the mathematical blueprint for the Lean formalization.
+%  Uses the macros of paper.tex (\eps, \zr, ...) and the notation of
+%  Appendix A (appendix_preliminaries.tex).  Labels are prefixed kb:.
+% =====================================================================
+
+\section{Draft: bipodality of fixed-density entropy maximizers}
+\label{kb:sec}
+
+\subsection{Setting and statement}
+
+Throughout, $H$ is a $d$-regular graph with $d\ge2$, $v$ vertices and
+$m=vd/2$ edges; in particular $m\ge3$.  For a graphon $W$ write
+\[
+  e(W)=\iint W,\qquad
+  t(H,W)=\int_{[0,1]^{V(H)}}\prod_{ij\in E(H)}W(x_i,x_j)\,dx,\qquad
+  s(W)=\iint S_0(W),
+\]
+with $S_0(u)=-\tfrac12[u\log u+(1-u)\log(1-u)]$, so that
+$S_0''(u)=-1/(2u(1-u))\le-2$.  For $\eps\in(0,1)$ let $\delta W:=W-\eps$ and
+\[
+  \mathcal C(\eps,\vartheta)
+  :=\{W:\ e(W)=\eps,\ t(H,W)=\eps^m+\vartheta\}.
+\]
+The degree function is $d_W(x)=\int_0^1W(x,y)\,dy$, and
+$\tau_d(W):=\int_0^1d_W(x)^d\,dx$.  We write $\eps_*=(d-1)/d$,
+$\zeta=\zr(\eps)$, and use $\mathcal N_\eps$, $\mathcal D_\eps$,
+$\psi_d=\mathcal N_\eps/\mathcal D_\eps$ and
+$R_d(t)=\mathcal N''/\mathcal D''=-1/(d(d-1)t^{d-1}(1-t))$ as in
+Appendix~A and \Cref{thm:krrs-cross-density}.
+
+\paragraph{The family.}
+Fix $\eps_0\in(0,1)\setminus\{\eps_*\}$ and put $b_0:=\zr(\eps_0)$.
+Paragraphs~2--4 of Appendix~A construct, around a base point
+$(\eps_0,a_0,b_0,0)$, real-analytic maps $a_*(\eps,\vartheta)$,
+$b_*(\eps,\vartheta)$, $c_*(\eps,\vartheta)=C(\eps,a_*,b_*,\vartheta)$ and
+$q_*(\eps,\vartheta)=Q(\eps,a_*,b_*,c_*)$ solving the edge and
+$H$-density constraints and the two desingularized stationarity equations
+$F_1=F_2=0$.  The only input from \cite[Theorem~1.1]{kenyon2014entropy}
+used there is the value $a_0$; we replace it by an explicit definition
+in \Cref{kb:lem:base-point}.  Write
+\[
+  \widehat W_{\eps,\vartheta}
+  :=W\bigl(a_*(\eps,\vartheta),b_*(\eps,\vartheta),
+           q_*(\eps,\vartheta),c_*(\eps,\vartheta)\bigr).
+\]
+
+\begin{theorem}[Bipodality, $d$-regular case]\label{kb:thm:main}
+There are an open interval $U\ni\eps_0$ and $\Delta>0$ such that for every
+$\eps\in U$ and $0<\vartheta<\Delta$:
+\begin{enumerate}
+\item $\widehat W_{\eps,\vartheta}\in\mathcal C(\eps,\vartheta)$ and
+  $s(W)\le s(\widehat W_{\eps,\vartheta})$ for every
+  $W\in\mathcal C(\eps,\vartheta)$;
+\item if $W\in\mathcal C(\eps,\vartheta)$ and
+  $s(W)=s(\widehat W_{\eps,\vartheta})$, then
+  $W(x,y)=\widehat W_{\eps,\vartheta}(\sigma x,\sigma y)$ a.e.\ for a
+  measure-preserving $\sigma$.
+\end{enumerate}
+\end{theorem}
+
+\subsection{Plan of the proof}
+
+\begin{enumerate}
+\item[\S\ref{kb:sec:base}] The base point $a_0$ and the boundary values of
+  the family, without \cite{kenyon2014entropy}.
+\item[\S\ref{kb:sec:local}] Existence of a maximizer, and
+  localization: $\|W-\eps\|_2^2\le K\vartheta$ for every competitor, and
+  the star reduction of $t(H,\cdot)$.
+\item[\S\ref{kb:sec:el}] The Euler--Lagrange equation
+  $S_0'(W)=\alpha+\beta\,\Gamma_W$ for maximizers, given two qualifying directions.
+\item[\S\ref{kb:sec:efficiency}--\ref{kb:sec:structure}] First-order efficiency, the
+  gap function, and the two-block structure of competitors.
+\item[\S\ref{kb:sec:cluster}] Qualifying directions for maximizers, with multipliers near
+  explicit limits $(\alpha_0,\beta_0)$.
+\item[\S\ref{kb:sec:row}] Row balance: replacing the rows of a small set by one row does not
+  increase the entropy.
+\item[\S\ref{kb:sec:pointwise}] Every row is nearly constant, with value near $\eps$ or near
+  $\zeta$.
+\item[\S\ref{kb:sec:bip}] Exact bipodality, by a contraction estimate for the difference of
+  two rows in the same class.
+\item[\S\ref{kb:sec:ident}] Identification with $\widehat W_{\eps,\vartheta}$
+  and the proof of \Cref{kb:thm:main}.
+\end{enumerate}
+Constants $K,K',\dots$ depend only on $H$ and a compact neighbourhood of
+$\eps_0$ fixed once and for all, and may change from line to line.
+
+\subsection{The base point without \texorpdfstring{\cite{kenyon2014entropy}}{KRR-S}}
+\label{kb:sec:base}
+
+Recall \eqref{eq:krrs-second-coefficient}.  Since
+$S_0'(u)=\tfrac12\log\frac{1-u}{u}$ is a strictly decreasing bijection
+$(0,1)\to\RR$, with inverse $\lambda(y):=(1+e^{2y})^{-1}$, the following
+definition makes sense.
+
+\begin{lemma}[The base point]\label{kb:lem:base-point}
+For $\eps\in(0,1)\setminus\{\eps_*\}$ put
+\[
+  a_d(\eps)
+  :=\lambda\!\left(
+      \frac{\mathcal N_\eps(\zeta)\,B_1(\eps,\zeta)}{\mathcal A(\eps,\zeta)}
+      -R_1(\eps,\zeta)\right)\in(0,1),
+  \qquad \zeta=\zr(\eps).
+\]
+Then $\mathcal F_1(\eps,a,\zeta,0)=0$ if and only if $a=a_d(\eps)$, and
+$\mathcal F_2(\eps,a,\zeta,0)=0$ for every $a$.
+\end{lemma}
+
+\begin{proof}
+By \eqref{eq:krrs-small-block-stationarity} and
+\eqref{eq:krrs-quotient-expansion},
+$\mathcal F_1(\eps,a,b,0)=\partial_aM(\eps,a,b)
+ =\mathcal A^{-2}\bigl[S_0'(a)+R_1-\mathcal N_\eps(b)B_1/\mathcal A\bigr]$,
+evaluated at $(\eps,b)$, and $\mathcal A(\eps,\zeta)>0$ because
+$\zeta\ne\eps$.  The first claim follows.  The second is
+$\mathcal F_2(\eps,a,b,0)=\partial_z\psi_d(\eps,b)/(n_d\eps^{m-d})$ together
+with $\partial_z\psi_d(\eps,\zeta)=0$.
+\end{proof}
+
+With $a_0:=a_d(\eps_0)$, \eqref{eq:krrs-boundary-stationarity} holds by
+\Cref{kb:lem:base-point}, and \eqref{eq:krrs-jacobian-aa}--%
+\eqref{eq:krrs-jacobian-bb} are unaffected.  Hence paragraphs~3--4 of
+Appendix~A produce $a_*,b_*,c_*,q_*$ on
+$U_{\mathrm{IFT}}\times(-\Delta_{\mathrm{IFT}},\Delta_{\mathrm{IFT}})$
+without any appeal to \cite{kenyon2014entropy}.  We record their boundary
+values.
+
+\begin{lemma}[Boundary values]\label{kb:lem:boundary}
+After shrinking $U_{\mathrm{IFT}}$, for every $\eps\in U_{\mathrm{IFT}}$:
+$c_*(\eps,0)=0$, $q_*(\eps,0)=\eps$, $b_*(\eps,0)=\zr(\eps)$ and
+$a_*(\eps,0)=a_d(\eps)$.  Moreover $\partial_\vartheta c_*(\eps,0)
+=1/\mathcal A(\eps,\zr(\eps))>0$, so after shrinking $\Delta_{\mathrm{IFT}}$,
+$0<c_*(\eps,\vartheta)<1$ and $a_*,b_*,q_*\in(0,1)$ whenever
+$0<\vartheta<\Delta_{\mathrm{IFT}}$.
+\end{lemma}
+
+\begin{proof}
+$c_*(\eps,0)=C(\eps,a_*,b_*,0)=0$ and $q_*(\eps,0)=Q(\eps,a,b,0)=\eps$.
+At $\vartheta=0$ the second equation reads $\partial_z\psi_d(\eps,b_*(\eps,0))=0$
+with $b_*(\eps,0)$ close to $b_0\ne\eps_0$, hence $b_*(\eps,0)\ne\eps$ after
+shrinking; uniqueness of the off-diagonal critical point
+(\Cref{thm:krrs-cross-density}) gives $b_*(\eps,0)=\zr(\eps)$.  The first
+equation and \Cref{kb:lem:base-point} then give $a_*(\eps,0)=a_d(\eps)$.
+The derivative of $c_*$ follows from $\partial_\vartheta C(\eps,a,b,0)
+=1/\mathcal A(\eps,b)$ and $C(\eps,a,b,0)=0$, and the remaining assertions
+follow by continuity.
+\end{proof}
+
+Finally, $\widehat W_{\eps,\vartheta}$ is a bipodal graphon with
+$e=\eps$, $t(H,\cdot)=\eps^m+\vartheta$ by construction, and its entropy is
+$\Sigma(\eps,a_*,b_*,\vartheta)$.  By \eqref{eq:krrs-entropy-quotient} and
+\eqref{eq:krrs-quotient-boundary},
+\begin{equation}\label{kb:eq:family-entropy}
+  s(\widehat W_{\eps,\vartheta})
+  =S_0(\eps)+\frac{\psi_d(\eps,\zr(\eps))}{n_d\eps^{m-d}}\,\vartheta
+   +O(\vartheta^2),
+\end{equation}
+uniformly for $\eps$ in a compact neighbourhood of $\eps_0$.
+
+\subsection{Existence, localization and the star reduction}
+\label{kb:sec:local}
+
+\begin{lemma}[Existence]\label{kb:lem:exists}
+For $\eps\in U_{\mathrm{IFT}}$ and $0<\vartheta<\Delta_{\mathrm{IFT}}$,
+$s$ attains its supremum on $\mathcal C(\eps,\vartheta)$.
+\end{lemma}
+
+\begin{proof}
+$\mathcal C(\eps,\vartheta)\ni\widehat W_{\eps,\vartheta}$ is nonempty.
+Since $J_p(w)=-2S_0(w)-w\log p-(1-w)\log(1-p)$, we have
+$I_p(W)=-2s(W)-e(W)\log p-(1-e(W))\log(1-p)$, so on
+$\mathcal C(\eps,\vartheta)$ maximizing $s$ is minimizing $I_p$ for any
+fixed $p\in(0,1)$.  Take a maximizing sequence; by sequential cut
+compactness a subsequence converges in the cut distance; $e$ and
+$t(H,\cdot)$ are cut continuous, so the limit lies in
+$\mathcal C(\eps,\vartheta)$, and lower semicontinuity of $I_p$ shows that
+it is a maximizer.
+\end{proof}
+
+\begin{lemma}[Localization]\label{kb:lem:localization}
+There is $K$ such that, for $\eps\in U_{\mathrm{IFT}}$ (after shrinking to a
+compact neighbourhood) and $0<\vartheta<\Delta_{\mathrm{IFT}}$, every graphon
+$W$ with $e(W)=\eps$ satisfies
+\begin{equation}\label{kb:eq:strong-concavity}
+  s(W)\le S_0(\eps)-\|\delta W\|_2^2,
+\end{equation}
+and every $W\in\mathcal C(\eps,\vartheta)$ with
+$s(W)\ge s(\widehat W_{\eps,\vartheta})$ satisfies
+$\|\delta W\|_2^2\le K\vartheta$.
+\end{lemma}
+
+\begin{proof}
+Since $S_0''\le-2$ on $(0,1)$, $S_0(w)\le S_0(\eps)+S_0'(\eps)(w-\eps)-(w-\eps)^2$
+for $w\in[0,1]$; integrate and use $\iint\delta W=0$.  The second claim
+follows from \eqref{kb:eq:strong-concavity} and
+\eqref{kb:eq:family-entropy}.
+\end{proof}
+
+\begin{lemma}[Star reduction]\label{kb:lem:star}
+For every graphon $W$ with $e(W)=\eps$,
+\begin{equation}\label{kb:eq:star}
+  t(H,W)-\eps^m=v\,\eps^{m-d}\bigl(\tau_d(W)-\eps^d\bigr)+R_H(W),
+  \qquad |R_H(W)|\le 2^m\|\delta W\|_2^3,
+\end{equation}
+and $0\le\tau_d(W)-\eps^d\le K\|\delta W\|_2^2$.
+\end{lemma}
+
+\begin{proof}
+Expanding $\prod_{e\in E(H)}(\eps+\delta W)$ gives
+$t(H,W)=\sum_{F\subseteq E(H)}\eps^{m-|F|}T_F$ with
+$T_F=\int\prod_{ij\in F}\delta W(x_i,x_j)\,dx$.  If $F$ has a component
+consisting of a single edge, integrating out its two endpoints gives the
+factor $\iint\delta W=0$, so $T_F=0$.
+
+Let $F$ be a star with $j\ge2$ edges centred at $u$ (the centre is unique).
+Integrating out the leaves gives $T_F=\int\delta d(x)^j\,dx$ with
+$\delta d:=d_W-\eps$.  For fixed $u$ there are $\binom dj$ such $F$, and
+\[
+  \sum_{j\ge2}\binom dj\eps^{m-j}\int\delta d^{\,j}
+  =\eps^{m-d}\int\bigl[(\eps+\delta d)^d-\eps^d-d\eps^{d-1}\delta d\bigr]
+  =\eps^{m-d}\bigl(\tau_d(W)-\eps^d\bigr),
+\]
+because $\int\delta d=0$.  Summing over the $v$ centres gives the main term.
+
+Every remaining $F$ with $T_F\ne0$ either has at least two components, each
+with at least two edges, or is connected with at least two edges and is not a
+star.  In the latter case $F$ contains a path with three edges or a
+triangle.  Let $L$ be the integral operator with kernel $|\delta W|$, so that
+$\|L\|_{\mathrm{op}}\le\|L\|_{\mathrm{HS}}=\|\delta W\|_2\le1$.  Bounding
+$|\delta W|\le1$ on all other edges, a path gives
+$|T_F|\le\langle\mathbf 1,L^3\mathbf 1\rangle\le\|\delta W\|_2^3$ and a triangle
+gives $|T_F|\le\operatorname{tr}L^3\le\|L\|_{\mathrm{op}}\|L\|_{\mathrm{HS}}^2
+\le\|\delta W\|_2^3$.  In the former case each of two components contains a
+path with two edges, and
+$\int|\delta W(x,y)||\delta W(y,z)|=\int(\int|\delta W(y,\cdot)|)^2\,dy
+\le\|\delta W\|_2^2$ by Cauchy--Schwarz, so $|T_F|\le\|\delta W\|_2^4$.
+There are at most $2^m$ sets $F$.
+
+Finally $(\eps+\delta d)^d-\eps^d-d\eps^{d-1}\delta d$ is nonnegative and at
+most $K\,\delta d^{\,2}$ on $[-\eps,1-\eps]$, and
+$\int\delta d^{\,2}\le\|\delta W\|_2^2$ by Jensen.
+\end{proof}
+
+\subsection{The Euler--Lagrange equation}
+\label{kb:sec:el}
+
+For $ij\in E(H)$ let $t_{ij}(W;x,y)$ be the homomorphism density of $H$ with
+$x_i=x$, $x_j=y$ fixed and the factor $W(x_i,x_j)$ omitted, and put
+\[
+  \Gamma_W(x,y):=\sum_{ij\in E(H)}\tfrac12\bigl[t_{ij}(W;x,y)+t_{ij}(W;y,x)\bigr]
+  \in[0,m].
+\]
+Write $\langle f,g\rangle=\iint fg$ and $\Omega_\eta(W):=\{\eta\le W\le1-\eta\}$.  Expanding the
+product over $E(H)$ gives, for bounded symmetric $\delta$ with $W+\delta$ a graphon,
+\begin{equation}\label{kb:eq:first-variation-t}
+  \bigl|t(H,W+\delta)-t(H,W)-\langle\Gamma_W,\delta\rangle\bigr|\le 2^m\|\delta\|_\infty^2,
+  \qquad
+  \|\Gamma_{W+\delta}-\Gamma_W\|_\infty\le m^2\|\delta\|_\infty,
+\end{equation}
+and Taylor's formula with $S_0''\ge-2/\eta$ on $[\eta/2,1-\eta/2]$ gives, if $\delta$
+vanishes off $\Omega_\eta(W)$ and $\|\delta\|_\infty\le\eta/2$,
+\begin{equation}\label{kb:eq:first-variation-s}
+  s(W+\delta)\ge s(W)+\langle S_0'(W),\delta\rangle-\tfrac2\eta\|\delta\|_2^2 .
+\end{equation}
+
+\begin{lemma}[Constraint correction]\label{kb:lem:correction}
+Let $0<\eta\le\frac12$ and $D_0>0$.  There are $\rho_0,K>0$ with the following property.
+Let $\chi_1,\chi_2$ be measurable, symmetric, $|\chi_k|\le1$, vanishing off
+$\Omega_\eta(W)$, with $c_k:=\iint\chi_k$, $g_k:=\langle\Gamma_W,\chi_k\rangle$ and
+$|c_1g_2-c_2g_1|\ge D_0$.  If $|e_0-e(W)|+|t_0-t(H,W)|\le\rho_0$, there are $u_1,u_2$ with
+$|u_1|+|u_2|\le K(|e_0-e(W)|+|t_0-t(H,W)|)$ such that $W+u_1\chi_1+u_2\chi_2$ is a graphon
+with edge density $e_0$ and $H$-density $t_0$.
+\end{lemma}
+
+\begin{proof}
+The edge density is affine in $u$, so it takes the value $e_0$ exactly on a line
+$\ell=\{u: c\cdot u=e_0-e(W)\}$ (not both $c_k$ vanish).  Along a unit parametrization of $\ell$
+the $H$-density is, by \eqref{kb:eq:first-variation-t}, an affine function of slope at least
+$D_0/2$ in absolute value, up to an error $2^m|u|^2$; the intermediate value theorem on a
+segment of length $O(\rho_0)$ gives the required $u$.  The perturbation keeps values in $[0,1]$
+because it lives where $W$ has margin $\eta$.
+\end{proof}
+
+We call $(\chi_1,\chi_2)$ as in the lemma \emph{qualifying directions} for $W$, and define
+the multipliers $(\alpha,\beta)$ by $\alpha c_k+\beta g_k=\langle S_0'(W),\chi_k\rangle$
+($k=1,2$).
+
+\begin{lemma}[Euler--Lagrange]\label{kb:lem:el}
+Let $W$ maximize $s$ on $\{e=e_0,\ t(H,\cdot)=t_0\}$ and admit qualifying directions with
+multipliers $(\alpha,\beta)$.
+\begin{enumerate}
+\item For every bounded symmetric $\varphi$ vanishing off some $\Omega_{\eta'}(W)$,
+  $\langle S_0'(W),\varphi\rangle=\alpha\iint\varphi+\beta\langle\Gamma_W,\varphi\rangle$.
+\item $0<W<1$ almost everywhere, and
+  \begin{equation}\label{kb:eq:el}
+    S_0'\bigl(W(x,y)\bigr)=\alpha+\beta\,\Gamma_W(x,y)\qquad\text{for a.e. }(x,y).
+  \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) For small $|h|$ put $W_h=W+h\varphi$; its constraints move by $O(|h|)$, and
+\Cref{kb:lem:correction} (with $D_0$ half the determinant, which moves by $O(|h|)$ by
+\eqref{kb:eq:first-variation-t}) gives $W_h''=W_h+u\cdot\chi$ with the original constraints and
+$|u|=O(|h|)$.  Maximality, \eqref{kb:eq:first-variation-s} and the two constraint identities
+(the $H$-density one via \eqref{kb:eq:first-variation-t}) give
+$h\bigl(\langle S_0'(W),\varphi\rangle-\alpha\iint\varphi-\beta\langle\Gamma_W,\varphi\rangle\bigr)
+\le Ch^2$ for both signs of $h$.
+
+(2) Applying (1) to $\varphi=\1_{B}$ for symmetric measurable $B\subseteq\Omega_{\eta'}(W)$
+gives \eqref{kb:eq:el} almost everywhere on $\{0<W<1\}$.  If $|\{W=0\}|>0$, perturb by
+$h\1_{B}$ with $B\subseteq\{W=0\}$ of positive measure and correct as in (1): the entropy
+gains at least $\frac12h\log(1/h)|B|$ while all first-order terms are $O(h)$, contradicting
+maximality for small $h$; the set $\{W=1\}$ is treated symmetrically.
+\end{proof}
+
+\subsection{First-order efficiency}
+\label{kb:sec:efficiency}
+
+Write $\psi_*:=\psi_d(\eps,\zeta)<0$ and define the \emph{gap function}
+\[
+  \Gamma^{\mathrm{gap}}_\eps(u):=\psi_*\,\mathcal D_\eps(u)-\mathcal N_\eps(u),
+  \qquad u\in[0,1].
+\]
+
+\begin{lemma}[Gap function]\label{kb:lem:gap}
+$\Gamma^{\mathrm{gap}}_\eps\ge0$ on $[0,1]$, its zeros are exactly $\eps$ and
+$\zeta$, and there is $\kappa>0$, uniform for $\eps$ in a compact subset of
+$(0,1)\setminus\{\eps_*\}$, with
+$\Gamma^{\mathrm{gap}}_\eps(u)\ge\kappa\min\{(u-\eps)^2,(u-\zeta)^2\}$.
+\end{lemma}
+
+\begin{proof}
+For $u\ne\eps$, $\mathcal D_\eps(u)>0$ and $\psi_d(\eps,u)\le\psi_*$ with
+equality only at $u=\zeta$ (\Cref{thm:krrs-cross-density}); this gives
+nonnegativity and the zero set.  Both zeros are double:
+$(\Gamma^{\mathrm{gap}}_\eps)'(\zeta)=\psi_*\mathcal D_\eps'(\zeta)
+-\mathcal N_\eps'(\zeta)=0$ because $\mathcal N'/\mathcal D'=\mathcal N/\mathcal D$ at
+a critical point, and
+$(\Gamma^{\mathrm{gap}}_\eps)''(u)=\mathcal D''(u)\bigl(\psi_*-R_d(u)\bigr)$ is
+positive at $u=\eps$ and $u=\zeta$ because $R_d(\eps),R_d(\zeta)<\psi_*$ at a
+critical pair (the sign statement proved for Step~2 of
+\Cref{thm:krrs-cross-density}).  Continuity and compactness give $\kappa$.
+\end{proof}
+
+\begin{lemma}[First-order efficiency]\label{kb:lem:efficiency}
+For every graphon $W$ with $e(W)=\eps$ and $t(H,W)=\eps^m+\vartheta$,
+\begin{equation}\label{kb:eq:efficiency}
+  2\bigl(S_0(\eps)-s(W)\bigr)
+  =|\psi_*|\Bigl(\iint W^d-\eps^d\Bigr)+\iint\Gamma^{\mathrm{gap}}_\eps(W)
+  \ge|\psi_*|\,h_\eps(\vartheta)+\iint\Gamma^{\mathrm{gap}}_\eps(W),
+\end{equation}
+where $h_\eps(\vartheta):=(\eps^m+\vartheta)^{d/m}-\eps^d
+=\frac2{v\eps^{m-d}}\vartheta+O(\vartheta^2)$.  Consequently there is $K$ such
+that every such $W$ with $s(W)\ge s(\widehat W_{\eps,\vartheta})$ satisfies
+\begin{equation}\label{kb:eq:efficiency-consequence}
+  \iint\Gamma^{\mathrm{gap}}_\eps(W)\le K\vartheta^2,
+  \qquad
+  0\le\iint W^d-\eps^d-h_\eps(\vartheta)\le K\vartheta^2 .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Since $\iint(W-\eps)=0$, $2(s(W)-S_0(\eps))=\iint\mathcal N_\eps(W)$ and
+$\iint\mathcal D_\eps(W)=\iint W^d-\eps^d$; this is the identity.  The
+inequality is the generalized H\"older inequality
+\eqref{eq:generalized-holder}, $t(H,W)\le(\iint W^d)^{m/d}$.  Note
+$\frac dm\eps^{d-m}=\frac2{v\eps^{m-d}}$ because $vd=2m$.  By
+\eqref{kb:eq:family-entropy},
+$2(S_0(\eps)-s(\widehat W_{\eps,\vartheta}))=|\psi_*|h_\eps(\vartheta)+O(\vartheta^2)$,
+which gives \eqref{kb:eq:efficiency-consequence}.
+\end{proof}
+
+\begin{remark}
+\Cref{kb:lem:efficiency} is the nonexceptional counterpart of the cost
+decomposition used in \Cref{lem:localization-rank-one}: there the gap
+function has a single zero, here it has two, and the second zero $\zeta$ is
+what produces the small block.  It already excludes the ``spread regime'':
+by \Cref{kb:lem:gap}, the part of $W$ near $\eps$ carries only
+$O(\vartheta^2)$ of $\|\delta W\|_2^2$.
+\end{remark}
+
+\begin{lemma}[Cross structure]\label{kb:lem:cross}
+Let $S\subseteq[0,1]^2$ be symmetric and measurable, $s_x:=|\{y:(x,y)\in S\}|$,
+and let $\phi:[0,1]\to[0,\infty)$ be convex with $\phi(0)=0$.  Then for every
+$\tau\in(0,1]$,
+\[
+  \int_0^1\phi(s_x)\,dx
+  \le\phi(1)\Bigl(\frac{|S|}2+\frac{|S|^2}{\tau^2}\Bigr)
+     +\frac{\phi(\tau)}\tau|S|.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $I=\{s_x\ge\tau\}$, so $|I|\le|S|/\tau$.  Convexity gives
+$\phi(s)\le s\phi(1)$ and $\phi(s)\le s\phi(\tau)/\tau$ for $s\le\tau$.  By
+symmetry $|S\cap(I\times I^c)|=|S\cap(I^c\times I)|$, and these two sets are
+disjoint subsets of $S$, so $|S\cap(I\times I^c)|\le|S|/2$.  Hence
+$\int_Is_x=|S\cap(I\times I)|+|S\cap(I\times I^c)|\le|I|^2+|S|/2$, and the
+claim follows by splitting $\int\phi(s_x)$ over $I$ and $I^c$.
+\end{proof}
+
+\subsection{Structure of competitors}
+\label{kb:sec:structure}
+
+In this and the following subsections $o(1)$ denotes a quantity tending to $0$
+as $\vartheta\downarrow0$, uniformly for $\eps$ in a compact neighbourhood of
+$\eps_0$ and for $W$ in the stated class.  Put
+$W_0^{I}:=\eps+(\zeta-\eps)\bigl(\mathbf 1_{I\times I^c}+\mathbf 1_{I^c\times I}\bigr)$
+for a measurable $I\subseteq[0,1]$.
+
+\begin{proposition}[Structure]\label{kb:prop:structure}
+Let $W\in\mathcal C(\eps,\vartheta)$ with $s(W)\ge s(\widehat W_{\eps,\vartheta})$.
+There is a measurable $I=I_W$ with
+$|I|=\vartheta/\mathcal A(\eps,\zeta)+o(\vartheta)$ such that
+\[
+  \|W-W_0^{I}\|_{L^2}=o(\vartheta^{1/2}),
+  \qquad
+  \int_I\!\int_0^1|W-W_0^{I}|\,dy\,dx=o(\vartheta).
+\]
+\end{proposition}
+
+\begin{proof}
+Let $S=\{|W-\zeta|<|W-\eps|\}$ (symmetric).  By \Cref{kb:lem:gap} and
+\eqref{kb:eq:efficiency-consequence},
+$\|W-\eps-(\zeta-\eps)\mathbf 1_S\|_2^2\le\kappa^{-1}\iint\Gamma^{\mathrm{gap}}_\eps(W)
+=o(\vartheta)$, and $\|\delta W\|_2^2\le K\vartheta$ gives $|S|\le K\vartheta$.
+Write $\phi(s):=\mathcal D_\eps(\eps+(\zeta-\eps)s)$, convex with $\phi(0)=0$,
+$\phi(1)=\mathcal D_\eps(\zeta)$, and $s_x=|S_x|$.  Then
+$d_W(x)=\eps+(\zeta-\eps)s_x+r(x)$ with $\|r\|_2=o(\vartheta^{1/2})$, so
+$\int\mathcal D_\eps(d_W)=\int\phi(s_x)+o(\vartheta)$ and
+$\iint\mathcal D_\eps(W)=\phi(1)|S|+o(\vartheta)$.  By \Cref{kb:lem:star},
+\eqref{kb:eq:efficiency-consequence} and $h_\eps(\vartheta)=
+\frac{2\vartheta}{v\eps^{m-d}}+O(\vartheta^2)$,
+\[
+  \int\phi(s_x)\,dx=\tfrac12\phi(1)|S|+o(\vartheta).
+\]
+\Cref{kb:lem:cross} with $\tau=\vartheta^{1/3}$ bounds the left side by
+$\frac12\phi(1)|S|+o(\vartheta)$, and inspection of its proof shows that
+near-equality forces, with $I=\{s_x\ge\tau\}$: $|S\cap(I\times I)|=o(\vartheta)$,
+$\int_{I^c}s_x\phi(\tau)/\tau=o(\vartheta)$, and
+$\int_I(s_x\phi(1)-\phi(s_x))=o(\vartheta)$; strict convexity of $\phi$ on
+$[\tau,1]$ then gives $\int_I(1-s_x)=o(\vartheta)$.  Hence
+$|S\,\triangle\,((I\times I^c)\cup(I^c\times I))|=o(\vartheta)$ and the $L^2$ bound
+follows.  For the $L^1$ bound on $I\times[0,1]$ use Cauchy--Schwarz:
+$\int_I\int|W-W_0^I|\le|I|^{1/2}\|W-W_0^I\|_2=o(\vartheta)$.  Finally
+$\vartheta=v\eps^{m-d}\int\mathcal D_\eps(d_W)+o(\vartheta)
+=v\eps^{m-d}\phi(1)|I|+o(\vartheta)=\mathcal A(\eps,\zeta)|I|+o(\vartheta)$.
+\end{proof}
+
+
+\begin{lemma}[One-row factorization]\label{kb:lem:pinned}
+Let $R_c(y):=\int_0^1|W(y,t)-c|\,dt$, $\kappa:=\|W-\eps\|_1=\int R_\eps$ and
+$\gamma(u):=m\eps^{m-d}u^{d-1}$.  For $ab\in E(H)$, all $x,y$ and every vertex $i$,
+\[
+  \bigl|t_{ab}(W;x,y)-\eps^{m-d}d_W(x)^{d-1}\bigr|\le m\bigl(R_\eps(y)+\kappa\bigr),
+  \qquad
+  \bigl|\Gamma_W(x,y)-\gamma(d_W(x))\bigr|\le m^2\bigl(R_\eps(y)+\kappa\bigr),
+\]
+and the density $t^{(i)}_W(x)$ of $H$ rooted at $i$ with $x_i=x$ satisfies
+$|t^{(i)}_W(x)-\eps^{m-d}d_W(x)^d|\le m\kappa$.
+\end{lemma}
+
+\begin{proof}
+For factors in $[0,1]$, $|\prod u_e-\prod u'_e|\le\sum|u_e-u'_e|$.  Replace every factor
+$W(x_p,x_q)$ with $a\notin\{p,q\}$ (resp.\ $i\notin\{p,q\}$) by $\eps$: a factor at $b$ costs
+$R_\eps(y)$ after integration, any other one costs $\kappa$, and there are at most $m$ of
+them.  The remaining factors $W(x,x_c)$, $c\in N(a)\setminus\{b\}$ (resp.\ $c\in N(i)$), involve
+distinct integration variables, so they integrate to $d_W(x)^{d-1}$ (resp.\ $d_W(x)^d$).  The
+bound for $\Gamma_W$ follows by summing over the $m$ edges and both orientations.
+\end{proof}
+
+\begin{lemma}[Two rows]\label{kb:lem:two-rows}
+Let $\rho:=\|W(x,\cdot)-W(x',\cdot)\|_1$ and let $S$ bound $|W(x,\cdot)-W(x',\cdot)|$ almost
+everywhere.  Then $|\Gamma_W(x,y)-\Gamma_W(x',y)|\le m(d-1)\rho$ for all $y$, and for all
+$c,\eps\in[0,1]$
+\[
+  |\Gamma_W(x,y)-\Gamma_W(x',y)|
+  \le m(d-1)\Bigl(c^{d-2}\eps^{m-d}\rho
+     +2mS\bigl(R_c(x)+R_c(x')+R_\eps(y)+\kappa\bigr)\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+In $t_{ab}(W;x,y)-t_{ab}(W;x',y)$ only the $d-1$ factors at $a$ change.  For $[0,1]$-valued
+$u,u',b$,
+$|\prod u-\prod u'|\le\sum_k|u_k-u'_k|\prod_{e\ne k}\max(u_e,u'_e)$ and
+$\prod v\le\prod b+\sum(v_e-b_e)^+$; take $b_e=c$ for the edges at $a$ and $b_e=\eps$
+otherwise, so that $\prod_{e\ne k}b_e=c^{d-2}\eps^{m-d}$, and use
+$(\max(u,u')-b)^+\le|u-b|+|u'-b|$.  After integration the factor $|W(x,x_k)-W(x',x_k)|$
+contributes $\rho$ against the constant and at most $S$ against the remainders, whose integrals
+are $R_c(x)+R_c(x')$, $2R_\eps(y)$ or $2\kappa$ according to the position of the edge.  The
+first bound is the case $b\equiv1$.  Sum over the edges and orientations.
+\end{proof}
+
+\subsection{Multipliers of maximizers}
+\label{kb:sec:cluster}
+
+Put $\zeta=\zr(\eps)$ and
+\[
+  \beta_0:=\frac{S_0'(\zeta)-S_0'(\eps)}{\gamma(\zeta)-\gamma(\eps)},\qquad
+  \alpha_0:=S_0'(\eps)-\beta_0\gamma(\eps),
+\]
+so that $S_0'(c)=\alpha_0+\beta_0\gamma(c)$ for $c\in\{\eps,\zeta\}$.
+
+\begin{lemma}\label{kb:lem:beta0}
+$\beta_0\,v\eps^{m-d}=\psi_*$; in particular $\beta_0<0$.
+\end{lemma}
+
+\begin{proof}
+$\mathcal N_\eps'(\zeta)=2(S_0'(\zeta)-S_0'(\eps))$ and
+$\mathcal D_\eps'(\zeta)=d(\zeta^{d-1}-\eps^{d-1})$, so $\beta_0v\eps^{m-d}
+=\frac{v}{m}\cdot\frac d2\cdot\frac{\mathcal N_\eps'(\zeta)}{\mathcal D_\eps'(\zeta)}$, and
+$vd=2m$.  At the critical point $\zeta$ of $\psi_d(\eps,\cdot)=\mathcal N_\eps/\mathcal D_\eps$ one
+has $\mathcal N'/\mathcal D'=\mathcal N/\mathcal D=\psi_*$.
+\end{proof}
+
+\begin{proposition}[Multipliers]\label{kb:prop:multipliers}
+For every $\delta>0$ there is $\Delta>0$ such that, for $\eps$ near $\eps_0$ and
+$0<\vartheta<\Delta$, every maximizer $W$ on $\mathcal C(\eps,\vartheta)$ admits qualifying
+directions whose multipliers satisfy $|\alpha-\alpha_0|\le\delta$ and $|\beta-\beta_0|\le\delta$.
+\end{proposition}
+
+\begin{proof}
+Let $I=I_W$ be as in \Cref{kb:prop:structure}.  Choose small thresholds $\omega,\tau$ first and
+then $\vartheta$ small.  Let $E_1$ be the set of pairs of rows outside $I$ with $R_\eps\le\omega$
+where $|W-\eps|\le\tau$, and $E_2$ the set of pairs $(x,y)\in I\times I^c$ (and their
+reflections) with $x$ cross-close to $W_0^I$, $R_\eps(y)\le\omega$ and $|W-\zeta|\le\tau$.  By
+\Cref{kb:prop:structure} and Markov's inequality $|E_1|\ge\frac12$ and $|E_2|\ge c|I|$, and by
+\Cref{kb:lem:pinned} $\Gamma_W=\gamma(\eps)+O(\omega+\kappa)$ on $E_1$ and
+$\Gamma_W=\gamma(\zeta)+O(\omega+\kappa+\tau)$ on $E_2$.  Take $\chi_k=\1_{E_k}$.  Then
+$c_k=|E_k|$, $g_k=|E_k|(\gamma_k+o(1))$ and $\langle S_0'(W),\chi_k\rangle=|E_k|(S_0'(c_k)+o(1))$
+with $c_1=\eps$, $c_2=\zeta$; the determinant is $|E_1||E_2|(\gamma(\zeta)-\gamma(\eps)+o(1))\ne0$,
+$W$ has margin on $E_1\cup E_2$, and Cramer's rule gives $(\alpha,\beta)\to(\alpha_0,\beta_0)$.
+\end{proof}
+
+\subsection{Row balance}
+\label{kb:sec:row}
+
+For a graphon $W$ put $\sigma_W(u)=\int_0^1S_0(W(u,t))\,dt$, let $t^{(i)}_W(u)$ be the density of
+$H$ rooted at $i$ with $x_i=u$, and
+\[
+  \Phi_{\alpha,\beta}(u):=2\sigma_W(u)-2\alpha\,d_W(u)-\beta\sum_{i\in V(H)}t^{(i)}_W(u).
+\]
+For measurable $A\subseteq\RR$ and $x_0\in\RR$ let $\pi(x)=x_0$ for $x\in A$ and $\pi(x)=x$
+otherwise, $W^A(x,y):=W(\pi x,\pi y)$, and $h:=|A\cap[0,1]|$.
+
+\begin{lemma}[Replacement]\label{kb:lem:replacement}
+For a finite graph $G$ on $v_G$ vertices and a symmetric measurable kernel $|k|\le1$,
+\[
+  \Bigl|t(G,k\circ\pi)-t(G,k)-\sum_i\Bigl(h\,t^{(i)}_k(x_0)-\int_At^{(i)}_k\Bigr)\Bigr|
+  \le2v_G^2h^2 .
+\]
+In particular ($G=H$, $k=W$; $G=K_2$, $k=W$ and $k=S_0\circ W$),
+$\Delta t=\sum_i(h\,t^{(i)}_W(x_0)-\int_At^{(i)}_W)+O(h^2)$,
+$\Delta e=2(h\,d_W(x_0)-\int_Ad_W)+O(h^2)$ and $\Delta s=2(h\,\sigma_W(x_0)-\int_A\sigma_W)+O(h^2)$,
+where $\Delta$ denotes the change from $W$ to $W^A$.  Moreover
+$|\Gamma_{W^A}(x,y)-\Gamma_W(x,y)|\le mvh$ for $x,y\notin A$.
+\end{lemma}
+
+\begin{proof}
+Replace the coordinates one at a time.  When coordinate $k$ is replaced and a set $S$ of
+coordinates already is, resample $x_k$: the change of the integral is
+$h\,\mathbb E F(x_0)-\mathbb E\int_AF(s)\,ds$, where $F(u)$ is the product with $x_k=u$ and the
+coordinates in $S$ replaced.  $F$ differs from the unreplaced rooted product only if some
+$x_j\in A$, $j\in S$, an event of probability at most $|S|h$, so the step error is at most
+$4|S|h^2$; summing over $k$ gives $2v_G^2h^2$.  For $\Gamma$ the same observation applies to
+the free coordinates of the pinned integrals.
+\end{proof}
+
+\begin{proposition}[Row balance]\label{kb:lem:row}
+Let $W$ maximize $s$ on $\{e=e_0,\ t(H,\cdot)=t_0\}$ with qualifying directions and multipliers
+$(\alpha,\beta)$.  There are $h_0,C>0$ such that for every $x_0\in\RR$ and every measurable $A$
+with $h\le h_0$,
+\[
+  h\,\Phi_{\alpha,\beta}(x_0)-\int_A\Phi_{\alpha,\beta}\le Ch^2 .
+\]
+Consequently, for every $x_0\in\RR$, $\Phi_{\alpha,\beta}(x_0)\le\Phi_{\alpha,\beta}(x)$ for
+almost every $x\in[0,1]$.
+\end{proposition}
+
+\begin{proof}
+Cut the qualifying directions off $A$: $\chi_k^A(x,y):=\1_{A^c}(x)\1_{A^c}(y)\chi_k(x,y)$.  They
+live where $W^A=W$ has margin $\eta$, $|\iint\chi_k^A-c_k|\le2h$, and by
+\Cref{kb:lem:replacement} $|\langle\Gamma_{W^A},\chi_k^A\rangle-g_k|\le(2m+mv)h$; hence they
+are qualifying for $W^A$ with half the determinant once $h$ is small.  By
+\Cref{kb:lem:replacement} $|\Delta e|+|\Delta t|=O(h)$, so \Cref{kb:lem:correction} gives
+$W''=W^A+u\cdot\chi^A$ with the original constraints and $|u|=O(h)$.  Maximality and
+\eqref{kb:eq:first-variation-s} at $W^A$ give
+$s(W^A)+\langle S_0'(W),u\cdot\chi^A\rangle-O(h^2)\le s(W)$, and
+\Cref{kb:lem:el}(1) applied to $\chi_k^A$ turns the middle term into
+$\alpha\,u\cdot\iint\chi^A+\beta\,u\cdot\langle\Gamma_W,\chi^A\rangle$.  The constraints give
+$u\cdot\iint\chi^A=-\Delta e$ and, by \eqref{kb:eq:first-variation-t} at $W^A$ and the bound on
+$\Gamma_{W^A}-\Gamma_W$, $u\cdot\langle\Gamma_W,\chi^A\rangle=-\Delta t+O(h^2)$.  Thus
+$\Delta s-\alpha\Delta e-\beta\Delta t\le Ch^2$, and \Cref{kb:lem:replacement} converts this
+into the claim.
+
+If $|\{x\in[0,1]:\Phi(x)\le\Phi(x_0)-s\}|>0$ for some $s>0$, intersect this set with a short
+interval to get $A$ with $0<h\le\min\{h_0,s/(2C+1)\}$; then
+$hs\le h\Phi(x_0)-\int_A\Phi\le Ch^2<hs$, a contradiction.  Taking $s=1/n$ gives the
+consequence.
+\end{proof}
+
+\subsection{Pointwise structure}
+\label{kb:sec:pointwise}
+
+Let $W$ be as in \Cref{kb:lem:row} with $e(W)=\eps$, write $\kappa=\|W-\eps\|_1$,
+$\lambda=(S_0')^{-1}$ and
+\[
+  w(x):=\lambda\bigl(\alpha+\beta\gamma(d_W(x))\bigr),\qquad
+  \varphi_{\alpha,\beta}(u):=2S_0(u)-2\alpha u-\beta\,v\eps^{m-d}u^d .
+\]
+Call $x$ \emph{regular} if \eqref{kb:eq:el} holds at $(x,y)$ for a.e.\ $y$; almost every $x$ is
+regular.
+
+\begin{lemma}[Rows]\label{kb:lem:rows}
+For regular $x$:
+\begin{enumerate}
+\item $\int_0^1|W(x,y)-w(x)|\,dy\le|\beta|m^2\kappa$;
+\item $|\Phi_{\alpha,\beta}(x)-\varphi_{\alpha,\beta}(w(x))|\le C_{\alpha,\beta}\kappa$ with
+  $C_{\alpha,\beta}=(2(|\alpha|+|\beta|m)+2|\alpha|+|\beta|vd)|\beta|m^2+|\beta|vm$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) $W(x,y)=\lambda(\alpha+\beta\Gamma_W(x,y))$ for a.e.\ $y$, $\lambda$ is $\frac12$-Lipschitz,
+and \Cref{kb:lem:pinned} gives $|\Gamma_W(x,y)-\gamma(d_W(x))|\le m^2(R_\eps(y)+\kappa)$; integrate
+in $y$.  (2) On $(0,1)$, $|S_0(a)-S_0(b)|\le\max(|S_0'(a)|,|S_0'(b)|)\,|a-b|$ by the mean value
+theorem and monotonicity of $S_0'$, and $|S_0'|\le|\alpha|+|\beta|m$ at $W(x,y)$ and at $w(x)$; so
+$|\sigma_W(x)-S_0(w(x))|\le(|\alpha|+|\beta|m)|\beta|m^2\kappa$.  Also
+$|d_W(x)-w(x)|\le|\beta|m^2\kappa$, $|d^d-w^d|\le d|d-w|$, and
+$|t^{(i)}_W(x)-\eps^{m-d}d_W(x)^d|\le m\kappa$ by \Cref{kb:lem:pinned}.
+\end{proof}
+
+\begin{lemma}[Limiting profile]\label{kb:lem:profile}
+$\varphi_{\alpha_0,\beta_0}(u)=\varphi_{\alpha_0,\beta_0}(\eps)-\Gamma^{\mathrm{gap}}_\eps(u)$;
+$|\varphi_{\alpha,\beta}-\varphi_{\alpha_0,\beta_0}|\le2|\alpha-\alpha_0|+v|\beta-\beta_0|$ on $[0,1]$;
+and if $\eps\in[\eta,1-\eta]$ and $|u-\eps|\le\eta/2$ then
+$\Gamma^{\mathrm{gap}}_\eps(u)\le\frac4\eta(u-\eps)^2$.
+\end{lemma}
+
+\begin{proof}
+By \Cref{kb:lem:beta0}, $\beta_0v\eps^{m-d}=\psi_*$, so the difference of the two sides of the
+identity is affine in $u$, vanishes at $u=\eps$, and has slope
+$2S_0'(\eps)-2\alpha_0-\psi_*d\eps^{d-1}=2\beta_0\gamma(\eps)-\beta_0vd\,\eps^{m-1}=0$ since
+$vd=2m$.  The second claim is immediate.  For the third, $\psi_*<0\le\mathcal D_\eps$ and
+$-\mathcal N_\eps(u)\le\frac4\eta(u-\eps)^2$ by \eqref{kb:eq:first-variation-s} in one variable.
+\end{proof}
+
+\begin{proposition}[Two clusters]\label{kb:prop:pointwise}
+If $(|\beta|m^2+1)\kappa\le\eta/2$ and $\eps\in[\eta,1-\eta]$, then for a.e.\ $x$
+\[
+  \Gamma^{\mathrm{gap}}_\eps(w(x))\le G:=\tfrac4\eta\bigl((|\beta|m^2+1)\kappa\bigr)^2
+  +2C_{\alpha,\beta}\kappa+2\bigl(2|\alpha-\alpha_0|+v|\beta-\beta_0|\bigr).
+\]
+Hence, with $\kappa_g$ from \Cref{kb:lem:gap} and $r:=(G/\kappa_g)^{1/2}$, the class
+$J:=\{x\in[0,1]:|w(x)-\zeta|<|w(x)-\eps|\}$ satisfies, for a.e.\ $x$:
+$R_\zeta(x)\le e_1+r$ if $x\in J$ and $R_\eps(x)\le e_1+r$ if $x\notin J$, where
+$e_1=|\beta|m^2\kappa$; and $|J|\le2\kappa/|\zeta-\eps|$ whenever $r+e_1\le|\zeta-\eps|/2$.
+\end{proposition}
+
+\begin{proof}
+Since $\int R_\eps=\kappa$ there is a regular $x_*$ with $R_\eps(x_*)\le\kappa$; then
+$|w(x_*)-\eps|\le|w(x_*)-d_W(x_*)|+R_\eps(x_*)\le(|\beta|m^2+1)\kappa$ and
+\Cref{kb:lem:profile} bounds $\Gamma^{\mathrm{gap}}_\eps(w(x_*))$.  By \Cref{kb:lem:row},
+$\Phi(x)\ge\Phi(x_*)$ for a.e.\ $x$; combine with \Cref{kb:lem:rows}(2) at $x$ and $x_*$ and
+with \Cref{kb:lem:profile}.  The quadratic lower bound places $w(x)$ within $r$ of $\eps$ or
+$\zeta$, and $R_c(x)\le\int|W(x,\cdot)-w(x)|+|w(x)-c|$.  For $x\in J$ regular,
+$R_\eps(x)\ge|d_W(x)-\eps|\ge|\zeta-\eps|-R_\zeta(x)\ge|\zeta-\eps|/2$, and
+$\int R_\eps=\kappa$.
+\end{proof}
+
+\subsection{Exact bipodality}
+\label{kb:sec:bip}
+
+\begin{lemma}[Contraction]\label{kb:lem:contraction}
+Let $x,x'$ be regular, $c\in[0,1]$, $M=m(d-1)$ and $\rho=\|W(x,\cdot)-W(x',\cdot)\|_1$.  Then
+\[
+  \rho\le\Bigl(2c(1-c)|\beta|M c^{d-2}\eps^{m-d}
+    +2|\beta|^2M^2m\bigl(R_c(x)+R_c(x')+2\kappa\bigr)
+    +2|\beta|M\bigl(R_c(x)+R_c(x')\bigr)\Bigr)\rho .
+\]
+\end{lemma}
+
+\begin{proof}
+By \eqref{kb:eq:el} and \Cref{kb:lem:two-rows}, $|W(x,\cdot)-W(x',\cdot)|\le S:=|\beta|M\rho/2$
+a.e.  For $a,b\in(0,1)$ the mean value theorem for $S_0'$, whose derivative is
+$-1/(2\xi(1-\xi))$, gives $|a-b|\le2(c(1-c)+|a-c|+|b-c|)\,|S_0'(a)-S_0'(b)|$.  With $a=W(x,y)$,
+$b=W(x',y)$ this is at most
+$2c(1-c)|\beta||\Gamma_W(x,y)-\Gamma_W(x',y)|+2(|a-c|+|b-c|)|\beta|M\rho$.  Integrate in $y$ and
+use the second bound of \Cref{kb:lem:two-rows} together with $\int R_\eps=\kappa$ and
+$c(1-c)\le1$.
+\end{proof}
+
+\begin{lemma}[Contraction constants]\label{kb:lem:kappa}
+For $c\in(0,1)$,
+$2c(1-c)|\beta_0|m(d-1)c^{d-2}\eps^{m-d}=1-c(1-c)\,(\Gamma^{\mathrm{gap}}_\eps)''(c)$.
+In particular the left side is $<1$ for $c=\eps$ and $c=\zeta$, uniformly for $\eps$ near
+$\eps_0$.
+\end{lemma}
+
+\begin{proof}
+$(\Gamma^{\mathrm{gap}}_\eps)''(c)=\mathcal D''(c)\bigl(\psi_*-R_d(c)\bigr)$ with
+$\mathcal D''(c)R_d(c)=\mathcal N''(c)=-1/(c(1-c))$, so the right side equals
+$-c(1-c)\,d(d-1)c^{d-2}\psi_*$; insert $\psi_*=\beta_0v\eps^{m-d}$ and $vd=2m$.  Both zeros of
+$\Gamma^{\mathrm{gap}}_\eps$ are nondegenerate (proof of \Cref{kb:lem:gap}), and continuity in
+$\eps$ gives uniformity.
+\end{proof}
+
+\begin{proposition}[Bipodality]\label{kb:prop:bipodal}
+In the setting of \Cref{kb:prop:pointwise}, assume moreover $r+e_1\le|\zeta-\eps|/2$,
+$2\kappa/|\zeta-\eps|\le\frac12$, and that the coefficient of \Cref{kb:lem:contraction}
+with $R_c(x),R_c(x')$ replaced by $e_1+r$ is $<1$ for $c=\eps$ and for $c=\zeta$.  Then there are
+a measurable $J\subseteq[0,1]$ and $a,b,q\in(0,1)$ with
+\[
+  W=a\1_{J\times J}+b\,(\1_{J\times J^c}+\1_{J^c\times J})+q\1_{J^c\times J^c}\quad\text{a.e.},
+\]
+$|J|\le2\kappa/|\zeta-\eps|$, $|b-\zeta|,|q-\eps|\le2(e_1+r)$ and
+$|S_0'(a)|\le|\alpha|+|\beta|m$.
+\end{proposition}
+
+\begin{proof}
+Call $x$ \emph{good} if it is regular and satisfies the row bounds of
+\Cref{kb:prop:pointwise}.  For good $x,x'$ in the same class, \Cref{kb:lem:contraction} gives
+$\rho\le\theta\rho$ with $\theta<1$, so $\rho=0$, and then $\Gamma_W(x,\cdot)=\Gamma_W(x',\cdot)$
+by the first bound of \Cref{kb:lem:two-rows}.  Since $|J|\le\frac12$ there is a good
+$x_c\notin J$; if $J$ contains a good point choose one, $x_J$ (otherwise $J$ is null and the
+claim holds with $b=\zeta$ and any $a$).  With $r(x)=x_J$ for $x\in J$ and $r(x)=x_c$ otherwise,
+symmetry of $\Gamma_W$ gives $\Gamma_W(x,y)=\Gamma_W(r(x),r(y))$ for good $x,y$, and
+\eqref{kb:eq:el} makes $W$ a.e.\ equal to the displayed kernel with
+$a=\lambda(\alpha+\beta\Gamma_W(x_J,x_J))$, $b=\lambda(\alpha+\beta\Gamma_W(x_J,x_c))$,
+$q=\lambda(\alpha+\beta\Gamma_W(x_c,x_c))$.  The row of $x_c$ equals $q$ a.e.\ off $J$, so
+$|q-\eps|(1-|J|)\le R_\eps(x_c)\le e_1+r$; similarly for $b$ with the row of $x_J$.
+\end{proof}
+
+All hypotheses of \Cref{kb:prop:bipodal} hold for $\eps$ near $\eps_0$ and $\vartheta$ small:
+$\kappa\le(K\vartheta)^{1/2}$ by \Cref{kb:lem:localization}, the multipliers are within $\delta$
+of $(\alpha_0,\beta_0)$ by \Cref{kb:prop:multipliers}, $|\alpha_0|,|\beta_0|$ and
+$|\zeta-\eps|^{-1}$ are bounded and $\kappa_g$ and the margin of \Cref{kb:lem:kappa} are bounded
+below near $\eps_0$; choose $\delta$ and then $\vartheta$ small.
+
+\subsection{Identification and proof of \texorpdfstring{\Cref{kb:thm:main}}{the theorem}}
+\label{kb:sec:ident}
+
+Let $P_0$ bound $|\alpha|+|\beta|m$ uniformly, so that the first-pode density of every maximizer
+lies in the compact $K:=[\lambda(P_0),\lambda(-P_0)]\subset(0,1)$.
+
+\emph{Stationarity, uniformly in $a$.}  For each $a'\in K$ the pode-size chart of Appendix~A
+at $(\eps_0,a',\zeta_0,0)$ and the reduction of paragraph~3 (graphon maximality of a bipodal
+graphon $\Rightarrow$ local maximality of the reduced entropy $\Rightarrow$
+$\mathcal F_1=\mathcal F_2=0$) apply to bipodal maximizers whose parameters $(\eps,a,b,c)$ and
+surplus $\vartheta>0$ are close to $(\eps_0,a',\zeta_0,0)$ and $0$.  The tube lemma over $K$ gives
+one neighbourhood of $(\eps_0,\zeta_0,0,0)$ in $(\eps,b,c,\vartheta)$ that works for all $a\in K$.
+
+\emph{Location of $a$.}  By \Cref{kb:lem:base-point}, $\mathcal F_1(\eps_0,a,\zeta_0,0)\ne0$ for
+$a\ne a_d(\eps_0)$; by continuity and the tube lemma over the compact
+$K\cap\{|a-a_d(\eps_0)|\ge r'\}$, $\mathcal F_1(\eps,a,b,c)\ne0$ there whenever $(\eps,b,c)$ is
+close to $(\eps_0,\zeta_0,0)$.
+
+\emph{Conclusion.}  Let $W$ be a maximizer at $(\eps,\eps^m+\vartheta)$ with $\eps$ near $\eps_0$
+and $\vartheta$ small.  By \Cref{kb:prop:bipodal} and a measure-preserving relabelling, $W$ is a
+relabelling of the standard bipodal graphon $W_2$ with parameters $(a,b,q,c')$, $c'=|J|$, which is
+itself a maximizer.  The two previous paragraphs give $\mathcal F_1=\mathcal F_2=0$ at
+$(\eps,a,b,c')$ and $|a-a_d(\eps_0)|<r'$; the edge constraint gives $q=Q(\eps,a,b,c')$; so the
+local uniqueness of the family yields $(a,b,c')=(a_*,b_*,c_*)(\eps,\vartheta)$, and $W$ is a
+relabelling of $\widehat W_{\eps,\vartheta}$.  A maximizer exists (\Cref{kb:lem:exists}), hence
+$s(\widehat W_{\eps,\vartheta})=\max s$ on $\mathcal C(\eps,\vartheta)$, and every $W$ with
+$s(W)=s(\widehat W_{\eps,\vartheta})$ is a maximizer and therefore a relabelling of
+$\widehat W_{\eps,\vartheta}$.  All smallness requirements are uniform for $\eps$ in a
+neighbourhood of $\eps_0$, which gives $U$ and $\Delta$. \qed
+
+\subsection{Status}
+\label{kb:sec:status}
+Every step above is formalized in Lean, in \texttt{UpperTailOptimizers/Bipodality/}; the
+theorem is \texttt{KRRSFamily.isOptimal} (\texttt{Bipodality/Optimal.lean}), and
+\texttt{krrs\_rectangle} (\texttt{KRRS/Main.lean}) is derived from it.  The only project axioms
+used are \texttt{generalized\_holder} and the four cut-topology axioms (through
+\Cref{kb:lem:exists}).  Correspondence:
+\Cref{kb:lem:correction}~\texttt{exists\_correction};
+\Cref{kb:lem:el}~\texttt{QualDirs.el\_linear}, \texttt{QualDirs.el};
+\Cref{kb:lem:pinned}~\texttt{Graphon.abs\_gammaW\_sub\_row\_le},
+\texttt{Graphon.abs\_rootedK\_sub\_row\_le};
+\Cref{kb:lem:two-rows}~\texttt{Graphon.abs\_gammaW\_sub\_gammaW\_crude},
+\texttt{Graphon.abs\_gammaW\_sub\_gammaW\_le};
+\Cref{kb:lem:beta0}~\texttt{beta\textsubscript{0}\_mul\_eq\_psiStar};
+\Cref{kb:prop:multipliers}~\texttt{KRRSFamily.exists\_qualDirs};
+\Cref{kb:lem:replacement}~\texttt{abs\_integral\_kProd\_rowRep\_sub\_le},
+\texttt{Graphon.abs\_gammaW\_rowReplace\_sub\_le};
+\Cref{kb:lem:row}~\texttt{QualDirs.row\_balance}, \texttt{QualDirs.ae\_balFun\_ge};
+\Cref{kb:lem:rows}~\texttt{Graphon.integral\_abs\_sub\_rowVal\_le},
+\texttt{Graphon.abs\_balFun\_sub\_phiFun\_le};
+\Cref{kb:lem:profile}~\texttt{phiFun\_limit\_eq}, \texttt{gapFun\_le\_sq};
+\Cref{kb:prop:pointwise}~\texttt{QualDirs.ae\_gapFun\_rowVal\_le};
+\Cref{kb:lem:contraction}~\texttt{Graphon.rowDiff\_le\_contraction};
+\Cref{kb:lem:kappa}~\texttt{contraction\_limit\_eq};
+\Cref{kb:prop:bipodal}~\texttt{QualDirs.bipodal\_of\_bounds},
+\texttt{KRRSFamily.exists\_bipodal};
+\S\ref{kb:sec:ident}~\texttt{eventually\_bipodal\_stationary},
+\texttt{eventually\_F1\_ne\_zero}, \texttt{KRRSFamily.isOptimal}.

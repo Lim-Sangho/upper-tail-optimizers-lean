@@ -1,0 +1,74 @@
+\section{Optimizers near the singular endpoint}
+\label{sec:singular-endpoint}
+
+In this section, we prove \Cref{thm:endpoint-optimizers} in a more precise form.
+Along the Lubetzky--Zhao boundary, the supporting line to the graph of
+$x\mapsto J_{\pc(r)}(x^{1/d})$ touches it at $x=r^d$ and
+$x=\sm(r)^d$.  At the exceptional density $r_*=(d-1)/d$, these two
+points coincide at $x=r_*^d$, so the nonexceptional reduction no longer
+applies.  Following the strategy in
+\Cref{sec:proof-strategy}, we construct an analytic rank-one bipodal family
+and establish its global optimality and uniqueness along the associated
+parameter curve approaching $(\pc(r_*),r_*)$.
+
+Fix a finite simple $d$-regular graph $H$ with $d\ge2$,
+and write $m:=|E(H)|$ and $v:=|V(H)|=2m/d$.  Set
+\begin{equation*}
+  r_*=\frac{d-1}{d},
+  \qquad
+  p_*=\pc(r_*)
+  =\frac{d-1}{(d-1)+\exp(d/(d-1))},
+  \qquad
+  u_*:=\sqrt{r_*},
+  \qquad
+  P_*:=(p_*,r_*).
+\end{equation*}
+We write $\lambda$ for Lebesgue measure on $[0,1]$, and also for its
+product measure on $[0,1]^2$.
+In this section, a kernel means a measurable real-valued function of two
+variables; unlike a graphon, it need not be symmetric or take values in
+$[0,1]$.
+For a measurable function $g:[0,1]\to\mathbb R$, write $g\otimes g$ for
+the rank-one kernel $(g\otimes g)(x,y):=g(x)g(y)$.
+The following theorem is the main result of this section.
+The remainder of this section is devoted to proving this theorem.
+
+\begin{theorem}[Optimality at the exceptional endpoint]
+\label{thm:singular-endpoint}
+There exist $h_0>0$ and real-analytic functions
+$p_h,r_h,u_h,\alpha_h$, defined for $|h|<h_0$, such that
+\[
+  p_h<\pc(r_h),
+  \qquad
+  (p_0,r_0)=P_*,
+  \qquad
+  u_0=u_*,
+  \qquad
+  \alpha_0=\frac12,
+\]
+and the following holds.  For every $h\in(0,h_0)$ and every
+measurable set $A_h\subset[0,1]$ with $\lambda(A_h)=\alpha_h$, set
+\[
+  s_h:=u_h-h,
+  \qquad
+  t_h:=u_h+h,
+  \qquad
+  f_h:=s_h\1_{A_h}+t_h\1_{A_h^c},
+  \qquad
+  W_h:=f_h\otimes f_h.
+\]
+Then, $W_h$ is a nonconstant rank-one bipodal graphon satisfying $t(H,W_h)=r_h^m$,
+and it is the unique minimizer, up to measure-preserving relabeling, of
+$I_{p_h}$ among all graphons $W$ satisfying $t(H,W)\ge r_h^m$.  Moreover,
+\begin{equation*}
+  I_{p_h}(W_h)-J_{p_h}(r_h)
+  =-\frac{d^3}{3}h^4+O_d(h^6).
+\end{equation*}
+\end{theorem}
+
+\input{sections/singular_stationary_family}
+\input{sections/singular_constant_comparison}
+\input{sections/singular_localization}
+\input{sections/singular_auxiliary_lagrangian}
+\input{sections/singular_graphon_comparison}
+\input{sections/singular_proof}

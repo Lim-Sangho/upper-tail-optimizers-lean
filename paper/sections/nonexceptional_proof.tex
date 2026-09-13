@@ -1,0 +1,138 @@
+\subsection{Proof of the nonexceptional-endpoint theorem}\label{sec:nonexceptional-proof}
+
+\begin{proof}[Proof of \Cref{thm:nonexceptional-endpoint}]
+Let $I$ and $\rho_0$ be as in
+\Cref{cor:scalar-reduction}.  After shrinking $I$ around $r_0$, let
+$G$, $\overline\delta$, $a_0$, and $C_2$ be supplied by
+\Cref{thm:positive-second-variation}.  Choose
+\[
+  0<\delta_0<
+  \min\left\{\rho_0,\overline\delta,\frac{a_0}{2C_2},\inf_{r\in I}r\right\}.
+\]
+Then, uniformly for $r\in I$ and $|\delta|<\delta_0$,
+\[
+  \partial_\delta^2G(r,\delta)
+  \ge A_H(r)-C_2|\delta|\ge\frac{a_0}{2}>0.
+\]
+Apply \Cref{cor:scalar-reduction} with $\rho=\delta_0$ to choose $\eta>0$.
+For $r\in I$ and $\pc(r)-\eta<p<\pc(r)$,
+it reduces the graphon problem to choosing
+$\delta=r-e(W)\in(0,\delta_0)$.
+The relative entropy identity \eqref{eq:relative-entropy-identity},
+applied to $B_{r-\delta,r}$ and the constant graphon $r$, gives
+\[
+  I_{p,r}(r-\delta)-J_p(r)
+  =G(r,\delta)-\lambda(p,r)\delta.
+\]
+Indeed, changing $p$ from $\pc(r)$ adds an affine function of the edge
+density, and the difference of the two edge densities is $-\delta$.
+Consequently,
+\begin{equation}\label{eq:edge-deficit-minimization}
+  \Phi_H(p,r)
+  =J_p(r)+\min_{0<\delta<\delta_0}
+    \{G(r,\delta)-\lambda(p,r)\delta\}.
+\end{equation}
+The correspondence in \Cref{cor:scalar-reduction} identifies its minimizers
+with graphon optimizers up to relabeling.
+
+To find the minimizing deficit, consider the critical-point equation
+\[
+  \Psi(p,r,\delta):=\partial_\delta G(r,\delta)-\lambda(p,r)=0.
+\]
+This function is analytic near $(\pc(r_0),r_0,0)$, where
+\[
+  \Psi(\pc(r_0),r_0,0)=0,
+  \qquad
+  \partial_\delta\Psi(\pc(r_0),r_0,0)=A_H(r_0)>0.
+\]
+The analytic implicit function theorem gives an analytic
+solution $\delta_*(p,r)\in(-\delta_0,\delta_0)$ near $(\pc(r_0),r_0)$.
+Shrink $I$ to $(r_0-\rho,r_0+\rho)$ and decrease $\eta>0$ if necessary
+so that
+\[
+  U=\{(p,r):|p-\pc(r)|<\eta,\ |r-r_0|<\rho\}
+\]
+has compact closure in this analytic domain and satisfies $0<p<r<1$.
+Since $\partial_\delta G(r,0)=\lambda(\pc(r),r)=0$, uniqueness gives
+\[
+  \delta_*(\pc(r),r)=0,
+  \qquad
+  \partial_\delta G(r,\delta_*(p,r))=\lambda(p,r).
+\]
+
+For $(p,r)\in U$ with $p<\pc(r)$, the mean value theorem yields
+\[
+  \lambda(p,r)
+  =\partial_\delta^2G(r,\theta\delta_*)\delta_*
+  \qquad (\text{for some }\theta\in(0,1)).
+\]
+The positive lower bound on the second derivative shows that
+\[
+  0<\delta_*(p,r)<\delta_0,
+  \qquad
+  \delta_*(p,r)\le\frac{2}{a_0}\lambda(p,r).
+\]
+Strict convexity now makes $\delta_*$ the unique minimizer in
+\eqref{eq:edge-deficit-minimization}.  Moreover,
+\eqref{eq:boundary-excess-curvature} gives
+$\lambda(p,r)=A_H(r)\delta_*+O_{H,U}(\delta_*^2)$, uniformly on this region.
+Since $A_H(r)\ge a_0$, it follows that
+\begin{equation}\label{eq:optimal-deficit-expansion}
+  \delta_*(p,r)
+  =\frac{\lambda(p,r)}{A_H(r)}+O_{H,U}(\lambda(p,r)^2).
+\end{equation}
+
+By \Cref{cor:scalar-reduction}, the unique graphon optimizer is
+$W_{p,r}:=B_{r-\delta_*,r}$ up to relabeling.  It is bipodal and
+satisfies
+\[
+  e(W_{p,r})=r-\delta_*,
+  \qquad
+  t(H,W_{p,r})=r^m.
+\]
+It is nonconstant, since a constant graphon with $H$-density $r^m$ has
+edge density $r$, whereas $\delta_*>0$.
+Write $\widetilde c$ and $\widetilde q_{ij}$ for the single analytic
+KRR--S parameter map chosen in \Cref{lem:fixed-density-bipodality}, and set
+\[
+  \eps(p,r):=r-\delta_*(p,r),
+  \qquad
+  \vartheta(p,r):=r^m-\eps(p,r)^m.
+\]
+The bipodal parameters are
+\[
+  c(p,r):=\widetilde c(\eps(p,r),\vartheta(p,r)),
+  \qquad
+  q_{ij}(p,r):=\widetilde q_{ij}(\eps(p,r),\vartheta(p,r))
+  \quad((i,j)\in\{(1,1),(1,2),(2,2)\}).
+\]
+They are analytic in $(p,r)$, as are the edge density $r-\delta_*$ and
+the minimum cost $J_p(r)+G(r,\delta_*)-\lambda(p,r)\delta_*$.
+
+After decreasing $\eta$ if necessary, the uniform block-size bound in
+\Cref{thm:krrs-analytic-extension} gives
+\[
+  c(p,r)=O_{H,U}(\vartheta(p,r))
+  =O_{H,U}(\delta_*(p,r))
+  =O_{H,U}(\lambda(p,r)).
+\]
+Here $c(p,r)>0$: otherwise the graphon would be constant with value
+$\eps(p,r)<r$, contradicting its $H$-density $r^m$.
+The function $\lambda$ vanishes at $p=\pc(r)$ and has bounded $p$-derivative
+on $\overline U$, so decreasing $\eta$ makes $c(p,r)<1/2$ uniformly.
+Thus the first block $A_{p,r}:=[0,c(p,r)]$ is the smaller one, and $c(p,r)\to0$ as
+$p\uparrow\pc(r)$ for every fixed $r\in I$.
+
+Finally, \eqref{eq:optimal-deficit-expansion} gives the edge-density
+expansion in \eqref{eq:optimizer-expansion}.  For the cost, substitute it
+into \eqref{eq:edge-deficit-minimization} and use
+\eqref{eq:boundary-excess-expansion}:
+\[
+  \Phi_H(p,r)
+  =J_p(r)+\frac12A_H(r)\delta_*^2-\lambda(p,r)\delta_*
+    +O_{H,U}(\delta_*^3)
+  =J_p(r)-\frac{\lambda(p,r)^2}{2A_H(r)}
+    +O_{H,U}(\lambda(p,r)^3).
+\]
+The remainders are uniform on the symmetry-breaking part of $U$.
+\end{proof}

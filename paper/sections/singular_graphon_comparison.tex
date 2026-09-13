@@ -1,0 +1,226 @@
+\subsection{The arbitrary-graphon comparison}
+\label{sec:graphon-comparison}
+
+We now restore the remainder $E$ and convert the lower bound for the auxiliary
+Lagrangian difference into the corresponding bound for the Lagrangian
+difference between the actual graphons $W$ and $W_h$.
+By \Cref{lem:localization-rank-one}, every feasible graphon satisfying
+$I_{p_h}(W)\le I_{p_h}(W_h)$ can be written as $W=f\otimes f+E$, while
+\Cref{lem:auxiliary-lagrangian-bound} controls the auxiliary Lagrangian
+difference between $f$ and $f_h$.  The next lemma estimates the contribution
+of $E$ and gives the required full-graphon bound.
+
+\begin{lemma}[Lower bound for the full-graphon Lagrangian difference]
+\label{lem:graphon-lagrangian-bound}
+There exist $\rho_0>0$ and $C_{d,m}\ge1$ such that for
+every $0<\rho<\rho_0$, one can choose $C_{d,\rho}\ge1$ and $h_\rho>0$ with
+the following property.  Let $0<h<h_\rho$, and let $W$ satisfy the hypotheses of
+\Cref{lem:localization-rank-one}.  Write $W=f\otimes f+E$ for the
+decomposition provided there, and let $\nu$ be the distribution of the
+values of $f$.  Then,
+\begin{equation}\label{eq:graphon-lagrangian-bound}
+\begin{aligned}
+  &\left[I_{p_h}(W)-\mu_h\{t(H,W)-r_h^m\}\right]
+   -\left[I_{p_h}(W_h)-\mu_h\{t(H,W_h)-r_h^m\}\right]\\
+  &\qquad\qquad\qquad\qquad\qquad\qquad\qquad=I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}\\
+  &\qquad\qquad\qquad\qquad\qquad\qquad\qquad
+  \ge C_{d,\rho}^{-1}\!\left[A_{h,\rho}(\nu)+\nu(\mathcal T_\rho)+\|E\|_2^2\right]
+  -C_{d,m}\Delta_h(\nu)^2.
+\end{aligned}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Put $q:=q(f)=m_d(\nu)$ and
+$\Omega_\rho:=\{x:f(x)\in\mathcal N_\rho\}$.  Then
+$\lambda(\Omega_\rho^c)=\nu(\mathcal T_\rho)$.
+Combining the localization results in \Cref{lem:localization-rank-one}
+and \eqref{eq:factor-tail-mass}, we may use throughout the proof
+\begin{equation}\label{eq:graphon-comparison-estimates}
+  \begin{gathered}
+    \nu(\mathcal T_\rho)\le C_{d,\rho}h^4,
+    \qquad |\Delta_h(\nu)|\le C_dh^2,
+    \qquad \|E\|_2\le C_dh,
+    \qquad \|f-u_*\|_4\le C_dh,\\
+    |t(H,W)-q^v|\le C_{d,m}\|E\|_2^3,
+    \qquad \lambda(\Omega_\rho)\ge\frac12,
+    \qquad 0\le f\le2,
+    \qquad \|E\|_\infty\le5.
+  \end{gathered}
+\end{equation}
+The bound on $\lambda(\Omega_\rho)$ follows from
+$\lambda(\Omega_\rho^c)=\nu(\mathcal T_\rho)$, while the last bound uses
+$0\le W\le1$ and $0\le f\le2$.
+Since
+\[
+  \mathcal J_h(\nu)
+  =\iint\widetilde J_{p_h}(f(x)f(y))\,dx\,dy,
+  \qquad
+  \mathcal J_h(\nu_h)=I_{p_h}(W_h),
+\]
+and $t(H,W_h)=q_h^v=r_h^m$, the full-graphon Lagrangian difference has the
+exact decomposition
+\begin{equation*}
+\begin{aligned}
+  &I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}\\
+  &\quad=\bigl[\mathcal L_h(\nu)-\mathcal L_h(\nu_h)\bigr]
+  +\iint\{J_{p_h}(W(x,y))-\widetilde J_{p_h}(f(x)f(y))\}\,dx\,dy\\
+  &\qquad-\mu_h\{t(H,W)-q^v\}.
+\end{aligned}
+\end{equation*}
+The first term is controlled by \Cref{lem:auxiliary-lagrangian-bound}, and
+the last by the homomorphism-density estimate in
+\eqref{eq:rank-one-reduction-bounds}.  It remains to bound the middle
+double integral over its central, mixed, and tail--tail parts.
+
+We first consider the central square $\Omega_\rho^2$.  Decrease $\rho_0$ so
+that $f(x)f(y)$ lies in a fixed closed subinterval of $(0,1)$ whenever
+$x,y\in\Omega_\rho$.  Put
+\[
+  \|E\|_{2,G}
+  :=\left( \iint_G E(x,y)^2\,dx\,dy \right)^{1/2}
+  \qquad (G \subset[0,1]^2).
+\]
+On $\Omega_\rho^2$, the identity $\mathcal M_h'(xy)=J_{p_h}'(xy)-\gamma_h(xy)^{d-1}$ yields
+the decomposition of the integrand:
+\begin{equation*}
+  J_{p_h}(W)-J_{p_h}(f\otimes f)
+  = \bigl[ J_{p_h}(W)-J_{p_h}(f\otimes f) -(J_{p_h})'(f\otimes f)E \bigr]
+  +\mathcal M_h'(f\otimes f)E
+      +\gamma_h(f\otimes f)^{d-1}E.
+\end{equation*}
+In this step, we bound the integrals of these three terms on $\Omega_\rho^2$ separately.
+Since $J_{p_h}''(z)=1/(z(1-z))\ge4$, strong convexity gives the first bound
+\[
+  \iint_{\Omega_\rho^2}
+  \{J_{p_h}(W)-J_{p_h}(f\otimes f)-(J_{p_h})'(f\otimes f)E\}
+  \ge2\|E\|_{2,\Omega_\rho^2}^2.
+\]
+For the second bound, we divide $\mathcal M_h'$ by $Q_h$ in each variable and write
+\[
+  \mathcal M_h'(xy)=Q_h(x)U_h(x,y)+Q_h(y)V_h(x,y)+C_h(x,y),
+\]
+where $C_h$ has degree at most one in each variable.  The factorization
+\eqref{eq:mh-derivative-factorization} then gives
+$\mathcal M_h'(xy)=0$ for every $(x,y)\in\{s_h,t_h\}^2$.  Since
+$Q_h(s_h)=Q_h(t_h)=0$, the bilinear remainder $C_h$ must vanish identically.
+At $h=0$, $\mathcal M_0'(xy)$ is an analytic multiple of $(xy-r_*)^3$ and
+$Q_0(z)=(z-u_*)^2$, so $U_0$ and $V_0$ vanish at $(u_*,u_*)$.  By
+joint continuity, after decreasing $\rho_0$ and $h_\rho$, we may ensure that
+$|U_h|$ and $|V_h|$ are at most $\sqrt{a/4}$ on $\mathcal N_\rho^2$, and
+\[
+  |\mathcal M_h'(xy)|
+  \le\sqrt{\frac a4}
+    \{|Q_h(x)|+|Q_h(y)|\}
+  \qquad(x,y\in\mathcal N_\rho,\ 0<h<h_\rho).
+\]
+Then, $uv \le (1/4)u^2+v^2$ and
+$(u+v)^2\le 2(u^2+v^2)$ give
+\begin{align*}
+  \left|\iint_{\Omega_\rho^2} \{\mathcal M_h'(f(x)f(y))\} E(x,y)\,dx\,dy\right|
+  &\le \frac{1}{4} \iint_{\Omega_\rho^2} \frac{a}{4}\{|Q_h(f(x))|+|Q_h(f(y))|\}^2 \,dx\,dy + \|E\|_{2,\Omega_\rho^2}^2 \\
+  &\le \frac{a}{16} \iint_{\Omega_\rho^2} 2|Q_h(f(x))|^2+2|Q_h(f(y))|^2 \,dx\,dy + \|E\|_{2,\Omega_\rho^2}^2 \\
+  &\le \frac a4 A_{h,\rho}(\nu) + \|E\|_{2,\Omega_\rho^2}^2.
+\end{align*}
+For the third bound, the orthogonality in \eqref{eq:rank-one-orthogonality} moves
+the remaining linear term to the tail--tail square:
+\[
+  \left| \iint_{\Omega_\rho^2}\gamma_h(f(x)f(y))^{d-1}E(x,y)\,dx\,dy \right|
+  = \left| \iint_{(\Omega_\rho^c)^2}\gamma_h(f(x)f(y))^{d-1}E(x,y)\,dx\,dy \right|
+  \le C_d \nu(\mathcal T_\rho)^2.
+\]
+Combining the three bounds gives
+\begin{equation*}
+  \iint_{\Omega_\rho^2} \{J_{p_h}(W)-J_{p_h}(f\otimes f)\}
+  \ge \|E\|_{2,\Omega_\rho^2}^2 -\frac a4 A_{h,\rho}(\nu)-C_d\nu(\mathcal T_\rho)^2.
+\end{equation*}
+
+We next consider the mixed rectangles.  For almost every $x$, the
+orthogonality in
+\eqref{eq:rank-one-orthogonality}, together with
+\eqref{eq:graphon-comparison-estimates}, gives
+\begin{equation*}
+  u_*^{d-1}\left|\int_{\Omega_\rho}E(x,y)\,dy\right|
+  \le\int_{\Omega_\rho}
+    |f(y)^{d-1}-u_*^{d-1}|\,|E(x,y)|\,dy
+  +\int_{\Omega_\rho^c}f(y)^{d-1}|E(x,y)|\,dy
+  \le C_{d,\rho}h.
+\end{equation*}
+Consequently, if $\overline W_x:= (\int_{\Omega_\rho}W(x,y)\,dy)/\lambda(\Omega_\rho)$,
+then
+\begin{equation*}
+  |\overline W_x-u_*f(x)|
+  \le |f(x)|\left|
+    \frac1{\lambda(\Omega_\rho)}\int_{\Omega_\rho} (f(y)-u_*)\,dy\right|
+    +\frac1{\lambda(\Omega_\rho)}\left|\int_{\Omega_\rho}E(x,y)\,dy\right|
+  \le C_{d,\rho}h.
+\end{equation*}
+Since $\overline W_x\in[0,1]$, we have
+$J_{p_h}(\overline W_x)=\widetilde J_{p_h}(\overline W_x)$.
+By Jensen's and H\"older's inequalities, with
+\eqref{eq:continuation-kernel-bounds} and
+\eqref{eq:graphon-comparison-estimates},
+\begin{equation*}
+\begin{aligned}
+&\int_{\Omega_\rho}
+  \{J_{p_h}(W(x,y))-\widetilde J_{p_h}(f(x)f(y))\}\,dy\\
+&\quad\ge \lambda(\Omega_\rho) \left\{J_{p_h}(\overline W_x)-\widetilde J_{p_h}(u_*f(x))\right\}
+-\int_{\Omega_\rho} \left\{\widetilde J_{p_h}(f(x)f(y))-\widetilde J_{p_h}(u_*f(x))\right\}\,dy\\
+&\quad\ge-C_d |\overline W_x - u_*f(x)|^{1/2} -C_d\int_{\Omega_\rho}|f(y)-u_*|^{1/2}\,dy \ge-C_{d,\rho}h^{1/2} \ge -\frac{b_\rho}{16}.
+\end{aligned}
+\end{equation*}
+Integrating this bound over $x\in\Omega_\rho^c$ yields
+\begin{equation*}
+\begin{aligned}
+  2\iint_{\Omega_\rho^c\times \Omega_\rho}
+  \{J_{p_h}(W)-\widetilde J_{p_h}(f\otimes f)\}
+  \ge -\frac{b_\rho}{8}\nu(\mathcal T_\rho).
+\end{aligned}
+\end{equation*}
+
+It remains to consider the tail--tail square.  The uniform bound in
+\eqref{eq:continuation-kernel-bounds} gives
+\[
+  \iint_{(\Omega_\rho^c)^2}
+  \{J_{p_h}(W)-\widetilde J_{p_h}(f\otimes f)\}
+  \ge-C_d\nu(\mathcal T_\rho)^2.
+\]
+
+Combining all bounds with \eqref{eq:auxiliary-lagrangian-bound}
+and $|t(H,W)-q^v|\le C_{d,m}\|E\|_2^3$ gives
+\begin{equation*}
+\begin{aligned}
+  I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}
+  &\ge\frac a4 A_{h,\rho}(\nu)
+    +\frac{3b_\rho}{8}\nu(\mathcal T_\rho)
+    +\|E\|_{2,\Omega_\rho^2}^2\\
+  &\quad-C_{d,m}\Delta_h(\nu)^2
+    -C_d\nu(\mathcal T_\rho)^2
+    -C_{d,m}\|E\|_2^3.
+\end{aligned}
+\end{equation*}
+Since $\|E\|_\infty\le5$ and
+$\lambda([0,1]^2\setminus\Omega_\rho^2)\le2\nu(\mathcal T_\rho)$, choose
+$C_{d,\rho}\ge1$ so that $50C_{d,\rho}^{-1}\le b_\rho/16$.  Then
+\begin{equation*}
+  \|E\|_{2,\Omega_\rho^2}^2
+  \ge C_{d,\rho}^{-1}\|E\|_{2,\Omega_\rho^2}^2
+  =C_{d,\rho}^{-1}\left(
+    \|E\|_2^2-\|E\|_{2,[0,1]^2\setminus\Omega_\rho^2}^2\right)
+  \ge C_{d,\rho}^{-1}\|E\|_2^2
+    -50C_{d,\rho}^{-1}\nu(\mathcal T_\rho)
+  \ge C_{d,\rho}^{-1}\|E\|_2^2
+    -\frac{b_\rho}{16}\nu(\mathcal T_\rho).
+\end{equation*}
+By \eqref{eq:graphon-comparison-estimates}, we may also decrease $h_\rho$ so that
+$C_d\nu(\mathcal T_\rho)\le b_\rho/16$ and $C_{d,m}\|E\|_2\le C_{d,\rho}^{-1}/2$.
+Consequently,
+\begin{equation*}
+  I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}
+  \ge\frac a4 A_{h,\rho}(\nu)
+  +\frac{b_\rho}{4}\nu(\mathcal T_\rho)
+  +\frac{1}{2}C_{d,\rho}^{-1}\|E\|_2^2
+  -C_{d,m}\Delta_h(\nu)^2.
+\end{equation*}
+Increasing $C_{d,\rho}$ if necessary proves \eqref{eq:graphon-lagrangian-bound}.
+\end{proof}

@@ -7,16 +7,16 @@ Fix $d\ge2$, and write
 \]
 For $p\in(0,1)$, define
 \[
-  \varphi_{p,d}(x)=J_p(x^{1/d}),\qquad 0\le x\le1.
+  \varphi_{p,d}(x)=J_p(x^{1/d})\qquad (0\le x\le1).
 \]
 Recall that the result of Lubetzky and Zhao~\cite{lubetzky2015large} states
-that the constant graphon $W\equiv r$ is the unique minimizer
+that when $H$ is $d$-regular, the constant graphon $W\equiv r$ is the unique minimizer
 of~\eqref{eq:graphon-variational-problem} if and only if the point
 $(r^d, J_p(r))$ lies on the convex minorant\footnote{For a continuous
 function $f$ on a compact interval $I$, the convex minorant is the largest
 convex function $g:I\to\mathbb R$ such that $g(x)\le f(x)$ for every
 $x\in I$.} of $\varphi_{p,d}$.
-In this section, we analyse in detail the behaviour of the function $\varphi_{p,d}$ and of its convex minorant; this is the key to the proof of \Cref{thm:nonexceptional-optimizers}.
+In this section, we analyze in detail the behavior of the function $\varphi_{p,d}$ and of its convex minorant; this is the key to the proof of \Cref{thm:nonexceptional-optimizers}.
 The main objective of this section is to prove the following.
 \begin{theorem}[Scalar Lubetzky--Zhao boundary]\label{thm:scalar-lz-boundary}
     There exist analytic functions
@@ -58,24 +58,24 @@ Appendix~\ref{app:lz-scalar-geometry}.
 
 For $p\in(0,1)$ set
 \[
-  h_{p,d}(u):=uJ_p''(u)-(d-1)J_p'(u),
-  \qquad 0<u<1.
+  h_{p,d}(z):=zJ_p''(z)-(d-1)J_p'(z)
+  \qquad (0<z<1).
 \]
 
 \begin{lemma}[Convexity defect]\label{lem:convexity-defect}
 For every $p\in(0,1)$,
 \[
-  h_{p,d}'(u)=\frac{d(u-r_*)}{u(1-u)^2}
+  h_{p,d}'(z)=\frac{d(z-r_*)}{z(1-z)^2}
   \qquad\text{and}\qquad
   h_{p,d}(r_*)=d-(d-1)\log\frac{(d-1)(1-p)}{p}.
 \]
 Thus, $h_{p,d}$ is strictly decreasing on $(0,r_*)$, strictly increasing on
 $(r_*,1)$, and has its unique minimum at $r_*$.  Moreover, for
-$x\in(0,1)$ and $u=x^{1/d}$,
+$x\in(0,1)$ and $z=x^{1/d}$,
 \[
-  \varphi_{p,d}''(x)=\frac{h_{p,d}(u)}{d^2u^{2d-1}},
+  \varphi_{p,d}''(x)=\frac{h_{p,d}(z)}{d^2z^{2d-1}},
 \]
-so $h_{p,d}(u)$ and $\varphi_{p,d}''(x)$ have the same sign.  If $p\ge p_*$,
+so $h_{p,d}(z)$ and $\varphi_{p,d}''(x)$ have the same sign.  If $p\ge p_*$,
 then $h_{p,d}\ge0$ and $\varphi_{p,d}$ is convex on $[0,1]$.  If $p<p_*$,
 then $h_{p,d}$ has exactly two zeros
 \[
@@ -174,9 +174,9 @@ increasing order, satisfy
 The contact points vary continuously with $r$ by
 Lemma~\ref{lem:contact-points}.  The zeros $u_-(p)$ and $u_+(p)$ also vary
 continuously in $p$.  To see this, apply the implicit function theorem to
-$h_{p,d}(u)=0$, noting that
+$h_{p,d}(z)=0$, noting that
 \[
-  \partial_u h_{p,d}(u)=\frac{d(u-r_*)}{u(1-u)^2}
+  \partial_z h_{p,d}(z)=\frac{d(z-r_*)}{z(1-z)^2}
 \]
 is nonzero at both zeros.  Since $p_r=\pc(r)$ is continuous, all the quantities
 above vary continuously with $r$.  Hence, the positive gaps
@@ -227,9 +227,9 @@ we get
   g_r(x)\ge \frac{m_K}{2}\,
   \dist(x,\{r^d,\sm(r)^d\})^2
 \]
-inside the two contact neighbourhoods.
+inside the two contact neighborhoods.
 
-It remains to handle the complement of these neighbourhoods.  On the compact set
+It remains to handle the complement of these neighborhoods.  On the compact set
 \[
   R_K:=\{(r,x): r\in K,\ x\in[0,1],\
   \dist(x,\{r^d,\sm(r)^d\})\ge\eta\},
@@ -250,23 +250,23 @@ gives (M5).
 
 
 \emph{Proof of (M2) away from $r_*$.}
-Fix $r\in(0,1)\setminus\{r_*\}$ and put $p_0=\pc(r)$.
+Fix $r\in(0,1)\setminus\{r_*\}$.
 If $p\ge p_*$, then
 $\varphi_{p,d}$ is convex by Lemma~\ref{lem:convexity-defect}, so every point
 of its graph, in particular $(r^d,J_p(r))$, lies on its convex minorant.
-Assume now that $p<p_*$.  If $r<r_*$, then $r=u_a(p_0)$.  If
-$p_0\le p<p_*$, then $u_a(p)\ge u_a(p_0)=r$, so
+Assume now that $p<p_*$.  If $r<r_*$, then $r=u_a(\pc(r))$.  If
+$\pc(r)\le p<p_*$, then $u_a(p)\ge u_a(\pc(r))=r$, so
 $r^d\le x_a(p)$.  Hence, $r^d$ lies outside the affine part of the convex
 minorant, on the left side where the convex minorant agrees with
 $\varphi_{p,d}$.  Thus, $(r^d,J_p(r))$ lies on the convex minorant.  If
-$p<p_0$, then $u_a(p)<r<r_*<u_b(p)$, so $r^d$ lies strictly between the two
+$p<\pc(r)$, then $u_a(p)<r<r_*<u_b(p)$, so $r^d$ lies strictly between the two
 contact points $x_a(p)$ and $x_b(p)$.  On this open interval the graph of
 $\varphi_{p,d}$ lies strictly above the affine part of the convex minorant.
 Thus, $(r^d,J_p(r))$ does not lie on the convex minorant.
 
-If $r>r_*$, then $r=u_b(p_0)$.  If $p_0\le p<p_*$, then
-$u_b(p)\le u_b(p_0)=r$, so $r^d\ge x_b(p)$ and the convex minorant agrees with
-$\varphi_{p,d}$ at $r^d$.  If $p<p_0$, then
+If $r>r_*$, then $r=u_b(\pc(r))$.  If $\pc(r)\le p<p_*$, then
+$u_b(p)\le u_b(\pc(r))=r$, so $r^d\ge x_b(p)$ and the convex minorant agrees with
+$\varphi_{p,d}$ at $r^d$.  If $p<\pc(r)$, then
 $u_a(p)<r_*<r<u_b(p)$, so $r^d$ lies strictly between the two contact points and
 again the graph lies strictly above the affine part of the convex minorant.
 This proves the stated dichotomy for all $p\in(0,1)$, and hence $p=\pc(r)$ is
@@ -278,7 +278,7 @@ By Lemma~\ref{lem:contact-point-limits},
   u_a(p)\to r_*,
   \qquad
   u_b(p)\to r_*
-  \qquad\text{as }p\uparrow p_*.
+  \qquad (p\uparrow p_*).
 \]
 Therefore the two inverse functions both satisfy $\pc(r)\to p_*$ as
 $r\to r_*$ from their respective sides.  Moreover,

@@ -90,7 +90,7 @@ the saturated moment `∫∫W_h^d = r_h^d`, the composite `𝒱_{R,h}/h²` of `t
 and `graphon_edge_gap`.  This is exactly the block that `family_localization` performs inline;
 it is isolated here because the moment display needs the *same* block with a different final
 step. -/
-private theorem ldSharp_family_rhs (hd : 2 ≤ d) (B : KKTFamily d) :
+theorem ldSharp_family_rhs (hd : 2 ≤ d) (B : KKTFamily d) :
     ∃ Cc : ℝ, 0 < Cc ∧ (∀ X : Graphon, RdInt d X ^ 2 ≤ Cc * GamInt d X) ∧
       ∃ N : ℝ, 0 < N ∧ ∃ δ : ℝ, 0 < δ ∧
         ∀ (h : ℝ) (hh : |h| < B.h₀), 0 < h → h < δ →

@@ -1,0 +1,420 @@
+\subsection{The rank-one stationary family near the exceptional endpoint}
+\label{sec:rank-one-stationary-family}
+
+We now construct an analytic family of rank-one bipodal
+candidates.  The numerical exploration in \Cref{fig:bipodal-parameter-maps}
+suggests that rank-one graphons describe the optimizers along a curve of
+parameter pairs $(p,r)$ approaching $P_*$.  Motivated by this observation,
+we seek rank-one solutions of the full graphon stationarity equations,
+together with the block-proportion stationarity condition.
+At this stage, the resulting family consists only of stationary
+rank-one bipodal candidates; the subsequent arguments establish their optimality and
+uniqueness along the corresponding parameter curve.
+
+Throughout this subsection, graphons are assumed to take values in a compact
+subinterval of $(0,1)$.  For a rank-one graphon $W=f\otimes f$ with
+measurable $f:[0,1]\to[0,1]$, this requires that, for some $\eta>0$,
+\[
+  \eta\le f\le1-\eta
+  \qquad\text{a.e.}
+\]
+This interiority condition is used only to construct the candidate family in
+this subsection.  It ensures that $W+\varepsilon U$ remains a graphon for every
+bounded symmetric function $U$ and all sufficiently small $|\varepsilon|$, so
+that stationarity can be tested in every bounded direction.  The subsequent
+optimality and uniqueness arguments impose no such restriction on competing
+graphons.  We say that $W$ is \emph{stationary} for
+$I_p-\mu t(H,\,\cdot\,)$ if
+\begin{equation}\label{eq:graphon-stationarity}
+  \left.\frac{d}{d\varepsilon}\right|_{\varepsilon=0}
+  \left[
+    I_p(W+\varepsilon U)
+    -\mu t(H,W+\varepsilon U)
+  \right]=0
+\end{equation}
+for every such $U$.
+For a rank-one graphon $W=f\otimes f$, we say that $W$ \emph{satisfies the
+KKT conditions} at $(p,r)$ with multiplier $\mu$, if \eqref{eq:graphon-stationarity}
+holds with $\mu\ge0$ and $t(H,W)=r^m$.  This is the graphon
+analog of the usual first-order Karush--Kuhn--Tucker condition for
+constrained finite-dimensional optimization.
+
+To formulate the separate first-order condition for block proportion,
+for $\alpha\in(0,1)$ and $s,t\in(0,1)$, set
+\[
+  f_{\alpha,s,t}
+  :=s\1_{[0,\alpha]}+t\1_{(\alpha,1]},
+  \qquad
+  W_{\alpha,s,t}:=f_{\alpha,s,t}\otimes f_{\alpha,s,t}.
+\]
+Changing $\alpha$ moves the boundary between the two vertex classes.  Unlike
+the perturbations $W_{\alpha,s,t}+\varepsilon U$ used in graphon stationarity,
+replacing $\alpha$ by $\alpha+\varepsilon$, when $s\ne t$, changes the graphon
+by an amount bounded away from zero on a set whose measure tends to zero.
+Hence this variation is not small in $L^\infty$ and is not covered by graphon
+stationarity.  We therefore impose the separate condition
+\begin{equation}\label{eq:block-stationarity}
+  \left.\frac{d}{d\beta}\right|_{\beta=\alpha}
+  \left[
+    I_p(W_{\beta,s,t})-\mu t(H,W_{\beta,s,t})
+  \right]=0,
+\end{equation}
+obtained by varying the block proportion while keeping $s$ and $t$ fixed.
+
+The following lemma makes a structural reduction: it shows that bipodality is
+forced by the KKT conditions within the interior rank-one class.  The
+construction lemma later begins by seeking a bipodal family; this structural
+result justifies that choice and removes the need to assume bipodality in
+the accompanying local uniqueness assertion.  The proof reduces the stationarity condition
+\eqref{eq:graphon-stationarity} to a scalar equation and bounds the
+number of its roots.  For this reduction, define the \emph{$d$-th moment} of
+$f$ by
+\[
+  q(f):=\int_0^1 f(x)^d\,dx.
+\]
+Note that any rank-one graphon $W=f\otimes f$ satisfies
+$t(H,W)=q(f)^v$ depending only on $H$ through $d$ and $v$:
+\[
+  t(H,f\otimes f)
+  =\int_{[0,1]^v}\prod_{(i,j)\in E(H)}f(x_i)f(x_j)\,dx_1\cdots dx_v
+  =\int_{[0,1]^v}\prod_{i=1}^v f(x_i)^{d}\,dx_1\cdots dx_v
+  =q(f)^v.
+\]
+
+\begin{lemma}[Bipodality of stationary rank-one graphons]
+\label{lem:stationary-rank-one-bipodality}
+Let $p,r\in(0,1)$, let $\mu\ge0$, and let
+$f:[0,1]\to[0,1]$ be measurable.  Suppose that, for some $\eta>0$,
+\[
+  \eta\le f\le1-\eta
+  \qquad\text{a.e.},
+\]
+and that $f\otimes f$ satisfies the KKT conditions at $(p,r)$ with multiplier
+$\mu$.  If $f$ is not a.e.\ constant, then there exist $\alpha\in(0,1)$ and
+$0<s<t<1$ such that, after a measure-preserving relabeling,
+\[
+  f=f_{\alpha,s,t}
+  \qquad\text{a.e.}
+\]
+\end{lemma}
+
+\begin{proof}
+Set $\gamma:=\mu m q(f)^{v-2}$ and $F_{p,\gamma}(z):=J_p'(z)-\gamma z^{d-1}$.
+We first claim that
+\begin{equation}
+\label{eq:rank-one-kkt}
+  F_{p,\gamma}(f(x)f(y))=0
+  \quad\text{for a.e. }(x,y)\in[0,1]^2.
+\end{equation}
+Let $U$ be any bounded symmetric function on $[0,1]^2$ and set
+$W_\varepsilon=f\otimes f+\varepsilon U$.  The variation of $I_p$ is
+\[
+  \left.\frac{d}{d\varepsilon}I_p(W_\varepsilon)\right|_{\varepsilon=0}
+  =\iint J_p'(f(x)f(y))U(x,y)\,dx\,dy.
+\]
+Since $H$ is $d$-regular, differentiating one of the $m$ edge factors in
+$t(H,W_\varepsilon)$ gives
+\[
+  \left.\frac{d}{d\varepsilon}t(H,W_\varepsilon)\right|_{\varepsilon=0}
+  =\iint m q(f)^{v-2}f(x)^{d-1}f(y)^{d-1}
+  U(x,y)\,dx\,dy.
+\]
+Stationarity for every $U$ therefore yields
+\[
+  J_p'(f(x)f(y))
+  =\mu m q(f)^{v-2}f(x)^{d-1}f(y)^{d-1}
+  =\gamma\bigl(f(x)f(y)\bigr)^{d-1}
+\]
+for almost every $(x,y)$, proving
+\eqref{eq:rank-one-kkt}.
+
+We next show that $F_{p,\gamma}(z)=0$ has at most three
+solutions for $z\in(0,1)$.  Since $J_p''(z)=1/(z(1-z))$,
+\[
+  F_{p,\gamma}'(z)
+  =\frac1{z(1-z)}-\gamma(d-1)z^{d-2}.
+\]
+If $\gamma\le0$, then $F_{p,\gamma}'>0$ on $(0,1)$, so
+$F_{p,\gamma}$ has at most one zero.  If $\gamma>0$, the critical-point
+equation is
+\[
+  z^{d-1}(1-z)=\frac1{(d-1)\gamma}.
+\]
+The function $z\mapsto z^{d-1}(1-z)$ is strictly increasing on
+$(0,(d-1)/d)$ and strictly decreasing on $((d-1)/d,1)$.  Hence
+$F_{p,\gamma}'$ has at most two distinct zeros,
+and by Rolle's theorem, $F_{p,\gamma}$ has at most three distinct zeros.
+
+By Fubini's theorem, one can choose $y_0\in[0,1]$ such that
+\[
+  F_{p,\gamma}(f(x)f(y_0))=0
+  \qquad\text{for a.e. }x.
+\]
+The lower bound on $f$ gives $f(y_0)>0$.  Hence multiplication by
+$f(y_0)$ is injective, and the three-root bound for $F_{p,\gamma}$ implies
+that $f$ takes at most three values up to null sets.
+
+Suppose that it takes three distinct values $0<a<b<c<1$ up to null sets.
+Since \eqref{eq:rank-one-kkt} holds outside a null subset
+of $[0,1]^2$, each of
+\[
+  a^2,\qquad ab,\qquad ac,\qquad bc,\qquad c^2
+\]
+is a zero of $F_{p,\gamma}$.  They satisfy
+$a^2<ab<ac<bc<c^2$, contradicting the three-root bound.  Hence $f$ takes at
+most two values.
+Therefore, if $f$ is not a.e. constant, it has the form
+\[
+  f=s\1_A+t\1_{A^c}
+\]
+for some $0<s<t<1$ and measurable $A$ with $0<\lambda(A)<1$.  Setting
+$\alpha:=\lambda(A)$ and relabeling $A$ as $[0,\alpha]$ gives
+$f=f_{\alpha,s,t}$ almost everywhere.
+\end{proof}
+
+\Cref{lem:stationary-rank-one-bipodality} reduces the problem to a finite-dimensional
+one: after a measure-preserving relabeling, the factor of every nonconstant
+rank-one graphon satisfying the KKT conditions has the form
+$f_{\alpha,s,t}$ for some $\alpha\in(0,1)$ and $0<s<t<1$.  It does not,
+however, construct such graphons near $P_*$ or determine their parameters.
+The next lemma constructs this analytic family.
+Reparametrize $s$ and $t$ by
+\[
+  u:=\frac{s+t}{2},
+  \qquad
+  h:=\frac{t-s}{2},
+  \qquad
+  \gamma:=\mu m q(f_{\alpha,s,t})^{v-2}.
+\]
+Thus, $u$ is the midpoint of the two factor values, $|h|$ is half their
+separation, and $\gamma$ is the coefficient appearing in the scalar
+stationarity equation \eqref{eq:rank-one-kkt}.
+The three stationarity equations, evaluated at the three graphon values,
+determine $u,p,\gamma$; the block-proportion equation then determines
+$\alpha$, and the defining relation for $\gamma$ determines the multiplier $\mu$.
+Changing $h$ to $-h$ exchanges the two factor values and their proportions,
+while remaining quantities are unchanged.
+
+We denote the value of the coefficient $\gamma$ at the singular endpoint by
+\[
+  \gamma_*:=\left(\frac{d}{d-1}\right)^d=r_*^{-d}.
+\]
+
+\begin{lemma}[Analytic rank-one KKT family]
+\label{lem:rank-one-kkt-family}
+There exist $h_0>0$ and real-analytic functions
+\[
+  h\longmapsto(u_h,p_h,\gamma_h,\alpha_h)
+  \qquad (|h|<h_0)
+\]
+such that
+\[
+  (u_0,p_0,\gamma_0,\alpha_0)
+  =\left(u_*,p_*,\gamma_*,\frac12\right),
+\]
+and the following properties hold.  First, for all $|h|<h_0$,
+\[
+  u_{-h}=u_h,\qquad p_{-h}=p_h,\qquad
+  \gamma_{-h}=\gamma_h,\qquad \alpha_{-h}=1-\alpha_h.
+\]
+Next, for $|h|<h_0$, define the two-valued factor and its rank-one graphon by
+\[
+  s_h:=u_h-h,
+  \qquad 
+  t_h:=u_h+h,
+  \qquad
+  f_h:=f_{\alpha_h,s_h,t_h}, 
+  \qquad
+  W_h:=f_h\otimes f_h,
+\]
+and define the $d$-th moment of $f_h$, the associated target density, and the
+Lagrange multiplier by
+\[
+  q_h:=q(f_h)=\alpha_hs_h^d+(1-\alpha_h)t_h^d,
+  \qquad
+  r_h:=q_h^{2/d}, 
+  \qquad
+  \mu_h:=\frac{\gamma_h}{m q_h^{v-2}}.
+\]
+The resulting functions $q_h,r_h,\mu_h$ are real analytic, and for all
+$|h|<h_0$, these quantities satisfy
+\[
+  0<p_h<r_h<1,
+  \qquad s_h,t_h\in(0,1),
+  \qquad \alpha_h\in(0,1),
+  \qquad \mu_h>0,
+  \qquad\text{and}\qquad
+  t(H,W_h)=r_h^m.
+\]
+Finally, for $0<|h|<h_0$, the nonconstant rank-one graphon $W_h$ satisfies
+the KKT conditions at $(p_h,r_h)$ with multiplier $\mu_h$, and
+\eqref{eq:block-stationarity} holds.  Conversely, in the precise
+sense stated below, let $W=f\otimes f$ be a nearby nonconstant rank-one
+graphon whose factor $f$ is bounded away from $0$ and $1$.  If $W$ satisfies
+the KKT conditions with multiplier $\mu$ and
+\eqref{eq:block-stationarity} holds, then $W$ agrees, up to
+measure-preserving relabeling, with a unique member $W_h$ indexed by
+$h\in(0,h_0)$, and $\mu=\mu_h$.
+\end{lemma}
+
+The graphons $W_h$ supplied by \Cref{lem:rank-one-kkt-family},
+with their measure-preserving relabelings, form the family used in
+\Cref{thm:singular-endpoint}.  Before proving the lemma, we clarify the
+family at the singular endpoint and the local uniqueness assertion.
+At $h=0$, the definitions in the lemma give
+\[
+  s_0=t_0=u_*,
+  \qquad
+  q_0=u_*^d,
+  \qquad
+  r_0=u_*^2=r_*,
+  \qquad
+  \mu_0=\frac1{m r_*^m},
+  \qquad
+  W_0\equiv r_*.
+\]
+Thus, $(p_0,r_0)=P_*$, so the family passes through the constant graphon
+$W_0\equiv r_*$ at the singular endpoint.  Also, the two factor values $s_0$ and
+$t_0$ coincide, as do the three values $s_0^2,s_0t_0,t_0^2$ taken by the
+graphon $W_0$.
+For the local uniqueness assertion, consider a graphon $W=f\otimes f$ and a
+multiplier $\mu$ appearing in the converse assertion of the lemma.  By
+\Cref{lem:stationary-rank-one-bipodality}, after a measure-preserving relabeling its
+factor has the form $f_{\alpha,s,t}$ with
+$\alpha\in(0,1)$ and $0<s<t<1$.  If
+$(s,t,p,r,\mu,\alpha)$ is sufficiently close to
+\[
+  \left(u_*,u_*,p_*,r_*,\frac1{m r_*^m},\frac12\right),
+\]
+then $h:=(t-s)/2$ belongs to $(0,h_0)$ and
+\[
+  (s,t,p,r,\mu,\alpha)
+  =(s_h,t_h,p_h,r_h,\mu_h,\alpha_h).
+\]
+
+\begin{proof}[Proof outline]
+Write
+\[
+  \ell(z):=\log\frac{1-z}{z},
+  \qquad
+  \ell_*:=\ell(p_*)=\frac{d}{d-1}-\log(d-1).
+\]
+By \Cref{lem:stationary-rank-one-bipodality}, every nonconstant rank-one graphon
+satisfying the KKT conditions has, after a measure-preserving relabeling, a
+two-valued factor.  Motivated by this reduction, we seek a family of the form
+\[
+  s:=u-h,
+  \qquad
+  t:=u+h,
+  \qquad
+  f:=f_{\alpha,s,t},
+  \qquad
+  W:=f\otimes f.
+\]
+Since $f\otimes f$ takes the three values $s^2,st,t^2$, the scalar
+stationarity equation \eqref{eq:rank-one-kkt} requires
+\begin{equation}\label{eq:three-value-kkt}
+  \ell(p)-\ell(s^2)=\gamma s^{2d-2},\qquad
+  \ell(p)-\ell(st)=\gamma(st)^{d-1},\qquad
+  \ell(p)-\ell(t^2)=\gamma t^{2d-2}.
+\end{equation}
+We therefore begin by solving this necessary system for $u,p,\gamma$ as
+functions of $h$; the block proportion $\alpha$ does not occur and will be
+determined later.
+At $h=0$, these equations have the solution $(u,p,\gamma)=(u_*,p_*,\gamma_*)$.
+For $h\ne0$, subtracting consecutive equations in \eqref{eq:three-value-kkt} eliminates
+$\ell(p)$ and expresses $\gamma$ as each of the two divided slopes across
+$s^2,st,t^2$.  Although each slope appears as $0/0$ at $h=0$, both extend
+analytically.  Let $A(u,h)$ denote the difference of the two divided slopes,
+so the system requires $A(u,h)=0$.  The symmetry $h\mapsto-h$ makes $A$ odd in $h$,
+and hence $A(u,h)=hB(u,h)$ for some analytic $B$.  A direct calculation shows that
+$B(u,0)$ has the unique nondegenerate zero $u=u_*$.  The analytic implicit
+function theorem therefore gives $h_0>0$ and a unique even analytic solution
+$u=u_h$ for $|h|<h_0$ satisfying $B(u_h,h)=A(u_h,h)=0$.  The common divided slope then defines the even function
+$\gamma=\gamma_h$, and the middle equation in
+\eqref{eq:three-value-kkt} determines the even function $p=p_h$.
+
+We now choose the block proportion $\alpha$ as a function of $h$.
+Once $\alpha$ is fixed, set
+\[
+  q:=\alpha s_h^d+(1-\alpha)t_h^d,
+  \qquad
+  r:=q^{2/d},
+  \qquad
+  \mu:=\frac{\gamma_h}{m q^{v-2}},
+  \qquad
+  f:=f_{\alpha,s_h,t_h},
+  \qquad
+  W:=f\otimes f.
+\]
+Also define the function
+\[
+  \mathcal M_h(z):=J_{p_h}(z)-\frac{\gamma_h}{d}z^d
+  \qquad (0 < z < 1).
+\]
+Evaluating the derivative in \eqref{eq:block-stationarity} and
+solving the resulting linear equation gives
+\begin{equation}\label{eq:block-proportion-formula}
+  \alpha_h:=
+  \frac{\mathcal M_h(t_h^2)-\mathcal M_h(s_ht_h)}
+  {\left\{\mathcal M_h(t_h^2)-\mathcal M_h(s_ht_h)\right\}+
+  \left\{\mathcal M_h(s_h^2)-\mathcal M_h(s_ht_h)\right\}}.
+\end{equation}
+To analyze this quotient as $h\to0$, we factor $\mathcal M_h'$.  By
+\eqref{eq:three-value-kkt}, the three values
+$s_h^2,s_ht_h,t_h^2$ are zeros of $\mathcal M_h'$, and
+\begin{equation}\label{eq:mh-derivative-factorization}
+  \mathcal M_h'(z)
+  =(z-s_h^2)(z-s_ht_h)(z-t_h^2)R(h,z),
+\end{equation}
+where $R$ is jointly analytic near $(0,r_*)$.
+At $h=0$, the three zeros coincide at $r_*$, and direct calculation gives
+\[
+  \mathcal M_0'(z)
+  =k_3(z-r_*)^3+O_d((z-r_*)^4),
+  \qquad
+  k_3:=\frac{d^5}{6(d-1)^2}>0.
+\]
+Thus $R(0,r_*)=k_3$.  Since every $z\in[s_h^2,t_h^2]$ satisfies
+$|z-r_*|=O_d(|h|)$, joint analyticity of $R$ gives
+\[
+  R(h,z)=k_3+O_d(|z-r_*|+|h|)=k_3+O_d(|h|).
+\]
+Substituting this into \eqref{eq:mh-derivative-factorization}
+and integrating over $[s_h^2,s_ht_h]$ and $[s_ht_h,t_h^2]$,
+and using the expansions of $s_h$ and $t_h$ in powers of $h$,
+show that the two differences in \eqref{eq:block-proportion-formula} vanish to order exactly four
+and have the same leading term.  Canceling their common factor $h^4$ extends
+the quotient analytically to $h=0$, where it equals $1/2$.  Finally,
+$h\mapsto-h$ exchanges the two differences, so
+$\alpha_{-h}=1-\alpha_h$.  The resulting analytic function $\alpha_h$ then
+determines the analytic functions $q_h,r_h,\mu_h$, and the rank-one
+factors $f_h$ and the bipodal graphons $W_h$.
+
+The definitions of $q_h,r_h,\mu_h$ now give
+$t(H,W_h)=q_h^v=r_h^m$.  The three equations
+\eqref{eq:three-value-kkt} verify the stationarity condition
+\eqref{eq:graphon-stationarity}, while
+\eqref{eq:block-proportion-formula} verifies
+\eqref{eq:block-stationarity}.
+After decreasing $h_0$, continuity gives $0<p_h<r_h<1$,
+$s_h,t_h,\alpha_h\in(0,1)$, and $\gamma_h,q_h>0$, hence $\mu_h>0$.
+Thus, $(p_h,r_h)$ is admissible and $W_h$ is an interior bipodal graphon.
+
+Finally, \Cref{lem:stationary-rank-one-bipodality} reduces any nearby rank-one graphon family in the
+converse assertion to the same bipodal form that we selected in the beginning of the proof.
+Repeating the construction, uniqueness in the implicit function theorem and in the linear
+block-proportion equation forces the graphon, up to relabeling, to be
+$W_h$ for a unique $h>0$, with multiplier $\mu_h$.
+Full details are given in
+\Cref{app:rank-one-kkt-family}.
+\end{proof}
+
+\begin{remark}[Dependence on $d$ and $H$]\label{rmk:rank-one-family-universality}
+The equations \eqref{eq:three-value-kkt} and \eqref{eq:block-proportion-formula} depend only on $d$.
+Thus, for fixed $d$, the local parameter curve $(p_h,r_h)$ and graphon
+family $W_h$, up to relabeling, are independent of the particular
+$d$-regular graph $H$.  The multiplier $\mu_h=\gamma_h/(m q_h^{v-2})$
+and the interval on which we will establish global optimality and uniqueness
+in the subsequent sections may depend on $H$.
+\end{remark}

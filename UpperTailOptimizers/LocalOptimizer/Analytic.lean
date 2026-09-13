@@ -2,8 +2,7 @@ import UpperTailOptimizers.LocalOptimizer.SymmetryBreaking
 import UpperTailOptimizers.LZBoundary.AnalyticIFT
 
 /-!
-# Section 6 of `paper/bipodal_optimizer.tex`: the analytic family (the "Furthermore" clause of
-`thm:local-optimizer-structure`)
+# The analytic family of `thm:nonexceptional-endpoint` (Theorem 4.1 of `paper/paper.tex`), parts (b)–(d)
 
 `thm:local-optimizer-structure` closes with the assertion that, on the symmetry-breaking side, `Φ_H(p,r)` and
 `e(W_{p,r})` are **analytic functions of `(p,r)`**.  Since `e(W_{p,r}) = r - δ_*(p,r)` and
@@ -31,6 +30,12 @@ point `δ_*` of the tilted problem, and everything glues: on the window,
   concrete two-block graphon they describe **is itself an optimizer**.
 
 `symmetry_breaking_analytic` is the projection of that assembly onto the paper's statement.
+
+`bipodal_family_smallBlock` keeps the same family on a smaller window and adds part (d) of
+`thm:nonexceptional-endpoint`: at every point of that one window the first pode `[0, c]` is the
+smaller pode, `0 < c < 1/2`, and `c → 0` as `p ↑ pc(r)`.  The window is obtained from the uniform
+bounds `|c| ≤ L·Δ ≤ L·C·λ` and the explicit estimate `lambdaDisp_le_div`, not from the limit at
+each `r` separately.
 
 **Two conventions.**  (i) `Φ_H` is asserted analytic only at genuine symmetry-breaking points
 `p < pc(r)` — that is all that is true, since across the boundary the value function switches
@@ -495,88 +500,6 @@ theorem bipodal_family {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
   and every optimizer — `B` included, by instantiating the last clause at `W := B` — is `W_*`
   up to a measure-preserving relabelling.
 
-/-! ## Theorem 6.1(d): the block size vanishes at the boundary -/
-
-/-- **`thm:local-optimizer-structure`(d), the pode size.**  For every `r` in the window supplied
-by `bipodal_family` the first pode is nondegenerate, shrinks to nothing as `p ↑ pc(r)`, and is
-therefore eventually the smaller of the two. -/
-theorem exists_blockSize_pos_tendsto {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
-    {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
-    (hreg : ∀ v, H.degree v = d) (hm : 1 ≤ H.edgeFinset.card)
-    {r₀ : ℝ} (hr₀U : r₀ ∈ M.U) (hr₀ex : r₀ ≠ rStar d) :
-    ∃ ρ η : ℝ, 0 < ρ ∧ 0 < η ∧ ∃ (Dl : ℝ × ℝ → ℝ) (cc : ℝ → ℝ → ℝ),
-      ∀ r : ℝ, |r - r₀| < ρ →
-        (∀ p : ℝ, M.pc r - η < p → p < M.pc r →
-          0 < cc (r - Dl (p, r))
-            (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card)) ∧
-        Tendsto (fun p : ℝ => cc (r - Dl (p, r))
-            (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card))
-          (𝓝[<] (M.pc r)) (𝓝 0) ∧
-        (∀ᶠ p in 𝓝[<] (M.pc r), cc (r - Dl (p, r))
-            (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card) < 1 / 2) := by
-  obtain ⟨ρ, η, L, Cd, hρ0, hη0, hL0, hCd0, Dl, q11, q12, q22, cc, hbase, hmain⟩ :=
-    bipodal_family hd M H hreg hm hr₀U hr₀ex
-  refine ⟨ρ, η, hρ0, hη0, Dl, cc, fun r hr => ?_⟩
-  obtain ⟨hrU, -⟩ := hbase r hr
-  -- positivity of the pode size
-  have hpos : ∀ p : ℝ, M.pc r - η < p → p < M.pc r →
-      0 < cc (r - Dl (p, r))
-        (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card) := by
-    intro p h1 h2
-    obtain ⟨-, -, -, -, hDlpos, -, -, -, -, -, -, -, -, -, -, -, ε, θ, hε, hθ,
-      -, -, -, hccI, -, -, -, -, Bg, -, -, hBe, hBtd, hBae⟩ := hmain r hr p h1 h2
-    rw [← hε, ← hθ] at hccI ⊢
-    refine blockSize_pos H hm Bg hccI.1 hBe ?_ hBtd hBae
-    rw [hε]; linarith
-  -- the limit
-  have hlim : Tendsto (fun p : ℝ => cc (r - Dl (p, r))
-      (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card))
-      (𝓝[<] (M.pc r)) (𝓝 0) := by
-    refine tendsto_blockSize_zero M hrU hη0 hL0 hCd0 ?_ ?_ ?_ <;> intro p h1 h2
-    · exact (hpos p h1 h2).le
-    · obtain ⟨-, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, ε, θ, hε, hθ,
-        -, -, -, -, hccb, -, -, -, -⟩ := hmain r hr p h1 h2
-      rw [← hε, ← hθ] at hccb ⊢
-      exact le_trans (le_abs_self _) hccb
-    · obtain ⟨-, -, -, -, -, -, -, -, -, -, -, -, -, -, -, hDlb, -⟩ := hmain r hr p h1 h2
-      exact hDlb
-  exact ⟨hpos, hlim, hlim.eventually (eventually_lt_nhds (by norm_num : (0:ℝ) < 1 / 2))⟩
-
-/-- **The squeeze behind `c(p,r) → 0`.**  A nonnegative quantity bounded by a constant multiple
-of `λ(p,r)` on a left neighbourhood of `pc(r)` tends to `0` as `p ↑ pc(r)`, because `λ` is
-analytic and vanishes at `p = pc(r)`. -/
-theorem tendsto_blockSize_zero {d : ℕ} (M : LZBoundaryArc d) {r : ℝ} (hrU : r ∈ M.U)
-    {η L Cd : ℝ} (hη : 0 < η) (hL : 0 ≤ L) (hCd : 0 ≤ Cd)
-    {Dl : ℝ × ℝ → ℝ} {c : ℝ → ℝ}
-    (hc0 : ∀ p, M.pc r - η < p → p < M.pc r → 0 ≤ c p)
-    (hcb : ∀ p, M.pc r - η < p → p < M.pc r → c p ≤ L * Dl (p, r))
-    (hDl : ∀ p, M.pc r - η < p → p < M.pc r → Dl (p, r) ≤ Cd * lambdaDisp M p r) :
-    Tendsto c (𝓝[<] (M.pc r)) (𝓝 0) := by
-  obtain ⟨hpc0, hpcr, hr1, -⟩ := M.ordering r hrU
-  have hpc1 : M.pc r < 1 := lt_trans hpcr hr1
-  have hlam : Tendsto (fun p : ℝ => lambdaDisp M p r) (𝓝 (M.pc r)) (𝓝 0) := by
-    have hcont : ContinuousAt (fun q : ℝ × ℝ => lambdaDisp M q.1 q.2) (M.pc r, r) :=
-      (analyticAt_lambdaDisp M hrU hpc0 hpc1).continuousAt
-    have hpair : Tendsto (fun p : ℝ => (p, r)) (𝓝 (M.pc r)) (𝓝 (M.pc r, r)) :=
-      Continuous.tendsto (by fun_prop) _
-    have h := hcont.tendsto.comp hpair
-    simpa [Function.comp, lambdaDisp_self] using h
-  have hup : Tendsto (fun p : ℝ => L * (Cd * lambdaDisp M p r)) (𝓝[<] (M.pc r)) (𝓝 0) := by
-    have h := ((hlam.const_mul Cd).const_mul L).mono_left
-      (nhdsWithin_le_nhds (a := M.pc r) (s := Set.Iio (M.pc r)))
-    simpa using h
-  have hev : ∀ᶠ p in 𝓝[<] (M.pc r), M.pc r - η < p ∧ p < M.pc r := by
-    refine Filter.Eventually.and ?_ ?_
-    · exact eventually_nhdsWithin_of_eventually_nhds
-        (eventually_gt_nhds (by linarith : M.pc r - η < M.pc r))
-    · exact eventually_nhdsWithin_of_forall fun p hp => hp
-  refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hup ?_ ?_
-  · filter_upwards [hev] with p hp using hc0 p hp.1 hp.2
-  · filter_upwards [hev] with p hp
-    exact le_trans (hcb p hp.1 hp.2)
-      (mul_le_mul_of_nonneg_left (hDl p hp.1 hp.2) hL)
-
-
 Analyticity is asserted only for `p < pc(r)`, which is exactly what the paper claims: at
 `p = pc(r)` the value function is not analytic across the boundary.  This is a projection of
 `bipodal_family`. -/
@@ -621,5 +544,289 @@ theorem symmetry_breaking_analytic {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d
     hmain r hrρ p hp_lo hp_hi
   exact ⟨hDl0, hPhiA, hEdgeA, hedge, hA11, hA12, hA22, hAcc, ε, θ, hε, hθ,
     Wstar, B, ⟨hWfeas, hWopt⟩, ⟨hBfeas, hBopt⟩, hBae, hWrel⟩
+
+/-! ## `thm:nonexceptional-endpoint`(d): the first pode is the smaller one on one window
+
+`bipodal_family` bounds the first pode by `|c| ≤ L·Δ` and `Δ ≤ Cd·λ`, with `L` and `Cd`
+independent of `(p,r)`.  To get `0 < c < 1/2` on *one* window, `λ(p,r)` has to be small uniformly
+over the window; knowing `c(p,r) → 0` as `p ↑ pc(r)` separately for each `r` would not give a
+common `η`.  The uniform smallness is explicit:
+
+* `lambdaDisp_le_div`: `λ(p,r) ≤ (pc(r) - p) / (p (1 - pc(r)))`, from `log x ≤ x - 1`;
+* continuity of `pc` at `r₀` keeps `pc(r) ∈ (μ/2, 1 - μ/2)` for `r` near `r₀`, where
+  `μ = min(pc(r₀), 1 - pc(r₀))`;
+* hence `λ(p,r) < 8η/μ²` whenever `pc(r) - η < p < pc(r)` and `η ≤ μ/4`, and the choice
+  `η ≤ μ²/(32(L·Cd + 1))` gives `c ≤ L·Cd·λ < 1/4` at every point of the window.
+
+`bipodal_family_smallBlock` records this for the family of `bipodal_family` itself — the
+parameter maps are not changed and the blocks are not swapped — together with all of its other
+clauses, the limit `c → 0` and the value expansion, on the shrunken window. -/
+
+/-- **An explicit bound for the log-odds displacement.**  For `p, pc(r) ∈ (0,1)`,
+`λ(p,r) ≤ (pc(r) - p) / (p (1 - pc(r)))`; this is `log x ≤ x - 1` for the odds ratio. -/
+theorem lambdaDisp_le_div {d : ℕ} (M : LZBoundaryArc d) {p r : ℝ}
+    (hp0 : 0 < p) (hp1 : p < 1) (hpc0 : 0 < M.pc r) (hpc1 : M.pc r < 1) :
+    lambdaDisp M p r ≤ (M.pc r - p) / (p * (1 - M.pc r)) := by
+  have hA : 0 < (1 - p) / p := div_pos (by linarith) hp0
+  have hB : 0 < (1 - M.pc r) / M.pc r := div_pos (by linarith) hpc0
+  have hlog : lambdaDisp M p r = Real.log ((1 - p) / p / ((1 - M.pc r) / M.pc r)) := by
+    rw [Real.log_div hA.ne' hB.ne']
+    rfl
+  have hq : (1 - p) / p / ((1 - M.pc r) / M.pc r) - 1
+      = (M.pc r - p) / (p * (1 - M.pc r)) := by
+    have h1 : 1 - M.pc r ≠ 0 := (sub_pos.mpr hpc1).ne'
+    have h2 : M.pc r ≠ 0 := hpc0.ne'
+    have h3 : p ≠ 0 := hp0.ne'
+    field_simp
+    ring
+  rw [hlog, ← hq]
+  exact Real.log_le_sub_one_of_pos (div_pos hA hB)
+
+/-- **The squeeze behind `c(p,r) → 0`.**  A nonnegative quantity bounded by a constant multiple
+of `λ(p,r)` on a left neighbourhood of `pc(r)` tends to `0` as `p ↑ pc(r)`, because `λ` is
+analytic and vanishes at `p = pc(r)`. -/
+theorem tendsto_blockSize_zero {d : ℕ} (M : LZBoundaryArc d) {r : ℝ} (hrU : r ∈ M.U)
+    {η L Cd : ℝ} (hη : 0 < η) (hL : 0 ≤ L)
+    {Dl : ℝ × ℝ → ℝ} {c : ℝ → ℝ}
+    (hc0 : ∀ p, M.pc r - η < p → p < M.pc r → 0 ≤ c p)
+    (hcb : ∀ p, M.pc r - η < p → p < M.pc r → c p ≤ L * Dl (p, r))
+    (hDl : ∀ p, M.pc r - η < p → p < M.pc r → Dl (p, r) ≤ Cd * lambdaDisp M p r) :
+    Tendsto c (𝓝[<] (M.pc r)) (𝓝 0) := by
+  obtain ⟨hpc0, hpcr, hr1, -⟩ := M.ordering r hrU
+  have hpc1 : M.pc r < 1 := lt_trans hpcr hr1
+  have hlam : Tendsto (fun p : ℝ => lambdaDisp M p r) (𝓝 (M.pc r)) (𝓝 0) := by
+    have hcont : ContinuousAt (fun q : ℝ × ℝ => lambdaDisp M q.1 q.2) (M.pc r, r) :=
+      (analyticAt_lambdaDisp M hrU hpc0 hpc1).continuousAt
+    have hpair : Tendsto (fun p : ℝ => (p, r)) (𝓝 (M.pc r)) (𝓝 (M.pc r, r)) :=
+      Continuous.tendsto (by fun_prop) _
+    have h := hcont.tendsto.comp hpair
+    simpa [Function.comp_def, lambdaDisp_self] using h
+  have hup : Tendsto (fun p : ℝ => L * (Cd * lambdaDisp M p r)) (𝓝[<] (M.pc r)) (𝓝 0) := by
+    have h := ((hlam.const_mul Cd).const_mul L).mono_left
+      (nhdsWithin_le_nhds (a := M.pc r) (s := Set.Iio (M.pc r)))
+    simpa using h
+  have hev : ∀ᶠ p in 𝓝[<] (M.pc r), M.pc r - η < p ∧ p < M.pc r := by
+    refine Filter.Eventually.and ?_ ?_
+    · exact eventually_nhdsWithin_of_eventually_nhds
+        (eventually_gt_nhds (by linarith : M.pc r - η < M.pc r))
+    · exact eventually_nhdsWithin_of_forall fun p hp => hp
+  refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hup ?_ ?_
+  · filter_upwards [hev] with p hp using hc0 p hp.1 hp.2
+  · filter_upwards [hev] with p hp
+    exact le_trans (hcb p hp.1 hp.2)
+      (mul_le_mul_of_nonneg_left (hDl p hp.1 hp.2) hL)
+
+/-- **`thm:nonexceptional-endpoint`(b)–(d) for one analytic bipodal family on one window.**
+
+This is `bipodal_family` restricted to a smaller window: the functions `Dl, q₁₁, q₁₂, q₂₂, c`
+are the ones `bipodal_family` constructs, and the first pode is always `[0, c(ε,θ)]`.  Every clause
+of `bipodal_family` is kept, and three are added on the same window and for the same family:
+
+* `c(ε,θ) ∈ (0, 1/2)` at **every** point `|r - r₀| < ρ`, `pc(r) - η < p < pc(r)`: the first
+  pode of the optimizer `B` is the smaller pode throughout the window, as in part (d);
+* `c(p,r) → 0` as `p ↑ pc(r)`, for every `r` of the window;
+* the value expansion `|Φ_H(p,r) - (J_p(r) - λ²/(2A_H(r)))| ≤ Cd·λ³` of part (c).
+
+One constant `Cd` serves all the expansions.  The window is only shrunk: `ρ` so that `pc(r)` stays
+in `(μ/2, 1 - μ/2)` with `μ = min(pc(r₀), 1 - pc(r₀))`, and `η ≤ μ/4`,
+`η ≤ μ²/(32(L·Cd₀ + 1))`, where `L`, `Cd₀` are the constants of `bipodal_family`.  Then
+`λ(p,r) < 8η/μ²` by `lambdaDisp_le_div`, so `c ≤ L·Δ ≤ L·Cd₀·λ < 1/4`; positivity of `c` is
+`blockSize_pos`, because the family's graphon is an optimizer with edge density `r - Δ < r`. -/
+theorem bipodal_family_smallBlock {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
+    {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
+    (hreg : ∀ v, H.degree v = d) (hm : 1 ≤ H.edgeFinset.card)
+    {r₀ : ℝ} (hr₀U : r₀ ∈ M.U) (hr₀ex : r₀ ≠ rStar d) :
+    ∃ ρ η L Cd : ℝ, 0 < ρ ∧ 0 < η ∧ 0 ≤ L ∧ 0 ≤ Cd ∧
+      ∃ (Dl : ℝ × ℝ → ℝ) (q11 q12 q22 cc : ℝ → ℝ → ℝ),
+        (∀ r : ℝ, |r - r₀| < ρ → r ∈ M.U ∧ r ≠ rStar d ∧ 0 < r ∧ r < 1 ∧
+          cc r 0 = 0 ∧ q22 r 0 = r ∧ q11 r 0 ∈ Set.Ioo (0:ℝ) 1 ∧
+          q12 r 0 ∈ Set.Ioo (0:ℝ) 1 ∧ q12 r 0 ≠ r ∧
+          AnalyticAt ℝ (fun s : ℝ => q12 s 0) r ∧
+          Tendsto (fun p : ℝ => cc (r - Dl (p, r))
+              (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card))
+            (𝓝[<] (M.pc r)) (𝓝 0)) ∧
+        ∀ r : ℝ, |r - r₀| < ρ → ∀ p : ℝ, M.pc r - η < p → p < M.pc r →
+          0 < p ∧ p < r ∧ 0 < AH H M r ∧ 0 < lambdaDisp M p r ∧ 0 < Dl (p, r) ∧
+          AnalyticAt ℝ Dl (p, r) ∧
+          AnalyticAt ℝ (fun q : ℝ × ℝ => phiVar H q.1 q.2) (p, r) ∧
+          AnalyticAt ℝ (fun q : ℝ × ℝ => q.2 - Dl q) (p, r) ∧
+          AnalyticAt ℝ (fun q : ℝ × ℝ => q11 (q.2 - Dl q)
+            (q.2 ^ H.edgeFinset.card - (q.2 - Dl q) ^ H.edgeFinset.card)) (p, r) ∧
+          AnalyticAt ℝ (fun q : ℝ × ℝ => q12 (q.2 - Dl q)
+            (q.2 ^ H.edgeFinset.card - (q.2 - Dl q) ^ H.edgeFinset.card)) (p, r) ∧
+          AnalyticAt ℝ (fun q : ℝ × ℝ => q22 (q.2 - Dl q)
+            (q.2 ^ H.edgeFinset.card - (q.2 - Dl q) ^ H.edgeFinset.card)) (p, r) ∧
+          AnalyticAt ℝ (fun q : ℝ × ℝ => cc (q.2 - Dl q)
+            (q.2 ^ H.edgeFinset.card - (q.2 - Dl q) ^ H.edgeFinset.card)) (p, r) ∧
+          (∀ W : Graphon, Feasible H r W → W.Ip p = phiVar H p r →
+            W.edgeDensity = r - Dl (p, r)) ∧
+          (∃ Wstar : Graphon, Feasible H r Wstar ∧ Wstar.Ip p = phiVar H p r ∧
+            IsBipodal Wstar ∧ (¬ ∃ c : ℝ, ∀ᵐ z ∂gμ, Wstar.toFun z.1 z.2 = c) ∧
+            ∀ W : Graphon, Feasible H r W → W.Ip p = phiVar H p r →
+              ∃ σ : ℝ → ℝ, IsRelabelling σ ∧
+                ∀ᵐ z ∂gμ, W.toFun z.1 z.2 = Wstar.toFun (σ z.1) (σ z.2)) ∧
+          |Dl (p, r) - lambdaDisp M p r / AH H M r| ≤ Cd * lambdaDisp M p r ^ 2 ∧
+          Dl (p, r) ≤ Cd * lambdaDisp M p r ∧
+          |phiVar H p r - (Jp p r - lambdaDisp M p r ^ 2 / (2 * AH H M r))|
+            ≤ Cd * lambdaDisp M p r ^ 3 ∧
+          ∃ ε θ : ℝ, ε = r - Dl (p, r) ∧
+            θ = r ^ H.edgeFinset.card - ε ^ H.edgeFinset.card ∧
+            q11 ε θ ∈ Set.Icc (0:ℝ) 1 ∧ q12 ε θ ∈ Set.Icc (0:ℝ) 1 ∧
+            q22 ε θ ∈ Set.Icc (0:ℝ) 1 ∧ cc ε θ ∈ Set.Ioo (0:ℝ) (1 / 2) ∧
+            |cc ε θ| ≤ L * Dl (p, r) ∧
+            |q22 ε θ - r| ≤ L * Dl (p, r) ∧
+            |q12 ε θ - q12 r 0| ≤ L * Dl (p, r) ∧
+            |q11 ε θ - q11 r 0| ≤ L * Dl (p, r) ∧
+            (∃ B : Graphon, Feasible H r B ∧ B.Ip p = phiVar H p r ∧
+              B.edgeDensity = ε ∧ B.tDensity H = r ^ H.edgeFinset.card ∧
+              (∀ᵐ z ∂gμ, B.toFun z.1 z.2
+                = bipodalValue (Set.Icc 0 (cc ε θ)) (q11 ε θ) (q12 ε θ) (q22 ε θ) z)) := by
+  classical
+  obtain ⟨ρ₁, η₁, L, Cd, hρ₁0, hη₁0, hL0, hCd0, Dl, q11, q12, q22, cc, hbase, hmain⟩ :=
+    bipodal_family hd M H hreg hm hr₀U hr₀ex
+  obtain ⟨ρ₂, η₂, C, hρ₂0, hη₂0, hC0, hsb⟩ := symmetry_breaking_side hd M H hreg hm hr₀U hr₀ex
+  -- ### `pc(r)` stays uniformly inside `(0,1)` for `r` near `r₀`
+  obtain ⟨hpc₀0, hpc₀r, hr₀1, -⟩ := M.ordering r₀ hr₀U
+  obtain ⟨μ, hμ_def⟩ : ∃ x : ℝ, x = min (M.pc r₀) (1 - M.pc r₀) := ⟨_, rfl⟩
+  have hμ0 : 0 < μ := by rw [hμ_def]; exact lt_min hpc₀0 (by linarith)
+  have hμa : μ ≤ M.pc r₀ := by rw [hμ_def]; exact min_le_left _ _
+  have hμb : μ ≤ 1 - M.pc r₀ := by rw [hμ_def]; exact min_le_right _ _
+  obtain ⟨ρ₃, hρ₃0, hρ₃⟩ :=
+    Metric.continuousAt_iff.mp ((M.analytic_pc r₀ hr₀U).continuousAt) (μ / 2) (by linarith)
+  -- ### The common window
+  have hLC : 0 ≤ L * Cd := mul_nonneg hL0 hCd0
+  obtain ⟨K, hK_def⟩ : ∃ x : ℝ, x = L * Cd + 1 := ⟨_, rfl⟩
+  have hK0 : 0 < K := by rw [hK_def]; linarith
+  obtain ⟨ρ, hρ_def⟩ : ∃ x : ℝ, x = min (min ρ₁ ρ₂) ρ₃ := ⟨_, rfl⟩
+  obtain ⟨η, hη_def⟩ : ∃ x : ℝ,
+      x = min (min η₁ η₂) (min (μ / 4) (μ ^ 2 / (32 * K))) := ⟨_, rfl⟩
+  have hρ0 : 0 < ρ := by rw [hρ_def]; exact lt_min (lt_min hρ₁0 hρ₂0) hρ₃0
+  have hη0 : 0 < η := by
+    rw [hη_def]; exact lt_min (lt_min hη₁0 hη₂0) (lt_min (by linarith) (by positivity))
+  have hρ₁ : ρ ≤ ρ₁ := by rw [hρ_def]; exact le_trans (min_le_left _ _) (min_le_left _ _)
+  have hρ₂ : ρ ≤ ρ₂ := by rw [hρ_def]; exact le_trans (min_le_left _ _) (min_le_right _ _)
+  have hρ₃le : ρ ≤ ρ₃ := by rw [hρ_def]; exact min_le_right _ _
+  have hη₁ : η ≤ η₁ := by rw [hη_def]; exact le_trans (min_le_left _ _) (min_le_left _ _)
+  have hη₂ : η ≤ η₂ := by rw [hη_def]; exact le_trans (min_le_left _ _) (min_le_right _ _)
+  have hημ : η ≤ μ / 4 := by rw [hη_def]; exact le_trans (min_le_right _ _) (min_le_left _ _)
+  have hηK : η ≤ μ ^ 2 / (32 * K) := by
+    rw [hη_def]; exact le_trans (min_le_right _ _) (min_le_right _ _)
+  -- ### `λ` is uniformly small on the window: `L·Cd·λ < 1/2`
+  have hsmall : ∀ r : ℝ, |r - r₀| < ρ → ∀ p : ℝ, M.pc r - η < p → p < M.pc r →
+      L * (Cd * lambdaDisp M p r) < 1 / 2 := by
+    intro r hr p hp_lo hp_hi
+    have hrU : r ∈ M.U := (hbase r (lt_of_lt_of_le hr hρ₁)).1
+    have hpcr : |M.pc r - M.pc r₀| < μ / 2 := by
+      have h := hρ₃ (show dist r r₀ < ρ₃ by rw [Real.dist_eq]; exact lt_of_lt_of_le hr hρ₃le)
+      rwa [Real.dist_eq] at h
+    obtain ⟨hpc_lo, hpc_hi⟩ := abs_lt.mp hpcr
+    have hpc0 : μ / 2 < M.pc r := by linarith
+    have hpc1 : μ / 2 < 1 - M.pc r := by linarith
+    have hp0 : μ / 4 < p := by linarith
+    have hμ4 : 0 < μ / 4 := by linarith
+    have hμ2 : 0 < μ / 2 := by linarith
+    have hD : μ ^ 2 / 8 < p * (1 - M.pc r) := by
+      have h := mul_lt_mul'' hp0 hpc1 hμ4.le hμ2.le
+      nlinarith [h]
+    have hDpos : 0 < p * (1 - M.pc r) := lt_trans (by positivity) hD
+    have hlam0 : 0 < lambdaDisp M p r := lambdaDisp_pos M hrU (by linarith) hp_hi
+    have hle : lambdaDisp M p r * (p * (1 - M.pc r)) ≤ M.pc r - p :=
+      (le_div_iff₀ hDpos).mp
+        (lambdaDisp_le_div M (by linarith) (by linarith) (by linarith) (by linarith))
+    have hlamμ : lambdaDisp M p r * (μ ^ 2 / 8) < μ ^ 2 / (32 * K) := by
+      calc lambdaDisp M p r * (μ ^ 2 / 8)
+          < lambdaDisp M p r * (p * (1 - M.pc r)) := mul_lt_mul_of_pos_left hD hlam0
+        _ ≤ M.pc r - p := hle
+        _ < η := by linarith
+        _ ≤ μ ^ 2 / (32 * K) := hηK
+    have hlamK : lambdaDisp M p r * (4 * K) < 1 := by
+      have h := (lt_div_iff₀ (by positivity : (0:ℝ) < 32 * K)).mp hlamμ
+      have hμsq : 0 < μ ^ 2 := by positivity
+      nlinarith [h, hμsq]
+    rw [hK_def] at hlamK
+    nlinarith [hlamK, hLC, hlam0]
+  -- ### The block-size clauses on the window
+  have hblock : ∀ r : ℝ, |r - r₀| < ρ → ∀ p : ℝ, M.pc r - η < p → p < M.pc r →
+      0 < cc (r - Dl (p, r)) (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card) ∧
+      cc (r - Dl (p, r)) (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card)
+        < 1 / 2 ∧
+      cc (r - Dl (p, r)) (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card)
+        ≤ L * Dl (p, r) ∧
+      Dl (p, r) ≤ Cd * lambdaDisp M p r := by
+    intro r hr p hp_lo hp_hi
+    obtain ⟨-, -, -, -, hDl0, -, -, -, -, -, -, -, -, -, -, hDlC, ε, θ, hε, hθ,
+      -, -, -, hccI, hccb, -, -, -, B, -, -, hBe, hBt, hBae⟩ :=
+      hmain r (lt_of_lt_of_le hr hρ₁) p (by linarith) hp_hi
+    subst hε
+    subst hθ
+    have hcb := le_trans (le_abs_self _) hccb
+    refine ⟨blockSize_pos H hm B hccI.1 hBe (by linarith) hBt hBae, ?_, hcb, hDlC⟩
+    have h1 := hsmall r hr p hp_lo hp_hi
+    have h2 : L * Dl (p, r) ≤ L * (Cd * lambdaDisp M p r) := mul_le_mul_of_nonneg_left hDlC hL0
+    linarith
+  -- ### `c → 0` at the boundary, for every `r` of the window
+  have htend : ∀ r : ℝ, |r - r₀| < ρ →
+      Tendsto (fun p : ℝ => cc (r - Dl (p, r))
+          (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card))
+        (𝓝[<] (M.pc r)) (𝓝 0) := by
+    intro r hr
+    have hrU : r ∈ M.U := (hbase r (lt_of_lt_of_le hr hρ₁)).1
+    exact tendsto_blockSize_zero M hrU hη0 hL0
+      (fun p h1 h2 => (hblock r hr p h1 h2).1.le)
+      (fun p h1 h2 => (hblock r hr p h1 h2).2.2.1)
+      (fun p h1 h2 => (hblock r hr p h1 h2).2.2.2)
+  -- ### The output: the same family on the shrunken window
+  refine ⟨ρ, η, L, max Cd C, hρ0, hη0, hL0, le_trans hCd0 (le_max_left _ _),
+    Dl, q11, q12, q22, cc, ?_, ?_⟩
+  · intro r hr
+    obtain ⟨b1, b2, b3, b4, b5, b6, b7, b8, b9, b10⟩ := hbase r (lt_of_lt_of_le hr hρ₁)
+    exact ⟨b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, htend r hr⟩
+  · intro r hr p hp_lo hp_hi
+    obtain ⟨h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16,
+      ε, θ, hε, hθ, h17, h18, h19, -, hccb, h21, h22, h23, B, hB1, hB2, hBe, hBt, hBae⟩ :=
+      hmain r (lt_of_lt_of_le hr hρ₁) p (by linarith) hp_hi
+    obtain ⟨-, _, -, -, -, -, -, -, hΦ⟩ :=
+      hsb r (lt_of_lt_of_le hr hρ₂) p (by linarith) hp_hi
+    obtain ⟨hc0, hc1, -, -⟩ := hblock r hr p hp_lo hp_hi
+    subst hε
+    subst hθ
+    exact ⟨h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14,
+      le_trans h15 (mul_le_mul_of_nonneg_right (le_max_left _ _) (sq_nonneg _)),
+      le_trans h16 (mul_le_mul_of_nonneg_right (le_max_left _ _) h4.le),
+      le_trans hΦ (mul_le_mul_of_nonneg_right (le_max_right _ _) (pow_nonneg h4.le 3)),
+      _, _, rfl, rfl, h17, h18, h19, ⟨hc0, hc1⟩, hccb, h21, h22, h23,
+      B, hB1, hB2, hBe, hBt, hBae⟩
+
+/-- **`thm:nonexceptional-endpoint`(d), the pode size alone.**  On one window `|r - r₀| < ρ`,
+`pc(r) - η < p < pc(r)`, the first pode of the analytic family satisfies `0 < c(p,r) < 1/2`, and
+`c(p,r) → 0` as `p ↑ pc(r)` for every `r` of that window.
+
+This is a projection of `bipodal_family_smallBlock`, where the same clauses hold together with the
+analyticity, the optimizer representation with first pode `[0, c]`, uniqueness and the expansions
+of the same family on the same window. -/
+theorem exists_blockSize_pos_tendsto {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
+    {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
+    (hreg : ∀ v, H.degree v = d) (hm : 1 ≤ H.edgeFinset.card)
+    {r₀ : ℝ} (hr₀U : r₀ ∈ M.U) (hr₀ex : r₀ ≠ rStar d) :
+    ∃ ρ η : ℝ, 0 < ρ ∧ 0 < η ∧ ∃ (Dl : ℝ × ℝ → ℝ) (cc : ℝ → ℝ → ℝ),
+      ∀ r : ℝ, |r - r₀| < ρ →
+        (∀ p : ℝ, M.pc r - η < p → p < M.pc r →
+          0 < cc (r - Dl (p, r))
+            (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card) ∧
+          cc (r - Dl (p, r))
+            (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card) < 1 / 2) ∧
+        Tendsto (fun p : ℝ => cc (r - Dl (p, r))
+            (r ^ H.edgeFinset.card - (r - Dl (p, r)) ^ H.edgeFinset.card))
+          (𝓝[<] (M.pc r)) (𝓝 0) := by
+  obtain ⟨ρ, η, L, Cd, hρ0, hη0, -, -, Dl, q11, q12, q22, cc, hbase, hmain⟩ :=
+    bipodal_family_smallBlock hd M H hreg hm hr₀U hr₀ex
+  refine ⟨ρ, η, hρ0, hη0, Dl, cc, fun r hr => ⟨fun p h1 h2 => ?_, ?_⟩⟩
+  · obtain ⟨-, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, ε, θ, hε, hθ,
+      -, -, -, hcc, -⟩ := hmain r hr p h1 h2
+    subst hε
+    subst hθ
+    exact hcc
+  · obtain ⟨-, -, -, -, -, -, -, -, -, -, hT⟩ := hbase r hr
+    exact hT
 
 end UpperTailOptimizers

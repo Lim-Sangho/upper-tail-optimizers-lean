@@ -1,0 +1,195 @@
+\subsection{Comparison with the constant graphon}
+\label{sec:constant-graphon-comparison}
+
+The constant graphon $W\equiv r_h$ has $H$-density $r_h^m$ and is therefore
+feasible for the same constraint as $W_h$, where $W_h$ is the member of the
+analytic rank-one KKT family constructed in
+\Cref{lem:rank-one-kkt-family}.  We will prove that
+\[
+  I_{p_h}(W_h)<I_{p_h}(W\equiv r_h)=J_{p_h}(r_h),
+\]
+and compute the asymptotic expansion of the
+relative entropy difference for all sufficiently small $h>0$.  At $h=0$, the
+two graphons coincide, so their $I_{p_h}$-values are equal.  The symmetries in
+\Cref{lem:rank-one-kkt-family} make the relative entropy difference
+an even analytic function of $h$, and the calculation below shows that its
+leading term is of order $h^4$.  The sign of the difference for small $h>0$ is therefore
+determined by the coefficient of $h^4$.  To compute that coefficient, we
+first record the expansions of the parameters that will be used below.
+Write
+\[
+  \ell(z):=\log\frac{1-z}{z}, \qquad
+  \ell_*:=\ell(p_*)=\frac d{d-1}-\log(d-1), \qquad
+  \Lambda_h:=\ell(p_h)-\ell_*.
+\]
+Here, $\Lambda_h$ represents the slope of the affine difference
+\begin{equation}\label{eq:entropy-parameter-shift}
+  J_{p_h}(z)-J_{p_*}(z)=\Lambda_h z+J_{p_h}(0)-J_{p_*}(0).
+\end{equation}
+
+\begin{lemma}[Expansions along the rank-one KKT family]
+\label{lem:rank-one-parameter-expansions}
+The analytic family constructed in
+\Cref{lem:rank-one-kkt-family} satisfies
+\begin{equation}\label{eq:rank-one-parameter-expansions}
+\begin{aligned}
+  u_h&=u_*+\frac{5-3d}{6u_*}h^2+O_d(h^4),
+  &&&
+  \Lambda_h&=\frac{2d^3}{3(d-1)}h^2+O_d(h^4),\\
+  \alpha_h&=\frac12+\frac{2d^2u_*}{3(d-1)}h+O_d(h^3),
+  &&&
+  r_h&=r_*-\frac{2(4d-1)}3h^2+O_d(h^4).
+\end{aligned}
+\end{equation}
+\end{lemma}
+
+These expansions immediately locate the family relative to
+$P_*=(p_*,r_*)$.  For all sufficiently small $h>0$, the expansion of $r_h$
+gives $r_h<r_*$.  Moreover, $\Lambda_h>0$ implies the strict decrease of
+$\ell$, which gives $p_h<p_*$.
+
+\begin{proof}[Proof outline]
+The symmetries in \Cref{lem:rank-one-kkt-family} show that
+$u_h,\gamma_h$, and $\Lambda_h$ have expansions in even powers of $h$, while
+$\alpha_h-1/2$ has an expansion in odd powers.  Let $U_2, G_2, L_2$
+denote the quadratic coefficients of $u_h,\gamma_h$, and $\Lambda_h$,
+respectively, and substitute the expansions of $s_h^2,s_ht_h,t_h^2$ into
+\eqref{eq:three-value-kkt}.
+The middle equation at order $h^2$ relates $G_2$ and $L_2$,
+and either outer equation at order $h^3$ determines $G_2$,
+and the comparison at order $h^4$ relates $U_2$ and $G_2$.
+Solving these three equations gives the first two expansions in
+\eqref{eq:rank-one-parameter-expansions}.
+
+Now we determine the expansions of $\alpha_h$ and $r_h$.
+Since $R(h,z)$ is even in $h$, its Taylor expansion gives
+\[
+  R(h,z)=k_3+k_4(z-r_*)+O_d(h^2)
+  \quad (z\in[s_h^2,t_h^2]),
+  \qquad
+  k_4:=\frac{5d^6(d-2)}{24(d-1)^3}.
+\]
+Using this expansion and integrating the factorization
+\eqref{eq:mh-derivative-factorization} over $[s_h^2,s_ht_h]$ and
+$[s_ht_h,t_h^2]$ gives the two differences in \eqref{eq:block-proportion-formula}
+through order $h^5$.  Their asymmetry at order $h^5$ determines the linear
+term of $\alpha_h$.  The expansions of $q_h$ and $r_h$ then follow from
+their definitions.
+Full details are given in \Cref{app:rank-one-parameter-expansions}.
+\end{proof}
+
+We now turn to the comparison stated at the beginning of this subsection.
+
+\begin{lemma}[Comparison with the constant graphon]
+\label{lem:constant-graphon-comparison}
+For sufficiently small $h>0$,
+\[
+  I_{p_h}(W_h)-J_{p_h}(r_h)
+  =-\frac{d^3}{3}h^4+O_d(h^6).
+\]
+In particular, the constant graphon
+$W\equiv r_h$ is feasible but has strictly larger $I_{p_h}$-value,
+and consequently $p_h<\pc(r_h)$ for all sufficiently small $h>0$.
+\end{lemma}
+
+The affine identity \eqref{eq:entropy-parameter-shift} separates the change in $p$
+from the comparison at $p_*$:
+\[
+  I_{p_h}(W_h)-J_{p_h}(r_h)
+  =\{I_{p_*}(W_h)-J_{p_*}(r_h)\}+\Lambda_h\{e(W_h)-r_h\}.
+\]
+The second term is evaluated using \Cref{lem:rank-one-parameter-expansions}.
+For the first difference, we return to the supporting-line geometry of
+\Cref{thm:scalar-lz-boundary}.  Its proof obtains the quadratic separation
+in \eqref{eq:contact-quadratic-separation} by Taylor-expanding the difference between
+$\varphi_{\pc(r),d}(x)=J_{\pc(r)}(x^{1/d})$ and its tangent line $\ell_r(x)$
+near the two contact points.  We use the same approach at the exceptional
+endpoint, where these contacts coincide.
+
+By the continuous extensions in \Cref{thm:scalar-lz-boundary},
+$\pc(r)\to p_*$ and $\sm(r)\to r_*$ as $r\to r_*$.  The tangent lines
+$\ell_r$ therefore extend continuously to the tangent of
+$\varphi_{p_*,d}$ at $x=r_*^d$:
+\[
+  \ell_{r_*}(x)=J_{p_*}(r_*)+\beta_d(x-r_*^d).
+\]
+Here $\beta_d$ denotes the slope of this tangent, which the chain rule gives as
+\[
+  \beta_d:=\varphi_{p_*,d}'(r_*^d)
+  =\frac{J_{p_*}'(r_*)}{d r_*^{d-1}}
+  =\frac{\gamma_*}{d}
+  =\frac{d^{d-1}}{(d-1)^d}.
+\]
+Following \eqref{eq:supporting-cost-gap}, define the \emph{supporting cost gap} by
+\begin{equation}\label{eq:endpoint-supporting-gap}
+  \Gamma_d(z)
+  :=\varphi_{p_*,d}(z^d)-\ell_{r_*}(z^d)
+  =J_{p_*}(z)-J_{p_*}(r_*)-\beta_d\{z^d-r_*^d\}
+  \qquad(0\le z\le1).
+\end{equation}
+Thus, $\Gamma_d$ is the continuous extension to $r=r_*$ of the function
+$g_r$ used there.  Its Taylor expansion describes the separation from
+the tangent at their common contact point; as shown below, the leading term is quartic.
+
+By \eqref{eq:endpoint-supporting-gap}, we can express the cost difference
+at $p_*$ in terms of $\Gamma_d$ as
+\[
+  I_{p_*}(W_h)-J_{p_*}(r_h)
+  =\int\Gamma_d(W_h)-\Gamma_d(r_h)+\beta_d\left(\int W_h^d-r_h^d\right).
+\]
+Adding the affine correction from $p_*$ to $p_h$ gives
+\begin{equation}\label{eq:constant-comparison-decomposition}
+  I_{p_h}(W_h)-J_{p_h}(r_h)
+  =\int\Gamma_d(W_h)-\Gamma_d(r_h)
+  +\beta_d\left(\int W_h^d-r_h^d\right)
+  +\Lambda_h\{e(W_h)-r_h\}.
+\end{equation}
+Since $\int W_h^d=(\int f_h^d)^2=q_h^2=r_h^d$, the $d$-th moment term vanishes, and
+\begin{equation}\label{eq:constant-comparison-identity}
+  I_{p_h}(W_h)-J_{p_h}(r_h)
+  =\int\Gamma_d(W_h)-\Gamma_d(r_h) +\Lambda_h\{e(W_h)-r_h\}.
+\end{equation}
+The proof first evaluates $\Gamma_d$ by its quartic expansion,
+then expands all the parameters using \Cref{lem:rank-one-parameter-expansions}.
+
+\begin{proof}
+Tangency gives $\Gamma_d(r_*)=\Gamma_d'(r_*)=0$.  At the exceptional
+endpoint, direct differentiation further gives
+$\Gamma_d''(r_*)=\Gamma_d'''(r_*)=0$ and
+$\Gamma_d^{(4)}(r_*)=d^5/(d-1)^2>0$.
+Taylor's theorem therefore yields, as $z\to r_*$,
+\begin{equation}\label{eq:endpoint-gap-expansion}
+  \Gamma_d(z)
+  =\frac{d^5}{24(d-1)^2}(z-r_*)^4+O_d(|z-r_*|^5).
+\end{equation}
+By the parameter expansions in \eqref{eq:rank-one-parameter-expansions},
+\[
+  s_h^2-r_*=-2u_*h+O_d(h^2),
+  \qquad
+  t_h^2-r_*=2u_*h+O_d(h^2),
+  \qquad
+  s_ht_h-r_*=O_d(h^2),
+  \qquad
+  r_h-r_*=O_d(h^2).
+\]
+Each of the four rectangles determined by $A_h$ and $A_h^c$ in
+$[0,1]^2$ has area $1/4+O_d(h)$.
+Thus the quartic expansion and $u_*^2=(d-1)/d$ yield
+\begin{equation}\label{eq:family-gap-expansion}
+  \int\Gamma_d(W_h)=\frac{d^3}{3}h^4+O_d(h^6),
+  \qquad
+  \Gamma_d(r_h)=O_d(h^8).
+\end{equation}
+The first remainder improves from $O_d(h^5)$ to $O_d(h^6)$
+because $\int\Gamma_d(W_h)$ is an even analytic function of $h$.
+Finally, $e(W_h)=\{u_h+h(1-2\alpha_h)\}^2$ and the parameter expansions give
+\[
+  e(W_h)-r_h=-(d-1)h^2+O_d(h^4),
+  \qquad
+  \Lambda_h\{e(W_h)-r_h\}=-\frac{2d^3}{3}h^4+O_d(h^6).
+\]
+Substituting these expansions into \eqref{eq:constant-comparison-identity}
+proves the lemma.
+\end{proof}
+
+

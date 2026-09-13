@@ -1,0 +1,378 @@
+\clearpage
+\section{Notation}\label{app:notation}
+
+This section collects the asymptotic conventions and the principal symbols
+used in the main text.  The tables follow the order of the sections
+where the corresponding symbols that are mainly introduced.
+Temporary variables used only within individual proofs are omitted.
+The domain or regime column records the scope of each definition.
+
+\subsection{Asymptotic notation}\label{app:asymptotic-notation}
+
+Subscripts on $O$, $\Omega$, and $\Theta$ specify the dependence
+of implicit constants; unsubscripted $O$-terms have absolute constants.
+Set subscripts, such as $K$ and $U$ in $O_{H,K}$ and $O_{H,U}$,
+allow uniform dependence over the parameters in that set.
+For $o$-terms, subscripts indicate fixed parameters; convergence is taken
+in the stated regime; no uniformity in these parameters is asserted.
+The notation $f\ll g$ means $f/g\to0$, and $f\gg g$ means $g\ll f$.
+
+\subsection{Symbols}\label{app:symbols}
+
+All integrals without an indicated measure use Lebesgue measure, usually on $[0,1]$ or $[0,1]^2$.  The notation $\|\cdot\|_k$
+denotes the corresponding $L^k$-norm.  We use natural logarithms and
+$0\log0=0$.
+
+\newenvironment{notationtable}{%
+  \small
+  \setlength{\tabcolsep}{4pt}%
+  \renewcommand{\arraystretch}{1.18}%
+  \setlength{\LTpre}{4pt}%
+  \setlength{\LTpost}{6pt}%
+  \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}
+    >{\raggedright\arraybackslash}p{0.21\textwidth}
+    >{\raggedright\arraybackslash}p{\dimexpr0.62\textwidth-4\tabcolsep\relax}@{}}
+  \toprule
+  Symbol & Domain or regime & Definition and role \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Symbol & Domain or regime & Definition and role \\
+  \midrule
+  \endhead
+  \bottomrule
+  \endfoot
+}{\end{longtable}}
+
+\subsubsection*{\Cref{sec:introduction}: Basic objects and the variational problem}
+
+\begin{notationtable}
+$H,d,m,v$ & Main regular-graph results &
+$H$ is a finite simple $d$-regular graph, $d\ge2$;
+$m=|E(H)|$ and $v=|V(H)|=2m/d$.  The symbol $v$ is introduced in
+\Cref{sec:singular-endpoint}. \\
+$G(n,p),X_H$ & $n\in\mathbb N$, $0<p<1$ &
+The Erd\H{o}s--R\'enyi random graph and its number of injective
+homomorphisms from $H$, respectively. \\
+$(n)_k$ & Integers $0\le k\le n$ &
+$n(n-1)\cdots(n-k+1)$, the falling factorial. \\
+$p,r$ & Dense regime: $0<p<r<1$ &
+The background edge probability and target density, fixed as
+$n\to\infty$.  The target $H$-density is $r^m$. \\
+$t(H,G)$,
+$\mathcal E_{H,r}$ & A finite graph $G$ &
+$t(H,G)=\hom(H,G)/|V(G)|^{|V(H)|}$;
+$\mathcal E_{H,r}=\{t(H,G(n,p))\ge r^m\}$ is the upper-tail event. \\
+$W,\W_0$ & $W:[0,1]^2\to[0,1]$ &
+A symmetric measurable function (a graphon), and the space of all
+graphons.  A scalar $r$ also denotes the constant graphon $W\equiv r$. \\
+$e(W),t(H,W)$ & $W\in\W_0$ &
+$e(W)=\int W=t(K_2,W)$; $t(H,W)$ is the integral of
+$\prod_{ij\in E(H)}W(x_i,x_j)$ over the vertex variables. \\
+$J_p(z),I_p(W)$ & $0<p<1$, $0\le z\le1$ &
+$J_p(z)=z\log(z/p)+(1-z)\log((1-z)/(1-p))$;
+$I_p(W)=\int J_p(W)$ is the graphon relative entropy. \\
+$\Phi_H(p,r)$,
+$\W_H(p,r)$ & $0<p<r<1$ &
+The minimum of $I_p(W)$ subject to $t(H,W)\ge r^m$, and its set of
+minimizers; see \eqref{eq:graphon-variational-problem}. \\
+$\lambda(p,r)$ & $0<p,r<1$ &
+$\log((1-p)/p)-\log((1-\pc(r))/\pc(r))$;
+the log-odds displacement from the phase boundary, positive when
+$p<\pc(r)$. \\
+\end{notationtable}
+
+\subsubsection*{\Cref{sec:preliminaries}: Graphon topology and entropy maximization}
+
+\begin{notationtable}
+$\|F\|_\square$ & Integrable kernels on $[0,1]^2$ &
+$\sup_{S,T}|\int_{S\times T}F|$, with measurable $S,T\subseteq[0,1]$;
+the cut norm. \\
+$W^\sigma$,
+$\delta_\square(U,W)$ & $U,W\in\W_0$ &
+$W^\sigma(x,y)=W(\sigma x,\sigma y)$ and
+$\delta_\square(U,W)=\inf_\sigma\|U-W^\sigma\|_\square$.
+Here $\sigma$ is a measure-preserving a.e.\ bijection. \\
+$\widetilde\W_0,W_G$ & Graphons; finite graphs $G$ &
+The graphon space modulo zero cut distance, and the step
+graphon associated with $G$.  Uniqueness is understood in
+$\widetilde\W_0$; see \Cref{sec:graphons}. \\
+$q_{11},q_{12},q_{22}$;
+$c$ & Bipodal graphons;
+$q_{ij},c\in[0,1]$ &
+The two within-block densities, cross-block density, and first-block
+size: $q_{11}$ belongs to the block of size $c$ and $q_{22}$ to its
+complement.  In the KRR--S parametrization the smaller block is first. \\
+$S_0(z),s(W)$ & $z\in[0,1]$, $W\in\W_0$ &
+$S_0(z)=-\tfrac12[z\log z+(1-z)\log(1-z)]$;
+$s(W)=\int S_0(W)$. \\
+$\eps,\tau,\vartheta$ & Fixed-density slices &
+$\eps=e(W)$, $\tau=t(H,W)$, and $\vartheta=\tau-\eps^m$. \\
+$\psi_d(\eps,z)$ & $\eps,z\in(0,1)$ &
+$\displaystyle\frac{2[S_0(z)-S_0(\eps)-S_0'(\eps)(z-\eps)]}
+{z^d-\eps^d-d\eps^{d-1}(z-\eps)}$, with the diagonal value filled in
+continuously; the scalar quotient selecting the limiting cross density. \\
+$\zeta_d(\eps)$ & $\eps\in(0,1)$ &
+The unique maximizer of $z\mapsto\psi_d(\eps,z)$.
+For $\eps\ne r_*$, it is the limiting KRR--S cross density and
+satisfies $\zeta_d(\eps)\ne\eps$. \\
+\end{notationtable}
+
+\subsubsection*{\Cref{sec:lz-boundary}: The Lubetzky--Zhao boundary and its two contacts}
+
+\begin{notationtable}
+$r_*,p_*$ & Fixed by $d$ &
+$r_*=(d-1)/d$ and
+$p_*=(d-1)/(d-1+\exp(d/(d-1)))$;
+the exceptional target density and boundary probability. \\
+$\varphi_{p,d}(x)$ & $p\in(0,1)$, $x\in[0,1]$ &
+$J_p(x^{1/d})$; its convex minorant determines the phase boundary. \\
+$h_{p,d}(z)$ & $z\in(0,1)$ &
+$zJ_p''(z)-(d-1)J_p'(z)$; its sign is the sign of
+$\varphi_{p,d}''(z^d)$. \\
+$x_a(p),x_b(p)$ & $0<p<p_*$ &
+The two contact points of the affine part of the convex minorant.
+Their density coordinates are $u_a=x_a^{1/d}$ and $u_b=x_b^{1/d}$;
+see \Cref{lem:contact-points}. \\
+$\pc(r),\sm(r)$ & $r\in(0,1)$ &
+The phase-boundary probability and the other contact density.
+They are analytic for $r\ne r_*$ and extend continuously by
+$\pc(r_*)=p_*$, $\sm(r_*)=r_*$.  For $r\ne r_*$,
+$\sm(r)=\zeta_d(r)$; see \Cref{rmk:bipodal-parameter-expansions}. \\
+$\ell_r(x)$ & $x\in[0,1]$ &
+$J_{\pc(r)}(r)+[J_{\pc(r)}'(r)/(dr^{d-1})](x-r^d)$;
+the supporting tangent, touching at $r^d$ and $\sm(r)^d$ when
+$r\ne r_*$.  It extends to $r=r_*$ in \Cref{sec:constant-graphon-comparison}. \\
+\end{notationtable}
+
+\subsubsection*{\Cref{sec:nonexceptional-endpoint}: Nonexceptional optimizers}
+
+\noindent\emph{Reduction at fixed densities
+(\Cref{sec:local-reduction}).}
+\par\nopagebreak[4]
+
+\begin{notationtable}
+$I$ & Open interval containing $r_0$, with compact closure in
+$(0,1)\setminus\{r_*\}$ &
+A sufficiently small neighborhood of the fixed density $r_0$ on which
+the nonexceptional estimates are uniform; it may be shrunk as needed. \\
+$S_H(\eps,\tau)$ & $(\eps,\tau)\in[0,1]^2$ &
+$\sup\{s(W):e(W)=\eps,\ t(H,W)=\tau\}$;
+the entropy envelope, equal to $-\infty$ for an empty slice. \\
+$I_{p,r}(\eps)$ & $p,r\in(0,1)$,
+$\eps\in[0,1]$ &
+$-2S_H(\eps,r^m)-\log(1-p)+\eps\log((1-p)/p)$;
+the relative-entropy infimum at densities $(\eps,r^m)$, equal to
+$+\infty$ for an empty slice. \\
+$B_{\eps,r}$ & $r\in I$, $\eps<r$ sufficiently close to $r$ &
+The unique bipodal entropy maximizer at densities $(\eps,r^m)$;
+$I_p(B_{\eps,r})=I_{p,r}(\eps)$.
+See \Cref{lem:fixed-density-bipodality}. \\
+\end{notationtable}
+
+\noindent\emph{The boundary cost and its curvature
+(\Cref{sec:nonexceptional-quadratic-growth}).}
+\par\nopagebreak[4]
+
+\begin{notationtable}
+$\delta$ & $r\in I$ &
+$\delta=r-\eps$ is the edge-density deficit. \\
+$g_r(z)$ & $r\in I$, $z\in[0,1]$ &
+$J_{\pc(r)}(z)-\ell_r(z^d)$;
+the nonnegative supporting cost gap, vanishing exactly at
+$r$ and $\sm(r)$; see \eqref{eq:supporting-cost-gap}. \\
+$D_d(r,z)$ & $r,z\in(0,1)$, $z\ne r$ &
+$\displaystyle\frac{z^d-r^d}{dr^{d-1}}-(z-r)>0$;
+the coefficient relating smaller-block size to edge-density deficit, used in
+the comparison construction and \eqref{eq:edge-deficit-coefficient}. \\
+$G_r(\delta)$,
+$G(r,\delta)$ & Small $\delta>0$;
+respectively, a neighborhood of $I\times\{0\}$ &
+$G_r(\delta)=I_{\pc(r),r}(r-\delta)-J_{\pc(r)}(r)$
+is the boundary excess cost.  $G$ is its two-sided analytic extension;
+derivatives at $\delta=0$ refer to $G$. \\
+$A_H(r)$ & $r\in(0,1)\setminus\{r_*\}$ &
+$\partial_\delta^2G(r,0)>0$;
+the analytic coefficient of the quadratic boundary cost, introduced
+in \Cref{thm:positive-second-variation}. \\
+\end{notationtable}
+
+\noindent\emph{The nonexceptional optimizer
+(\Cref{thm:nonexceptional-endpoint}; proof in
+\Cref{sec:nonexceptional-proof}).}
+\par\nopagebreak[4]
+
+\begin{notationtable}
+$\delta_*(p,r)$ & Near $p=\pc(r)$, $r\ne r_*$ &
+The analytic solution of
+$\partial_\delta G(r,\delta_*)=\lambda(p,r)$.
+On the symmetry-breaking side it equals $r-e(W_{p,r})$ and is positive. \\
+$W_{p,r}$ & Near the nonexceptional boundary, $p<\pc(r)$ &
+The unique optimizer, up to relabeling;
+$W_{p,r}=B_{r-\delta_*(p,r),r}$ up to relabeling. \\
+$A_{p,r},c(p,r)$;
+$q_{ij}(p,r)$ & The same regime &
+$A_{p,r}=[0,c(p,r)]$ is the smaller block, with
+$0<c(p,r)<1/2$.  The three densities and $c$ are the KRR--S parameters
+evaluated at $\eps=r-\delta_*$,
+$\vartheta=r^m-(r-\delta_*)^m$. \\
+\end{notationtable}
+
+\subsubsection*{\Cref{sec:singular-endpoint}: The exceptional family and its comparison}
+
+\noindent\emph{Stationary family and scalar cost
+(\Cref{sec:rank-one-stationary-family,sec:constant-graphon-comparison}).}
+
+\begin{notationtable}
+$u_*,P_*$ & Fixed by $d$ &
+$u_*=\sqrt{r_*}$ and $P_*=(p_*,r_*)$;
+the limiting factor value and exceptional boundary point. \\
+$\lambda$,
+$f\otimes f$ & \Cref{sec:singular-endpoint} &
+$\lambda$ is Lebesgue measure, not $\lambda(p,r)$.
+$(f\otimes f)(x,y)=f(x)f(y)$ is a rank-one kernel; it need not be a
+graphon for a general bounded factor $f$. \\
+$q(f)$ & Nonnegative $f\in L^d([0,1])$ &
+$\int_0^1f^d$; regularity gives $t(H,f\otimes f)=q(f)^v$.
+In the localization and comparison proofs, $q$ abbreviates $q(f)$. \\
+$f_{\alpha,s,t}$,
+$W_{\alpha,s,t}$ & $\alpha,s,t\in(0,1)$ &
+$f_{\alpha,s,t}=s\1_{[0,\alpha]}+t\1_{(\alpha,1]}$;
+$W_{\alpha,s,t}=f_{\alpha,s,t}\otimes f_{\alpha,s,t}$. \\
+$u,h,s_h,t_h$ & Near $(u,h)=(u_*,0)$ &
+$u=(s+t)/2$ and $h=(t-s)/2$.
+Along the family, $s_h=u_h-h$ and $t_h=u_h+h$;
+for $h>0$ the two factor values satisfy $s_h<t_h$. \\
+$\alpha_h,f_h,W_h$ & $|h|<h_0$ &
+$f_h=f_{\alpha_h,s_h,t_h}$ and $W_h=f_h\otimes f_h$.
+$\alpha_h$ is the mass of the $s_h$-valued block, not necessarily the
+smaller block; $\alpha_{-h}=1-\alpha_h$ and $\alpha_0=1/2$. \\
+$p_h,q_h,r_h$ & $|h|<h_0$ &
+The background probability, factor moment
+$q_h=q(f_h)=\alpha_hs_h^d+(1-\alpha_h)t_h^d$, and target
+$r_h=q_h^{2/d}$; thus $t(H,W_h)=q_h^v=r_h^m$. \\
+$\gamma_h,\mu_h$,
+$\gamma_*$ & $|h|<h_0$ &
+$\gamma_h=\mu_h m q_h^{v-2}>0$ is the scalar stationarity coefficient;
+$\mu_h$ is the graphon constraint multiplier.
+$\gamma_*=r_*^{-d}$ is the value of $\gamma_h$ at $h=0$. \\
+$F_{p,\gamma}(z)$ & $z\in(0,1)$ &
+$J_p'(z)-\gamma z^{d-1}$; stationarity requires
+$F_{p,\gamma}(f(x)f(y))=0$ a.e., with
+$\gamma=\mu m q(f)^{v-2}$; see \eqref{eq:rank-one-kkt}. \\
+$\ell(z),\ell_*$,
+$\Lambda_h$ & $z\in(0,1)$ &
+$\ell(z)=\log((1-z)/z)$, $\ell_*=\ell(p_*)$,
+$\Lambda_h=\ell(p_h)-\ell_*$.
+$\Lambda_h$ is the slope of the affine change in
+$J_{p_h}-J_{p_*}$, not the displacement $\lambda(p_h,r_h)$. \\
+$\mathcal M_h(z)$,
+$R(h,z)$ & $z$ near $r_*$ &
+$\mathcal M_h(z)=J_{p_h}(z)-(\gamma_h/d)z^d$.
+The analytic quotient $R$ is defined by
+$\mathcal M_h'(z)=(z-s_h^2)(z-s_ht_h)(z-t_h^2)R(h,z)$;
+see \eqref{eq:mh-derivative-factorization}. \\
+$\beta_d,\Gamma_d(z)$ & $z\in[0,1]$ &
+$\beta_d=\gamma_*/d$ is the tangent slope at the singular endpoint;
+$\Gamma_d(z)=J_{p_*}(z)-\ell_{r_*}(z^d)$ is the corresponding supporting
+cost gap.  It vanishes to fourth order at $r_*$ and controls
+$|z-r_*|^4$; see \eqref{eq:endpoint-supporting-gap}. \\
+\end{notationtable}
+
+\noindent\emph{Localization and decomposition
+(\Cref{sec:localization-rank-one}).}
+\par\nopagebreak[4]
+
+\begin{notationtable}
+$d',T_K$ & $d'=d/(d-1)$;
+suitable kernels $K$ &
+$d'$ is the H\"older conjugate of $d$, and
+$(T_Kg)(x)=\int_0^1K(x,y)g(y)\,dy$.
+Here $K$ denotes a kernel, not the compact density interval. \\
+$\mathcal Q_W,g_0$,
+$\theta$ & $g\in L^{d'}([0,1])$, $\|g\|_{d'}\le1$ &
+$\mathcal Q_W(g)=\iint W(x,y)g(x)g(y)\,dx\,dy$;
+$g_0\ge0$ is a unit-norm maximizer and
+$\theta=\mathcal Q_W(g_0)>0$. \\
+$f,E$ & Competitors in \Cref{lem:localization-rank-one} &
+$f=\theta^{1/2}g_0^{1/(d-1)}$ and $E=W-f\otimes f$.
+They satisfy $0\le f\le2$ and $T_E(f^{d-1})=0$;
+$\|f-u_*\|_4,\|E\|_2=O_d(h)$. \\
+\end{notationtable}
+
+\noindent\emph{Factor distributions and Lagrangian comparison
+(\Cref{sec:auxiliary-lagrangian,sec:graphon-comparison}).}
+\par\nopagebreak[4]
+
+\begin{notationtable}
+$\nu,\nu_h$ & Probability measures on $[0,2]$ &
+$\nu=f_\#\lambda$ is the distribution of factor values;
+$\nu_h=(f_h)_\#\lambda=\alpha_h\delta_{s_h}+(1-\alpha_h)\delta_{t_h}$,
+where $\delta_x$ is the Dirac mass at $x$. \\
+$\xi,\sigma$ & Measures on $[0,2]$ &
+$\xi$ is a general probability measure and $\sigma=\xi-\nu_h$ is its
+signed difference from the reference measure; for a competitor,
+$\xi=\nu$. \\
+$m_d(\xi),\Delta_h(\xi)$ & Probability measures $\xi$ on $[0,2]$ &
+$m_d(\xi)=\int x^d\,d\xi(x)$ and
+$\Delta_h(\xi)=m_d(\xi)-q_h$;
+in particular $m_d(\nu)=q(f)$ and $m_d(\nu_h)=q_h$. \\
+$\widetilde\Gamma_d$,
+$\widetilde J_{p_h}$ & Scalar arguments in $[0,4]$ &
+The auxiliary continuations in \eqref{eq:entropy-continuation}.
+They agree with $\Gamma_d,J_{p_h}$ on $[0,1]$;
+above $1$, $\widetilde\Gamma_d(z)=\Gamma_d(1)+(z-1)^2$.
+The continued cost is not a relative entropy above $1$. \\
+$K_h(x,y)$ & $(x,y)\in[0,2]^2$ &
+$\widetilde J_{p_h}(xy)$; the cost kernel in factor-value coordinates,
+as opposed to the graphon kernel on the vertex space. \\
+$\mathcal J_h(\xi)$,
+$\mathcal L_h(\xi)$ & Probability measures $\xi$ on $[0,2]$ &
+$\mathcal J_h(\xi)=\iint K_h\,d\xi\,d\xi$;
+$\mathcal L_h(\xi)=\mathcal J_h(\xi)-\mu_h\{m_d(\xi)^v-q_h^v\}$.
+These are the auxiliary factor functional and Lagrangian. \\
+$\Psi_h(x),\kappa_h$ & $x\in[0,2]$ &
+$\Psi_h(x)=2\int K_h(x,y)\,d\nu_h(y)
+-(2\gamma_hq_h/d)x^d-\kappa_h$, with $\Psi_h(s_h)=0$.
+It represents the first variation of $\mathcal L_h$ at $\nu_h$;
+see \eqref{eq:first-variation}. \\
+$\mathcal N_\rho$,
+$\mathcal T_\rho$ & Small fixed $\rho>0$ &
+$\mathcal N_\rho=(u_*-\rho,u_*+\rho)$ and
+$\mathcal T_\rho=[0,2]\setminus\mathcal N_\rho$;
+the central and tail regions in factor-value space. \\
+$Q_h(x)$,
+$A_{h,\rho}(\xi)$ & $x\in[0,2]$;
+probability measures $\xi$ &
+$Q_h(x)=(x-s_h)(x-t_h)$ and
+$A_{h,\rho}(\xi)=\int_{\mathcal N_\rho}Q_h^2\,d\xi$;
+the central deviation from the two reference factor values. \\
+$I_h^x,R_h^x$ & Functions of $(x,y)$ near $(u_*,u_*)$;
+$h>0$ &
+Interpolation in $x^d$ at $s_h^d,t_h^d$, and the remainder
+$R_h^xF=F-I_h^xF$; the $y$-operators are analogous.
+See \eqref{eq:moment-interpolation}. \\
+$\Omega_\rho$ & A measurable subset of $[0,1]$ &
+$f^{-1}(\mathcal N_\rho)$, the central region in vertex space;
+$\lambda(\Omega_\rho^c)=\nu(\mathcal T_\rho)$.
+It is distinct from the factor-value region $\mathcal N_\rho$. \\
+\end{notationtable}
+
+\subsubsection*{\Cref{sec:concluding-remarks}: Conjectural optimizer structure}
+
+The following symbols belong to \Cref{conj:symmetry-breaking-optimizers}.
+
+\begin{notationtable}
+$\mathcal B_H$ & A subset of $(0,1)^2$ &
+$\{(p,r):p<\pc(r)\}$; the symmetry-breaking region. \\
+$D_H,\pi_H$ & A nonempty interval $D_H\subseteq(0,1)$ &
+$\pi_H:D_H\to(0,1)$ is the conjectured strictly increasing analytic
+function parametrizing nonuniqueness by the target density $r$. \\
+$\mathcal C_H$ & A curve in $\mathcal B_H$ &
+$\{(\pi_H(r),r):r\in D_H\}$; the conjectured set of parameters with
+nonunique optimizers, not the rank-one curve $(p_h,r_h)$. \\
+$\alpha_*,\eta_{\alpha_*}$ & $0<\alpha_*\le1/2$ &
+The prescribed limiting smaller-block size and a conjectured continuous
+path $\eta_{\alpha_*}:(0,1)\to\mathcal B_H\setminus\mathcal C_H$
+approaching $P_*$ with this limit. \\
+\end{notationtable}
