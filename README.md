@@ -69,7 +69,7 @@ The output lists the theorem's project and foundational axioms; `sorryAx` would
 indicate an unproved placeholder.
 
 For definitions, the proof overview, detailed theorem correspondence and exact
-assumptions, read [FORMALISATION.md](FORMALISATION.md).
+assumptions, read [FORMALIZATION.md](FORMALIZATION.md).
 
 <!-- Paper citations link to the corresponding source labels. -->
 [thm:nonexceptional-optimizers]: paper/sections/intro.tex#L256

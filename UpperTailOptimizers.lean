@@ -1,6 +1,6 @@
--- Root module / import manifest for the formalisation of `paper/paper.tex`
+-- Root module / import manifest for the formalization of `paper/paper.tex`
 -- The deterministic results from Sections 1–5 and the appendices, with the scope and
--- representation differences recorded in FORMALISATION.md, and the worked instances.
+-- representation differences recorded in FORMALIZATION.md, and the worked instances.
 -- The imports below are in dependency order and double as the reading order.
 -- Sections 1–3 of `paper/paper.tex`: external inputs, the scalar entropy layer, and the
 -- Lubetzky–Zhao boundary curve (Theorem 3.1).
