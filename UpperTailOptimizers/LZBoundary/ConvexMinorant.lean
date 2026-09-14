@@ -5,7 +5,7 @@ import Mathlib
 
 `lce a b f` is the supremum of all affine functions lying below `f` on `[a,b]`.
 It is the largest convex function `≤ f` (the convex minorant), and is the
-infrastructure for `lem:contact-points` of `paper/bipodal_optimizer.tex`.
+infrastructure for `lem:contact-points` of `paper/paper.tex`.
 
 Proved here: `lce ≤ f`, convexity of `lce`, the affine-minorant bound, the
 tangency lemma (an affine minorant touching `f` at an interior point is tangent),
@@ -15,7 +15,7 @@ endpoint agreement and one-sided continuity (`lce_left_eq`/`lce_right_eq`,
 `lce_affine_on_component` (the η-tilt argument, via `lce_ge_chord_compact`),
 with endpoint variants `lce_eq_affine_left`/`lce_eq_affine_right`.
 
-The final section proves **`lem:two-point-convex-minorant`** of `paper/bipodal_optimizer.tex`
+The final section proves **`lem:two-point-convex-minorant`** of `paper/paper.tex`
 (`lce_isLeast_twoPoint`): the convex minorant at `x` is the *minimum* of the
 two-point convex combinations of `f` representing `x`.  The proof does not follow
 the paper's citation of Rockafellar Cor. 17.1.5 (Mathlib has no convex-envelope

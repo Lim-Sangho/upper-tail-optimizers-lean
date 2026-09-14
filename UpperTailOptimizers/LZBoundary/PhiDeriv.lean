@@ -1,9 +1,9 @@
 import UpperTailOptimizers.LZBoundary.PhiConvex
-import UpperTailOptimizers.Graphon.Basic
+import UpperTailOptimizers.Preliminaries.Graphons.Basic
 
 /-!
 # Second derivative and convex/concave structure of `φ_{p,d}` (`lem:convexity-defect` of
-`paper/bipodal_optimizer.tex`)
+`paper/paper.tex`)
 
 For `p < p_*` the convexity defect `h_{p,d}` is negative at `r_*` and tends to
 `+∞` at both ends of `(0,1)`; being strictly monotone on each side of `r_*`, it
@@ -24,7 +24,7 @@ functions of `p`.  The boundary-slope limits and `phi_continuousOn_Icc` recorded
 * `hpd_left_zero`, `hpd_right_zero` — `lem:convexity-defect`(f): for `p < p_*`, the zeros `u₋ ∈ (0,r_*)`
   and `u₊ ∈ (r_*,1)`, each bundled with positivity of `h_{p,d}` on the outer side.
 * `phi''`, `hasDerivAt_phi''`, `phi''_pos_iff`, `phi''_neg_iff` — `lem:convexity-defect`(d): the explicit
-  formula `φ_{p,d}''(x) = h_{p,d}(u)/(d² u^{2d-1})` and the equality of signs.
+  formula `φ_{p,d}''(x) = h_{p,d}(z)/(d² z^{2d-1})` and the equality of signs.
 * `Jp'_tendsto_atBot`, `Jp'_tendsto_atTop_one`, `phi'_tendsto_atBot`, `phi'_tendsto_atTop`,
   `phi_continuousOn_Icc` — boundary behaviour of `J_p'`, `φ_{p,d}'` and continuity on `[0,1]`.
 * `hpd_strictAntiOn_Ioc`, `hpd_strictMonoOn_Ico`, `hpd_rStar_lt_of_ne` — `lem:convexity-defect`(c): the
@@ -264,7 +264,7 @@ end
 section
 variable {p : ℝ} {d : ℕ}
 
-/-- The explicit second-derivative formula `φ_{p,d}''(x) = h_{p,d}(u)/(d² u^{2d-1})`,
+/-- The explicit second-derivative formula `φ_{p,d}''(x) = h_{p,d}(z)/(d² z^{2d-1})`,
 `u = x^{1/d}`. -/
 noncomputable def phi'' (p : ℝ) (d : ℕ) (x : ℝ) : ℝ :=
   hpd p d (Real.rpow x (1 / (d:ℝ))) /
@@ -757,28 +757,26 @@ theorem strictConvexOn_phi_upper {d : ℕ} {p : ℝ} (hd : 2 ≤ d) (hp0 : 0 < p
 
 /-! ### `lem:convexity-defect` packaged -/
 
-/-- **`lem:convexity-defect` of `paper/bipodal_optimizer.tex`, in one declaration.**
+/-- **`lem:convexity-defect` of `paper/paper.tex`, in one declaration.**
 
-For every `p ∈ (0,1)` and `d ≥ 2`:
+For every `p ∈ (0,1)` and `d ≥ 2`, with the lemma's assertions labelled (a)–(g) in order:
 
-* (a) `h_{p,d}'(u) = d(u - r_*)/(u(1-u)^2)` on `(0,1)`;
+* (a) `h_{p,d}'(z) = d(z - r_*)/(z(1-z)^2)` on `(0,1)`;
 * (b) `h_{p,d}(r_*) = d - (d-1) log((d-1)(1-p)/p)`;
 * (c) `h_{p,d}` is strictly decreasing on `(0,r_*)`, strictly increasing on `(r_*,1)`, and
   has its unique minimum at `r_*`;
-* (d) `φ_{p,d}''(x) = h_{p,d}(u)/(d² u^{2d-1})` for `u = x^{1/d}` (this is the definition of
+* (d) `φ_{p,d}''(x) = h_{p,d}(z)/(d² z^{2d-1})` for `z = x^{1/d}` (this is the definition of
   `phi''`, and `hasDerivAt_phi''` identifies it with the second derivative), so
-  `φ_{p,d}''(x)` and `h_{p,d}(u)` have the same sign;
+  `φ_{p,d}''(x)` and `h_{p,d}(z)` have the same sign;
 * (e) if `p ≥ p_*` then `h_{p,d} ≥ 0` on `(0,1)` and `φ_{p,d}` is convex on `[0,1]`;
 * (f) if `p < p_*` then `h_{p,d}` has exactly two zeros `u₋ < r_* < u₊`, is positive on
   `(0,u₋) ∪ (u₊,1)` and negative on `(u₋,u₊)`;
 * (g) accordingly `φ_{p,d}` is strictly convex on `[0,u₋^d]` and `[u₊^d,1]` and strictly
   concave on `[u₋^d,u₊^d]`.
 
-The two zeros are produced **existentially**: the lemma asserts no regularity of `u_±` in
-`p`, every consumer in this development uses the existential form (`hpd_left_zero`,
-`hpd_right_zero`), and naming them as functions of `p` would require a separate uniqueness
-lemma for no gain.  This theorem is a convenience packaging; the downstream proofs consume
-the individual lemmas assembled here. -/
+Here the two zeros are produced existentially; `convexity_defect_zeros`
+(`LZBoundary/PaperForm.lean`) states the lemma with the named zeros `uMinus p d`, `uPlus p d`.
+The downstream proofs consume the individual lemmas assembled here. -/
 theorem convexity_defect {d : ℕ} (hd : 2 ≤ d) {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) :
     (∀ u : ℝ, 0 < u → u < 1 →
         HasDerivAt (hpd p d) (((d : ℝ) * (u - rStar d)) / (u * (1 - u) ^ 2)) u) ∧

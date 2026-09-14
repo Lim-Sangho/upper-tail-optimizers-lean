@@ -136,12 +136,12 @@ Hence, by \eqref{eq:relative-entropy-identity},
 \[
   I_{p,r}(\eps^*)\le I_p(W^*)=\Phi_H(p,r).
 \]
-On the other hand, $B_{\eps^*,r}$ has edge density $\eps^*$ and
+On the other hand, $B_{\eps^*,r^m}$ has edge density $\eps^*$ and
 $H$-density $r^m$, so it is feasible for the variational problem defining
 $\Phi_H(p,r)$ in \eqref{eq:graphon-variational-problem}.  Using
 \eqref{eq:reduced-objective-attainment}, we get
 \[
-  \Phi_H(p,r)\le I_p(B_{\eps^*,r})=I_{p,r}(\eps^*).
+  \Phi_H(p,r)\le I_p(B_{\eps^*,r^m})=I_{p,r}(\eps^*).
 \]
 Thus, the preceding inequalities are all equalities, and in particular,
 \[
@@ -156,19 +156,19 @@ $s(W^*)\le S_H(\eps^*,r^m)$ were strict.  Then the inequality
 $I_{p,r}(\eps^*)\le I_p(W^*)$ would also be strict.  Therefore,
 $W^*$ is an entropy maximizer under the fixed constraints
 $e(W)=\eps^*$ and $t(H,W)=r^m$.  By the uniqueness part of
-\Cref{thm:krrs-analytic-extension}, $W^*$ agrees with $B_{\eps^*,r}$ up to relabeling.
+\Cref{thm:krrs-analytic-extension}, $W^*$ agrees with $B_{\eps^*,r^m}$ up to relabeling.
 
-For any $\eps\in(r-\rho,r)$, the graphon $B_{\eps,r}$ is feasible for the
+For any $\eps\in(r-\rho,r)$, the graphon $B_{\eps,r^m}$ is feasible for the
 variational problem defining $\Phi_H(p,r)$ in \eqref{eq:graphon-variational-problem}, so
 \[
-  I_{p,r}(\eps)=I_p(B_{\eps,r})\ge\Phi_H(p,r)
+  I_{p,r}(\eps)=I_p(B_{\eps,r^m})\ge\Phi_H(p,r)
   =I_{p,r}(\eps^*).
 \]
 Therefore, $\eps^*$ minimizes $I_{p,r}$ on $(r-\rho,r)$, and
 \eqref{eq:edge-density-minimization} follows.  The same inequality gives the converse
 statement: if $\eps$ minimizes $I_{p,r}$ on $(r-\rho,r)$, then
-$I_p(B_{\eps,r})=I_{p,r}(\eps)=I_{p,r}(\eps^*)
-=\Phi_H(p,r)$, and $B_{\eps,r}$ is feasible, so it is an optimizer
+$I_p(B_{\eps,r^m})=I_{p,r}(\eps)=I_{p,r}(\eps^*)
+=\Phi_H(p,r)$, and $B_{\eps,r^m}$ is feasible, so it is an optimizer
 attaining $\Phi_H(p,r)$.
 Finally, distinct $\eps$ give graphons of distinct edge density, hence
 inequivalent under relabeling, which gives the asserted bijection.
@@ -181,10 +181,9 @@ inequivalent under relabeling, which gives the asserted bijection.
 \label{rmk:bipodal-parameter-expansions}
 \Cref{thm:nonexceptional-endpoint} gives the qualitative limit
 \(c(p,r)\to0\).  The purpose of this remark is to quantify that limit and the
-corresponding change in the block densities.  Fix a compact interval $K$
-inside the $r$-neighborhood furnished by the theorem, take $r\in K$,
-and let \(p\uparrow\pc(r)\) from the
-symmetry-breaking side.  Relabel the podes as in \Cref{thm:nonexceptional-endpoint}, so
+corresponding change in the block densities.  Work in the neighborhood $U$
+of that theorem, shrinking it if necessary, and let \(p\uparrow\pc(r)\)
+from the symmetry-breaking side.  Relabel the podes as in \Cref{thm:nonexceptional-endpoint}, so
 that the first pode has size \(c=c(p,r)\), and set
 \[
   \delta_*:=r-e(W_{p,r}),
@@ -194,28 +193,30 @@ that the first pode has size \(c=c(p,r)\), and set
 Denote by \(q_{11}^0(r)\) the value at
 \((\eps,\vartheta)=(r,0)\) of the analytically extended KRR--S parameter
 \(q_{11}\) from \Cref{thm:krrs-analytic-extension}.
-All limits below refer to this regime, and the $O_{H,K}$-bounds are uniform
-for $r\in K$ and $p$ sufficiently close to $\pc(r)$.
+All limits below refer to this regime, and the $O_{H,U}$-bounds are uniform
+for $(p,r)\in U$ with $p<\pc(r)$.
 
 For \(z\ne r\), define
 \begin{equation}\label{eq:edge-deficit-coefficient}
   D_d(r,z):=\frac{z^d-r^d}{d r^{d-1}}-(z-r)>0,
 \end{equation}
 where positivity follows from the strict convexity of \(z\mapsto z^d\).
+Since $\zeta_d(r_0)\ne r_0$, continuity lets us shrink $U$ so that
+$D_d(r,\zeta_d(r))$ is uniformly bounded away from zero.
 Then
 \[
-  \delta_*=2D_d(r,z)c+O_{H,K}(\delta_*^2).
+  \delta_*=2D_d(r,z)c+O_{H,U}(\delta_*^2).
 \]
 Thus, \(2D_d(r,z)\) is the first-order edge-density deficit per unit of
 smaller-pode mass, after \(q_{22}\) is adjusted to preserve the
 \(H\)-density.  Combining this relation with
-\(\delta_*=\lambda(p,r)/A_H(r)+O_{H,K}(\lambda(p,r)^2)\) from
+\(\delta_*=\lambda(p,r)/A_H(r)+O_{H,U}(\lambda(p,r)^2)\) from
 \Cref{thm:nonexceptional-endpoint} gives
 \begin{equation}\label{eq:optimizer-block-size}
   c(p,r)=
   \frac{\lambda(p,r)}
   {2D_d(r,\zeta_d(r))A_H(r)}
-  +O_{H,K}(\lambda(p,r)^2),
+  +O_{H,U}(\lambda(p,r)^2),
 \end{equation}
 \begin{equation}\label{eq:optimizer-block-density}
   q_{22}(p,r)
@@ -224,13 +225,13 @@ smaller-pode mass, after \(q_{22}\) is adjusted to preserve the
   \frac{\zeta_d(r)^d-r^d}
        {d r^{d-1}D_d(r,\zeta_d(r))A_H(r)}
   \lambda(p,r)
-  +O_{H,K}(\lambda(p,r)^2),
+  +O_{H,U}(\lambda(p,r)^2),
 \end{equation}
 and
 \[
-  q_{12}(p,r)=\zeta_d(r)+O_{H,K}(\lambda(p,r)),
+  q_{12}(p,r)=\zeta_d(r)+O_{H,U}(\lambda(p,r)),
   \qquad
-  q_{11}(p,r)=q_{11}^0(r)+O_{H,K}(\lambda(p,r)).
+  q_{11}(p,r)=q_{11}^0(r)+O_{H,U}(\lambda(p,r)).
 \]
 In particular, both the smaller-pode size and the displacement of the
 large-pode density from \(r\) are of order \(\lambda(p,r)\).
@@ -262,13 +263,16 @@ arguments \((p,r)\) and evaluate the analytic KRR--S parameter map at
   (\eps,\vartheta)
   =\bigl(r-\delta_*,\,r^m-(r-\delta_*)^m\bigr).
 \]
-Since \(\vartheta=O_{H,K}(\delta_*)\), \Cref{thm:krrs-analytic-extension} and analyticity at
-\((r,0)\) give
+After shrinking $U$, the segments from $(r,0)$ to these parameter pairs
+lie in a compact subset of the KRR--S analytic domain, as in
+\Cref{sec:nonexceptional-proof}.  Uniform Taylor estimates, the boundary
+values in \Cref{thm:krrs-analytic-extension}, and
+\(\vartheta=O_{H,U}(\delta_*)\) therefore give
 \[
-  c=O_{H,K}(\delta_*),\qquad
-  q_{22}-r=O_{H,K}(\delta_*),\qquad
-  q_{12}-z=O_{H,K}(\delta_*),\qquad
-  q_{11}-q_{11}^0(r)=O_{H,K}(\delta_*).
+  c=O_{H,U}(\delta_*),\qquad
+  q_{22}-r=O_{H,U}(\delta_*),\qquad
+  q_{12}-z=O_{H,U}(\delta_*),\qquad
+  q_{11}-q_{11}^0(r)=O_{H,U}(\delta_*).
 \]
 The exact edge-density identity
 \[
@@ -278,7 +282,7 @@ The exact edge-density identity
 \]
 therefore yields
 \begin{equation}\label{eq:bipodal-edge-linearization}
-  -\delta_*=(q_{22}-r)+2(z-r)c+O_{H,K}(\delta_*^2).
+  -\delta_*=(q_{22}-r)+2(z-r)c+O_{H,U}(\delta_*^2).
 \end{equation}
 
 For the \(H\)-density, separate the homomorphisms according to the number of
@@ -288,31 +292,31 @@ vertices mapped to the smaller pode.  Since \(H\) is \(d\)-regular and has
   t(H,W_{p,r})
   &=(1-c)^{2m/d}q_{22}^m
     +\frac{2m}{d}c(1-c)^{2m/d-1}
-      q_{12}^d q_{22}^{m-d}+O_{H,K}(c^2)\\
+      q_{12}^d q_{22}^{m-d}+O_{H,U}(c^2)\\
   &=r^m+m r^{m-1}(q_{22}-r)
     +\frac{2m}{d}r^{m-d}(z^d-r^d)c
-    +O_{H,K}(\delta_*^2).
+    +O_{H,U}(\delta_*^2).
 \end{align*}
 Using \(t(H,W_{p,r})=r^m\), we obtain
 \begin{equation}\label{eq:bipodal-density-linearization}
   0=m r^{m-1}(q_{22}-r)
     +\frac{2m}{d}r^{m-d}(z^d-r^d)c
-    +O_{H,K}(\delta_*^2).
+    +O_{H,U}(\delta_*^2).
 \end{equation}
 Eliminating \(q_{22}-r\) between
 \eqref{eq:bipodal-edge-linearization} and
 \eqref{eq:bipodal-density-linearization} gives
 \[
-  \delta_*=2D_d(r,z)c+O_{H,K}(\delta_*^2),
+  \delta_*=2D_d(r,z)c+O_{H,U}(\delta_*^2),
   \qquad
-  c=\frac{\delta_*}{2D_d(r,z)}+O_{H,K}(\delta_*^2),
+  c=\frac{\delta_*}{2D_d(r,z)}+O_{H,U}(\delta_*^2),
 \]
 which proves \eqref{eq:optimizer-block-size}.  Finally,
 \eqref{eq:bipodal-edge-linearization} gives
 \[
   q_{22}
   =r-\frac{z^d-r^d}{d r^{d-1}D_d(r,z)}\delta_*
-   +O_{H,K}(\delta_*^2),
+   +O_{H,U}(\delta_*^2),
 \]
 and \eqref{eq:optimizer-block-density} follows.
 

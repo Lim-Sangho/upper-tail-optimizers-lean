@@ -1,17 +1,16 @@
 import UpperTailOptimizers.LZBoundary.Arc
-import UpperTailOptimizers.Graphon.ExternalInputs
+import UpperTailOptimizers.Preliminaries.Graphons.ExternalInputs
 
 /-!
-# Boundary uniqueness at `p = pc(r)` (the boundary case of `thm:local-optimizer-structure`(a))
+# Boundary uniqueness at `p = pc(r)` (the boundary case of the replica-symmetric side)
 
 At a boundary point `p₀ = pc(r)` of an oriented regular Lubetzky–Zhao boundary arc, the constant
 graphon `W ≡ r` is the unique minimizer of
 `inf { I_{p₀}(W) : t(H,W) ≥ r^m }`.
 
-`paper/bipodal_optimizer.tex` has no separate lemma for this: the proof of `thm:local-optimizer-structure`(a)
-(`thm:local-optimizer-structure`) covers the closed side `p ≥ pc(r)` in one step, using condition (M2)
-of `thm:scalar-lz-boundary` — an equivalence valid for every `p ∈ (0,1)` — together with the uniqueness
-clause of `thm:lz-criterion`.  The Lean development instead
+`paper/paper.tex` has no separate lemma for this: the closed side `p ≥ pc(r)` follows in one
+step from condition (M2) of Theorem 3.1 — an equivalence valid for every
+`p ∈ (0,1)` — together with the uniqueness clause of `thm:lz-criterion`.  The Lean development instead
 *derives* uniqueness from the Lubetzky–Zhao-arc fields, so it needs the boundary case as a
 standalone lemma.
 

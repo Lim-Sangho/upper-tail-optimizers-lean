@@ -1,18 +1,18 @@
 import UpperTailOptimizers.LZBoundary.ContactMaps
-import UpperTailOptimizers.Graphon.ScalarEntropy
+import UpperTailOptimizers.Preliminaries.Graphons.ScalarEntropy
 
 /-!
 # Real-analyticity of the scalar entropy
 
-`analyticAt_shannonH` used to live in `Nondegeneracy/AnalyticTools.lean`, which sits high in
-the import order (it reaches `LocalReduction/Main.lean`, hence `KRRS/Main.lean`).  Once Appendix A
-was re-formalised, `KRRS/Reduced.lean` needed this lemma too, and importing `AnalyticTools`
+`analyticAt_shannonH` used to live in `NonexceptionalEndpoint/QuadraticGrowth/AnalyticTools.lean`, which sits high in
+the import order (it reaches `NonexceptionalEndpoint/LocalReduction/Main.lean`, hence `Preliminaries/KRRSAnalyticExtension/Main.lean`).  Once Appendix B
+was re-formalised, `Preliminaries/KRRSAnalyticExtension/Reduced.lean` needed this lemma too, and importing `AnalyticTools`
 from there closed an import cycle
 
-  `KRRS/Reduced → Nondegeneracy/AnalyticTools → … → LocalReduction → KRRS/Main → … → KRRS/Reduced`.
+  `Preliminaries/KRRSAnalyticExtension/Reduced → NonexceptionalEndpoint/QuadraticGrowth/AnalyticTools → … → LocalReduction → Preliminaries/KRRSAnalyticExtension/Main → … → Preliminaries/KRRSAnalyticExtension/Reduced`.
 
 So the lemma is recorded here instead, above both consumers: this file needs only
-`LZBoundary/ContactMaps.lean` (for `analyticAt_log_comp`) and `Graphon/ScalarEntropy.lean`
+`LZBoundary/ContactMaps.lean` (for `analyticAt_log_comp`) and `Preliminaries/Graphons/ScalarEntropy.lean`
 (for `shannonH`), neither of which depends on the KRR–S development.
 -/
 

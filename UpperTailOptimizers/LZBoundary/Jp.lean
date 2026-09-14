@@ -3,24 +3,26 @@ import Mathlib
 /-!
 # The binomial relative entropy `J_p`
 
-This file formalises the relative-entropy function `J_p` of `paper/bipodal_optimizer.tex` (introduced
+This file formalises the relative-entropy function `J_p` of `paper/paper.tex` (introduced
 in Section 1 and used throughout) together with its first two derivatives, as recorded in
 the proof of `lem:convexity-defect` (convexity defect).
 
-For `0 < p < 1` and `u ∈ [0,1]` (with the convention `0 * log 0 = 0`, which is
+For `0 < p < 1` and `z ∈ [0,1]` (with the convention `0 * log 0 = 0`, which is
 automatic in Mathlib because `Real.log 0 = 0`),
-$$ J_p(u) = u \log\frac{u}{p} + (1-u)\log\frac{1-u}{1-p}. $$
+$$ J_p(z) = z \log\frac{z}{p} + (1-z)\log\frac{1-z}{1-p}. $$
 
-The derivative identities proved here (valid on the open interval `0 < u < 1`):
-$$ J_p'(u) = \log\frac{u(1-p)}{(1-u)p}, \qquad
-   J_p''(u) = \frac{1}{u(1-u)}. $$
+The derivative identities proved here (valid on the open interval `0 < z < 1`):
+$$ J_p'(z) = \log\frac{z(1-p)}{(1-z)p}, \qquad
+   J_p''(z) = \frac{1}{z(1-z)}. $$
+
+The Lean definitions below name the variable `u`.
 -/
 
 namespace UpperTailOptimizers
 
 open Real
 
-/-- The binomial relative entropy `J_p(u)` (Section 1 of `paper/bipodal_optimizer.tex`). -/
+/-- The binomial relative entropy `J_p(z)` (Section 1 of `paper/paper.tex`). -/
 noncomputable def Jp (p u : ℝ) : ℝ :=
   u * Real.log (u / p) + (1 - u) * Real.log ((1 - u) / (1 - p))
 

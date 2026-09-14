@@ -2,24 +2,24 @@ import UpperTailOptimizers.LZBoundary.Phi
 import UpperTailOptimizers.LZBoundary.PhiConvex
 
 /-!
-# Oriented Lubetzky–Zhao boundary arcs (the Lean packaging of `thm:scalar-lz-boundary`)
+# Oriented Lubetzky–Zhao boundary arcs (the Lean packaging of Theorem 3.1)
 
-This file introduces the `LZBoundaryArc` record.  `paper/bipodal_optimizer.tex` has no corresponding
-definition: its `thm:scalar-lz-boundary` (Section 3 `sec:lz-boundary`) states
+This file introduces the `LZBoundaryArc` record.  `paper/paper.tex` has no corresponding
+definition: its Theorem 3.1 (Section 3 `sec:lz-boundary`) states
 conditions (M1)–(M5) directly about the global analytic maps `pc`, `sm`.  The record is a
 Lean-side abstraction that bundles those conditions on an interval `U`, plus one extra
-window condition the development needs (`noFlatTie`); `scalar_lz_boundary_arcs`
-(`LZBoundary/Existence.lean`) is the Lean form of `thm:scalar-lz-boundary` and constructs such an arc
+window condition the development needs (`noFlatTie`); `lz_boundary_arcs`
+(`LZBoundary/Existence.lean`) is the Lean form of Theorem 3.1 and constructs such an arc
 through every non-exceptional `r₀`.
 
 We work in the `u`-coordinate `u = x^{1/d}` (so `x = u^d`); the Lubetzky–Zhao one-variable
 graph is `x ↦ J_p(x^{1/d})`, and at the contact `x = r^d` the supporting line has slope
 `φ'_{p}(r^d) = J_p'(r)/(d r^{d-1})`, recorded as `slope`.
 
-**Field-to-paper dictionary.**  The correspondence with `thm:scalar-lz-boundary` is not a bijection, so
+**Field-to-paper dictionary.**  The correspondence with Theorem 3.1 is not a bijection, so
 each field docstring names its counterpart explicitly:
 
-| field           | `thm:scalar-lz-boundary`                                                       |
+| field           | Theorem 3.1                                                       |
 |-----------------|-------------------------------------------------------------------|
 | `ordering`      | part of (M1) (`0 < pc(r) < r < 1`, `sm(r) ≠ r`, `sm(r) ∈ (0,1)`)   |
 | `pcLtPStar`     | the `pc(r) < p_*` half of (M1)                                    |
@@ -62,9 +62,9 @@ theorem slope_pos {d : ℕ} (hd : 1 ≤ d) {pc : ℝ → ℝ} {r : ℝ}
   exact div_pos hlog hden
 
 /-- An **oriented Lubetzky–Zhao boundary arc** for the degree-`d` problem.  A Lean-side record with
-no numbered counterpart in `paper/bipodal_optimizer.tex`.  `U` is the arc, `pc` the boundary curve
+no numbered counterpart in `paper/paper.tex`.  `U` is the arc, `pc` the boundary curve
 `p = pc(r)`, `sm` the second-contact density `s(r)`.  The condition labels below are those
-of `thm:scalar-lz-boundary` of `paper/bipodal_optimizer.tex`; see the module docstring for the dictionary. -/
+of Theorem 3.1 of `paper/paper.tex`; see the module docstring for the dictionary. -/
 structure LZBoundaryArc (d : ℕ) where
   /-- The interval of target densities `r`. -/
   U : Set ℝ
@@ -77,7 +77,7 @@ structure LZBoundaryArc (d : ℕ) where
   analytic_pc : AnalyticOnNhd ℝ pc U
   /-- `sm` is real-analytic on `U`. -/
   analytic_sm : AnalyticOnNhd ℝ sm U
-  /-- Part of (M1) of `thm:scalar-lz-boundary`: `0 < pc(r) < r < 1` and `sm(r) ≠ r`, with
+  /-- Part of (M1) of Theorem 3.1: `0 < pc(r) < r < 1` and `sm(r) ≠ r`, with
   `sm(r) ∈ (0,1)`. -/
   ordering : ∀ r ∈ U, 0 < pc r ∧ pc r < r ∧ r < 1 ∧ sm r ≠ r ∧ 0 < sm r ∧ sm r < 1
   /-- (M3): the tangent line `ℓ_r` at `r^d` lies below the graph (supporting line). -/
@@ -104,7 +104,7 @@ structure LZBoundaryArc (d : ℕ) where
   subarcs, since `pc` is continuous and `pc < p_*` on the arc. -/
   orientation : ∀ r ∈ U, ∀ p, pc r < p → p < pStar d →
     ∃ a : ℝ, ∀ x ∈ Set.Icc (0:ℝ) 1, Jp p r + a * (x - r ^ d) ≤ phi p d x
-  /-- **No flat tie** — a Lean-side window condition with no counterpart in `thm:scalar-lz-boundary`.
+  /-- **No flat tie** — a Lean-side window condition with no counterpart in Theorem 3.1.
   On the replica-symmetric side (Jensen form): for `pc(r) < p < p_*`, any `[0,1]`-valued
   law `μ` with mean `r^d` has `∫ φ_{p,d} dμ ≥ J_p(r)`, with equality only at the Dirac
   mass at `r^d`. -/

@@ -19,17 +19,20 @@ This is the analytic implicit function theorem absent from Mathlib v4.28.0.  Two
 specialisations are used in the development:
 
 * `analytic_implicit_two_z` / `analytic_implicit_two` — two equations, two unknowns, one
-  scalar parameter: the analyticity of the Lubetzky–Zhao contact maps (`thm:scalar-lz-boundary` of
-  `paper/bipodal_optimizer.tex`);
+  scalar parameter: the analyticity of the Lubetzky–Zhao contact maps (Theorem 3.1 of
+  `paper/paper.tex`);
 * `analytic_implicit_scalar` — one scalar equation, one scalar unknown, parameters in `P`:
-  the analytic critical point `δ_*(p,r)` of Section 6 of `paper/bipodal_optimizer.tex`.
+  the analytic critical point `δ_*(p,r)` of Section 4 of `paper/paper.tex`.
 
 The companion `analytic_inverse` is the **analytic inverse function theorem**
-(Krantz–Parks, *A Primer of Real Analytic Functions*, Theorem 2.5.1), used in Appendix A
-of `paper/bipodal_optimizer.tex` (`KRRS/Main.lean`).  It is not a corollary of
+(Krantz–Parks, *A Primer of Real Analytic Functions*, Theorem 2.5.1), used in the
+formalisation of Appendix B of `paper/paper.tex` (`Preliminaries/KRRSAnalyticExtension/CChart.lean`, `Preliminaries/KRRSAnalyticExtension/Family.lean`) and
+in `LZBoundary/AnalyticImplicitUnique.lean`.  It is not a corollary of
 `analytic_implicit`: besides the analytic local inverse it supplies the *injectivity* of
-`F` on the source neighbourhood, which is the entire content of the appendix's uniqueness
-clause ("`θ = Γ(y)` is the unique parameter vector in `𝒰` solving (A.1)").
+`F` on the source neighbourhood.  That injectivity is what yields the local uniqueness that
+the appendix takes from its two applications of the analytic implicit function theorem: the
+unique chart `c = C(ε,a,b,ϑ)` of `eq:krrs-density-constraint`, and the unique local solution
+`(a_*,b_*)` of the stationarity system in `eq:krrs-stationary-densities`.
 -/
 
 open Filter Topology

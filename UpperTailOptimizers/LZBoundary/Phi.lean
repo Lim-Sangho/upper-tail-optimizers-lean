@@ -3,13 +3,13 @@ import UpperTailOptimizers.LZBoundary.Jp
 /-!
 # The one-variable Lubetzky–Zhao function and the convexity defect (`lem:convexity-defect`)
 
-For `d ≥ 2` and `p ∈ (0,1)`, Section 3 of `paper/bipodal_optimizer.tex` (Section 3) studies
+For `d ≥ 2` and `p ∈ (0,1)`, Section 3 of `paper/paper.tex` studies
 `φ_{p,d}(x) = J_p(x^{1/d})` and the convexity-defect function
-`h_{p,d}(u) = u J_p''(u) - (d-1) J_p'(u)`, whose sign is the sign of `φ_{p,d}''`.
+`h_{p,d}(z) = z J_p''(z) - (d-1) J_p'(z)`, whose sign is the sign of `φ_{p,d}''`.
 
-Clauses (a)–(c) of `lem:convexity-defect` (convexity defect) are proved here at
-the level of `h_{p,d}`:
-* `hasDerivAt_hpd` :  `h_{p,d}'(u) = d(u - r_*) / (u(1-u)^2)`,
+Clauses (a)–(c) of `lem:convexity-defect` (convexity defect), as enumerated in the docstring
+of `convexity_defect` (`LZBoundary/PhiDeriv.lean`), are proved here at the level of `h_{p,d}`:
+* `hasDerivAt_hpd` :  `h_{p,d}'(z) = d(z - r_*) / (z(1-z)^2)`,
 * `hpd_rStar` :       `h_{p,d}(r_*) = d - (d-1) log((d-1)(1-p)/p)`,
 * `hpd_strictAntiOn` / `hpd_strictMonoOn` : monotonicity on `(0,r_*)` and `(r_*,1)`,
 where `r_* = (d-1)/d` and `p_* = (d-1)/((d-1)+exp(d/(d-1)))`.
@@ -24,7 +24,7 @@ namespace UpperTailOptimizers
 
 open Real
 
-/-- The exceptional density `r_* = (d-1)/d` of `paper/bipodal_optimizer.tex` (the Lean name is
+/-- The exceptional density `r_* = (d-1)/d` of `paper/paper.tex` (the Lean name is
 `rStar`). -/
 noncomputable def rStar (d : ℕ) : ℝ := ((d : ℝ) - 1) / (d : ℝ)
 
@@ -35,7 +35,7 @@ noncomputable def pStar (d : ℕ) : ℝ :=
 /-- The Lubetzky–Zhao one-variable function `φ_{p,d}(x) = J_p(x^{1/d})`. -/
 noncomputable def phi (p : ℝ) (d : ℕ) (x : ℝ) : ℝ := Jp p (Real.rpow x (1 / (d : ℝ)))
 
-/-- The convexity-defect function `h_{p,d}(u) = u J_p''(u) - (d-1) J_p'(u)`. -/
+/-- The convexity-defect function `h_{p,d}(z) = z J_p''(z) - (d-1) J_p'(z)`. -/
 noncomputable def hpd (p : ℝ) (d : ℕ) (u : ℝ) : ℝ := u * Jp'' u - ((d : ℝ) - 1) * Jp' p u
 
 section

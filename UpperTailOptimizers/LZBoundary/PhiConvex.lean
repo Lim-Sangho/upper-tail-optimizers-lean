@@ -4,7 +4,7 @@ import UpperTailOptimizers.LZBoundary.Phi
 # `lem:convexity-defect`, the `p_*` threshold (convexity half)
 
 This file completes the convexity half of `lem:convexity-defect` of
-`paper/bipodal_optimizer.tex`.  The sign of
+`paper/paper.tex`.  The sign of
 `φ_{p,d}''` is the sign of `h_{p,d}`, whose minimum over `(0,1)` is its value at
 `r_*`.  We prove the threshold characterisation
 `h_{p,d}(r_*) ≥ 0 ↔ p_* ≤ p`, equivalently `φ_{p,d}` is (everywhere) convex if and
@@ -100,7 +100,7 @@ variable {p : ℝ} {d : ℕ}
 
 /-- The first derivative of `φ_{p,d}(x) = J_p(x^{1/d})` at `x > 0`:
 `φ_{p,d}'(x) = J_p'(x^{1/d}) · (1/d) x^{1/d - 1}`, matching the paper's
-`J_p'(u)/(d u^{d-1})` after substituting `u = x^{1/d}`. -/
+`J_p'(z)/(d z^{d-1})` after substituting `z = x^{1/d}`. -/
 theorem hasDerivAt_phi (hd : 2 ≤ d) (hp0 : 0 < p) (hp1 : p < 1)
     {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
     HasDerivAt (phi p d)

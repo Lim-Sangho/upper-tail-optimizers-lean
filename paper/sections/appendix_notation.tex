@@ -15,7 +15,7 @@ Set subscripts, such as $K$ and $U$ in $O_{H,K}$ and $O_{H,U}$,
 allow uniform dependence over the parameters in that set.
 For $o$-terms, subscripts indicate fixed parameters; convergence is taken
 in the stated regime; no uniformity in these parameters is asserted.
-The notation $f\ll g$ means $f/g\to0$, and $f\gg g$ means $g\ll f$.
+The notation $f=o(g)$ means $f/g\to0$.
 
 \subsection{Symbols}\label{app:symbols}
 
@@ -59,10 +59,11 @@ $n(n-1)\cdots(n-k+1)$, the falling factorial. \\
 $p,r$ & Dense regime: $0<p<r<1$ &
 The background edge probability and target density, fixed as
 $n\to\infty$.  The target $H$-density is $r^m$. \\
-$t(H,G)$,
-$\mathcal E_{H,r}$ & A finite graph $G$ &
-$t(H,G)=\hom(H,G)/|V(G)|^{|V(H)|}$;
-$\mathcal E_{H,r}=\{t(H,G(n,p))\ge r^m\}$ is the upper-tail event. \\
+$t(H,G)$ & Finite graphs $H,G$ &
+$t(H,G)=\hom(H,G)/|V(G)|^{|V(H)|}$ is the homomorphism density. \\
+$\mathcal E_{H,p,r}$ & $0<p<r<1$ &
+$\{t(H,G(n,p))\ge r^{|E(H)|}\}$; the upper-tail event under $G(n,p)$,
+with $n$ suppressed in the notation. \\
 $W,\W_0$ & $W:[0,1]^2\to[0,1]$ &
 A symmetric measurable function (a graphon), and the space of all
 graphons.  A scalar $r$ also denotes the constant graphon $W\equiv r$. \\
@@ -164,9 +165,12 @@ $\eps\in[0,1]$ &
 $-2S_H(\eps,r^m)-\log(1-p)+\eps\log((1-p)/p)$;
 the relative-entropy infimum at densities $(\eps,r^m)$, equal to
 $+\infty$ for an empty slice. \\
-$B_{\eps,r}$ & $r\in I$, $\eps<r$ sufficiently close to $r$ &
-The unique bipodal entropy maximizer at densities $(\eps,r^m)$;
-$I_p(B_{\eps,r})=I_{p,r}(\eps)$.
+$B_{\eps,\tau}$ & $\tau=r^m$, $r\in I$,
+$\eps\in(r-\rho_0,r)$ &
+The unique bipodal entropy maximizer with $e(B_{\eps,\tau})=\eps$ and
+$t(H,B_{\eps,\tau})=\tau$, so $s(B_{\eps,\tau})=S_H(\eps,\tau)$.
+In particular,
+$I_p(B_{\eps,r^m})=I_{p,r}(\eps)$.
 See \Cref{lem:fixed-density-bipodality}. \\
 \end{notationtable}
 
@@ -209,7 +213,7 @@ $\partial_\delta G(r,\delta_*)=\lambda(p,r)$.
 On the symmetry-breaking side it equals $r-e(W_{p,r})$ and is positive. \\
 $W_{p,r}$ & Near the nonexceptional boundary, $p<\pc(r)$ &
 The unique optimizer, up to relabeling;
-$W_{p,r}=B_{r-\delta_*(p,r),r}$ up to relabeling. \\
+$W_{p,r}=B_{r-\delta_*(p,r),r^m}$ up to relabeling. \\
 $A_{p,r},c(p,r)$;
 $q_{ij}(p,r)$ & The same regime &
 $A_{p,r}=[0,c(p,r)]$ is the smaller block, with

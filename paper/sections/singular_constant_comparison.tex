@@ -45,8 +45,8 @@ The analytic family constructed in
 
 These expansions immediately locate the family relative to
 $P_*=(p_*,r_*)$.  For all sufficiently small $h>0$, the expansion of $r_h$
-gives $r_h<r_*$.  Moreover, $\Lambda_h>0$ implies the strict decrease of
-$\ell$, which gives $p_h<p_*$.
+gives $r_h<r_*$.  Moreover, since $\ell$ is strictly decreasing,
+$\Lambda_h>0$ implies $p_h<p_*$.
 
 \begin{proof}[Proof outline]
 The symmetries in \Cref{lem:rank-one-kkt-family} show that
@@ -84,8 +84,9 @@ We now turn to the comparison stated at the beginning of this subsection.
 \label{lem:constant-graphon-comparison}
 For sufficiently small $h>0$,
 \[
-  I_{p_h}(W_h)-J_{p_h}(r_h)
-  =-\frac{d^3}{3}h^4+O_d(h^6).
+  e(W_h)=r_h-(d-1)h^2+O_d(h^4),
+  \qquad
+  I_{p_h}(W_h)=J_{p_h}(r_h)-\frac{d^3}{3}h^4+O_d(h^6).
 \]
 In particular, the constant graphon
 $W\equiv r_h$ is feasible but has strictly larger $I_{p_h}$-value,

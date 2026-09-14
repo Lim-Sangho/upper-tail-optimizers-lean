@@ -199,7 +199,7 @@
 
 \title{Bipodal optimizers in the upper-tail variational problem for regular subgraph densities}
 
-\date{\today}
+\date{}
 
 \author[1,2]{Sangho Lim}
 \author[3]{Seonghyuk Im}
@@ -230,19 +230,18 @@ exceptional target density $(d-1)/d$, we prove that the optimizer of the
 Chatterjee--Varadhan variational problem on the symmetry-breaking side is
 bipodal (two-block) and unique up to relabeling.
 Its block parameters depend analytically on $(p,r)$.
-We derive a first-order expansion for the edge-density deficit,
-together with a second-order expansion of the rate function
-governing the exponential decay of the upper-tail probability.
-These results also show that the conditioned random graph has an
-asymptotically bipodal structure.
-At the exceptional boundary point, where the nonexceptional theory
+To treat the exceptional boundary point, where the nonexceptional theory
 degenerates, we construct an analytic curve approaching that point from the
 symmetry-breaking side along which the unique optimizers are nonconstant
 rank-one bipodal graphons.
-The optimizers approach their constant limits through two distinct
-mechanisms.  For each fixed nonexceptional target density, one block shrinks
-to zero measure as the phase boundary is approached, giving convergence in
-$L^1$ but not in $L^\infty$.
+In both settings, we derive asymptotic expansions of the edge-density deficit
+and the rate function that governs the exponential decay of the upper-tail probability.
+Moreover, the conditioned random graph converges in cut distance
+to the corresponding bipodal optimizer as $n\to\infty$.
+As $(p,r)$ approaches the phase boundary from the symmetry-breaking side,
+the optimizers converge to their constant limits through two distinct mechanisms.
+For each fixed nonexceptional target density, one block shrinks to zero measure,
+giving convergence in $L^1$ but not in $L^\infty$.
 Along the exceptional curve, both blocks remain macroscopic: their sizes
 tend to $1/2$ and all three block densities tend to $(d-1)/d$, yielding
 convergence in $L^\infty$.
@@ -293,9 +292,10 @@ grant funded by the Korean Government (MSIT) (No.~RS-2023-00279680).
 \bibliographystyle{plain}
 \bibliography{cites}
 
+\clearpage
 \appendix
 
-\input{sections/appendix_notation}
+%\input{sections/appendix_notation}
 \input{sections/appendix_preliminaries}
 \input{sections/appendix_lz_boundary}
 \input{sections/appendix_nonexceptional_endpoint}

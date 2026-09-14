@@ -2,7 +2,7 @@ import UpperTailOptimizers.LZBoundary.AnalyticIFT
 import UpperTailOptimizers.LZBoundary.Phi
 
 /-!
-# Layers 2–3 of `thm:scalar-lz-boundary` of `paper/bipodal_optimizer.tex`: analyticity of the
+# Layers 2–3 of Theorem 3.1 of `paper/paper.tex`: analyticity of the
 Lubetzky–Zhao contact maps
 
 The two Lubetzky–Zhao contacts `u_a(p), u_b(p)` solve, in the `u`-coordinate, the
@@ -14,7 +14,7 @@ two-equation system `contactF`:
 `0 < a₀ < b₀ < 1`, `0 < p₀ < 1`, and the convexity-defect non-degeneracy
 `h_{p₀,d}(a₀) ≠ 0`, `h_{p₀,d}(b₀) ≠ 0`, the contacts extend to real-analytic
 functions of `p`.  This is the local, functional form of `lem:contact-points`
-(`lem:contact-points`) needed for `thm:scalar-lz-boundary`; it is a direct
+(`lem:contact-points`) needed for Theorem 3.1; it is a direct
 application of the analytic implicit function theorem `analytic_implicit_two`
 (`LZBoundary/AnalyticIFT.lean`), via:
 

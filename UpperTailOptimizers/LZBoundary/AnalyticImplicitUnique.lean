@@ -17,11 +17,13 @@ The upgraded statement `analytic_implicit_unique` names the two neighbourhoods: 
 `isOpen_prod_iff`; `T` is then cut down further, to the interior of the set of parameters
 for which the inverse map lands in `S` and inverts `Φ`.
 
-The consumer is `lem:rank-one-kkt-family` of `paper/singular_endpoint.tex`.  The
-desingularized family system of `SingularEndpoint/FamilySystem.lean` is invariant under `h ↦ -h`,
+The consumer is `lem:rank-one-kkt-family` of `paper/sections/singular.tex`.  The
+desingularized family system of `SingularEndpoint/RankOneStationaryFamily/FamilySystem.lean` is invariant under `h ↦ -h`,
 so `h ↦ z (-h)` solves it as well; local uniqueness in the above sense is what forces the
-symmetries `u_{-h} = u_h`, `p_{-h} = p_h`, `γ_{-h} = γ_h` stated by that lemma (the family
-here also carries `ℓ_{-h} = ℓ_h`, which the paper writes as `ℓ(p_{-h}) = ℓ(p_h)`).  The
+symmetries `u_{-h} = u_h`, `p_{-h} = p_h`, `γ_{-h} = γ_h` stated by that lemma.  (The Lean
+family is solved jointly for `(u_h, ℓ_h, γ_h)` with `ℓ_h = ℓ(p_h)`, so uniqueness gives all
+three at once; the paper applies it only to `u_h` and reads off the evenness of `γ_h` and
+`p_h` from their explicit formulas.)  The
 germ form `analytic_implicit_locally_unique` is the shape that argument applies directly.
 
 ## Contents
@@ -198,7 +200,7 @@ any `z'` continuous at `p₀` with `z' p₀ = z₀` and `F (z' p) p = 0` near `p
 near `p₀`.
 
 This is the form used for `lem:rank-one-kkt-family`: applied to `z' p := z (-p)`
-— legitimate because the desingularized system of `SingularEndpoint/FamilySystem.lean` is invariant
+— legitimate because the desingularized system of `SingularEndpoint/RankOneStationaryFamily/FamilySystem.lean` is invariant
 under `h ↦ -h` — it yields the symmetries of the coalescing scalar family. -/
 theorem analytic_implicit_locally_unique {E P : Type*}
     [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]

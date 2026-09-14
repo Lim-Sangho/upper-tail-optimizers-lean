@@ -5,8 +5,8 @@ import UpperTailOptimizers.LZBoundary.Existence
 
 `LZBoundary/Existence.lean` produces, around every non-exceptional `r₀ ∈ (0,1)`, *a* Lubetzky–Zhao boundary arc
 `M : LZBoundaryArc d` carrying a boundary curve `M.pc` and a second-contact map `M.sm`.  This
-file removes the arc from the picture, which is what Section 3 of `paper/bipodal_optimizer.tex`
-(`thm:scalar-lz-boundary` and the discussion after it) actually asserts:
+file removes the arc from the picture, which is what Section 3 of `paper/paper.tex`
+(Theorem 3.1 and the discussion after it) actually asserts:
 
 * `LZBoundaryArc.pc_unique` / `LZBoundaryArc.sm_unique` — any two arcs agree on the overlap of
   their domains, so there is only **one** boundary curve and one second-contact map.
@@ -34,7 +34,7 @@ open Set Filter Topology
 
 /-! ### Uniqueness of the boundary data -/
 
-/-- The supporting line of (M3) of `thm:scalar-lz-boundary`, transported to the `x`-coordinate: at `r ∈ U` the boundary
+/-- The supporting line of (M3) of Theorem 3.1, transported to the `x`-coordinate: at `r ∈ U` the boundary
 parameter `pc r` admits a supporting line of `φ_{pc r,d}` at `x = r^d`.  This is the shape
 consumed by `brokenSide`, `orientation` and the `lubetzkyZhao` axiom. -/
 theorem LZBoundaryArc.supporting_x {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {r : ℝ} (hr : r ∈ M.U) :
@@ -61,7 +61,7 @@ theorem LZBoundaryArc.pc_unique {d : ℕ} (hd : 2 ≤ d) (M M' : LZBoundaryArc d
   · exact absurd (M'.supporting_x hd hr') (M.brokenSide r hr (M'.pc r) (M'.ordering r hr').1 h)
 
 /-- **Uniqueness of the second-contact map.**  Once `pc_unique` makes the two supporting
-lines identical, `M`'s `quadSep` field ((M5) of `thm:scalar-lz-boundary`) evaluated at `M'.sm r` — where
+lines identical, `M`'s `quadSep` field ((M5) of Theorem 3.1) evaluated at `M'.sm r` — where
 `M'`'s `secondContact` field makes the gap vanish — forces `M'.sm r ∈ {r, M.sm r}`, and `M'.sm r ≠ r`. -/
 theorem LZBoundaryArc.sm_unique {d : ℕ} (hd : 2 ≤ d) (M M' : LZBoundaryArc d) {r : ℝ}
     (hr : r ∈ M.U) (hr' : r ∈ M'.U) : M.sm r = M'.sm r := by
@@ -163,7 +163,7 @@ theorem pcGlobal_rStar {d : ℕ} (hd : 2 ≤ d) : pcGlobal d (rStar d) = pStar d
 /-- **Condition (M2), globally.**  With the continuous extension `pcGlobal`, the point
 `(r^d, J_p(r))` lies on the convex minorant of `φ_{p,d}` if and only if `p ≥ pcGlobal d r`,
 for **every** `r ∈ (0,1)` — including the exceptional density, where no Lubetzky–Zhao boundary arc exists.
-This is the closing clause of `thm:scalar-lz-boundary` of `paper/bipodal_optimizer.tex`. -/
+This is the closing clause of Theorem 3.1 of `paper/paper.tex`. -/
 theorem lz_boundary_M2_global {d : ℕ} (hd : 2 ≤ d) {r p : ℝ} (hr0 : 0 < r) (hr1 : r < 1)
     (hp0 : 0 < p) (hp1 : p < 1) :
     (∃ a : ℝ, ∀ x ∈ Set.Icc (0:ℝ) 1, Jp p r + a * (x - r ^ d) ≤ phi p d x)
@@ -178,7 +178,7 @@ theorem lz_boundary_M2_global {d : ℕ} (hd : 2 ≤ d) {r p : ℝ} (hr0 : 0 < r)
       exact no_supporting_rStar hd hp0 hcon h
     · intro h
       exact supporting_of_pStar_le hd h hp1 hr0 hr1
-  · obtain ⟨M, hrU, -⟩ := scalar_lz_boundary_arcs hd hr0 hr1 hexc
+  · obtain ⟨M, hrU, -⟩ := lz_boundary_arcs hd hr0 hr1 hexc
     rw [pcGlobal_eq_pc hd M hrU]
     constructor
     · intro h
@@ -202,7 +202,7 @@ def contactSet (d : ℕ) (p r : ℝ) : Set ℝ :=
     Jp p s = Jp p r + (Jp' p r / ((d:ℝ) * r ^ (d - 1))) * (s ^ d - r ^ d)}
 
 /-- **The contact set on an arc is the two-point set `{r, s(r)}`** — condition (M4) of
-`thm:scalar-lz-boundary`: `⊇` is the `ordering` and `secondContact` fields, `⊆` is the `quadSep`
+Theorem 3.1: `⊇` is the `ordering` and `secondContact` fields, `⊆` is the `quadSep`
 field (M5). -/
 theorem LZBoundaryArc.contactSet_eq {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {r : ℝ}
     (hr : r ∈ M.U) : contactSet d (M.pc r) r = {r, M.sm r} := by
@@ -331,14 +331,14 @@ theorem pcGlobal_pos_le {d : ℕ} (hd : 2 ≤ d) {r : ℝ} (hr0 : 0 < r) (hr1 : 
     0 < pcGlobal d r ∧ pcGlobal d r ≤ pStar d := by
   by_cases hexc : r = rStar d
   · subst hexc; rw [pcGlobal_rStar hd]; exact ⟨pStar_pos hd, le_rfl⟩
-  · obtain ⟨M, hrU, -⟩ := scalar_lz_boundary_arcs hd hr0 hr1 hexc
+  · obtain ⟨M, hrU, -⟩ := lz_boundary_arcs hd hr0 hr1 hexc
     rw [pcGlobal_eq_pc hd M hrU]
     exact ⟨(M.ordering r hrU).1, (M.pcLtPStar r hrU).le⟩
 
 /-- Off the exceptional density the boundary curve stays *strictly* below the threshold. -/
 theorem pcGlobal_lt_pStar {d : ℕ} (hd : 2 ≤ d) {r : ℝ} (hr0 : 0 < r) (hr1 : r < 1)
     (hexc : r ≠ rStar d) : pcGlobal d r < pStar d := by
-  obtain ⟨M, hrU, -⟩ := scalar_lz_boundary_arcs hd hr0 hr1 hexc
+  obtain ⟨M, hrU, -⟩ := lz_boundary_arcs hd hr0 hr1 hexc
   rw [pcGlobal_eq_pc hd M hrU]
   exact M.pcLtPStar r hrU
 
@@ -389,7 +389,7 @@ theorem continuousAt_pcGlobal_rStar {d : ℕ} (hd : 2 ≤ d) :
 /-- `pcGlobal` is analytic off the exceptional density. -/
 theorem analyticAt_pcGlobal {d : ℕ} (hd : 2 ≤ d) {r : ℝ} (hr0 : 0 < r) (hr1 : r < 1)
     (hexc : r ≠ rStar d) : AnalyticAt ℝ (pcGlobal d) r := by
-  obtain ⟨M, hrU, -⟩ := scalar_lz_boundary_arcs hd hr0 hr1 hexc
+  obtain ⟨M, hrU, -⟩ := lz_boundary_arcs hd hr0 hr1 hexc
   refine (M.analytic_pc r hrU).congr ?_
   filter_upwards [M.isOpen_U.mem_nhds hrU] with s hs
   exact (pcGlobal_eq_pc hd M hs).symm
@@ -404,7 +404,7 @@ theorem continuousOn_pcGlobal {d : ℕ} (hd : 2 ≤ d) :
 
 /-! ### Continuity of the second-contact map at the exceptional density
 
-The remaining clause of `thm:scalar-lz-boundary`'s continuous-extension statement.  The mathematical
+The remaining clause of Theorem 3.1's continuous-extension statement.  The mathematical
 content is that off the exceptional density the pair `{r^d, s(r)^d}` is *exactly* the
 Lubetzky–Zhao contact pair `{u_a(pc r)^d, u_b(pc r)^d}` (`contact_mem_lz_boundary`); the contacts are
 then squeezed towards `r_*^d` by any two flanking abscissae whose own boundary values are
@@ -567,7 +567,7 @@ theorem smGlobal_pow_mem {d : ℕ} (hd : 2 ≤ d) (G : GlobalContacts d) {r : �
     (hr0 : 0 < r) (hr1 : r < 1) (hexc : r ≠ rStar d) :
     (smGlobal d r) ^ d = (G.ua (pcGlobal d r)) ^ d ∨
       (smGlobal d r) ^ d = (G.ub (pcGlobal d r)) ^ d := by
-  obtain ⟨M, hrU, -⟩ := scalar_lz_boundary_arcs hd hr0 hr1 hexc
+  obtain ⟨M, hrU, -⟩ := lz_boundary_arcs hd hr0 hr1 hexc
   obtain ⟨hpc0, -, -, hsmne, hsm0, hsm1⟩ := M.ordering r hrU
   obtain ⟨hmin, htouch⟩ := M.contact_data hd hrU
   rw [pcGlobal_eq_pc hd M hrU, smGlobal_eq_sm hd M hrU]
@@ -623,7 +623,7 @@ theorem smGlobal_mem_Ioo {d : ℕ} (hd : 2 ≤ d) {r : ℝ} (hr0 : 0 < r) (hr1 :
     0 < smGlobal d r ∧ smGlobal d r < 1 := by
   by_cases hexc : r = rStar d
   · subst hexc; rw [smGlobal_rStar hd]; exact ⟨rStar_pos hd, rStar_lt_one hd⟩
-  · obtain ⟨M, hrU, -⟩ := scalar_lz_boundary_arcs hd hr0 hr1 hexc
+  · obtain ⟨M, hrU, -⟩ := lz_boundary_arcs hd hr0 hr1 hexc
     obtain ⟨-, -, -, -, hsm0, hsm1⟩ := M.ordering r hrU
     rw [smGlobal_eq_sm hd M hrU]
     exact ⟨hsm0, hsm1⟩
@@ -693,7 +693,7 @@ theorem continuousAt_smGlobal_rStar {d : ℕ} (hd : 2 ≤ d) :
 /-- `smGlobal` is analytic off the exceptional density. -/
 theorem analyticAt_smGlobal {d : ℕ} (hd : 2 ≤ d) {r : ℝ} (hr0 : 0 < r) (hr1 : r < 1)
     (hexc : r ≠ rStar d) : AnalyticAt ℝ (smGlobal d) r := by
-  obtain ⟨M, hrU, -⟩ := scalar_lz_boundary_arcs hd hr0 hr1 hexc
+  obtain ⟨M, hrU, -⟩ := lz_boundary_arcs hd hr0 hr1 hexc
   refine (M.analytic_sm r hrU).congr ?_
   filter_upwards [M.isOpen_U.mem_nhds hrU] with s hs
   exact (smGlobal_eq_sm hd M hs).symm

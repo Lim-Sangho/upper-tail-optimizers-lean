@@ -4,7 +4,7 @@ import UpperTailOptimizers.LZBoundary.PhiConvex
 /-!
 # Bridge between `φ_{p,d}` and the contact slope `sCM`
 
-Coordinate infrastructure for Section 3 of `paper/bipodal_optimizer.tex` (`sec:lz-boundary`, `thm:scalar-lz-boundary`):
+Coordinate infrastructure for Section 3 of `paper/paper.tex` (`sec:lz-boundary`, Theorem 3.1):
 structural facts tying the Lubetzky–Zhao one-variable function
 `phi p d x = Jp p (x^{1/d})` to the contact slope `sCM d p u = J_p'(u)/(d u^{d-1})`:
 

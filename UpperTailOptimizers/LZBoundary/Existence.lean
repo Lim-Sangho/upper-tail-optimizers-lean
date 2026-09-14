@@ -7,15 +7,15 @@ import UpperTailOptimizers.LZBoundary.ContactMono
 import UpperTailOptimizers.LZBoundary.ContactBridge
 
 /-!
-# Lubetzky–Zhao contacts and existence of regular Lubetzky–Zhao boundary arcs (Lemmas 3.3–3.4, `thm:scalar-lz-boundary`)
+# Lubetzky–Zhao contacts and existence of regular Lubetzky–Zhao boundary arcs (Lemmas 3.3–3.4, Theorem 3.1)
 
-This file proves the results of Section 3 of `paper/bipodal_optimizer.tex` (Section 3):
+This file proves the results of Section 3 of `paper/paper.tex`:
 
 * `lz_boundary_contacts`        — `lem:contact-points` (existence of the two
                               Lubetzky–Zhao contacts and the common-tangent equations),
 * `lz_boundary_endpoint_limits` — `lem:contact-point-limits` (limits of the
                               contacts as `p → p_*`, `p → 0`),
-* `scalar_lz_boundary_arcs`     — `thm:scalar-lz-boundary` (existence of an
+* `lz_boundary_arcs`     — Theorem 3.1 (existence of an
                               oriented regular Lubetzky–Zhao boundary arc through every
                               non-exceptional `r₀`).
 
@@ -28,22 +28,22 @@ the *lower convex envelope* and its structure theory, the full one-variable `φ`
 derivative/asymptotic analysis, and the subsequence/cluster machinery are **not present
 in Mathlib v4.28.0**.
 
-**`thm:scalar-lz-boundary`** (`scalar_lz_boundary_arcs`) is sorry-free and
-axiom-clean (`#print axioms scalar_lz_boundary_arcs ⇒ propext, Classical.choice, Quot.sound`,
+**Theorem 3.1** (`lz_boundary_arcs`) is sorry-free and
+axiom-clean (`#print axioms lz_boundary_arcs ⇒ propext, Classical.choice, Quot.sound`,
 i.e. only the standard Lean axioms, no project axiom).  It is built on the keystone
 `exists_globalContacts` (the global single-valued real-analytic monotone contact maps
 `u_a, u_b`, via a multivariate analytic implicit function theorem absent from Mathlib
 v4.28.0), the construction half `arcMaps_of_globalContacts` (the `ordering`,
 `supporting` and `secondContact` fields, by inverting the relevant contact family), and
 the three *regularity* fields `arcMaps_quadSep` (`quadSep` = condition (M5) of
-`thm:scalar-lz-boundary`, uniform quadratic separation via a Heine–Cantor tube + Taylor +
+Theorem 3.1, uniform quadratic separation via a Heine–Cantor tube + Taylor +
 compactness), `arcMaps_orientation` (`orientation` = the replica-symmetric half of (M2),
 the supporting-line ⟺ convex-minorant dichotomy), and `arcMaps_noFlatTie` (`noFlatTie`,
 the Lean-side window condition, Jensen via the strict supporting line + an ae→Dirac
 argument), each consuming the global contact data via `A.gc`.
 
 The `LZBoundaryArc` field labels used below are those of `LZBoundary/Arc.lean`, whose module
-docstring gives the dictionary to conditions (M1)–(M5) of `thm:scalar-lz-boundary`.
+docstring gives the dictionary to conditions (M1)–(M5) of Theorem 3.1.
 
 `lem:convexity-defect` is *not* here: the convex–concave–convex structure of
 `φ_{p,d}` — including the one-sided packagings `strictConvexOn_phi_left` /
@@ -523,7 +523,7 @@ private theorem contact_lt_false {d : ℕ} (hd : 2 ≤ d) {p a₁ b₁ a₂ b₂
     mul_pos (sub_pos.mpr hm12) (sub_pos.mpr hBA)]
 
 /-- **Per-`p` uniqueness of the constrained Lubetzky–Zhao contact pair.** -/
-private theorem contact_unique {d : ℕ} (hd : 2 ≤ d) {p a₁ b₁ a₂ b₂ : ℝ}
+theorem contact_unique {d : ℕ} (hd : 2 ≤ d) {p a₁ b₁ a₂ b₂ : ℝ}
     (hp0 : 0 < p) (hp : p < pStar d)
     (ha₁ : 0 < a₁) (ha₁s : a₁ < rStar d) (hb₁s : rStar d < b₁) (hb₁ : b₁ < 1)
     (hcf₁ : contactF d (a₁, b₁) p = 0) (hha₁ : 0 < hpd p d a₁) (hhb₁ : 0 < hpd p d b₁)
@@ -995,9 +995,9 @@ theorem lz_boundary_endpoint_limits {d : ℕ} (hd : 2 ≤ d)
   exact ⟨part1.1, part1.2, part2.1, part2.2⟩
 
 /-!
-## `thm:scalar-lz-boundary`: assembly scaffold
+## Theorem 3.1: assembly scaffold
 
-The proof of `thm:scalar-lz-boundary` is split into precisely-stated,
+The proof of Theorem 3.1 is split into precisely-stated,
 individually faithful sub-lemmas (the "`exists_lz_boundary_component`" pattern of
 `lem:contact-points`).  The
 structure `ArcMaps d r₀` packages the *construction* half — the parameter
@@ -1009,13 +1009,13 @@ equations).  The three *regularity* fields `quadSep`, `orientation`, `noFlatTie`
 supplied separately by `arcMaps_quadSep`, `arcMaps_orientation`, `arcMaps_noFlatTie`,
 each consuming an `ArcMaps`.
 
-`scalar_lz_boundary_arcs` then assembles the `LZBoundaryArc` record and discharges
+`lz_boundary_arcs` then assembles the `LZBoundaryArc` record and discharges
 non-exceptionality, so the theorem decomposes into the four proved sub-obligations
 `exists_arcMaps`, `arcMaps_quadSep`, `arcMaps_orientation`, `arcMaps_noFlatTie`.
 -/
 
 open Filter Topology in
-/-- **Global Lubetzky–Zhao contact data — the keystone of the Lean proof of `thm:scalar-lz-boundary`.**  The two contact
+/-- **Global Lubetzky–Zhao contact data — the keystone of the Lean proof of Theorem 3.1.**  The two contact
 maps `u_a, u_b : (0,p_*) → (0,1)` of Lemmas 3.3–3.4, packaged as *single-valued*
 real-analytic functions: on `(0,p_*)` they are ordered `0 < u_a < r_* < u_b < 1`,
 solve the `u`-coordinate contact system `contactF d (u_a,u_b) p = 0` (equal slope +
@@ -1199,7 +1199,7 @@ private theorem hpd_comp_continuousAt {d : ℕ} {p₀ : ℝ} {g : ℝ → ℝ}
       exact ne_of_gt this
 
 open Filter Topology in
-/-- **The keystone of the Lean proof of `thm:scalar-lz-boundary`.**  The global single-valued analytic monotone
+/-- **The keystone of the Lean proof of Theorem 3.1.**  The global single-valued analytic monotone
 Lubetzky–Zhao contact maps exist.  We pick, for each `p ∈ (0,p_*)`, the base solution
 `(u_a(p), u_b(p))` of `exists_contactF_zero` (via `Classical.choose`).  The
 `GlobalContacts` conditions are proved as follows: `contact` (directly), the
@@ -1370,13 +1370,13 @@ structure ArcMaps (d : ℕ) (r₀ : ℝ) where
   sm : ℝ → ℝ
   analytic_pc : AnalyticOnNhd ℝ pc U
   analytic_sm : AnalyticOnNhd ℝ sm U
-  /-- The `LZBoundaryArc.ordering` field (part of (M1) of `thm:scalar-lz-boundary`). -/
+  /-- The `LZBoundaryArc.ordering` field (part of (M1) of Theorem 3.1). -/
   ordering : ∀ r ∈ U, 0 < pc r ∧ pc r < r ∧ r < 1 ∧ sm r ≠ r ∧ 0 < sm r ∧ sm r < 1
-  /-- The `LZBoundaryArc.supporting` field ((M3) of `thm:scalar-lz-boundary`): the tangent line at
+  /-- The `LZBoundaryArc.supporting` field ((M3) of Theorem 3.1): the tangent line at
   `r^d` lies below the graph. -/
   supporting : ∀ r ∈ U, ∀ u ∈ Set.Icc (0:ℝ) 1,
     Jp (pc r) r + slope d pc r * (u ^ d - r ^ d) ≤ Jp (pc r) u
-  /-- The `LZBoundaryArc.secondContact` field (half of (M4) of `thm:scalar-lz-boundary`): a second
+  /-- The `LZBoundaryArc.secondContact` field (half of (M4) of Theorem 3.1): a second
   contact at `sm(r)^d`. -/
   secondContact : ∀ r ∈ U,
     Jp (pc r) (sm r) = Jp (pc r) r + slope d pc r * ((sm r) ^ d - r ^ d)
@@ -1673,7 +1673,7 @@ theorem arcMaps_upper {d : ℕ} (hd : 2 ≤ d) (G : GlobalContacts d) {r₀ : �
   exact ⟨A⟩
 
 /-- **Construction of the arc from the global contacts** (inversion half of
-`thm:scalar-lz-boundary`).  Given the global Lubetzky–Zhao contact maps, invert the relevant family (`u_a` if
+Theorem 3.1).  Given the global Lubetzky–Zhao contact maps, invert the relevant family (`u_a` if
 `r₀ < r_*`, `u_b` if `r₀ > r_*`) to the analytic boundary curve `pc` on an interval
 `U ∋ r₀` (analytic inverse function theorem `contact_localInverse_analytic` patched
 over `U`, the bijection from `mono_ua`/`mono_ub` + the endpoint limits via
@@ -1689,7 +1689,7 @@ theorem arcMaps_of_globalContacts {d : ℕ} (hd : 2 ≤ d) (G : GlobalContacts d
   · exact arcMaps_lower hd G hr₀0 hlow
   · exact arcMaps_upper hd G hupp hr₀1
 
-/-- **Construction half of `thm:scalar-lz-boundary`** (the three shallow fields), now factored
+/-- **Construction half of Theorem 3.1** (the three shallow fields), now factored
 through the keystone
 `GlobalContacts`: the global contact maps exist (`exists_globalContacts`) and the arc
 is built by inverting the relevant family (`arcMaps_of_globalContacts`). -/
@@ -2607,7 +2607,7 @@ theorem quadSep_pointwise {d : ℕ} (hd : 2 ≤ d) {p xa xb m η m_K b_mid x γ 
       rw [mul_one] at t; linarith [t, hgx]
 
 /-- **The `quadSep` field: uniform quadratic separation** for an `ArcMaps`.  Condition
-(M5) of `thm:scalar-lz-boundary`): on a
+(M5) of Theorem 3.1): on a
 compact subarc `K`, the zeros `u_±(p_r)` of `h_{p_r,d}` give, uniformly, two
 strictly-convex windows around the contacts `x_a(p_r), x_b(p_r) = {r^d, sm(r)^d}`;
 Taylor's theorem with `φ'' ≥ m_K > 0` there (`quadratic_lower_of_deriv2_ge`) yields the
@@ -2823,7 +2823,7 @@ theorem arcMaps_quadSep {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ} (A : ArcMaps d r�
     rw [hLineU, hmin_eq]; exact hmain
 
 /-- **The `orientation` field** for an `ArcMaps`.  The replica-symmetric half of
-condition (M2) of `thm:scalar-lz-boundary`: by the contact
+condition (M2) of Theorem 3.1: by the contact
 monotonicity (`dx_a/dp > 0` on the lower family, `dx_b/dp < 0` on the upper), for
 `p > pc(r)` the relevant contact moves so that `r^d` sits on a strictly convex piece
 of the convex minorant (a supporting line at `r^d` persists), while for `p < pc(r)`
@@ -2870,7 +2870,7 @@ theorem arcMaps_orientation {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ} (A : ArcMaps d
 
 
 /-- **The broken side of the Lubetzky–Zhao boundary, globally** (the `p < pc(r)` half of
-condition (M2) of `thm:scalar-lz-boundary`).
+condition (M2) of Theorem 3.1).
 For `r` on the arc and *every* `0 < p < pc(r)`, no supporting line lies below `φ_{p,d}` at
 `x = r^d`.  This strengthens the negative side of `arcMaps_orientation` from a local
 window `(pc r − δ, pc r)` to the full broken side `(0, pc r)`: the only role of `δ` there is
@@ -3052,7 +3052,7 @@ theorem noFlatTie_of_strict_supporting {d : ℕ} (hd : 2 ≤ d) {p r a : ℝ}
 
 open MeasureTheory in
 /-- **The `noFlatTie` field: no flat tie** (Jensen form) for an `ArcMaps`.  A Lean-side
-window condition with no counterpart in `thm:scalar-lz-boundary`: on
+window condition with no counterpart in Theorem 3.1: on
 the whole replica-symmetric window `pc(r) < p < p_*`, the point `(r^d, J_p(r))`
 is not on any nontrivial straight segment of the convex minorant of
 `x ↦ J_p(x^{1/d})`; equivalently, any `[0,1]`-valued law of mean `r^d` has
@@ -3125,7 +3125,7 @@ theorem noFlatTie_of_pStar_le {d : ℕ} (hd : 2 ≤ d) {p r : ℝ}
   obtain ⟨a, hLle, hLlt⟩ := supportingLine_strict_of_pStar_le hd hps hp1 hr0 hr1
   exact noFlatTie_of_strict_supporting hd (lt_of_lt_of_le (pStar_pos hd) hps) hp1 hr0 hLle hLlt
 
-/-- **`thm:scalar-lz-boundary`.**  For every
+/-- **Theorem 3.1.**  For every
 non-exceptional target density `r₀ ∈ (0,1) \ {(d-1)/d}` there is an oriented
 regular Lubetzky–Zhao boundary arc whose interval `U` contains `r₀`, and `r₀` is
 non-exceptional for it.
@@ -3134,7 +3134,7 @@ The proof assembles the `LZBoundaryArc` record from the construction data
 `exists_arcMaps` (the shallow fields) and the regularity lemmas `arcMaps_quadSep`,
 `arcMaps_orientation`, `arcMaps_noFlatTie`; the record assembly and
 non-exceptionality are discharged here directly. -/
-theorem scalar_lz_boundary_arcs {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ}
+theorem lz_boundary_arcs {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ}
     (hr₀0 : 0 < r₀) (hr₀1 : r₀ < 1) (hexc : r₀ ≠ rStar d) :
     ∃ M : LZBoundaryArc d, r₀ ∈ M.U ∧ M.NonExceptional r₀ := by
   obtain ⟨A⟩ := exists_arcMaps hd hr₀0 hr₀1 hexc

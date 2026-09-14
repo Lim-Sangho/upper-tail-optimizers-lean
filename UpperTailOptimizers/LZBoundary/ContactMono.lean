@@ -1,8 +1,8 @@
 import UpperTailOptimizers.LZBoundary.ContactMaps
 
 /-!
-# Monotonicity of the Lubetzky–Zhao contact maps (Layer 4 of `thm:scalar-lz-boundary` of
-`paper/bipodal_optimizer.tex`)
+# Monotonicity of the Lubetzky–Zhao contact maps (Layer 4 of Theorem 3.1 of
+`paper/paper.tex`)
 
 `contact_deriv_ua_pos`: the left contact map `u_a(p)` is strictly increasing
 (`dx_a/dp > 0`).  Differentiating the chord equation `(contactF …).2 = 0` and using
@@ -17,7 +17,7 @@ right-endpoint tangent bound `pow_tangent_lt_right`.
 Provides the joint 2-variable Fréchet derivatives of `Jp`, `Jp'`, `sCM`
 (`hasFDerivAt_Jp_joint` etc.) and the chain-rule helper `hasDerivAt_comp_pair`.
 Together with `contacts_analytic` and `contact_localInverse_analytic` this
-completes the *local* functional `lem:contact-points` of `paper/bipodal_optimizer.tex`.
+completes the *local* functional `lem:contact-points` of `paper/paper.tex`.
 -/
 
 open UpperTailOptimizers Real Filter Topology

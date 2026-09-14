@@ -95,7 +95,9 @@ envelope
   \sup\{s(W):e(W)=\eps,\ t(H,W)=\tau\}.
 \end{equation}
 We use the convention that the supremum is $-\infty$ if the constraint set is
-empty.  For $p,r\in(0,1)$, define the reduced objective
+empty.  When the maximizer is bipodal and unique up to relabeling, denote it
+by $B_{\eps,\tau}$; its subscripts specify the edge and $H$-densities.
+For $p,r\in(0,1)$, define the reduced objective
 \begin{equation}\label{eq:reduced-objective}
   I_{p,r}(\eps)=
   -2S_H(\eps,r^m)
@@ -129,11 +131,11 @@ There exist $\rho_0>0$ and an open interval $I\subset(0,1)\setminus\{r_*\}$ cont
 $r_0$ such that, for every $r \in I$ and $\eps\in(r-\rho_0,r)$,
 the entropy maximizer with edge density
 $\eps$ and $H$-density $r^m$ is bipodal and unique up to relabeling.
-Let $B_{\eps,r}$ denote the maximizer. Then for every $p\in(0,1)$,
+Thus $B_{\eps,r^m}$ is well defined up to relabeling, and for every $p\in(0,1)$,
 \begin{equation}\label{eq:reduced-objective-attainment}
-  s(B_{\eps,r})=S_H(\eps,r^m),
+  s(B_{\eps,r^m})=S_H(\eps,r^m),
   \qquad
-  I_{p,r}(\eps)=I_p(B_{\eps,r}).
+  I_{p,r}(\eps)=I_p(B_{\eps,r^m}).
 \end{equation}
 Furthermore, 
 for every $0<\rho<\rho_0$, one can choose $0<\eta<\inf_{r\in I}\pc(r)$ so that,
@@ -156,15 +158,15 @@ For $r\in I$ and $r-\rho_0<\eps<r$, the mean value theorem gives
   0<r^m-\eps^m\le m(r-\eps)<\Delta.
 \]
 Thus, for every $r\in I$ and $\eps\in(r-\rho_0,r)$,
-\Cref{thm:krrs-analytic-extension} with $\tau=r^m$ supplies $B_{\eps,r}$
-that satisfies $e(B_{\eps,r})=\eps$, $t(H,B_{\eps,r})=r^m$,
+\Cref{thm:krrs-analytic-extension} with $\tau=r^m$ supplies $B_{\eps,r^m}$
+that satisfies $e(B_{\eps,r^m})=\eps$, $t(H,B_{\eps,r^m})=r^m$,
 maximizes entropy among graphons with these densities,
 and is unique up to relabeling.
-Thus the definition \eqref{eq:fixed-density-entropy} gives $s(B_{\eps,r})=S_H(\eps,r^m)$,
-and substituting $B_{\eps,r}$ into \eqref{eq:relative-entropy-identity} gives,
+Thus the definition \eqref{eq:fixed-density-entropy} gives $s(B_{\eps,r^m})=S_H(\eps,r^m)$,
+and substituting $B_{\eps,r^m}$ into \eqref{eq:relative-entropy-identity} gives,
 for every $p\in(0,1)$,
 \[
-  I_p(B_{\eps,r})=-2S_H(\eps,r^m)-\log(1-p)+\eps\log\frac{1-p}{p}=I_{p,r}(\eps).
+  I_p(B_{\eps,r^m})=-2S_H(\eps,r^m)-\log(1-p)+\eps\log\frac{1-p}{p}=I_{p,r}(\eps).
 \]
 
 Fix $0<\rho<\rho_0$.  We claim that, for some
@@ -195,10 +197,10 @@ one-dimensional problem of minimizing $I_{p,r}$:
   \min_{\eps\in(r-\rho,r)}I_{p,r}(\eps).
 \end{equation}
 Furthermore, for such $p,r$, any optimizer $W^*$ attaining $\Phi_H(p,r)$
-is $B_{\eps^*,r}$ up to relabeling, where $\eps^*=e(W^*)$ is a minimizer of
+is $B_{\eps^*,r^m}$ up to relabeling, where $\eps^*=e(W^*)$ is a minimizer of
 $I_{p,r}$ over $(r-\rho,r)$.  Conversely, if
 $\eps\in(r-\rho,r)$ minimizes $I_{p,r}$ over $(r-\rho,r)$, then
-$B_{\eps,r}$ is an optimizer of \eqref{eq:graphon-variational-problem}.  In
+$B_{\eps,r^m}$ is an optimizer of \eqref{eq:graphon-variational-problem}.  In
 particular, the correspondence $W^*\mapsto e(W^*)$ is a bijection between the
 set of optimizers modulo relabeling and the set of minimizers of
 $I_{p,r}$ on $(r-\rho,r)$.
