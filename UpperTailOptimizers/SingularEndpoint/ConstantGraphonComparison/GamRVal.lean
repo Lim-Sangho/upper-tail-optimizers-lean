@@ -59,8 +59,6 @@ inputs are evenness of `u` (through `deriv_zero_of_even`), analyticity of `α`, 
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -231,7 +229,5 @@ theorem tendsto_gamInt_sub_gamRVal (hd : 2 ≤ d) (B : KKTFamily d) {F : ℝ →
   have h := (tendsto_gamInt_graphon hd B hF).sub (tendsto_Gam_rVal hd B)
   rw [sub_zero] at h
   exact h.congr fun x => by ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

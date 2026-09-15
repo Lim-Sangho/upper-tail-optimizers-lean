@@ -60,8 +60,6 @@ the explicit constant `C = d²·2^{d-2}`.  Only its existence is used downstream
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -437,7 +435,5 @@ theorem exists_moment_sub_pow_le_variance (hd : 2 ≤ d) :
       exact pow_taylor_upper hx.1 hx.2 hm0 hm2 d
     have h := integral_mono_ae iL iR hae
     rwa [hLint, hRint] at h
-
-end SingularEndpoint
 
 end UpperTailOptimizers

@@ -59,8 +59,6 @@ is treated separately.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -265,7 +263,5 @@ theorem tendsto_gamInt_graphon (hd : 2 ≤ d) (B : KKTFamily d) {F : ℝ → ℝ
   refine (tendsto_gamInt_block hd B).congr' ?_
   filter_upwards [eventually_abs_lt_h₀ B] with h hb
   rw [hF h hb, KKTFamily.gamInt_graphon hb]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

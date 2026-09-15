@@ -37,8 +37,6 @@ two scalars whose `h²` rates `SingularEndpoint/ConstantGraphonComparison/Expans
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology Finset
 
 variable {d : ℕ}
@@ -202,7 +200,5 @@ theorem tendsto_increment_sum (hd : 2 ≤ d) :
     ring
   rwa [hval] at heq
 
-
-end SingularEndpoint
 
 end UpperTailOptimizers

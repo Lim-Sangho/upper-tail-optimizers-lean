@@ -47,8 +47,6 @@ displacement identity from `SingularEndpoint/ConstantGraphonComparison/Identitie
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 namespace KKTFamily
 
 open Filter Topology
@@ -336,7 +334,5 @@ theorem exists_graphon_unif (hd : 2 ≤ d) (B : KKTFamily d) {ε : ℝ} (hε : 0
       (h₃ h (lt_of_lt_of_le hlt (le_trans (min_le_right _ _) (min_le_right _ _)))))
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

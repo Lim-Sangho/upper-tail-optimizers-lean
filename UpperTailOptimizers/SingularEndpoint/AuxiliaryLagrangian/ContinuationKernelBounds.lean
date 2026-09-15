@@ -49,8 +49,6 @@ constants depending only on `d` and the family `B`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -336,7 +334,5 @@ theorem continuation_kernel_bounds (hd : 2 ≤ d) (B : KKTFamily d) :
       (mul_le_mul_of_nonneg_right hCDC (sq_nonneg h))
   · intro x hx y hy
     exact le_trans (hJbd (x * y) (hprod x hx y hy)) hCBC
-
-end SingularEndpoint
 
 end UpperTailOptimizers

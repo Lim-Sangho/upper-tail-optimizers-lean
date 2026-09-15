@@ -240,7 +240,7 @@ theorem integral_rowResid_sq_le (W : Graphon) {ε ζ : ℝ} (hε : ε ∈ Icc (0
         rw [abs_of_nonneg (sq_nonneg _)]
         have h := abs_nearResid_le W hε hζ (x, y)
         nlinarith [abs_nonneg (nearResid W ε ζ (x, y)), sq_abs (nearResid W ε ζ (x, y))]
-    have h := SingularEndpoint.integral_abs_le_sqrt hi hi2
+    have h := integral_abs_le_sqrt hi hi2
     have h0 : 0 ≤ ∫ y, nearResid W ε ζ (x, y) ^ 2 ∂unitμ := integral_nonneg fun _ => sq_nonneg _
     calc (∫ y, nearResid W ε ζ (x, y) ∂unitμ) ^ 2
         = |∫ y, nearResid W ε ζ (x, y) ∂unitμ| ^ 2 := (sq_abs _).symm
@@ -396,7 +396,7 @@ theorem integral_Dfun_degFun_sub_le {d : ℕ} (hd : 1 ≤ d) (W : Graphon) {ε �
       nlinarith [hsmem.1, hsmem.2]
   have hrabs2 : Integrable (fun x => |r x| ^ 2) unitμ := by simpa [sq_abs] using hr2
   -- Cauchy–Schwarz
-  have hcs := SingularEndpoint.integral_mul_le_sqrt_mul_sqrt (μ := unitμ) (f := sx)
+  have hcs := integral_mul_le_sqrt_mul_sqrt (μ := unitμ) (f := sx)
     (g := fun x => |r x|) hs2 hrabs2 hsr
   have hs2le : ∫ x, sx x ^ 2 ∂unitμ ≤ (gμ S).toReal := by
     rw [← integral_sectionMeasure hSm]
@@ -505,7 +505,7 @@ theorem Dfun_zeta_measure_le {d : ℕ} (hd : 2 ≤ d) (W : Graphon) {ε ζ : ℝ
       nlinarith [(hind01 z).1, (hind01 z).2]
   have hR2 : Integrable (fun z => |nearResid W ε ζ z| ^ 2) gμ := by
     simpa [sq_abs] using integrable_nearResid_sq W hε hζ
-  have hcs := SingularEndpoint.integral_mul_le_sqrt_mul_sqrt (μ := gμ) (f := ind)
+  have hcs := integral_mul_le_sqrt_mul_sqrt (μ := gμ) (f := ind)
     (g := fun z => |nearResid W ε ζ z|) hind2 hR2 hindR
   have hind2eq : ∫ z, ind z ^ 2 ∂gμ = (gμ S).toReal := by
     have : (fun z => ind z ^ 2) = ind := by

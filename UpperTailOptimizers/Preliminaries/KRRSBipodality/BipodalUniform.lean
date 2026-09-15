@@ -21,7 +21,7 @@ set_option linter.unusedSectionVars false
 
 namespace UpperTailOptimizers
 
-open MeasureTheory Set SingularEndpoint Filter Topology
+open MeasureTheory Set Filter Topology
 
 /-- **The contraction constant at the limiting multiplier.** -/
 theorem contraction_limit_eq {d m v : ℕ} (hd : 2 ≤ d) (hmv : v * d = 2 * m) (hm : 0 < m) {ε c : ℝ}

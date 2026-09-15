@@ -79,8 +79,6 @@ That is the whole interface.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -208,7 +206,5 @@ theorem singular_endpoint_localization (hd : 2 ≤ d) {V : Type*} [Fintype V] [D
       refine mul_le_mul_of_nonneg_right ?_ hpos.le
       linarith
     linarith [hfirst, hstep, hcoef]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

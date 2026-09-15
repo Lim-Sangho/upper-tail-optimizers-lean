@@ -21,7 +21,7 @@ set_option linter.unusedSectionVars false
 
 namespace UpperTailOptimizers
 
-open MeasureTheory Set SingularEndpoint
+open MeasureTheory Set
 
 theorem eq_zero_of_le_mul_of_lt_one {ρ θ : ℝ} (h0 : 0 ≤ ρ) (h : ρ ≤ θ * ρ) (hθ : θ < 1) :
     ρ = 0 := by

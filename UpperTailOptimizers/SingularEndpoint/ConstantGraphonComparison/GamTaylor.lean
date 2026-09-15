@@ -41,8 +41,6 @@ with `w₃ = t_h² - r_*` and `w₁ = s_h² - r_*`; the three factors converge b
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -144,7 +142,5 @@ theorem tendsto_Lstar_outer_sum (hd : 2 ≤ d) (B : KKTFamily d) :
   rw [Lstar_expand hd (B.tVal h ^ 2), Lstar_expand hd (B.sVal h ^ 2)]
   field_simp
   ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

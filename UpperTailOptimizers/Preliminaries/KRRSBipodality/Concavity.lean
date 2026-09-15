@@ -19,7 +19,7 @@ open MeasureTheory Real
 
 theorem S0_le_tangent_sub_sq {u v : ℝ} (hu : u ∈ Set.Icc (0:ℝ) 1) (hv0 : 0 < v) (hv1 : v < 1) :
     S0 u ≤ S0 v + dS0 v * (u - v) - (u - v) ^ 2 := by
-  have h := SingularEndpoint.two_sq_le_Jp_convexGap (p := 1 / 2) (by norm_num) (by norm_num)
+  have h := two_sq_le_Jp_convexGap (p := 1 / 2) (by norm_num) (by norm_num)
     hu hv0 hv1
   have hJ : ∀ w ∈ Set.Icc (0:ℝ) 1, Jp (1 / 2) w = -2 * S0 w + Real.log 2 := by
     intro w hw

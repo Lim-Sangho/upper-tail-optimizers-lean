@@ -67,8 +67,6 @@ product of probability measures leaves the integral unchanged, because
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 /-! ## Cauchy–Schwarz -/
@@ -1122,7 +1120,5 @@ theorem tDensity_eq_qVal_pow_add {V : Type*} [Fintype V] [DecidableEq V]
     P.abs_tDensity_sub_qVal_pow_le H hreg⟩
 
 end FactorDecomp
-
-end SingularEndpoint
 
 end UpperTailOptimizers

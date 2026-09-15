@@ -38,8 +38,6 @@ turns `smulAddRankOne (-u_*^d) _ phi e _` into the displayed derivative and
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
 /-! ## Rank-one perturbations of the identity -/
@@ -120,7 +118,5 @@ theorem addRankOne_symm_apply_of_map_one (phi : E →L[ℝ] ℝ) (e : E) (he : p
     (addRankOne phi e h).symm w = w - (phi w / 2) • e := by
   rw [addRankOne_symm_apply, he]
   norm_num
-
-end SingularEndpoint
 
 end UpperTailOptimizers

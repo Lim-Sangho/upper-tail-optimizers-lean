@@ -39,8 +39,6 @@ non-degeneracy constant behind `eq:endpoint-gap-expansion`.  Since
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ}
@@ -275,7 +273,5 @@ theorem hasDerivAt_Gam (hd : 2 ≤ d) {z : ℝ} (hz0 : 0 < z) (hz1 : z < 1) :
 theorem Gam_rStar (hd : 2 ≤ d) : Gam d (rStar d) = 0 := by
   have _hd : 2 ≤ d := hd
   rw [Gam, sub_self, sub_self, mul_zero, sub_zero]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

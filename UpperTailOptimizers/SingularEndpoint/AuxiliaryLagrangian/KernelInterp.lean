@@ -120,8 +120,6 @@ every theorem in this file is an unconditional exact identity or an explicit two
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 /-! ## Linearity of the one-variable interpolation in the function
 
 `powCoefA`, `powCoefB` and `powResid` (`SingularEndpoint/AuxiliaryLagrangian/PowInterp.lean`) are linear in `φ`.  No
@@ -629,7 +627,5 @@ theorem exists_mfac_window (hd : 2 ≤ d) (B : KKTFamily d) {ρ : ℝ} (hρ : 0 
   exact mfac_mem_Icc (by linarith) (hsub x hxmem) (hsub _ hsmem) (hsub _ htmem)
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

@@ -40,8 +40,6 @@ replace the paper's analytic division of `Ψ_h` by `Q_h²` (in the proof of
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 namespace KKTFamily
 
 open MeasureTheory Real
@@ -200,7 +198,5 @@ theorem Psi_zero_eq_zero_iff (hd : 2 ≤ d) (B : KKTFamily d) {x : ℝ} (hx0 : 0
     ring
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

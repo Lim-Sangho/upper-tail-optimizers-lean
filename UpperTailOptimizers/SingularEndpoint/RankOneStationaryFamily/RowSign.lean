@@ -46,8 +46,6 @@ Hence `F` rises from `F(z₁) = 0` to `ρ₁` and falls back to `F(z₂) = 0`, s
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 variable {d : ℕ}
 
 /-! ## The derivative of the rank-one KKT function, and its sign -/
@@ -364,7 +362,5 @@ theorem rowBalance_solution (hd : 2 ≤ d) {p γ z₁ z₂ z₃ : ℝ} (hp0 : 0 
   have hne := rowBalance_denom_ne_zero hd hp0 hp1 h₁ h₁₂ h₂₃ h₃ e₁ e₂ e₃
   field_simp
   ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

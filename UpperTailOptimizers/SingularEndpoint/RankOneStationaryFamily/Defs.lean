@@ -37,8 +37,6 @@ and above.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ}
@@ -257,7 +255,5 @@ theorem ell_rStar (hd : 2 ≤ d) : ell (rStar d) = -Real.log ((d : ℝ) - 1) := 
     rw [one_sub_rStar hd, rStar_eq]
     field_simp
   rw [ell, hstep, Real.log_inv]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

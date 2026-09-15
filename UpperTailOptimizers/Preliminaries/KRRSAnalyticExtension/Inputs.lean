@@ -99,21 +99,6 @@ closing paragraph 1, where `z₀ = ε_*` "implies `ε₀ = (d-1)/d`", are *deriv
 assumed: a strictly decreasing map is injective, so it has at most one fixed point, and
 `(d-1)/d` is one. -/
 
-theorem rStar_mem_Ioo {d : ℕ} (hd : 2 ≤ d) : rStar d ∈ Set.Ioo (0:ℝ) 1 := by
-  have hd0 : (0:ℝ) < (d : ℝ) := by
-    have : (0:ℕ) < d := by omega
-    exact_mod_cast this
-  have hd1 : (1:ℝ) ≤ (d : ℝ) - 1 := by
-    have : (2:ℕ) ≤ d := hd
-    have : (2:ℝ) ≤ (d : ℝ) := by exact_mod_cast this
-    linarith
-  constructor
-  · unfold rStar
-    positivity
-  · unfold rStar
-    rw [div_lt_one hd0]
-    linarith
-
 /-- **`ζ_d` fixes the exceptional density** — Step 1 of Kenyon–Radin–Ren–Sadun, Theorem 3.3,
 here a theorem rather than an assumption.
 

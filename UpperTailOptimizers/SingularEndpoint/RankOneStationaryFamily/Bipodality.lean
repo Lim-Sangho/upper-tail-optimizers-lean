@@ -32,8 +32,6 @@ the five products lives further up the file hierarchy.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 variable {d : ℕ}
 
 /-! ## The derivative of the rank-one KKT function -/
@@ -221,7 +219,5 @@ theorem three_values_absurd (hd : 2 ≤ d) {p γ a b c : ℝ} (hp0 : 0 < p) (hp1
   have h3 : a * c < b * c := by nlinarith
   have h4 : b * c < 1 := by nlinarith
   exact four_zeros_absurd hd hp0 hp1 (mul_pos ha0 ha0) h1 h2 h3 h4 haa hab' hac hbc'
-
-end SingularEndpoint
 
 end UpperTailOptimizers

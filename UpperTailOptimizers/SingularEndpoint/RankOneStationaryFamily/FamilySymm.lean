@@ -55,8 +55,6 @@ are `SingularEndpoint/RankOneStationaryFamily/Alpha.lean`, `SingularEndpoint/Ran
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -309,7 +307,5 @@ theorem exists_scalar_family_density (hd : 2 ≤ d) :
   · intro h hh
     exact ⟨(hsym h hh).1, (hsym h hh).2.1, (hsym h hh).2.2,
       congrArg pOf (hsym h hh).2.1⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

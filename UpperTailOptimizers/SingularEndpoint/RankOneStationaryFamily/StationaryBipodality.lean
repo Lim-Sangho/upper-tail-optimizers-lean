@@ -26,8 +26,6 @@ relabelling turns this into `f ∘ τ = f_{α,s,t}` a.e.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Filter
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
@@ -213,7 +211,5 @@ theorem stationary_rank_one_bipodality (H : SimpleGraph V) [DecidableRel H.Adj] 
   have hpull := hτ.measurePreserving.quasiMeasurePreserving.ae hkey
   filter_upwards [hpull, hστ] with y h1 h2
   rw [h1, h2]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

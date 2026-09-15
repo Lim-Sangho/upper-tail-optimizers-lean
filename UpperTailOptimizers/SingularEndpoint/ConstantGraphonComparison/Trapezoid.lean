@@ -41,8 +41,6 @@ That is the whole interface; the three private helpers below are used nowhere el
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 /-! ## The trapezoid identity -/
@@ -201,7 +199,5 @@ theorem tendsto_trapezoid_sum {x y : ℝ → ℝ} {c : ℝ} (d : ℕ)
   rw [← hval]
   exact tendsto_finsetSum _ fun j _ =>
     (tendsto_geom_sum₂ j hx hy).mul (tendsto_geom_sum₂ (d - 1 - j) hx hy)
-
-end SingularEndpoint
 
 end UpperTailOptimizers

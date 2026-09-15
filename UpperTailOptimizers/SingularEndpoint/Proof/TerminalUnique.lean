@@ -55,8 +55,6 @@ is a direct projection of `singular_endpoint_full`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Filter Topology
 
 open scoped Classical
@@ -371,7 +369,5 @@ theorem singular_endpoint_full (hd : 2 ≤ d) :
   exact ⟨⟨f, hfm, hf01, hWf⟩,
     anyBlock_of_singularEndpointOptimizers H S hh hh0 hhδ hA hAsub hAvol
       (ae_of_all _ fun z => (hWf z.1 z.2).trans (hfbip z.1 z.2))⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

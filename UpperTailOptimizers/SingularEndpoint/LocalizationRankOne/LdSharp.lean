@@ -71,8 +71,6 @@ That is the whole interface.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter MeasureTheory Topology
 
 variable {d : ℕ}
@@ -452,7 +450,5 @@ theorem family_factor_clause (hd : 2 ≤ d) {V : Type*} [Fintype V] [DecidableEq
   have hmain := hclause h hpos hlt₀ W P (W.tDensity H) (B.qVal h) hqlow
     (KKTFamily.qVal_pos hh).le hA4 hE4 hT hdqK hdefh hmomh
   exact ⟨P, hqlow, by linarith [hclose], hmain.1, hmain.2⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

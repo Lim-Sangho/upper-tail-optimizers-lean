@@ -86,8 +86,6 @@ statements are for a bare pair of derivatives on a compact interval `[a,b]` with
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 /-! ## The interpolant in the basis `{1, x^d}` and its residual -/
 
 /-- **The `x^d` coefficient** of the interpolant of `φ` in the basis `{1, x^d}` at the nodes
@@ -405,7 +403,5 @@ theorem exists_powResid_bound {d : ℕ} (hd : 2 ≤ d) {phi phi1 phi2 : ℝ → 
   rw [powResid_eq_powDD_mul hd0 phi (ha.le.trans hs.1) (ha.le.trans ht.1)
     (ha.le.trans hx.1) hst, hval]
   ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

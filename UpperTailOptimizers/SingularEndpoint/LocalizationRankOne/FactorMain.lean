@@ -82,8 +82,6 @@ threshold `ε₃(d)`, a clause the paper does not state.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ} {W : Graphon} {φ : ℝ → ℝ}
@@ -858,7 +856,5 @@ theorem factorMain_unique (hd : 2 ≤ d) (W : Graphon) (hε : contractionEps W d
   · filter_upwards [hae] with x hx
     rw [hx, ht1, one_mul]
   · rw [hqa, ht1, one_pow, one_mul]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

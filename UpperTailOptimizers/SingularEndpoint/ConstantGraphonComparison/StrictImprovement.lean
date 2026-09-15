@@ -41,8 +41,6 @@ remainder, which comes from evenness in `h`, is `constant_graphon_comparison` in
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology MeasureTheory
 
 variable {d : ℕ}
@@ -174,7 +172,5 @@ theorem singular_endpoint_symmetry_breaking (hd : 2 ≤ d) (H : SimpleGraph V) [
   push Not at hcon
   exact hno ((lz_boundary_M2_global hd hr0 hr1 hp0 hp1).mpr hcon)
 
-
-end SingularEndpoint
 
 end UpperTailOptimizers

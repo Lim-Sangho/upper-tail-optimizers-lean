@@ -42,8 +42,6 @@ the cost comparison `I_p(W) ≤ I_p(W')` — no smallness of `h`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Real
 
 variable {d : ℕ}
@@ -170,7 +168,5 @@ theorem integral_dist_pow_four_localized (hd : 2 ≤ d) {V : Type*} [Fintype V] 
     mul_nonneg hb0.le (sub_nonneg.mpr hmoment)
   have hloc := gamInt_localized hd H hreg hm hp0 hp1 hr0 hfeas hmom hcost hb0 hCc hVG hb0le
   linarith [hcG W]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

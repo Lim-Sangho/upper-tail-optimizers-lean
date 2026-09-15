@@ -37,8 +37,6 @@ syntactically.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 /-- The analytic extension of `x ↦ -log(1-x)/x` across `x = 0`, where it takes the value
@@ -94,7 +92,5 @@ theorem AnalyticAt.logSlope_comp {E : Type*} [NormedAddCommGroup E] [NormedSpace
     {g : E → ℝ} {w : E} (hg : AnalyticAt ℝ g w) (hgw : g w = 0) :
     AnalyticAt ℝ (fun z => logSlope (g z)) w :=
   analyticAt_logSlope.fun_comp_of_eq hg hgw
-
-end SingularEndpoint
 
 end UpperTailOptimizers

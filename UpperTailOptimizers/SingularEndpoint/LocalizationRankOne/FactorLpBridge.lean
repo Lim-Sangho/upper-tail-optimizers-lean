@@ -53,8 +53,6 @@ the Lean construction of the decomposition in `lem:localization-rank-one`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 open scoped ENNReal NNReal
@@ -352,7 +350,5 @@ theorem lpBridgeSet_exists_fixedPoint {M : ℝ} (hM : 1 ≤ M)
     ∃ F ∈ lpBridgeSet M, N F = F ∧ ∀ G ∈ lpBridgeSet M, N G = G → G = F :=
   lpBridge_existsUnique_fixedPoint (lpBridgeSet_isComplete M) hmaps hk hlip
     (lpBridgeSet_nonempty hM)
-
-end SingularEndpoint
 
 end UpperTailOptimizers

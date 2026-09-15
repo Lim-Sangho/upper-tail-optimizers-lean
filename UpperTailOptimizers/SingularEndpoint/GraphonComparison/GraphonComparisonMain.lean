@@ -91,8 +91,6 @@ orthogonality `ortho`, and it is used only for the corner estimate.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -2364,7 +2362,5 @@ theorem comparisonMain_exists_splitting_gap (hd : 2 ≤ d) (B : KKTFamily d) {θ
   have hsplit := comparison_splitting hd B hb W P.meas_f P.f_nonneg P.f_bdd
   have hr := hres h hh0 hhδ hb W P
   linarith
-
-end SingularEndpoint
 
 end UpperTailOptimizers

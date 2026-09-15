@@ -59,8 +59,6 @@ Two elementary steps carry this.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -283,7 +281,5 @@ theorem tendsto_muVal_coeff_rStar (hd : 2 ≤ d) {m : ℝ} (hm : 0 < m) :
         * (2 + (2 * m / (d : ℝ) - 2) * (4 * (d : ℝ) - 1) / ((d : ℝ) - 1)))) := by
   have h := tendsto_muVal_coeff B hd hm
   rwa [B.muVal_zero hd m] at h
-
-end SingularEndpoint
 
 end UpperTailOptimizers

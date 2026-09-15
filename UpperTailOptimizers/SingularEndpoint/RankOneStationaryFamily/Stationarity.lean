@@ -46,8 +46,6 @@ agrees with the paper's condition.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Filter Topology
 
 /-! ## Kernels and directions -/
@@ -228,7 +226,5 @@ theorem hasDerivAt_Ip_pert (W : Graphon) (U : Direction) {p η : ℝ} (hp0 : 0 <
   rw [show (fun z : ℝ × ℝ => Jp' p (W.toFun z.1 z.2) * U.toFun z.1 z.2) = F' 0 from
     (funext hzero).symm]
   exact hkey.2
-
-end SingularEndpoint
 
 end UpperTailOptimizers

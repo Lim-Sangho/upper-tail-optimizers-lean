@@ -69,8 +69,6 @@ handshake `2m = vd`, which is taken as the hypothesis `hvm`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ} {W : Graphon}
@@ -593,7 +591,5 @@ theorem exists_holder_stability (hd : 2 ≤ d) {v m : ℕ} (hv : 2 ≤ v) (hvm :
   ⟨stabCoer d v q₀, stabCoer_pos hd hv hq₀, stabQuart d v C₁ C₂,
     stabQuart_nonneg hd hC₁ hC₂,
     fun _ P hq hA4 hE4 _ hT => P.holder_stability hd hv hvm hC₁ hC₂ hq₀ hq hA4 hE4 hT⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

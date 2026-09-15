@@ -58,8 +58,6 @@ it is stated for a bare pair of derivatives on a compact interval.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 /-! ## Rolle's theorem, twice -/
@@ -395,7 +393,5 @@ theorem dd2_mem_of_deriv2_mem {f f₁ f₂ : ℝ → ℝ} {A B m M : ℝ}
   obtain ⟨ξ, hξ, hval⟩ := exists_dd2_eq_deriv2_half hf hf₁ ha hb hab hz
   rw [hval]
   exact ⟨by linarith [hm ξ hξ], by linarith [hM ξ hξ]⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

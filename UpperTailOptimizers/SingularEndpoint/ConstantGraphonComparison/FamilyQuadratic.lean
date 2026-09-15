@@ -41,8 +41,6 @@ Nothing here uses `𝓛_*`; the equations themselves are in `SingularEndpoint/Co
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology Finset
 
 variable {d : ℕ}
@@ -222,7 +220,5 @@ theorem tendsto_pow_diff_rate (m : ℕ) :
   rw [hgap] at hfac
   rw [hfac]
   field_simp
-
-end SingularEndpoint
 
 end UpperTailOptimizers

@@ -23,7 +23,7 @@ and `m = |E(H)| ≥ 1`. It minimizes the relative entropy `I_p(W)` subject to
 | `pc(r)`, `sm(r)`, `A_H(r)` and `λ(p,r)` | `pcGlobal`, `smGlobal`, `AHGlobal` and `lambdaGlobal`: the boundary curve, second contact density, second-variation coefficient and log-odds displacement. |
 | The convex minorant and its contacts | `lce` is the lower convex envelope. `uMinus`, `uPlus`, `contactXa` and `contactXb` name the zeros and contacts used in the Lubetzky–Zhao boundary theorem. |
 | `ζ_d(ε)` and `ψ_d(ε,z)` | `zetaFun` is the cross-density selector. `psiFill` fills the removable singularity of the scalar quotient at `z = ε` with its continuous value. |
-| The rank-one family | `SingularEndpoint.KKTFamily d` contains the analytic parameters, base values, symmetries and KKT equations. It depends on `d`; the graph enters the optimality statement. |
+| The rank-one family | `KKTFamily d` contains the analytic parameters, base values, symmetries and KKT equations. It depends on `d`; the graph enters the optimality statement. |
 
 The **exceptional density** is `r_* = (d−1)/d`. The **singular endpoint** is the
 boundary point `(pc(r_*), r_*)`, where the two contacts merge. At other boundary
@@ -109,7 +109,7 @@ results explain how the main declarations are assembled.
 
 Paper citations use the compiled numbers and link to the corresponding LaTeX source.
 Lean links point to declaration lines. Names are relative to `UpperTailOptimizers`;
-`SingularEndpoint.` and other subnamespaces are written explicitly.
+namespaces of Lean structures, such as `Graphon.` or `KRRSFamily.`, are written explicitly.
 
 ### Introduction and analytic extension
 
@@ -122,7 +122,7 @@ nonexceptional proof.
 | [Theorem 1.3][thm:graphon-large-deviations] — Graphon large deviations | Outside the formalization |
 | [Theorem 1.4][thm:lz-criterion] — Lubetzky–Zhao criterion | Criterion and uniqueness: [lz_criterion](UpperTailOptimizers/NonexceptionalEndpoint/Proof/LZCriterion.lean#L29) |
 | [Theorem 1.5][thm:nonexceptional-optimizers] — Nonexceptional optimizers | Corollary of Theorem 4.1: [nonexceptional_optimizers](UpperTailOptimizers/NonexceptionalEndpoint/Proof/Global.lean#L133) |
-| [Theorem 1.6][thm:endpoint-optimizers] — Singular endpoint optimizers | Corollary of Theorem 5.1: [SingularEndpoint.singular_endpoint_optimizers](UpperTailOptimizers/SingularEndpoint/Proof/IntroSingularEndpointOptimizers.lean#L19) |
+| [Theorem 1.6][thm:endpoint-optimizers] — Singular endpoint optimizers | Corollary of Theorem 5.1: [singular_endpoint_optimizers](UpperTailOptimizers/SingularEndpoint/Proof/IntroSingularEndpointOptimizers.lean#L19) |
 | [Theorem 2.1][thm:krrs-analytic-extension] — Two-sided KRR–S extension | Analytic parameter maps: [krrs_analytic_extension](UpperTailOptimizers/Preliminaries/KRRSAnalyticExtension/Extension.lean#L105) |
 
 Theorems 1.1–1.2 are informal statements. Their deterministic content is represented
@@ -179,24 +179,24 @@ constants depending on `d` or `(d,m)` are chosen before the graph, as in the pap
 
 | Paper result | Lean declaration |
 |---|---|
-| [Theorem 5.1][thm:singular-endpoint] — Optimizer structure | Family, optimality, uniqueness and expansions: [SingularEndpoint.singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/Proof/TerminalUnique.lean#L268) |
-| [Lemma 5.2][lem:stationary-rank-one-bipodality] — Stationary rank-one bipodality | Bipodality from stationarity: [SingularEndpoint.stationary_rank_one_bipodality](UpperTailOptimizers/SingularEndpoint/RankOneStationaryFamily/StationaryBipodality.lean#L97) |
-| [Lemma 5.3][lem:rank-one-kkt-family] — Analytic KKT family | Stationarity and local exhaustiveness: [SingularEndpoint.rank_one_kkt_family](UpperTailOptimizers/SingularEndpoint/RankOneStationaryFamily/RankOneKKTFamily.lean#L1000) |
-| [Remark 5.4][rmk:rank-one-family-universality] — Dependence on `d` | Family structure: [SingularEndpoint.KKTFamily](UpperTailOptimizers/SingularEndpoint/RankOneStationaryFamily/Family.lean#L126) |
-| [Lemma 5.5][lem:rank-one-parameter-expansions] — Parameter expansions | All four expansions: [SingularEndpoint.rank_one_parameter_expansions](UpperTailOptimizers/SingularEndpoint/ConstantGraphonComparison/ParameterRemainders.lean#L198) |
-| [Lemma 5.6][lem:constant-graphon-comparison] — Constant-graphon comparison | Both expansions, strict improvement and boundary placement: [SingularEndpoint.constant_graphon_comparison_full](UpperTailOptimizers/SingularEndpoint/ConstantGraphonComparison/ConstantComparison.lean#L34) |
-| [Lemma 5.7][lem:localization-rank-one] — Localization and rank-one reduction | Decomposition and bounds: [SingularEndpoint.localization_rank_one_reduction](UpperTailOptimizers/SingularEndpoint/LocalizationRankOne/LocalizationRankOne.lean#L120) |
-| [Lemma 5.8][lem:continuation-kernel-bounds] — Continuation and kernel bounds | All six estimates: [SingularEndpoint.continuation_kernel_bounds](UpperTailOptimizers/SingularEndpoint/AuxiliaryLagrangian/ContinuationKernelBounds.lean#L203) |
-| [Lemma 5.9][lem:first-variation-bound] — First-variation lower bound | Central and tail estimates: [SingularEndpoint.first_variation_bound](UpperTailOptimizers/SingularEndpoint/AuxiliaryLagrangian/FirstVariationCentralKernel.lean#L76) |
-| [Lemma 5.10][lem:central-kernel-bound] — Central kernel bound | Bound uniform in the radius: [SingularEndpoint.central_kernel_bound](UpperTailOptimizers/SingularEndpoint/AuxiliaryLagrangian/FirstVariationCentralKernel.lean#L164) |
-| [Lemma 5.11][lem:auxiliary-lagrangian-bound] — Auxiliary Lagrangian bound | Uniform comparison for the factor: [SingularEndpoint.auxiliary_lagrangian_bound_uniform](UpperTailOptimizers/SingularEndpoint/GraphonComparison/PaperForms.lean#L138) |
-| [Lemma 5.12][lem:graphon-lagrangian-bound] — Full-graphon Lagrangian bound | Uniform graphon comparison: [SingularEndpoint.graphon_lagrangian_bound_uniform](UpperTailOptimizers/SingularEndpoint/GraphonComparison/PaperForms.lean#L223) |
+| [Theorem 5.1][thm:singular-endpoint] — Optimizer structure | Family, optimality, uniqueness and expansions: [singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/Proof/TerminalUnique.lean#L266) |
+| [Lemma 5.2][lem:stationary-rank-one-bipodality] — Stationary rank-one bipodality | Bipodality from stationarity: [stationary_rank_one_bipodality](UpperTailOptimizers/SingularEndpoint/RankOneStationaryFamily/StationaryBipodality.lean#L95) |
+| [Lemma 5.3][lem:rank-one-kkt-family] — Analytic KKT family | Stationarity and local exhaustiveness: [rank_one_kkt_family](UpperTailOptimizers/SingularEndpoint/RankOneStationaryFamily/RankOneKKTFamily.lean#L998) |
+| [Remark 5.4][rmk:rank-one-family-universality] — Dependence on `d` | Family structure: [KKTFamily](UpperTailOptimizers/SingularEndpoint/RankOneStationaryFamily/Family.lean#L124) |
+| [Lemma 5.5][lem:rank-one-parameter-expansions] — Parameter expansions | All four expansions: [rank_one_parameter_expansions](UpperTailOptimizers/SingularEndpoint/ConstantGraphonComparison/ParameterRemainders.lean#L196) |
+| [Lemma 5.6][lem:constant-graphon-comparison] — Constant-graphon comparison | Both expansions, strict improvement and boundary placement: [constant_graphon_comparison_full](UpperTailOptimizers/SingularEndpoint/ConstantGraphonComparison/ConstantComparison.lean#L32) |
+| [Lemma 5.7][lem:localization-rank-one] — Localization and rank-one reduction | Decomposition and bounds: [localization_rank_one_reduction](UpperTailOptimizers/SingularEndpoint/LocalizationRankOne/LocalizationRankOne.lean#L118) |
+| [Lemma 5.8][lem:continuation-kernel-bounds] — Continuation and kernel bounds | All six estimates: [continuation_kernel_bounds](UpperTailOptimizers/SingularEndpoint/AuxiliaryLagrangian/ContinuationKernelBounds.lean#L201) |
+| [Lemma 5.9][lem:first-variation-bound] — First-variation lower bound | Central and tail estimates: [first_variation_bound](UpperTailOptimizers/SingularEndpoint/AuxiliaryLagrangian/FirstVariationCentralKernel.lean#L74) |
+| [Lemma 5.10][lem:central-kernel-bound] — Central kernel bound | Bound uniform in the radius: [central_kernel_bound](UpperTailOptimizers/SingularEndpoint/AuxiliaryLagrangian/FirstVariationCentralKernel.lean#L162) |
+| [Lemma 5.11][lem:auxiliary-lagrangian-bound] — Auxiliary Lagrangian bound | Uniform comparison for the factor: [auxiliary_lagrangian_bound_uniform](UpperTailOptimizers/SingularEndpoint/GraphonComparison/PaperForms.lean#L136) |
+| [Lemma 5.12][lem:graphon-lagrangian-bound] — Full-graphon Lagrangian bound | Uniform graphon comparison: [graphon_lagrangian_bound_uniform](UpperTailOptimizers/SingularEndpoint/GraphonComparison/PaperForms.lean#L221) |
 
-The family is constructed by [SingularEndpoint.exists_kktFamily](UpperTailOptimizers/SingularEndpoint/RankOneStationaryFamily/FamilyBuild.lean#L42).
-[SingularEndpoint.constant_graphon_comparison](UpperTailOptimizers/SingularEndpoint/ConstantGraphonComparison/CostRemainder.lean#L129) gives the scalar expansions, while
-[SingularEndpoint.singular_endpoint_symmetry_breaking](UpperTailOptimizers/SingularEndpoint/ConstantGraphonComparison/StrictImprovement.lean#L136) uses the Lubetzky–Zhao
+The family is constructed by [exists_kktFamily](UpperTailOptimizers/SingularEndpoint/RankOneStationaryFamily/FamilyBuild.lean#L40).
+[constant_graphon_comparison](UpperTailOptimizers/SingularEndpoint/ConstantGraphonComparison/CostRemainder.lean#L127) gives the scalar expansions, while
+[singular_endpoint_symmetry_breaking](UpperTailOptimizers/SingularEndpoint/ConstantGraphonComparison/StrictImprovement.lean#L134) uses the Lubetzky–Zhao
 criterion to show `p_h < pc(r_h)`.
-[SingularEndpoint.anyBlock_of_singularEndpointOptimizers](UpperTailOptimizers/SingularEndpoint/Proof/TerminalUnique.lean#L178) transfers the optimizer
+[anyBlock_of_singularEndpointOptimizers](UpperTailOptimizers/SingularEndpoint/Proof/TerminalUnique.lean#L176) transfers the optimizer
 conclusions from the canonical block to any block of the prescribed measure.
 
 ### Appendices

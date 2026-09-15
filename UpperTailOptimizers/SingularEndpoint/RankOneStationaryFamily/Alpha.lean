@@ -60,8 +60,6 @@ the functions where it matters.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -451,7 +449,5 @@ theorem exists_family_with_block_weight (hd : 2 ≤ d) :
     fun h hh => hp01 h (hwin0 h hh), fun h hh => hadm h (hwin0 h hh), halphmem,
     fun h hh => (hFk h (hwin0 h hh)).1, fun h hh => (hFk h (hwin0 h hh)).2.1,
     fun h hh => (hFk h (hwin0 h hh)).2.2, hrow⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

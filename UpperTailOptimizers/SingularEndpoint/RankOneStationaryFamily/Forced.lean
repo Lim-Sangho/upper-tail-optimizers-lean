@@ -36,8 +36,6 @@ third contact equations turns them into `w · J^{(3)}(w) = (d-2) · J''(w)`, tha
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ}
@@ -178,7 +176,5 @@ theorem triple_contact_forced (hd : 2 ≤ d) {p g w : ℝ} (hp0 : 0 < p) (hp1 : 
   have hg : g = gammaStar d := triple_zero_multiplier hd h1
   subst hg
   exact ⟨rfl, rfl, triple_zero_density hd hp0 hp1 h0⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

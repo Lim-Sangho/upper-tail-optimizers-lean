@@ -25,8 +25,6 @@ missing "normal form" statement behind `IsBipodal`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 
@@ -70,7 +68,5 @@ theorem exists_relabel_eq_bipodalGraphon {W : Graphon} {A : Set ℝ} (hA : Measu
   filter_upwards [hW, bipodalGraphon_comp_relabel hA hAsub hα h11 h12 h22] with z hz hz'
   rw [hz]
   exact hz'
-
-end SingularEndpoint
 
 end UpperTailOptimizers

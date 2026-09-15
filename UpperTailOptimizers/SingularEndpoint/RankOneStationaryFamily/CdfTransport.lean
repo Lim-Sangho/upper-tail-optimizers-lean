@@ -43,8 +43,6 @@ theory and would belong in `Mathlib` if it were polished.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Set
 
 /-- **The restricted distribution function** `m_S(x) = |S ∩ (-∞, x]|`. -/
@@ -829,7 +827,5 @@ theorem ae_gμ_of_ae_unitμ {q : ℝ → Prop} (h : ∀ᵐ x ∂unitμ, q x) :
   have h1 : ∀ᵐ z ∂gμ, q z.1 := Measure.quasiMeasurePreserving_fst.ae h
   have h2 : ∀ᵐ z ∂gμ, q z.2 := Measure.quasiMeasurePreserving_snd.ae h
   filter_upwards [h1, h2] with z hz1 hz2 using ⟨hz1, hz2⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

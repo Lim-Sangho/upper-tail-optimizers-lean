@@ -42,8 +42,6 @@ identity reads `t(H, W) = (α s^d + (1-α) t^d)^v`, and the edge density is
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Finset
 
 /-! ### The edge/vertex product identity -/
@@ -194,7 +192,5 @@ theorem edgeDensity_rankOne_two_block {s t c : ℝ}
       = (c * s + (1 - c) * t) ^ 2 := by
   rw [bipodalGraphon_edgeDensity, unitμ_Icc_toReal hc0 hc1]
   ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

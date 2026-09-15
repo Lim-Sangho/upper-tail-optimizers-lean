@@ -20,7 +20,7 @@ the kernel `Γ_W(x,y)` of the first variation of `t(H,·)`:
 
 namespace UpperTailOptimizers
 
-open MeasureTheory SingularEndpoint
+open MeasureTheory
 
 variable {V : Type*}
 

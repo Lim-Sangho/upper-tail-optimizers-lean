@@ -30,7 +30,7 @@ Nothing in this file refers to the graphon problem; it is stated for an arbitrar
   analytic at `0` with `G 0 = c`.
 -/
 
-namespace UpperTailOptimizers.SingularEndpoint
+namespace UpperTailOptimizers
 
 open Filter Topology
 
@@ -111,4 +111,4 @@ theorem exists_analytic_factor_of_tendsto {F : ℝ → ℝ} {c : ℝ} {k : ℕ}
     rw [hFz, mul_comm, mul_div_assoc, div_self (pow_ne_zero n (ne_of_gt hz)), mul_one]
   exact tendsto_nhds_unique hgtend (hlim.congr' hkey)
 
-end UpperTailOptimizers.SingularEndpoint
+end UpperTailOptimizers

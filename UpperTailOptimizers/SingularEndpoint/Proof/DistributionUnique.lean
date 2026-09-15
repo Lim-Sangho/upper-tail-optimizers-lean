@@ -61,8 +61,6 @@ than `exists_distributionGap_window`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -292,7 +290,5 @@ theorem distributionMeasure_isMinimizer (hd : 2 ≤ d) (B : KKTFamily d) :
   exact lt_irrefl _ hc
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

@@ -29,8 +29,6 @@ along the family — is not a field of `KKTFamily` and is discarded.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 variable {d : ℕ}
 
 /-- **The rank-one KKT family exists**
@@ -79,7 +77,5 @@ beyond the fields of the structure.  It exists to let statements about the famil
 as properties of a term rather than under an existential quantifier. -/
 noncomputable def kktFamily (hd : 2 ≤ d) : KKTFamily d :=
   Classical.choice (exists_kktFamily hd)
-
-end SingularEndpoint
 
 end UpperTailOptimizers

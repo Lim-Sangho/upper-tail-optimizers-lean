@@ -37,8 +37,6 @@ universe u
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -240,7 +238,5 @@ theorem localization_rank_one_reduction (hd : 2 ≤ d) (B : KKTFamily d) :
   · exact le_trans hres (mul_le_mul_of_nonneg_right hCEC hpos.le)
   · exact le_trans hq (mul_le_mul_of_nonneg_right hCqC (sq_nonneg h))
   · exact P.abs_tDensity_sub_qVal_pow_le H hreg
-
-end SingularEndpoint
 
 end UpperTailOptimizers

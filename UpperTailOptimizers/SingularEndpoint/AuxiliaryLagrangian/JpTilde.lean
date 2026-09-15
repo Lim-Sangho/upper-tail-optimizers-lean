@@ -63,8 +63,6 @@ without the scoped `log⁺` notation.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ}
@@ -463,7 +461,5 @@ theorem exists_JpTilde_modulus (hd : 2 ≤ d) :
   · exact final z z' hz hz' h
   · rw [abs_sub_comm (JpTilde d z) (JpTilde d z'), abs_sub_comm z z']
     exact final z' z hz' hz h
-
-end SingularEndpoint
 
 end UpperTailOptimizers

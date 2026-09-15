@@ -93,7 +93,7 @@ theorem constDist_le_sqrt (W : Graphon) (ε : ℝ) :
       rw [abs_of_nonneg (sq_nonneg _), ← sq_abs]
       exact pow_le_pow_left₀ (abs_nonneg _) (hb p) 2
   have : IsProbabilityMeasure gμ := by unfold gμ; infer_instance
-  exact SingularEndpoint.integral_abs_le_sqrt hi hi2
+  exact integral_abs_le_sqrt hi hi2
 
 /-- The degree is within the row distance of `ε`. -/
 theorem abs_degFun_sub_le_rowDist (W : Graphon) (ε x : ℝ) : |W.degFun x - ε| ≤ W.rowDist ε x := by
@@ -245,7 +245,7 @@ theorem integral_indicator_crossRowDist_le (W : Graphon) {ε ζ : ℝ} (hε : ε
     integrable_of_abs_le (hind.mul hρm) 1 fun x => by
       rw [abs_mul]; nlinarith [hindb x, hρb x, abs_nonneg (I.indicator (fun _ => (1:ℝ)) x),
         abs_nonneg (ρ x)]
-  have hcs := SingularEndpoint.integral_mul_le_sqrt_mul_sqrt hi1 hi2 hi12
+  have hcs := integral_mul_le_sqrt_mul_sqrt hi1 hi2 hi12
   have hsq1 : ∫ x, I.indicator (fun _ => (1:ℝ)) x ^ 2 ∂unitμ = (unitμ I).toReal := by
     have : (fun x => I.indicator (fun _ => (1:ℝ)) x ^ 2) = I.indicator (fun _ => (1:ℝ)) := by
       funext x; by_cases hx : x ∈ I
@@ -272,7 +272,7 @@ theorem integral_indicator_crossRowDist_le (W : Graphon) {ε ζ : ℝ} (hε : ε
       have hi' : Integrable (fun t => (W.toFun x t - crossProfile ε ζ I (x, t)) ^ 2) unitμ :=
         integrable_of_abs_le (hm.pow_const 2) 1 fun t => by
           rw [abs_of_nonneg (sq_nonneg _), ← sq_abs]; nlinarith [hdb (x, t), abs_nonneg (W.toFun x t - crossProfile ε ζ I (x, t))]
-      have h := SingularEndpoint.integral_abs_le_sqrt hi hi'
+      have h := integral_abs_le_sqrt hi hi'
       have h0 : 0 ≤ ∫ t, (W.toFun x t - crossProfile ε ζ I (x, t)) ^ 2 ∂unitμ :=
         integral_nonneg fun _ => sq_nonneg _
       calc ρ x ^ 2 ≤ Real.sqrt (∫ t, (W.toFun x t - crossProfile ε ζ I (x, t)) ^ 2 ∂unitμ) ^ 2 :=

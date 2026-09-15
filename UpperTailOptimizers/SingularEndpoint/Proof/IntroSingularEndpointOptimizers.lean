@@ -10,7 +10,7 @@ canonical block, and drops the base values, the analyticity of `u_h` and `α_h`,
 arbitrary-block clause.
 -/
 
-namespace UpperTailOptimizers.SingularEndpoint
+namespace UpperTailOptimizers
 
 universe u
 
@@ -26,4 +26,4 @@ theorem singular_endpoint_optimizers {d : ℕ} (hd : 2 ≤ d) :
     obtain ⟨δ, h⟩ := hfull H hreg hcard hv
     exact ⟨δ, h.toSingularEndpointOptimizers⟩⟩
 
-end UpperTailOptimizers.SingularEndpoint
+end UpperTailOptimizers

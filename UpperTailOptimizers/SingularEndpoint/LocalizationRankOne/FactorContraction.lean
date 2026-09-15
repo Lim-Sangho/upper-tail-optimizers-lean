@@ -72,14 +72,12 @@ inactive on `S` under the standing smallness hypothesis, so that `contractionMap
 the honest normalised map.
 
 One naming caution: `ContractionMem.one_le_integral_pow` below is a two-line `ContractionMem` wrapper of
-`SingularEndpoint.one_le_integral_pow_sub_one`, the `n = d-1` form of `SingularEndpoint.one_le_integral_pow`
+`one_le_integral_pow_sub_one`, the `n = d-1` form of `one_le_integral_pow`
 (`SingularEndpoint/LocalizationRankOne/KernelOp.lean`) — not a second proof of the same Jensen bound.  Inside
 `namespace ContractionMem` the bare name resolves to the wrapper.
 -/
 
 namespace UpperTailOptimizers
-
-namespace SingularEndpoint
 
 open MeasureTheory
 
@@ -887,7 +885,5 @@ theorem contractionMap_contraction (hd : 2 ≤ d) (hφ : ContractionMem d φ) (h
     _ = contractionContrConst d * contractionEps W d * Lnorm unitμ 4 (fun y => φ y - ψ y) := by
         simp only [contractionContrConst]
         ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

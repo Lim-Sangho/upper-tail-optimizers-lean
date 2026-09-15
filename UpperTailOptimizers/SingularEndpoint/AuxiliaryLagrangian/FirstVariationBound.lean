@@ -66,8 +66,6 @@ lie in `(0,1)`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -517,7 +515,5 @@ theorem exists_firstVariation_lower (hd : 2 ≤ d) (B : KKTFamily d) :
   exact mul_le_mul_of_nonneg_right (by linarith) (sq_nonneg _)
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

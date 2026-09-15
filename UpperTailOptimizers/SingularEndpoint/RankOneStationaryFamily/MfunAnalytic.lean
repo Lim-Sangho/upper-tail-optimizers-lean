@@ -45,8 +45,6 @@ is what makes `h = 0` a member of it.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 /-! ## The chain rule for `J` and `𝓜` -/
 
 /-- **`J` composed with analytic parameters.**  If `P` and `Z` are analytic at `x` and both
@@ -185,7 +183,5 @@ theorem analyticAt_increment_sum {d : ℕ} {h0 : ℝ} {u g p : ℝ → ℝ}
   rw [hfun]
   exact (analyticAt_right_increment hh0 hua hga hpa hadm hpm).sub
     (analyticAt_left_increment hh0 hua hga hpa hadm hpm)
-
-end SingularEndpoint
 
 end UpperTailOptimizers

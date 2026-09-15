@@ -33,8 +33,6 @@ statements are what the sandwich estimate consumes, the closed forms being the w
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 /-- The node cubic `P(z) = (z - z₁)(z - z₂)(z - z₃)` of three-node interpolation. -/
 noncomputable def Pcube (z1 z2 z3 z : ℝ) : ℝ := (z - z1) * (z - z2) * (z - z3)
 
@@ -118,7 +116,5 @@ theorem Pcube_neg_of_mem_Ioo_right {z1 z2 z3 z : ℝ} (h12 : z1 < z2) (_h23 : z2
   have hb : 0 < z - z2 := sub_pos.mpr hlo
   have hc : z - z3 < 0 := sub_neg.mpr hhi
   exact mul_neg_of_pos_of_neg (mul_pos ha hb) hc
-
-end SingularEndpoint
 
 end UpperTailOptimizers

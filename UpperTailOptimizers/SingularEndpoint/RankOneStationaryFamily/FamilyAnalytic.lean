@@ -39,8 +39,6 @@ There is no hard analysis left in it.  Every ingredient of `E₁, E₂, E₃` is
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ}
@@ -243,7 +241,5 @@ theorem analyticAt_Fsys (hd : 2 ≤ d) :
         ((Esys1 d w.1.2.1 w.1.2.2 w.1.1 w.2, Esys2 d w.1.2.2 w.1.1 w.2,
           Esys3 d w.1.2.2 w.1.1 w.2) : ℝ × ℝ × ℝ)) (wBase d) :=
   (analyticAt_Esys1 hd).prod ((analyticAt_Esys2 hd).prod (analyticAt_Esys3 hd))
-
-end SingularEndpoint
 
 end UpperTailOptimizers

@@ -84,8 +84,6 @@ from feasibility.  No new axiom is introduced.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter MeasureTheory Topology
 
 variable {d : ℕ}
@@ -597,7 +595,5 @@ theorem exists_factorTail_factor_clause (hd : 2 ≤ d) {v m : ℕ} (hv : 2 ≤ v
   constructor
   · exact le_trans hres (mul_le_mul_of_nonneg_right (by linarith) (by positivity))
   · exact le_trans hmomcl (mul_le_mul_of_nonneg_right (by linarith) (by positivity))
-
-end SingularEndpoint
 
 end UpperTailOptimizers

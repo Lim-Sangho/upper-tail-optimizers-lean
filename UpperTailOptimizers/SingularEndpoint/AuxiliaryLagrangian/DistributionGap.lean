@@ -74,8 +74,6 @@ window (`sigmaInt_tail`, whose hypothesis is supplied by `exists_atoms_mem_centr
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -361,7 +359,5 @@ theorem abs_sigmaInt_le (B : KKTFamily d) {h : ℝ} (hh : |h| < B.h₀) {ν : Me
   nlinarith [h1, h2, h3]
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

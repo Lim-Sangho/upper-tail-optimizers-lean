@@ -30,8 +30,6 @@ function of `h` as soon as `ℓ_h` is, which is the first of the four steps that
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ}
@@ -89,7 +87,5 @@ theorem analyticAt_pOf (L : ℝ) : AnalyticAt ℝ pOf L := by
   have hexp : AnalyticAt ℝ (fun x : ℝ => 1 + Real.exp x) L :=
     analyticAt_const.add analyticAt_rexp
   exact analyticAt_const.div hexp (ne_of_gt (one_add_exp_pos L))
-
-end SingularEndpoint
 
 end UpperTailOptimizers

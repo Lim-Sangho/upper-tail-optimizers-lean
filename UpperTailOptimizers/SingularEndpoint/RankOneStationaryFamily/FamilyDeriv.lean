@@ -42,8 +42,6 @@ are the same fact under the (unused) hypotheses `0 < u` and `u² < 1`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ}
@@ -373,7 +371,5 @@ theorem exists_hasStrictFDerivAt_Fsys (hd : 2 ≤ d) :
   refine ContinuousLinearMap.ext fun v => ?_
   simp only [ContinuousLinearMap.prod_apply, jac3_coe, add_apply,
     smul_apply, smul_eq_mul, prU_apply, prL_apply, prG_apply]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

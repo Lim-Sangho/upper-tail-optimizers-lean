@@ -40,8 +40,6 @@ Section 5; it is stated for a bare triple of derivatives on a compact interval.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 /-- Rolle's theorem, packaged for a function given together with an explicit derivative on
 a closed interval `Set.Icc a b`: between two zeros of `g` inside the interval there is a
 zero of `g₁`. -/
@@ -183,7 +181,5 @@ theorem exists_deriv3_eq_of_three_roots {f f₁ f₂ f₃ : ℝ → ℝ} {a b : 
   · exact key z₁ z₂ z z₃ hz₁ hz₂ hz hz₃ h₁₂ hB hC g₁0 g₂0 gz0 g₃0
   · exact absurd hC hd₃
   · exact key z₁ z₂ z₃ z hz₁ hz₂ hz₃ hz h₁₂ h₂₃ hC g₁0 g₂0 g₃0 gz0
-
-end SingularEndpoint
 
 end UpperTailOptimizers

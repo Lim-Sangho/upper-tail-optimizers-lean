@@ -35,8 +35,6 @@ decomposition of `lem:localization-rank-one` and `ν` the law of `f`, is
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -538,7 +536,5 @@ theorem auxiliary_lagrangian_bound_law (hd : 2 ≤ d) (B : KKTFamily d) :
     have := mul_le_mul_of_nonneg_right hμ hsq
     linarith
   linarith
-
-end SingularEndpoint
 
 end UpperTailOptimizers

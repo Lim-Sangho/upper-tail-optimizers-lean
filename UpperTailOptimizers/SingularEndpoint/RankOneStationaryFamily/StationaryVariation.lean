@@ -29,8 +29,6 @@ Two ingredients:
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Filter Topology Finset
 
 /-! ## Edge values -/
@@ -418,7 +416,5 @@ theorem tDensity_variation_rankOne {V : Type*} [Fintype V] [DecidableEq V] (H : 
       exact integral_pair_mul_rest hadj.ne hΦm hkm
   rw [Finset.sum_congr rfl hconst, Finset.sum_const, nsmul_eq_mul, hΦdef]
   ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

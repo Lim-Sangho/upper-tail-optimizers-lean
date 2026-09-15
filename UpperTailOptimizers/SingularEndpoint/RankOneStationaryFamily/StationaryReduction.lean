@@ -32,8 +32,6 @@ family — so both directions are proved here.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Filter Topology
 
 /-- The rank-one graphon `f ⊗ f`. -/
@@ -535,7 +533,5 @@ theorem isStationary_of_kkt_scalar {V : Type*} [Fintype V] [DecidableEq V] (H : 
     rw [hassoc, hcomb, hvanish]
   rw [hzero] at hsub
   exact hsub
-
-end SingularEndpoint
 
 end UpperTailOptimizers

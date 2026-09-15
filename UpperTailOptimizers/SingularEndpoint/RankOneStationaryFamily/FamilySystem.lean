@@ -49,8 +49,6 @@ ones that are true for every `d ≥ 2`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ} {lv g u h : ℝ}
@@ -272,7 +270,5 @@ theorem Esys3_zero (hd : 2 ≤ d) (_hu0 : 0 < u) (_hu1 : u ^ 2 < 1) :
           + u * (((d - 1 : ℕ) : ℝ) * u ^ (d - 2)) * (((d - 2 : ℕ) : ℝ) * u ^ (d - 3))) := by
   have _hd : 2 ≤ d := hd
   exact Esys3_zero' g u
-
-end SingularEndpoint
 
 end UpperTailOptimizers

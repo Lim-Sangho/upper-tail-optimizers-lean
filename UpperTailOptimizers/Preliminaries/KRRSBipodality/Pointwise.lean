@@ -26,7 +26,7 @@ set_option linter.unusedSectionVars false
 
 namespace UpperTailOptimizers
 
-open MeasureTheory Set SingularEndpoint
+open MeasureTheory Set
 
 variable {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
 

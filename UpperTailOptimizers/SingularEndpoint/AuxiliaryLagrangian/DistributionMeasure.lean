@@ -78,8 +78,6 @@ They are combined through `φ(u) = A + B u^d + g(u)`, which is the definition of
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter MeasureTheory Topology
 
 variable {d : ℕ}
@@ -584,7 +582,5 @@ theorem exists_tail_interpolation (hd : 2 ≤ d) (B : KKTFamily d) {ρ : ℝ} (h
     mul_nonneg (mul_nonneg hCC.le h2d.le) hAL]
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

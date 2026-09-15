@@ -36,8 +36,6 @@ the other proved clauses of Theorem 5.1, with the documented qualifications.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Real
 
 variable {d : ℕ}
@@ -191,7 +189,5 @@ theorem terminal_optimality_of_master (H : SimpleGraph V) [DecidableRel H.Adj]
     exact ⟨by linarith, fun _ => ⟨hΔz, hRz⟩⟩
   · push Not at hle
     exact ⟨hle.le, fun heq => absurd heq (by linarith)⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

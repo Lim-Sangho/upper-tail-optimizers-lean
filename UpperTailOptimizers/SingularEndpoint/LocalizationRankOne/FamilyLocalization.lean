@@ -52,8 +52,6 @@ statements are merged into a single punctured ball by the `eventually_nhdsWithin
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter MeasureTheory Topology
 
 variable {d : ℕ}
@@ -238,7 +236,5 @@ theorem family_localization_sq (hd : 2 ≤ d) {V : Type*} [Fintype V] [Decidable
     rw [mul_pow, Real.sq_sqrt hM0.le]; ring
   nlinarith [hcs, hbd h hh hpos hlt W hfeas hcost, hnn, hrhs,
     mul_pos (Real.sqrt_pos.mpr hM0) (pow_pos hpos 2)]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

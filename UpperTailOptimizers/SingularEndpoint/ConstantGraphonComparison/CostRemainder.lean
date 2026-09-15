@@ -43,8 +43,6 @@ halves are already available:
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology MeasureTheory
 
 variable {d : ℕ}
@@ -182,7 +180,5 @@ theorem constant_graphon_comparison (hd : 2 ≤ d) (B : KKTFamily d) :
       _ ≤ C₂ * |h| ^ 6 := h2
       _ ≤ max C₁ C₂ * |h| ^ 6 :=
           mul_le_mul_of_nonneg_right (le_max_right _ _) (by positivity)
-
-end SingularEndpoint
 
 end UpperTailOptimizers

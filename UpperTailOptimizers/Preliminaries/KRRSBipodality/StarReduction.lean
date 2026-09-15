@@ -26,7 +26,7 @@ disjoint edge, and is `O(‖δW‖₂³)`.
 
 namespace UpperTailOptimizers
 
-open MeasureTheory SingularEndpoint
+open MeasureTheory
 
 /-- `W - ε` as a bounded symmetric kernel. -/
 noncomputable def devKernel (W : Graphon) (ε : ℝ) (hε : ε ∈ Set.Icc (0:ℝ) 1) : BKernel where

@@ -39,8 +39,6 @@ family needs the expansions `eq:rank-one-parameter-expansions`, and is done in
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Real
 
 variable {d : ℕ}
@@ -213,7 +211,5 @@ theorem integral_dist_pow_four_le_gamInt (hd : 2 ≤ d) :
     refine integral_mono (hI4.const_mul c) hIgam fun z => ?_
     exact hc _ (W.mem_Icc z.1 z.2)
   rwa [integral_const_mul] at h
-
-end SingularEndpoint
 
 end UpperTailOptimizers

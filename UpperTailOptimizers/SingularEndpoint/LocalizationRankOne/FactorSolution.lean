@@ -83,8 +83,6 @@ spare, but proving that needs the smallness of `ε`, which the pointwise bound d
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ} {W : Graphon} {f : ℝ → ℝ} {q : ℝ}
@@ -906,7 +904,5 @@ theorem factorSolution_closeness (hd : 2 ≤ d) (hmeas : Measurable f) (hnn : �
     ring
   simp only [factorSolutionCloseConst] at hfin ⊢
   nlinarith [hL, hE, hmul, hfin]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

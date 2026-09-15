@@ -42,8 +42,6 @@ size of the class.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 open scoped Classical
@@ -210,7 +208,5 @@ theorem measure_eq_alph_of_qVal_eq (hd : 2 ≤ d) (P : FactorDecomp d W) (B : KK
   rcases this with h1 | h1
   · linarith
   · exact absurd h1 hne
-
-end SingularEndpoint
 
 end UpperTailOptimizers

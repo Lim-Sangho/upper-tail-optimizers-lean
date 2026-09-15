@@ -21,8 +21,6 @@ Its one consumer is the central-square bound in `SingularEndpoint/GraphonCompari
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 /-- **`J_p'' ≥ 4` on `(0,1)`**, uniformly in `p`: `J_p''(u) = 1/(u(1-u))` and
 `u(1-u) ≤ 1/4`. -/
 theorem four_le_Jp'' {u : ℝ} (hu0 : 0 < u) (hu1 : u < 1) : 4 ≤ Jp'' u := by
@@ -76,7 +74,5 @@ theorem two_sq_le_Jp_convexGap {p u v : ℝ} (hp0 : 0 < p) (hp1 : p < 1)
     (⟨hv0.le, hv1.le⟩ : v ∈ Set.Icc (0 : ℝ) 1) hderiv u hu
   have h' : Jp p v - 2 * v ^ 2 + (Jp' p v - 4 * v) * (u - v) ≤ Jp p u - 2 * u ^ 2 := h
   nlinarith [h']
-
-end SingularEndpoint
 
 end UpperTailOptimizers

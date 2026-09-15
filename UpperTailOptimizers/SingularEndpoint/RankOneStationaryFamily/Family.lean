@@ -56,8 +56,6 @@ ordering `p_h < r_h`, and local exhaustiveness (its scalar content being availab
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Real
 
 variable {d : ℕ}
@@ -391,7 +389,5 @@ theorem graphon_tDensity_eq_rVal_pow (hd : 2 ≤ d) (hreg : ∀ v, H.degree v = 
   rw [graphon_tDensity H hreg hh, rVal_pow_card_edges H hd hreg hh]
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

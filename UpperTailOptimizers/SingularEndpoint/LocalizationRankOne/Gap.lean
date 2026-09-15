@@ -41,8 +41,6 @@ The quartic lower bound `eq:endpoint-gap-quartic-bound` is *not* proved here.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ}
@@ -234,7 +232,5 @@ theorem sub_rStar_eq (hd : 2 ≤ d) (u : ℝ) :
   rw [Rd]
   field_simp
   ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

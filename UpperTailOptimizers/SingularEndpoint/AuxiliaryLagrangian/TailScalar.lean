@@ -63,8 +63,6 @@ The measure half of the two-node route (the Hölder step against `ν` and the
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -619,7 +617,5 @@ theorem sq_min_dist_le_abs_Qh (B : KKTFamily d) {h : ℝ} (_hpos : 0 < h) (u : �
   exact mul_le_mul h1 h2 h0 (abs_nonneg _)
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

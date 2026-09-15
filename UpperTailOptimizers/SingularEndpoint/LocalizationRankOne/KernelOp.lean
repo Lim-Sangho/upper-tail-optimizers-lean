@@ -64,8 +64,6 @@ format of Hölder's inequality.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 /-! ## The `L^p` functional on raw functions -/
@@ -353,7 +351,5 @@ theorem one_le_integral_pow_sub_one {d : ℕ} {φ : ℝ → ℝ} (hφ : ∀ x, 0
     (hp : Integrable (fun x => φ x ^ (d - 1)) unitμ) :
     1 ≤ ∫ x, φ x ^ (d - 1) ∂unitμ :=
   one_le_integral_pow hφ hi h1 (d - 1) hp
-
-end SingularEndpoint
 
 end UpperTailOptimizers

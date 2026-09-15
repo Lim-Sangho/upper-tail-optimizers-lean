@@ -31,8 +31,6 @@ is a polynomial one and no `rpow` Taylor theorem is needed.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -229,7 +227,5 @@ theorem muVal_tDensity_le_etaVal (hd : 2 ≤ d) {V : Type*} [Fintype V] [Decidab
     rw [heta, hmu]; ring
   rw [← hmu, hid, hlast]
   linarith [(abs_le.mp habs1).2, (abs_le.mp habs2).2]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

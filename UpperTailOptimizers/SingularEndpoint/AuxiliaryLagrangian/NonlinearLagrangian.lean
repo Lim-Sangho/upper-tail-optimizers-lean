@@ -29,8 +29,6 @@ bounds by `|μ_h| v² (2^d)^{2v} Δ²` because `m_d(ξ), q_h ∈ [0, 2^d]`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Filter Topology
 
 variable {d : ℕ}
@@ -128,7 +126,5 @@ theorem auxLagrangian_gap_ge (hd : 2 ≤ d) (B : KKTFamily d) {h : ℝ} (hh : |h
   linarith
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

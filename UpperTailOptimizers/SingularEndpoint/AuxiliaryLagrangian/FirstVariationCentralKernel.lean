@@ -42,8 +42,6 @@ depend on `ρ`; only the threshold `h_ρ` (both atoms in `𝒩_ρ`) does.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -313,7 +311,5 @@ theorem first_variation_central_kernel_bounds (hd : 2 ≤ d) (B : KKTFamily d) :
                 (fun x => B.sigmaInt h ξ (openWindow d ρ) (fun y => B.contKernel h x y))) := by
   have hdR : (0 : ℝ) < (d : ℝ) := dpos hd
   exact ⟨(d : ℝ) ^ 3 / 24, by positivity, first_variation_bound hd B, central_kernel_bound hd B⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

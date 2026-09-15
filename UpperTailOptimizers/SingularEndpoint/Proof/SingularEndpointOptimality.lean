@@ -40,8 +40,6 @@ family and adds the other proved clauses, with the qualifications in `FORMALIZAT
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -406,7 +404,5 @@ theorem exists_singular_endpoint_optimality (hd : 2 ≤ d) {V : Type*} [Fintype 
     exact hEq.ge
   · push Not at hcost
     exact hcost.le
-
-end SingularEndpoint
 
 end UpperTailOptimizers

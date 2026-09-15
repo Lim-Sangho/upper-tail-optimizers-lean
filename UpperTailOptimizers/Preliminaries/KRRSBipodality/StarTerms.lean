@@ -16,7 +16,7 @@ This file evaluates or bounds each of them:
 
 namespace UpperTailOptimizers
 
-open MeasureTheory SingularEndpoint
+open MeasureTheory
 
 /-- A function of one coordinate integrates like the function itself. -/
 theorem integral_pi_eval_comp {V : Type*} [Fintype V] [DecidableEq V] (u : V) {G : ℝ → ℝ}

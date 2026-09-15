@@ -39,8 +39,6 @@ they replace the ordinary two-contact supporting line at the singular endpoint.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Real
 
 variable {d : ℕ}
@@ -172,7 +170,5 @@ theorem Ip_sub_Jp_eq (hd : 2 ≤ d) {p r : ℝ} (hp0 : 0 < p) (hp1 : p < 1)
   rw [Ip_eq_Ip_pStar_add hd hp0 hp1 W, Ip_pStar_eq_moment_add_gam hd W,
     Jp_eq_Jp_pStar_add hd hp0 hp1 hr0 hr1, Jp_pStar_eq_gam d r]
   ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

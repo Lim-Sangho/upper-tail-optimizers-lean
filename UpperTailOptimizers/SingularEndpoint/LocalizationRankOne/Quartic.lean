@@ -91,8 +91,6 @@ theorem quartic_lower_of_deriv4_ge {f f1 f2 f3 f4 : ℝ → ℝ} {c m a b : ℝ}
   simp only [zero_div, zero_mul] at h
   linarith
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ}
@@ -270,7 +268,5 @@ theorem exists_rd_sq_le_gam (hd : 2 ≤ d) :
     _ ≤ ((d : ℝ) ^ 2 / ((d : ℝ) * rStar d ^ (d - 1))) ^ 2 * (Gam d u / c) :=
         mul_le_mul_of_nonneg_left h4 (by positivity)
     _ = ((d : ℝ) ^ 2 / ((d : ℝ) * rStar d ^ (d - 1))) ^ 2 / c * Gam d u := by ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

@@ -32,8 +32,6 @@ and `measurable_setIntegral_row` that the mixed-rectangle and corner bounds of
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -154,7 +152,5 @@ theorem centralSet_exists_gam_bound (B : KKTFamily d) :
   rw [Real.dist_eq, B.gam_zero] at hlt
   have h1 : |B.gam h| - |gammaStar d| ≤ |B.gam h - gammaStar d| := abs_sub_abs_le_abs_sub _ _
   linarith
-
-end SingularEndpoint
 
 end UpperTailOptimizers

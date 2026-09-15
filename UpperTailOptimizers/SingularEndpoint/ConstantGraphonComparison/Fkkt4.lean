@@ -37,8 +37,6 @@ the whole picture degenerates; `d ≥ 3` is where it is a genuine non-degeneracy
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 variable {d : ℕ}
 
 /-! ## The derivative -/
@@ -162,7 +160,5 @@ theorem Lstar4_rStar (hd : 2 ≤ d) :
         ring
 
 /-! ## Continuity -/
-
-end SingularEndpoint
 
 end UpperTailOptimizers

@@ -47,8 +47,6 @@ returns junk.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real Filter Topology
 
 variable {d : ℕ}
@@ -277,7 +275,5 @@ theorem iteratedDeriv_five_Gam (hd : 2 ≤ d) :
     iteratedDeriv 5 (Gam d) (rStar d) = 5 * (d : ℝ) ^ 6 * ((d : ℝ) - 2) / ((d : ℝ) - 1) ^ 3 := by
   rw [(iteratedDeriv_five_Gam_eventuallyEq hd).eq_of_nhds]
   exact Lstar4_rStar hd
-
-end SingularEndpoint
 
 end UpperTailOptimizers

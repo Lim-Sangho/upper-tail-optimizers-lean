@@ -53,8 +53,6 @@ bounded power of `x`, collected in `psiDrift`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -408,7 +406,5 @@ theorem exists_PsiT_sup_bound (hd : 2 ≤ d) (B : KKTFamily d) :
   linarith
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

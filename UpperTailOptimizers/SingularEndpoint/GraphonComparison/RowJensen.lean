@@ -48,8 +48,6 @@ stay below it.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ} {W : Graphon}
@@ -896,7 +894,5 @@ theorem integral_pow_four_le_of_Lnorm {g : ℝ → ℝ} {c : ℝ} (hL : Lnorm un
   have hc4 : c ^ (4 : ℝ) = c ^ 4 := by rw [← hnat, Real.rpow_natCast]
   rw [hrp, heq, hc4] at hmono
   exact hmono
-
-end SingularEndpoint
 
 end UpperTailOptimizers

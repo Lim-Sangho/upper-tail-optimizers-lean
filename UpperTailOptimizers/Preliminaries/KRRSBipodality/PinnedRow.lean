@@ -18,7 +18,7 @@ and of `W` from `ε`, and what remains factorizes over the neighbours of `a`:
 
 namespace UpperTailOptimizers
 
-open MeasureTheory Set SingularEndpoint
+open MeasureTheory Set
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 

@@ -44,8 +44,6 @@ place of the factorisation.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ}
@@ -254,7 +252,5 @@ theorem kappaVal_eq (hd : 2 ≤ d) {h : ℝ} (hh : |h| < B.h₀) :
     - (2 * (1 - B.alph h) * B.gam h / (d : ℝ)) * hid
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

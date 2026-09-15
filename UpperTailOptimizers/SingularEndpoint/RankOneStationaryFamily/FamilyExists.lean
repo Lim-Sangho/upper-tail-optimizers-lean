@@ -43,8 +43,6 @@ this file alone does not build an `KKTFamily`.  They are supplied by
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -129,7 +127,5 @@ theorem exists_scalar_family_kkt (hd : 2 ≤ d) :
     exact this.eventually_lt_const (rStar_lt_one hd)
   filter_upwards [hsol, hspos, htpos, hssq, htsq, hst] with h hsolh hsh hth hssqh htsqh hsth hne
   exact (lell_three_eq_iff hd hne hsh hth hssqh htsqh hsth).mpr hsolh
-
-end SingularEndpoint
 
 end UpperTailOptimizers

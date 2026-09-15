@@ -46,8 +46,6 @@ limit, derivative or power series occurs.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ} {p s t u h z : ℝ}
@@ -248,7 +246,5 @@ theorem pow_add_pow_sub_two_factored (_hd : 2 ≤ d) (hh : t - s = 2 * h) :
         * ((∑ i ∈ Finset.range k, (t ^ 2) ^ i * (s * t) ^ (k - 1 - i))
             + s * (∑ i ∈ Finset.range k, s ^ (k - 1 - i) * t ^ i)
                 * ∑ j ∈ Finset.range (k - 1), t ^ j * s ^ (k - 1 - 1 - j)) * hh
-
-end SingularEndpoint
 
 end UpperTailOptimizers

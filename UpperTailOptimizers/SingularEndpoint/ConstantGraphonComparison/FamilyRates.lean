@@ -40,8 +40,6 @@ equations, the fourth-order expansions, or the admissibility clause of
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -176,7 +174,5 @@ theorem tendsto_alph (B : KKTFamily d) :
   have h0mem : |(0 : ℝ)| < B.h₀ := by rw [abs_zero]; exact B.h₀_pos
   have h := (B.analyticAt_alph 0 h0mem).continuousAt.tendsto
   rwa [B.alph_zero] at h
-
-end SingularEndpoint
 
 end UpperTailOptimizers

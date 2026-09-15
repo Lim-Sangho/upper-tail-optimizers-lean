@@ -48,8 +48,6 @@ below, and the factorisation identity itself holds at **every** real `z`, not on
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter
 
 /-! ### `dslope` preserves analyticity -/
@@ -211,7 +209,5 @@ theorem exists_analytic_quotient_three_confluent {f : ℝ → ℝ} {s : Set ℝ}
   have := quotient3_factor h₀ d₁ d₂ z
   rw [this]
   ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

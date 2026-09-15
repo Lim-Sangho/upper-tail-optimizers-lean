@@ -75,8 +75,6 @@ sharper than the paper's clause `|Δ_h(ν)| ≤ C_dh²`; it is
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -436,7 +434,5 @@ theorem comparison_exists_apriori_factor (hd : 2 ≤ d) (B : KKTFamily d) {ρ : 
   · rw [integral_const]
     simp only [measureReal_def, measure_univ, ENNReal.toReal_one, smul_eq_mul, one_mul]
     exact Real.rpow_inv_natCast_pow (KKTFamily.qVal_pos hhb).le hdne
-
-end SingularEndpoint
 
 end UpperTailOptimizers

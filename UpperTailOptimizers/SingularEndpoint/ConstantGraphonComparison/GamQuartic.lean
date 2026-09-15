@@ -68,8 +68,6 @@ theorem quartic_upper_of_deriv4_le {f f1 f2 f3 f4 : ℝ → ℝ} {c M a b : ℝ}
   have h := hneg x hx
   linarith
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -212,7 +210,5 @@ theorem Gam_le_of_near (hd : 2 ≤ d) :
   obtain ⟨δ, hδ, hband⟩ := exists_gam_quartic_band hd (ε := 1) one_pos
   exact ⟨((d : ℝ) ^ 5 / ((d : ℝ) - 1) ^ 2 + 1) / 24, δ, by positivity, hδ,
     fun z hz => (hband z hz).2⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

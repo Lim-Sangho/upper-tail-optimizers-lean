@@ -35,8 +35,6 @@ the increment expansions comes from, and the pinching constant is
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 variable {d : ℕ}
 
 /-- The derivative hypotheses of `SingularEndpoint/RankOneStationaryFamily/Sandwich.lean`, assembled for `F_{p,γ}` and its
@@ -155,7 +153,5 @@ theorem cubic_constant_sum (hd : 2 ≤ d) :
         (d : ℝ) ^ 5 / ((d : ℝ) - 1) ^ 2 / 6 * (4 * uStar d ^ 3 * (uStar d + 2 * uStar d) / 3)
       = 4 * (d : ℝ) ^ 3 / 3 := by
   rw [cubic_constant_left hd]; ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

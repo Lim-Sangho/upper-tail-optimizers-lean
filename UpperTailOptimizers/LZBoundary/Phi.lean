@@ -63,6 +63,10 @@ theorem rStar_lt_one (hd : 2 ≤ d) : rStar d < 1 := by
   have h2 := dpos hd
   rw [div_lt_one h2]; linarith
 
+/-- `r_* ∈ (0,1)` for `d ≥ 2`. -/
+theorem rStar_mem_Ioo (hd : 2 ≤ d) : rStar d ∈ Set.Ioo (0 : ℝ) 1 :=
+  ⟨rStar_pos hd, rStar_lt_one hd⟩
+
 /-- On `(0,1)`, `h_{p,d}(u) = 1/(1-u) - (d-1) J_p'(u)`, eliminating `J_p''`. -/
 theorem hpd_eq {p u : ℝ} (hu0 : 0 < u) (hu1 : u < 1) :
     hpd p d u = (1 - u)⁻¹ - ((d : ℝ) - 1) * Jp' p u := by

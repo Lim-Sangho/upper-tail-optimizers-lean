@@ -30,8 +30,6 @@ and what lets the `Lstar`-level statements be proved by `exact` from the `Fkkt`-
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 variable {d : ℕ}
 
 /-! ## The derivatives -/
@@ -118,7 +116,5 @@ theorem continuousAt_Fkkt3 (d : ℕ) {γ z : ℝ} (hz0 : 0 < z) (hz1 : z < 1) :
       q.1 * ((d : ℝ) - 1) * ((d : ℝ) - 2) * ((d - 3 : ℕ) : ℝ) * q.2 ^ (d - 4)) (γ, z) := by
     fun_prop
   exact hJ.sub hpow
-
-end SingularEndpoint
 
 end UpperTailOptimizers

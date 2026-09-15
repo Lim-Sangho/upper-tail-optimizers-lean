@@ -18,8 +18,6 @@ arbitrary graphon `W` in place of the constant graphon.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -100,7 +98,5 @@ theorem graphon_cost_decomposition (hd : 2 ≤ d) (B : KKTFamily d) {h : ℝ} (h
         + (ell (B.p h) - ell (pStar d)) * (W.edgeDensity - (B.graphon hh).edgeDensity) := by
   rw [Ip_sub_Ip_eq_edgeDensity hd (B.p_mem h hh).1 (B.p_mem h hh).2 W (B.graphon hh),
     KKTFamily.graphon_Wmoment_eq_rVal_pow hd hh]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

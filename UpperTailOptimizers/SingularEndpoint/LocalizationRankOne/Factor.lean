@@ -49,8 +49,6 @@ uniform bound; `integrable_of_abs_le` is the only tool needed.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ} {W : Graphon}
@@ -308,7 +306,5 @@ theorem qVal_mul_f_le (hd : 1 ≤ d) :
   nlinarith [W.le_one' x y, W.nonneg' x y]
 
 end FactorDecomp
-
-end SingularEndpoint
 
 end UpperTailOptimizers

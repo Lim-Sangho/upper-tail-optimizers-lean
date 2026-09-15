@@ -37,8 +37,6 @@ strict differentiability of `(E₁, E₂, E₃)` into the analytic family.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 /-- The forward continuous linear map `(x, y, z) ↦ (y + az, bz, cx + ez)` underlying
 `jac3`. -/
 private noncomputable def jac3Fwd (a b c e : ℝ) : (ℝ × ℝ × ℝ) →L[ℝ] (ℝ × ℝ × ℝ) where
@@ -106,7 +104,5 @@ theorem jac3_coe (a b c e : ℝ) (hb : b ≠ 0) (hc : c ≠ 0) :
     ((jac3 a b c e hb hc : (ℝ × ℝ × ℝ) →L[ℝ] (ℝ × ℝ × ℝ)) : (ℝ × ℝ × ℝ) → (ℝ × ℝ × ℝ))
       = fun v => (v.2.1 + a * v.2.2, b * v.2.2, c * v.1 + e * v.2.2) :=
   rfl
-
-end SingularEndpoint
 
 end UpperTailOptimizers

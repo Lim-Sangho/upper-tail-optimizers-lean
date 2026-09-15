@@ -47,8 +47,6 @@ The arithmetic that produces the clean `-(d-1)`:
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology Finset
 
 variable {d : ℕ}
@@ -303,7 +301,5 @@ theorem graphon_edge_gap (hd : 2 ≤ d) {F : ℝ → ℝ}
   refine (tendsto_edge_gap B hd).congr' ?_
   filter_upwards [eventually_window B] with h hw
   rw [hF h hw, KKTFamily.graphon_edgeDensity hw]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

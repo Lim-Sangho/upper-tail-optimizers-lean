@@ -90,8 +90,6 @@ error estimate `sup_{0<h<h_ρ}‖Θ_h - d³/4‖_{L^∞(𝒩_ρ²)} ≤ a/4` in 
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 /-! ## The first-order mean-value theorem in the chart `w = x^d`
@@ -789,7 +787,5 @@ theorem exists_kp00_window (hd : 2 ≤ d) (B : KKTFamily d) {ρ : ℝ} (hρ : 0 
   linarith
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

@@ -53,8 +53,6 @@ Section 5; it is stated for a bare quadruple of derivatives on a compact interva
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 /-- **Zero counting for two double nodes and one extra simple zero.**
 
 If `g → g₁ → g₂ → g₃ → g₄` is a chain of derivatives on `Set.Icc a b`, if `g` and `g₁` both
@@ -195,7 +193,5 @@ theorem exists_deriv4_eq_of_two_double_roots {f f₁ f₂ f₃ f₄ : ℝ → �
   refine ⟨ξ, hξ, ?_⟩
   have hval : f₄ ξ = 24 * K := by linarith
   rw [hK, hval]; ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

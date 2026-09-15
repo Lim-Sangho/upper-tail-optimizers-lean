@@ -84,8 +84,6 @@ which reads `ν = ν_h` off this bound for an exact minimiser (the analogue of t
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -588,7 +586,5 @@ theorem exists_distributionGap (hd : 2 ≤ d) (B : KKTFamily d) {ρ : ℝ} (hρ0
   linarith [hmain, hPT, hzmul, hsplit1, hsplit2, hsplit3]
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

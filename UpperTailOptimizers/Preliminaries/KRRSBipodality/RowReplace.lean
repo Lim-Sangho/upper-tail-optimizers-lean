@@ -22,7 +22,7 @@ set_option linter.unusedSectionVars false
 
 namespace UpperTailOptimizers
 
-open MeasureTheory Set SingularEndpoint
+open MeasureTheory Set
 
 /-- `π_A(x) = x₀` for `x ∈ A`, `x` otherwise. -/
 noncomputable def rowRep (A : Set ℝ) (x₀ : ℝ) (x : ℝ) : ℝ := by

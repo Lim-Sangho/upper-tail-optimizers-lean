@@ -41,8 +41,6 @@ just near `0`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 /-- **The Taylor coefficients below the order of weak vanishing are zero.**  If `F` is analytic
@@ -265,7 +263,5 @@ theorem exists_pow_bound_sub_quartic {v : ℝ → ℝ} {c : ℝ} (hv : AnalyticA
     field_simp
   obtain ⟨C, δ, hC, hδ, hb⟩ := exists_pow_bound_of_reflect hF hrefl hlim'
   exact ⟨C, δ, hC, hδ, hb⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

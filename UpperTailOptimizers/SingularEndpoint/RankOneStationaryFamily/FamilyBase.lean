@@ -41,8 +41,6 @@ natural-number exponents `d - 2`, `d - 3`, which force a case split at `d = 2`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ}
@@ -164,7 +162,5 @@ theorem Fsys_base (hd : 2 ≤ d) : Fsys d (zBase d) 0 = 0 := by
           Esys2 d (gammaStar d) (uStar d) 0, Esys3 d (gammaStar d) (uStar d) 0) := rfl
   rw [hsplit, Esys1_base hd, Esys2_base hd, Esys3_base hd]
   rfl
-
-end SingularEndpoint
 
 end UpperTailOptimizers

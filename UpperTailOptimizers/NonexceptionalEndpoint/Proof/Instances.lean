@@ -38,7 +38,7 @@ namespace UpperTailOptimizers
 
 namespace Instances
 
-open MeasureTheory SingularEndpoint
+open MeasureTheory
 
 /-! ## The two graphs -/
 
@@ -66,7 +66,7 @@ theorem K4_verts : 2 ≤ Fintype.card (Fin 4) := by simp
 
 /-! ## The singular endpoint, made concrete
 
-The abstract statement is `SingularEndpoint.singular_endpoint_optimizers`
+The abstract statement is `singular_endpoint_optimizers`
 (`thm:endpoint-optimizers`).  What follows picks a parameter `h` inside both the family
 window and the optimality window, and reads off the resulting graphon. -/
 

@@ -5,7 +5,7 @@ import UpperTailOptimizers.Preliminaries.Graphons.Basic
 # Two-valuedness of rank-one KKT factors: the measure-theoretic step (Section 5)
 
 This file carries the scalar core of `lem:stationary-rank-one-bipodality` of `paper/sections/singular.tex`
-across the measure-theoretic divide.  `SingularEndpoint.three_values_absurd` says that the four
+across the measure-theoretic divide.  `three_values_absurd` says that the four
 numbers `a², ab, ac, bc` coming from `0 < a < b < c < 1` cannot all be zeros of the
 rank-one KKT function `F_{p,γ}`.  What the paper actually uses is the statement about a
 *factor* `f : [0,1] → ℝ`: if `F_{p,γ}(f(x)f(y)) = 0` for a.e. `(x,y)`, then `f` cannot take
@@ -29,8 +29,6 @@ three-zero bound already gives a contradiction without that fifth product.
 -/
 
 namespace UpperTailOptimizers
-
-namespace SingularEndpoint
 
 open MeasureTheory
 
@@ -66,7 +64,7 @@ Let `f` be measurable and suppose the rank-one KKT equation
 `F_{p,γ}(f(x) f(y)) = 0` holds for `gμ`-almost every `(x, y)`.  Then `f` cannot take three
 distinct values `0 < a < b < c < 1` on sets of positive measure: the four products
 `a·a`, `a·b`, `a·c`, `b·c` would all be zeros of `F_{p,γ}`, contradicting the
-three-zero bound `SingularEndpoint.three_values_absurd`. -/
+three-zero bound `three_values_absurd`. -/
 theorem not_three_values (hd : 2 ≤ d) {p g : ℝ} (hp0 : 0 < p) (hp1 : p < 1)
     {f : ℝ → ℝ} (hfm : Measurable f)
     (hkkt : ∀ᵐ z ∂gμ, Fkkt d p g (f z.1 * f z.2) = 0)
@@ -102,7 +100,5 @@ theorem two_of_three_measure_zero (hd : 2 ≤ d) {p g : ℝ} (hp0 : 0 < p) (hp1 
   obtain ⟨h1, h2, h3⟩ := hcon
   exact not_three_values hd hp0 hp1 hfm hkkt ha0 hab hbc hc1
     (pos_iff_ne_zero.mpr h1) (pos_iff_ne_zero.mpr h2) (pos_iff_ne_zero.mpr h3)
-
-end SingularEndpoint
 
 end UpperTailOptimizers

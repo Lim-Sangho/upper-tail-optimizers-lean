@@ -86,8 +86,6 @@ that displacement, divided by `d²w^{2d-1}`, and `thetaV2` does not move at all.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 /-! ## `dslope` as an honest quotient -/
@@ -1678,7 +1676,5 @@ theorem exists_kernelTheta_bound (hd : 2 ≤ d) (B : KKTFamily d) :
   linarith
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

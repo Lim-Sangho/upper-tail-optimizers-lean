@@ -4,9 +4,9 @@ import UpperTailOptimizers.SingularEndpoint.RankOneStationaryFamily.TwoValued
 # The essential range of a rank-one KKT factor (Section 5)
 
 This file closes `lem:stationary-rank-one-bipodality` of `paper/sections/singular.tex`.  Two ingredients
-are already in place.  `SingularEndpoint.four_zeros_absurd` (`SingularEndpoint/RankOneStationaryFamily/Bipodality.lean`) says the
+are already in place.  `four_zeros_absurd` (`SingularEndpoint/RankOneStationaryFamily/Bipodality.lean`) says the
 rank-one KKT function `F_{p,γ}(z) = J_p'(z) - γ z^{d-1}` has at most three zeros in `(0,1)`,
-and `SingularEndpoint.not_three_values` (`SingularEndpoint/RankOneStationaryFamily/TwoValued.lean`) says a rank-one KKT *factor*
+and `not_three_values` (`SingularEndpoint/RankOneStationaryFamily/TwoValued.lean`) says a rank-one KKT *factor*
 `f` cannot take three distinct values each on a set of positive `unitμ`-measure.  What is
 still missing is the essential-range step: passing from "no three values of positive
 measure" to "`f` is almost everywhere two-valued".
@@ -37,8 +37,6 @@ The passage has three steps, matching the three theorems below.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -50,7 +48,7 @@ variable {d : ℕ}
 The rank-one KKT function `F_{p,γ}` has only finitely many zeros in the open unit interval.
 Indeed an infinite zero set would contain a four-element `Finset`; listing it in increasing
 order via `Finset.orderEmbOfFin` produces `z₁ < z₂ < z₃ < z₄` in `(0,1)` with
-`F_{p,γ}(zᵢ) = 0`, which `SingularEndpoint.four_zeros_absurd` forbids. -/
+`F_{p,γ}(zᵢ) = 0`, which `four_zeros_absurd` forbids. -/
 theorem finite_fkkt_zeros (hd : 2 ≤ d) {p g : ℝ} (hp0 : 0 < p) (hp1 : p < 1) :
     {z : ℝ | z ∈ Set.Ioo (0:ℝ) 1 ∧ Fkkt d p g z = 0}.Finite := by
   by_contra hinf
@@ -97,10 +95,10 @@ theorem ae_mem_finite_of_kkt (hd : 2 ≤ d) {p g : ℝ} (hp0 : 0 < p) (hp1 : p <
 
 A measurable `f : [0,1] → (0,1)` satisfying the rank-one KKT equation
 `F_{p,γ}(f(x)f(y)) = 0` for `gμ`-a.e. `(x, y)` is almost everywhere equal to one of two
-constants.  Combined with `SingularEndpoint.ae_mem_finite_of_kkt`, which confines `f` to a finite
+constants.  Combined with `ae_mem_finite_of_kkt`, which confines `f` to a finite
 set `S`, this is the essential-range argument: the values in `S` carried by a null level set
 contribute a null set in total, and the remaining values cannot number three by
-`SingularEndpoint.not_three_values`, so the minimum and the maximum of what remains already exhaust
+`not_three_values`, so the minimum and the maximum of what remains already exhaust
 them.  Together with `f` not a.e. constant this gives the paper's `f = s·1_A + t·1_{A^c}`. -/
 theorem exists_two_values (hd : 2 ≤ d) {p g : ℝ} (hp0 : 0 < p) (hp1 : p < 1)
     {f : ℝ → ℝ} (hfm : Measurable f) (hpos : ∀ x, 0 < f x) (hlt : ∀ x, f x < 1)
@@ -148,7 +146,5 @@ theorem exists_two_values (hd : 2 ≤ d) {p g : ℝ} (hp0 : 0 < p) (hp1 : p < 1)
       hTfin.mem_toFinset.mp (hTfin.toFinset.max'_mem hFne)
     exact not_three_values hd hp0 hp1 hfm hkkt (hTval _ hminT).1 hmin hmax
       (hTval _ hmaxT).2.1 (hTval _ hminT).2.2 (hTval _ hx).2.2 (hTval _ hmaxT).2.2
-
-end SingularEndpoint
 
 end UpperTailOptimizers

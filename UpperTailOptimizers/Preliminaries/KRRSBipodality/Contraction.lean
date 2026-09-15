@@ -25,7 +25,7 @@ set_option linter.unusedSectionVars false
 
 namespace UpperTailOptimizers
 
-open MeasureTheory Set SingularEndpoint
+open MeasureTheory Set
 
 /-! ### Product algebra -/
 

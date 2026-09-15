@@ -64,8 +64,6 @@ the refined form, `exists_distributionGap` = `eq:auxiliary-lagrangian-bound`), a
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -298,7 +296,5 @@ theorem distributionGap_lower_window (hd : 2 ≤ d) (B : KKTFamily d) :
     hdd hu0 hud hcorner htw hJ
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

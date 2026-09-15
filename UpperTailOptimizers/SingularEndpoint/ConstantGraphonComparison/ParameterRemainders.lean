@@ -38,8 +38,6 @@ and analyticity through `analyticAt_qVal`, `analyticAt_rVal` and `analyticAt_muV
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -222,7 +220,5 @@ theorem rank_one_parameter_expansions (hd : 2 ≤ d) (B : KKTFamily d) :
   · exact mul_le_mul_of_nonneg_right (le_trans (le_max_right _ _) (le_max_left _ _)) hp4
   · exact mul_le_mul_of_nonneg_right (le_trans (le_max_left _ _) (le_max_right _ _)) hp3
   · exact mul_le_mul_of_nonneg_right (le_trans (le_max_right _ _) (le_max_right _ _)) hp4
-
-end SingularEndpoint
 
 end UpperTailOptimizers

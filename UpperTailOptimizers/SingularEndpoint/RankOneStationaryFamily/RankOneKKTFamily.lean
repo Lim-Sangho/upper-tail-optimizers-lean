@@ -69,8 +69,6 @@ smallest values `t_h²`, `s_h²` of `W_h` are relabelling invariants
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory Filter Topology
 
 universe u
@@ -1110,7 +1108,5 @@ theorem rank_one_kkt_family (hd : 2 ≤ d) (B : KKTFamily d) :
     · rw [B.muVal_zero hd, Real.rpow_natCast]
     · exact KKTFamily.exists_converse_rankOne H hd hreg hcard hh₀ hh₀B hε₁
         fun h hp hl => hconv h hp (lt_of_lt_of_le hl (min_le_left _ _))
-
-end SingularEndpoint
 
 end UpperTailOptimizers

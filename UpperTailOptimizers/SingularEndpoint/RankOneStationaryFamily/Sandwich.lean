@@ -35,8 +35,6 @@ negative, so the right-hand statement has `m` and `M` **exchanged**.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory intervalIntegral
 
 /-! ## Sign of the node cubic on the closed subintervals -/
@@ -192,7 +190,5 @@ theorem increment_sandwich_right {f f₁ f₂ f₃ F : ℝ → ℝ} {a b : ℝ}
   rw [hval, hFTC] at hlow
   rw [hval, hFTC] at hhigh
   exact ⟨hlow, hhigh⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

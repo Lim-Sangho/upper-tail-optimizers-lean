@@ -49,8 +49,6 @@ legitimate precisely because `h ≠ 0`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -154,7 +152,5 @@ theorem exists_scalar_family_locally_unique (hd : 2 ≤ d) :
   have hwS : ((u', lv', g') : ℝ × ℝ × ℝ) ∈ S :=
     hballS (Metric.mem_ball.mpr (dist_zBase_lt hu hl hg))
   exact huniq h (hmemT h hh) hne _ hwS hs ht hs1 ht1 hst e1 e2 e3
-
-end SingularEndpoint
 
 end UpperTailOptimizers

@@ -42,8 +42,6 @@ other side.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 variable {d : ℕ}
@@ -270,7 +268,5 @@ theorem exists_family_left_increment_asymptotics (hd : 2 ≤ d) :
     hadm, hp01, hellp, _hsym, hkkt⟩ := exists_scalar_family_density hd
   exact ⟨h0, u, g, p, hh0, hu0, hg0, hp00,
     family_left_increment_asymptotics hd hh0 hu0 hg0 hua hga hadm hp01 hellp hkkt⟩
-
-end SingularEndpoint
 
 end UpperTailOptimizers

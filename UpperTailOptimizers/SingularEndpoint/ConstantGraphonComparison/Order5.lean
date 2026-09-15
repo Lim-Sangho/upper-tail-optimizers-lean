@@ -57,8 +57,6 @@ vanishes at `d = 2` — where the whole `h⁵` coefficient still does not, being
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology Finset
 
 variable {d : ℕ}
@@ -263,7 +261,5 @@ theorem tendsto_alph_slope (hd : 2 ≤ d) :
   simp only [Pi.div_apply]
   rw [halpha]
   field_simp
-
-end SingularEndpoint
 
 end UpperTailOptimizers

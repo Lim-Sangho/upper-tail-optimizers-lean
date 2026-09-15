@@ -42,8 +42,6 @@ that the retained
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -152,7 +150,5 @@ theorem exists_distributionGap_window (hd : 2 ≤ d) (B : KKTFamily d) {K : ℝ}
     h00 hd0 h0d hdd hu0 hud hcor htw hs ht ν hν hνc htail hmom
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

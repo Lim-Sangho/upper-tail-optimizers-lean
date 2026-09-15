@@ -150,8 +150,6 @@ the paper proves uniqueness only at graphon level, in the last step of the proof
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}

@@ -81,8 +81,6 @@ assembled in `SingularEndpoint/AuxiliaryLagrangian/DistributionFinal.lean`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter MeasureTheory Topology
 
 variable {d : ℕ}
@@ -962,7 +960,5 @@ theorem exists_tail_mass_le (hd : 2 ≤ d) (B : KKTFamily d) {ρ : ℝ} (hρ : 0
     (measure_mono (Set.sdiff_subset_sdiff_right hwin))
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

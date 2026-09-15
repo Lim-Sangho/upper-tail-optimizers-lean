@@ -24,7 +24,7 @@ set_option linter.unusedSectionVars false
 
 namespace UpperTailOptimizers
 
-open MeasureTheory Set SingularEndpoint Filter Topology
+open MeasureTheory Set Filter Topology
 
 section Stationary
 

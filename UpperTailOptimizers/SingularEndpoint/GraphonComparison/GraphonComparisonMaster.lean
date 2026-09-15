@@ -60,8 +60,6 @@ assumes only `‖f - u_*‖₄, ‖E‖₂ ≤ K₀h`.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -1046,7 +1044,5 @@ theorem exists_singular_endpoint_comparison_graph (hd : 2 ≤ d) {V : Type*} [Fi
         + M₀⁻¹ / 2 * P.residSq := by
     linarith only [hlag', hcubefit, hQexp.ge, hQexp.le]
   linarith only [hmain, hstep1, cQ, cD, hhalf]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

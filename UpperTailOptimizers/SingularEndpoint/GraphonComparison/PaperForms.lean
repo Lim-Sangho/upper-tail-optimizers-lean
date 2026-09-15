@@ -42,8 +42,6 @@ universe u
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 variable {d : ℕ}
@@ -271,7 +269,5 @@ theorem graphon_lagrangian_bound_uniform (hd : 2 ≤ d) (B : KKTFamily d) :
     hP.2.2.2.2.2.2.2.1 hP.2.2.2.2.2.2.2.2.1⟩
   rw [KKTFamily.graphon_tDensity_eq_rVal_pow H hd hreg hh]
   ring
-
-end SingularEndpoint
 
 end UpperTailOptimizers

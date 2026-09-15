@@ -43,8 +43,6 @@ definite distance from the zero set.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Real
 
 variable {d : ℕ}

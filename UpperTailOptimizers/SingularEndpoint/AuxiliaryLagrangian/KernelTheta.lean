@@ -98,8 +98,6 @@ below is stated conditionally: every theorem in this file is an unconditional id
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter Topology
 
 /-! ## `𝒟_d` applied to a function
@@ -448,7 +446,5 @@ theorem powDopOf_powDopOf_kernel_zero {d : ℕ} (hd : 2 ≤ d) (B : KKTFamily d)
   exact powDopOf_powDopOf_kernel hd
 
 end KKTFamily
-
-end SingularEndpoint
 
 end UpperTailOptimizers

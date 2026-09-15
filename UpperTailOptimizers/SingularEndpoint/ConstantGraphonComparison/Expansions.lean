@@ -52,7 +52,7 @@ Two polynomial identities carry the algebra with no estimate at all:
 
 ## Contents
 
-* `rStar_mem_Ioo`, `LstarTail`, `Lstar_expand`, `LstarTail_rStar`, `continuousAt_LstarTail`,
+* `LstarTail`, `Lstar_expand`, `LstarTail_rStar`, `continuousAt_LstarTail`,
   `tendsto_LstarTail_comp` — the cubic-plus-quartic expansion;
 * `Fkkt_eq_Lstar_add` and `kkt_residual_*` — the equations in `𝓛_*` form;
 * `family_eq_cross`, `family_eq_diff`, `family_eq_second` — the three limit equations;
@@ -62,8 +62,6 @@ Two polynomial identities carry the algebra with no estimate at all:
 -/
 
 namespace UpperTailOptimizers
-
-namespace SingularEndpoint
 
 open Filter Topology Finset
 
@@ -77,9 +75,6 @@ variable {d : ℕ}
 
 The two coefficients are the contact constants `k₃` and `k₄` used below. -/
 noncomputable def LstarTail (d : ℕ) : ℝ → ℝ := taylorTail (Lstar d) (rStar d) 4
-
-theorem rStar_mem_Ioo (hd : 2 ≤ d) : rStar d ∈ Set.Ioo (0 : ℝ) 1 :=
-  ⟨rStar_pos hd, rStar_lt_one hd⟩
 
 /-- **The cubic-plus-quartic expansion of `𝓛_*`.**  The first three Taylor coefficients of
 `𝓛_*` at `r_*` vanish `eq:endpoint-entropy-derivatives`, so the expansion of
@@ -490,7 +485,5 @@ theorem Ucoeff_eq (hd : 2 ≤ d) : Ucoeff B = (5 - 3 * (d : ℝ)) / (6 * uStar d
   have h6 : (6 : ℝ) * uStar d ≠ 0 := by positivity
   rw [eq_div_iff h6]
   linarith [h24]
-
-end SingularEndpoint
 
 end UpperTailOptimizers

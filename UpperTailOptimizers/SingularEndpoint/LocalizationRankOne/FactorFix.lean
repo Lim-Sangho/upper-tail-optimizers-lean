@@ -83,8 +83,6 @@ among `0 ≤ f ≤ M` with `q ≥ 2^{-d}` is `factorMain_unique` (`SingularEndpo
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open MeasureTheory
 
 open scoped NNReal
@@ -513,7 +511,5 @@ theorem factorFix_fixedPoint_unique (hd : 2 ≤ d) (W : Graphon)
   have h1 : φ =ᵐ[unitμ] ⇑(hmφ.toLp φ) := hmφ.coeFn_toLp.symm
   rw [hLp] at h1
   exact h1.trans hmψ.coeFn_toLp
-
-end SingularEndpoint
 
 end UpperTailOptimizers

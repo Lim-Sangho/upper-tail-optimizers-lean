@@ -13,7 +13,7 @@ namespace.
 
 namespace UpperTailOptimizers
 
-open MeasureTheory SingularEndpoint
+open MeasureTheory
 
 /-- A bounded (by `5`), measurable, symmetric kernel on `ℝ²`. -/
 structure BKernel where

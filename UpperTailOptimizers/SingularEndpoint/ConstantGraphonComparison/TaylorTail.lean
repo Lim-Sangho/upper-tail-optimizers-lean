@@ -45,8 +45,6 @@ coefficients.
 
 namespace UpperTailOptimizers
 
-namespace SingularEndpoint
-
 open Filter
 
 /-- The **`n`-th Taylor tail** of `f` at `a`: the `n`-fold difference quotient of `f`, based
@@ -176,7 +174,5 @@ theorem tendsto_sub_self_div_pow {f : ℝ → ℝ} {a : ℝ} {n : ℕ} (hn : 1 �
   refine (hcont.mono_left nhdsWithin_le_nhds).congr' ?_
   filter_upwards [self_mem_nhdsWithin] with z hz
   exact (hquot z hz).symm
-
-end SingularEndpoint
 
 end UpperTailOptimizers
