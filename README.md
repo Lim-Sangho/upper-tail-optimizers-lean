@@ -1,10 +1,9 @@
 # Lean formalization of *Bipodal optimizers in the upper-tail variational problem for regular subgraph densities*
 
-This repository formalizes the deterministic graphon results of the
-[paper](paper/paper.tex) in Lean 4 and Mathlib: the Lubetzky–Zhao boundary,
-bipodal optimizers near nonexceptional boundary points, and optimizers near the
-singular endpoint. The random graph model and probabilistic conclusions are outside
-its scope.
+This repository formalizes in Lean 4 and Mathlib the deterministic graphon results of
+Sangho Lim, Seonghyuk Im, Taeyoung Kim, Kyeongsik Nam, and Hongseok Yang,
+[*Bipodal optimizers in the upper-tail variational problem for regular subgraph densities*](https://arxiv.org/abs/2609.15222).
+Its LaTeX source is also included in this repository, as [paper/paper.tex](paper/paper.tex).
 
 ## Main results
 
