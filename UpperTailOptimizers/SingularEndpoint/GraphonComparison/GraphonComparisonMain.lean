@@ -274,7 +274,7 @@ private theorem comparisonMain_abs_Fkkt_le (hd : 2 ≤ d) {p γ s t : ℝ} (hp0 
     (hkss : Fkkt d p γ (s ^ 2) = 0) (hkst : Fkkt d p γ (s * t) = 0)
     (hktt : Fkkt d p γ (t ^ 2) = 0)
     {C : ℝ} (hC : ∀ z ∈ Set.Icc (comparisonMainA d) (comparisonMainB d), |Fkkt3 d γ z| ≤ C)
-    (hsm : s ^ 2 ∈ Set.Icc (comparisonMainA d) (comparisonMainB d))
+    (hsc : s ^ 2 ∈ Set.Icc (comparisonMainA d) (comparisonMainB d))
     (htm : t ^ 2 ∈ Set.Icc (comparisonMainA d) (comparisonMainB d))
     {z : ℝ} (hz : z ∈ Set.Icc (comparisonMainA d) (comparisonMainB d)) :
     |Fkkt d p γ z| ≤ C / 6 * |(z - s ^ 2) * (z - s * t) * (z - t ^ 2)| := by
@@ -282,7 +282,7 @@ private theorem comparisonMain_abs_Fkkt_le (hd : 2 ≤ d) {p γ s t : ℝ} (hp0 
   have h12 : s ^ 2 < s * t := by nlinarith
   have h23 : s * t < t ^ 2 := by nlinarith
   have hstm : s * t ∈ Set.Icc (comparisonMainA d) (comparisonMainB d) :=
-    ⟨le_trans hsm.1 h12.le, le_trans h23.le htm.2⟩
+    ⟨le_trans hsc.1 h12.le, le_trans h23.le htm.2⟩
   have hchain0 : ∀ x ∈ Set.Icc (comparisonMainA d) (comparisonMainB d),
       HasDerivAt (Fkkt d p γ) (Fkkt1 d γ x) x := by
     intro x hx
@@ -299,7 +299,7 @@ private theorem comparisonMain_abs_Fkkt_le (hd : 2 ≤ d) {p γ s t : ℝ} (hp0 
     obtain ⟨h0, h1⟩ := comparisonMain_mem_Ioo hd hx
     exact hasDerivAt_Fkkt2 hd h0 h1
   obtain ⟨ξ, hξ, hval⟩ := exists_deriv3_eq_of_three_roots hchain0 hchain1 hchain2
-    hsm hstm htm h12 h23 hkss hkst hktt hz
+    hsc hstm htm h12 h23 hkss hkst hktt hz
   have hb := hC ξ hξ
   have hD : (0 : ℝ) ≤ |(z - s ^ 2) * (z - s * t) * (z - t ^ 2)| := abs_nonneg _
   rw [hval, abs_mul, abs_div]
@@ -370,7 +370,7 @@ theorem comparisonMain_exists_multiplier_bound (hd : 2 ≤ d) (B : KKTFamily d) 
   -- the products lie in the working interval
   have hxy : x * y ∈ Set.Icc (comparisonMainA d) (comparisonMainB d) :=
     comparisonMain_mul_mem hd hρ0 hρa hρb hxρ hyρ
-  have hsm : B.sVal h ^ 2 ∈ Set.Icc (comparisonMainA d) (comparisonMainB d) := by
+  have hsc : B.sVal h ^ 2 ∈ Set.Icc (comparisonMainA d) (comparisonMainB d) := by
     have := comparisonMain_mul_mem hd hρ0 hρa hρb hsρ hsρ
     rwa [← sq] at this
   have htm : B.tVal h ^ 2 ∈ Set.Icc (comparisonMainA d) (comparisonMainB d) := by
@@ -381,7 +381,7 @@ theorem comparisonMain_exists_multiplier_bound (hd : 2 ≤ d) (B : KKTFamily d) 
   have hs0 : 0 < B.sVal h := KKTFamily.sVal_pos hhb
   have hst : B.sVal h < B.tVal h := B.sVal_lt_tVal hh0
   have hcub := comparisonMain_abs_Fkkt_le hd hp.1 hp.2 hs0 hst (B.kkt_ss h hhb) (B.kkt_st h hhb)
-    (B.kkt_tt h hhb) (fun z hz => hFk h (by rw [habs]; exact hh1) z hz) hsm htm hxy
+    (B.kkt_tt h hhb) (fun z hz => hFk h (by rw [habs]; exact hh1) z hz) hsc htm hxy
   -- the ideal division
   have hid := comparisonMain_cubic_ideal (B.sVal h) (B.tVal h) x y
   have hUVs := hUV (B.sVal h) (B.tVal h) x y (lt_of_le_of_lt hsρ hρδ)

@@ -20,15 +20,17 @@ formalises the results of Section 4.1:
 * **`lem:boundary-convergence`** `edgeDensity_tendsto_boundary` — optimizers along a sequence approaching the
   boundary have `e(W_n) → r₀` (with the cut-metric companion `cutDist_tendsto_boundary`:
   the whole sequence converges in cut distance to the constant graphon `r₀`).
-* **`cor:scalar-reduction`** `scalar_reduction` — the uniform reduction
-  `Φ_H(p,r) = min_ε I_{p,r}(ε)` (`eq:edge-density-minimization`), whose
-  underlying entropy-maximizer statement is `lem:fixed-density-bipodality`.
+* **`cor:one-dimensional-reduction`** `scalar_reduction` — the uniform reduction
+  `Φ_H(p,r) = min_δ I_{p,r}(r-δ)` (`eq:edge-density-minimization`), whose
+  underlying entropy-maximizer statement is `lem:fixed-density-bipodality`.  The paper writes
+  the scalar variable as the edge-density deficit `δ = r - ε`; `ε` is used here.
 
-The reduction engine comes in two grades.  `krrs_strip` and `reduction_core_uniform` follow
-the paper's own quantifier order — one confinement bound `ρ₀`, then *any* `0 < ρ ≤ ρ₀`, then
-one window width `η(ρ)` valid for **every** `r` in a compact subarc `K` (in the paper, every
-`r` in an open interval `I ∋ r₀` with compact closure) — and export the
-KRR-S maximizer family `B_{ε,r}` as a function.  That uniformity is what Section 4.3 consumes.
+The reduction engine comes in two grades.  `krrs_strip` and `reduction_core_uniform` keep one
+confinement bound `ρ₀` (the paper's `δ₀`), then *any* `0 < ρ ≤ ρ₀`, then one window width
+`η(ρ)` valid for **every** `r` in a compact subarc `K` (in the paper, every `r` in an open
+interval `I ∋ r₀` with compact closure) — and export the KRR-S maximizer family `B_{ε,r}` as a
+function.  The paper states the lemma only for `ρ = δ₀`, with a single `η`; the extra
+parameter is the `ρ`-uniform strengthening used below.  That uniformity is what Section 4.3 consumes.
 The single-density `reduction_core` is the `K = {r}` instance of it, and the three headline
 statements of this section are unchanged.
 
@@ -39,8 +41,8 @@ generalized Hölder inequality (equation `eq:generalized-holder`, axiom `general
 graph-limit axioms of `Preliminaries/Graphons/CutContinuity.lean` (`cut_seqCompact`,
 `edgeDensity_cutContinuous`, `tDensity_cutContinuous`, `Ip_cut_lowerSemicontinuous`;
 also via the theorem `feasible_attains`).  The broken-side
-orientation is taken from the `LZBoundaryArc` record's `brokenSide` field (the `p < pc(r)` half of
-condition (M2) of Theorem 3.1), which `lz_boundary_arcs` discharges via
+orientation is taken from the `LZBoundaryArc` record's `brokenSide` field (the `p < p_c(r)` half of
+the criterion of condition (M1) of Theorem 3.1), which `lz_boundary_arcs` discharges via
 `arcMaps_brokenSide` — so it is **not** an axiom.
 -/
 
@@ -90,7 +92,7 @@ theorem edgeDensity_lt_of_no_support {V : Type*} [Fintype V] [DecidableEq V] (H 
   linarith
 
 /-- **`lem:edge-density-deficit`, Lubetzky–Zhao-arc form.**  On the broken side
-`0 < p < pc(r)` of a regular Lubetzky–Zhao boundary arc, every optimizer has `e(W) < r`. -/
+`0 < p < p_c(r)` of a regular Lubetzky–Zhao boundary arc, every optimizer has `e(W) < r`. -/
 theorem edgeDensity_lt_broken {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {r : ℝ} (hr : r ∈ M.U)
     {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
     (hreg : ∀ v, H.degree v = d) (hm : 1 ≤ H.edgeFinset.card)
@@ -214,7 +216,7 @@ private theorem boundary_subseq_ae {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d
   exact hbu.2.2 Wlim hfeas_lim heq
 
 /-- **`lem:boundary-convergence` (convergence to the boundary optimizer), edge-density form.**  If
-`r_n ∈ K → r₀ ∈ K` and `p_n ∈ (0, pc(r_n))` with `pc(r_n) − p_n → 0`, then the edge densities
+`r_n ∈ K → r₀ ∈ K` and `p_n ∈ (0, p_c(r_n))` with `p_c(r_n) − p_n → 0`, then the edge densities
 of any optimizers `W_n` at `(p_n, r_n)` converge to `r₀`.  (Subsequence criterion on the real
 sequence `e(W_n)` + the shared core `boundary_subseq_ae`.) -/
 theorem edgeDensity_tendsto_boundary {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
@@ -346,7 +348,7 @@ theorem active_constraint {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGra
 /-- **`lem:fixed-density-bipodality`, the localisation ("Furthermore") clause.**  On a regular
 Lubetzky–Zhao boundary arc, over
 a compact subarc `K`, for every confinement radius `ρ > 0` there is a window width `η > 0`
-such that *uniformly* for `r ∈ K` and `p ∈ (pc(r) − η, pc(r))`, every optimizer has edge
+such that *uniformly* for `r ∈ K` and `p ∈ (p_c(r) − η, p_c(r))`, every optimizer has edge
 density in `(r − ρ, r)`.
 
 This is the uniform broken-side confinement of Section 4.1: the upper bound `e(W) < r` is
@@ -416,17 +418,19 @@ theorem uniform_localization {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     le_of_tendsto_of_tendsto' hconv (hφtend.sub_const ρ) hle
   linarith
 
-/-! ### The scalar reduction `Φ_H(p,r) = min_ε I_{p,r}(ε)` (`cor:scalar-reduction`). -/
+/-! ### The scalar reduction `Φ_H(p,r) = min_ε I_{p,r}(ε)` (`cor:one-dimensional-reduction`). -/
 
-/-- The fixed-density **entropy envelope** `S_H(ε,τ) = sup { s(W) : e(W)=ε, t(H,W)=τ }` as a real
+/-- The fixed-density **entropy envelope** `S(ε,τ) = sup { s(W) : e(W)=ε, t(H,W)=τ }` as a real
 number; it agrees with the paper's `entropyEnvelope` when the constraint set is nonempty. -/
 noncomputable def entropyEnvelopeReal {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)
     [DecidableRel H.Adj] (ε τ : ℝ) : ℝ :=
   sSup {s | ∃ W : Graphon, W.edgeDensity = ε ∧ W.tDensity H = τ ∧ W.entropy = s}
 
 /-- The **reduced one-variable objective**
-`I_{p,r}(ε) = −2 S_H(ε, r^m) − log(1−p) + ε·log((1−p)/p)`: the value of `I_p` at the
-fixed-`(e, t_H)` entropy maximizer with edge density `ε` and `H`-density `r^m`. -/
+`I_{p,r}(ε) = −2 S(ε, r^m) − log(1−p) + ε·log((1−p)/p)`: the value of `I_p` at the
+fixed-`(e, t_H)` entropy maximizer with edge density `ε` and `H`-density `r^m`.  The paper
+defines `I_{p,r}(ε)` as the infimum of `I_p` over that constraint set
+(`eq:reduced-objective`) and derives this formula from `eq:relative-entropy-identity`. -/
 noncomputable def reducedObjectiveReal {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)
     [DecidableRel H.Adj] (p ε τ : ℝ) : ℝ :=
   -2 * entropyEnvelopeReal H ε τ - Real.log (1 - p) + ε * Real.log ((1 - p) / p)
@@ -462,7 +466,7 @@ theorem reducedObjective_eq_Ip {V : Type*} [Fintype V] [DecidableEq V] (H : Simp
 /-! ### The paper's envelope and reduced objective, with values in `[-∞, ∞]`
 
 `entropyEnvelopeReal` and `reducedObjectiveReal` are the real-valued working forms used in the
-proofs.  The paper takes the supremum of the empty set to be `-∞`, so `S_H` and `I_{p,r}` take
+proofs.  The paper takes the supremum of the empty set to be `-∞`, so `S` and `I_{p,r}` take
 values in the extended reals; `entropyEnvelope` and `reducedObjective` are these definitions, and
 `entropyEnvelope_eq_coe`, `reducedObjective_eq_coe` identify them with the working forms whenever
 some graphon satisfies the constraints. -/
@@ -483,16 +487,17 @@ private theorem ereal_sSup_image_coe {S : Set ℝ} (hne : S.Nonempty) (hbdd : Bd
         (csSup_le hne fun x hx => EReal.coe_le_coe_iff.mp (hb ⟨x, hx, rfl⟩))
     | top => exact le_top
 
-/-- **The fixed-density entropy envelope** `S_H(ε,τ) = sup {s(W) : e(W) = ε, t(H,W) = τ}`
+/-- **The fixed-density entropy envelope** `S(ε,τ) = sup {s(W) : e(W) = ε, t(H,W) = τ}`
 (`eq:fixed-density-entropy`), with the paper's convention that the supremum of the empty set is
 `-∞`. -/
 noncomputable def entropyEnvelope {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)
     [DecidableRel H.Adj] (ε τ : ℝ) : EReal :=
   sSup ((fun W : Graphon => (W.entropy : EReal)) '' {W | W.edgeDensity = ε ∧ W.tDensity H = τ})
 
-/-- **The reduced objective** `I_{p,r}(ε) = -2 S_H(ε, r^m) - log(1-p) + ε log((1-p)/p)`
-(`eq:reduced-objective`).  It is `+∞` when no graphon has edge density `ε` and `H`-density
-`r^m`. -/
+/-- **The reduced objective** `I_{p,r}(ε) = inf {I_p(W) : e(W) = ε, t(H,W) = r^m}`
+(`eq:reduced-objective`), in the equivalent entropy form
+`-2 S(ε, r^m) - log(1-p) + ε log((1-p)/p)` that the paper derives from it.  It is `+∞` when no
+graphon has edge density `ε` and `H`-density `r^m`, the paper's convention `inf ∅ = +∞`. -/
 noncomputable def reducedObjective {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)
     [DecidableRel H.Adj] (p r ε : ℝ) : EReal :=
   (-2 : EReal) * entropyEnvelope H ε (r ^ H.edgeFinset.card)
@@ -549,10 +554,12 @@ theorem reducedObjective_eq_top {V : Type*} [Fintype V] [DecidableEq V] (H : Sim
 
 /-- **The KRR-S fixed-`(e, t_H)` entropy maximizer family `B_{ε,r}`, uniform over a compact
 subarc.**  This is the first part of the paper's `lem:fixed-density-bipodality`: for `ε` in the
-strip `(r−ρ₀, r)` the entropy maximizer `B_{ε,r}` at `(ε, r^m)` is bipodal and unique up to
-relabelling (the identities `eq:reduced-objective-attainment` then follow from its maximality
-via `entropyEnvelope_eq_of_isMax` and `reducedObjective_eq_Ip`).  The localisation
-`e(W) ∈ (r−ρ, r)`, which the lemma states after "Furthermore", is `uniform_localization`.
+strip `(r−ρ₀, r)` — the paper's deficit range `0 < δ < δ₀` for `ε = r − δ` — the entropy
+maximizer `B_{ε,r}` at `(ε, r^m)` is bipodal and unique up to relabelling (the identities
+`eq:reduced-objective-attainment` then follow from its maximality via
+`entropyEnvelope_eq_of_isMax` and `reducedObjective_eq_Ip`).  The localisation
+`0 < r − e(W) < ρ` (`eq:edge-density-localization`), which the lemma states after
+"Furthermore", is `uniform_localization`.
 The paper applies `thm:krrs-analytic-extension` once, at `ε₀ = r₀`, and takes an open interval
 `I ∋ r₀` with compact closure inside that single neighbourhood; here `K` is an arbitrary compact
 subarc, so we cover `K` by finitely many KRR-S
@@ -673,11 +680,12 @@ theorem krrs_strip {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
   exact ⟨ρ₀, hρ₀0, What, fun r hr ε hε => hWhat ε r hr hε⟩
 
 /-- **Shared engine for the reduction, uniform over a compact subarc `K` and over the
-confinement radius.**  Mirrors the paper's `lem:fixed-density-bipodality` and
-`cor:scalar-reduction` in their actual quantifier order: one `ρ₀`, then *any*
+confinement radius.**  Covers the paper's `lem:fixed-density-bipodality` and
+`cor:one-dimensional-reduction`, with one extra parameter: one `ρ₀` (the paper's `δ₀`), then *any*
 `0 < ρ ≤ ρ₀`, then one window width `η = η(ρ)` valid for **every** `r ∈ K` (the paper's
-`r ∈ I`), and — as the paper also stipulates, via `η < inf_{r∈I} pc(r)` — small enough that
-`η ≤ pc(r)` on `K`, so every `p` in the window is a genuine probability.
+`r ∈ I`), and — as the paper also stipulates, via `η < inf_{r∈I} p_c(r)` — small enough that
+`η ≤ p_c(r)` on `K`, so every `p` in the window is a genuine probability.  The paper's own
+statement is the case `ρ = δ₀`.
 
 The first clause exports the KRR-S maximizer family `B_{ε,r}` together with the identity
 `I_{p,r}(ε) = I_p(B_{ε,r})` (`eq:reduced-objective-attainment`), which is the *converse* half
@@ -722,7 +730,7 @@ theorem reduction_core_uniform {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     intro ρ hρ0 hρub
     obtain ⟨ηloc, hηloc0, hloc⟩ := uniform_localization hd M H hreg hm hK hKc hKne hρ0
     refine ⟨min ηloc (ηK / 2), lt_min hηloc0 (by linarith), ?_, ?_⟩
-    · -- `η ≤ pc(r)` uniformly: the window keeps `p` a genuine probability
+    · -- `η ≤ p_c(r)` uniformly: the window keeps `p` a genuine probability
       intro r hr
       obtain ⟨-, -, -, -, hηKpc, -⟩ := hηK r hr
       have := min_le_right ηloc (ηK / 2)
@@ -814,9 +822,9 @@ private theorem reduction_core {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {r
   exact ⟨hmem, hphiF, hbip, What Wopt.edgeDensity r, hWmaxbip, hWmaxfeas, hmaxopt, hWmaxe,
     σ, hσ, hrel⟩
 
-/-- **`cor:scalar-reduction` (the scalar reduction).**  At a non-exceptional `r` on a regular Lubetzky–Zhao boundary arc,
+/-- **`cor:one-dimensional-reduction` (the scalar reduction).**  At a non-exceptional `r` on a regular Lubetzky–Zhao boundary arc,
 there are a confinement radius `ρ > 0` and a window width `η > 0` such that for every
-broken-side `p ∈ (pc(r) − η, pc(r))` the upper-tail value equals the minimum of the reduced
+broken-side `p ∈ (p_c(r) − η, p_c(r))` the upper-tail value equals the minimum of the reduced
 one-variable objective over `(r − ρ, r)`: there is a minimizing edge density `ε*` with
 `Φ_H(p,r) = I_{p,r}(ε*)` and `I_{p,r}(ε*) ≤ I_{p,r}(ε)` for all `ε ∈ (r − ρ, r)`. -/
 theorem scalar_reduction {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {r : ℝ} (hr : r ∈ M.U)
@@ -834,14 +842,14 @@ theorem scalar_reduction {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {r : ℝ
   obtain ⟨hmem, hphiF, -⟩ := huniv W0 hW0feas hW0opt
   exact ⟨W0.edgeDensity, hmem, hphiF, fun ε' hε' => by rw [← hphiF]; exact hF_lb ε' hε'⟩
 
-/-! ### Structure of the broken-side optimizers (`lem:fixed-density-bipodality` and `cor:scalar-reduction`). -/
+/-! ### Structure of the broken-side optimizers (`lem:fixed-density-bipodality` and `cor:one-dimensional-reduction`). -/
 
 /-- **Every broken-side optimizer is bipodal and is the entropy maximizer up to relabelling.**
-At a non-exceptional `r`, for every broken-side `p ∈ (pc(r) − η, pc(r))`, every minimizer
+At a non-exceptional `r`, for every broken-side `p ∈ (p_c(r) − η, p_c(r))`, every minimizer
 `Wopt` of the upper-tail problem is **bipodal**, and equals — up to a measure-preserving
 relabelling `σ` of `[0,1]` — the (also optimal) KRRS bipodal entropy maximizer `Wmax` at its own
 edge density `(e(Wopt), r^m)`.  This is the full structural conclusion of the paper's `lem:fixed-density-bipodality`
-together with the "Furthermore" clause of `cor:scalar-reduction`, available because
+together with the "Furthermore" clause of `cor:one-dimensional-reduction`, available because
 `kenyonRadinRenSadun` (`thm:krrs-analytic-extension`; Kenyon–Radin–Ren–Sadun, arXiv:1509.05370)
 includes uniqueness up to relabelling. -/
 theorem optimizer_bipodal {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {r : ℝ} (hr : r ∈ M.U)

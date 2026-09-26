@@ -64,9 +64,9 @@ theorem integral_convex_sectionMeasure_le {S : Set (ℝ × ℝ)} (hS : Measurabl
   classical
   set s := sectionMeasure S with hs
   set σ : ℝ := (gμ S).toReal with hσ
-  have hsm : Measurable s := measurable_sectionMeasure hS
+  have hsc : Measurable s := measurable_sectionMeasure hS
   set I : Set ℝ := {x | τ ≤ s x} with hI
-  have hIm : MeasurableSet I := measurableSet_le measurable_const hsm
+  have hIm : MeasurableSet I := measurableSet_le measurable_const hsc
   -- pointwise convexity bounds
   have hle1 : ∀ t ∈ Icc (0:ℝ) 1, φ t ≤ t * φ 1 := by
     intro t ht
@@ -89,7 +89,7 @@ theorem integral_convex_sectionMeasure_le {S : Set (ℝ × ℝ)} (hS : Measurabl
     rw [Measure.restrict_univ] at h
     rw [h]; congr 2; ext p; simp
   have hsint : Integrable s unitμ :=
-    Integrable.of_bound hsm.aestronglyMeasurable 1
+    Integrable.of_bound hsc.aestronglyMeasurable 1
       (Eventually.of_forall fun x => by
         rw [Real.norm_eq_abs, abs_of_nonneg (sectionMeasure_mem_Icc S x).1]
         exact (sectionMeasure_mem_Icc S x).2)
@@ -97,7 +97,7 @@ theorem integral_convex_sectionMeasure_le {S : Set (ℝ × ℝ)} (hS : Measurabl
     obtain ⟨M, hM⟩ : ∃ M, ∀ t ∈ Icc (0:ℝ) 1, |φ t| ≤ M :=
       ⟨φ 1, fun t ht => by rw [abs_of_nonneg (hφnn t ht)]
                            exact le_trans (hle1 t ht) (by nlinarith [ht.2, hφnn 1 ⟨zero_le_one, le_rfl⟩, ht.1])⟩
-    exact Integrable.of_bound (hφm.comp hsm).aestronglyMeasurable M
+    exact Integrable.of_bound (hφm.comp hsc).aestronglyMeasurable M
       (Eventually.of_forall fun x => by
         rw [Real.norm_eq_abs]; exact hM _ (sectionMeasure_mem_Icc S x))
   -- Markov: `|I| ≤ σ/τ`

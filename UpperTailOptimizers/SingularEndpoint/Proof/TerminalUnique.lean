@@ -27,10 +27,10 @@ gives `W(x,y) = W_h(σx, σy)` for `gμ`-a.e. `(x,y)`.
 ## Contents
 
 * **`exists_singular_endpoint_uniqueness`** — the uniqueness clause.
-* **`exists_singular_endpoint_full`** — feasibility, optimality and uniqueness for a given family
+* **`exists_singular_endpoint`** — feasibility, optimality and uniqueness for a given family
   with the canonical block `[0, α_h]`.
 * `SingularEndpointOptimizers H B C δ` — the conclusions of Theorem 1.6 for a family `B`, a
-  remainder constant `C` and a window `(0, δ)` with `δ ≤ h₀`: analytic curve, `p_h < pc(r_h)`,
+  remainder constant `C` and a window `(0, δ)` with `δ ≤ h₀`: analytic curve, `p_h < p_c(r_h)`,
   the limits of `p_h, r_h, α_h, 1-α_h, s_h, t_h` and of the three block values, uniform
   convergence to `r_*`, the optimizer conclusions for the canonical block, and the two expansions
   `|e(W_h) - (r_h - (d-1)h²)| ≤ Ch⁴` and `|Φ_H(p_h,r_h) - (J_{p_h}(r_h) - d³h⁴/3)| ≤ Ch⁶`.
@@ -40,17 +40,17 @@ gives `W(x,y) = W_h(σx, σy)` for `gμ`-a.e. `(x,y)`.
   measure `α_h`.
 * **`anyBlock_of_singularEndpointOptimizers`** — transfers the optimizer conclusions and the
   edge expansion from the canonical block `[0, α_h]` to every block of measure `α_h`.
-* **`singular_endpoint_full`** — Theorem 5.1: there are a family `B` and a constant `C > 0`,
+* **`singular_endpoint`** — Theorem 5.1: there are a family `B` and a constant `C > 0`,
   depending only on `d`, such that every `d`-regular `H` has a window `δ` with
   `SingularEndpointStructure H B C δ`.
 
 `FamilyContinuity.lean` supplies the analytic curve and convergence facts;
-`StrictImprovement.lean` supplies `p_h < pc(r_h)` (`singular_endpoint_symmetry_breaking`), and
+`StrictImprovement.lean` supplies `p_h < p_c(r_h)` (`singular_endpoint_symmetry_breaking`), and
 `CostRemainder.lean` both expansions (`constant_graphon_comparison`), whose constant depends only
 on `B`.  The window `δ` is the minimum of the optimality/uniqueness window (which depends on
 `H`), the expansion and symmetry-breaking windows, `1` and `h₀`.  `Φ_H(p_h,r_h) = I_{p_h}(W_h)`
 because `W_h` is feasible and optimal.  Theorem 1.6 in `IntroSingularEndpointOptimizers.lean`
-is a direct projection of `singular_endpoint_full`.
+is a direct projection of `singular_endpoint`.
 -/
 
 namespace UpperTailOptimizers
@@ -103,7 +103,7 @@ graphons feasible for `t(H,·) ≥ r_h^m`, and every other minimiser is a relabe
 The feasibility conjunct is what makes the second one a *minimality* claim rather than a bare
 lower bound: without it the statement would not say that the infimum is attained. It is
 `graphon_tDensity_eq_rVal_pow`, `t(H, W_h) = r_h^m`, weakened to an inequality. -/
-theorem exists_singular_endpoint_full (hd : 2 ≤ d) {V : Type*} [Fintype V] [DecidableEq V]
+theorem exists_singular_endpoint (hd : 2 ≤ d) {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] (hreg : ∀ v, H.degree v = d)
     (hcard : 1 ≤ H.edgeFinset.card) (hv : 2 ≤ Fintype.card V) (B : KKTFamily d) :
     ∃ δ : ℝ, 0 < δ ∧ ∀ (h : ℝ) (hh : |h| < B.h₀), 0 < h → h < δ → h ≤ 1 →
@@ -261,9 +261,9 @@ universe u
 
 /-- **Theorem 5.1.**  One family `B` and one remainder constant `C`, both depending only on
 `d`, serve every `d`-regular graph `H`; the window `δ` depends on `H`.  Theorem 1.6 is a
-projection of this result.  The clause `p_h < pc(r_h)` is `singular_endpoint_symmetry_breaking`,
+projection of this result.  The clause `p_h < p_c(r_h)` is `singular_endpoint_symmetry_breaking`,
 which uses the Lubetzky–Zhao criterion. -/
-theorem singular_endpoint_full (hd : 2 ≤ d) :
+theorem singular_endpoint (hd : 2 ≤ d) :
     ∃ (B : KKTFamily d) (C : ℝ), 0 < C ∧
       ∀ {V : Type u} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj],
         (∀ v, H.degree v = d) → 1 ≤ H.edgeFinset.card → 2 ≤ Fintype.card V →
@@ -271,7 +271,7 @@ theorem singular_endpoint_full (hd : 2 ≤ d) :
   obtain ⟨B⟩ := exists_kktFamily hd
   obtain ⟨C, δc, hC, hδc, hcomp⟩ := constant_graphon_comparison hd B
   refine ⟨B, C, hC, fun {V} _ _ H _ hreg hcard hv => ?_⟩
-  obtain ⟨δf, hδf, hfull⟩ := exists_singular_endpoint_full hd H hreg hcard hv B
+  obtain ⟨δf, hδf, hfull⟩ := exists_singular_endpoint hd H hreg hcard hv B
   obtain ⟨δs, hδs, hsb⟩ := singular_endpoint_symmetry_breaking hd H hreg hcard B
   set δ : ℝ := min (min δf δc) (min δs (min 1 B.h₀)) with hδdef
   have hδpos : 0 < δ := lt_min (lt_min hδf hδc) (lt_min hδs (lt_min one_pos B.h₀_pos))

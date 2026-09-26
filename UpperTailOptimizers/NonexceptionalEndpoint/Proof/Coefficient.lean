@@ -4,8 +4,8 @@ import UpperTailOptimizers.NonexceptionalEndpoint.QuadraticGrowth.AnalyticExtens
 /-!
 # The coefficient `A_H` is the second `δ`-derivative of the analytic extension
 
-`thm:positive-second-variation` of `paper/paper.tex` constructs a real-analytic extension `G` of
-the boundary excess `G_r(δ) = I_{pc(r),r}(r-δ) - J_{pc(r)}(r)` across `δ = 0` and defines
+`thm:boundary-excess-expansion` of `paper/paper.tex` constructs a real-analytic extension `G` of
+the boundary excess `G_r(δ) = I_{p_c(r),r}(r-δ) - J_{p_c(r)}(r)` across `δ = 0` and defines
 `A_H(r) := ∂²_δG(r,0)`.  `AHGlobal` (`NonexceptionalEndpoint/Proof/Main.lean`) is defined instead as the
 limit of `2G_r(δ)/δ²` as `δ ↓ 0`, which does not refer to a choice of extension.
 `dDelta_dDelta_eq_AHGlobal` shows that the two definitions agree: for **every** `G` analytic at
@@ -34,8 +34,8 @@ theorem dDelta_dDelta_eq_deriv_deriv {F : ℝ × ℝ → ℝ} {r : ℝ} (hF : An
   exact ((hasDerivAt_dDelta (analyticAt_dDelta hF).differentiableAt).deriv).symm
 
 /-- **`A_H(r) = ∂²_δG(r,0)`** for every analytic extension `G` of the boundary excess
-(`thm:positive-second-variation`).  Let `r ∈ (0,1) ∖ {r_*}` and let `G` be analytic at `(r,0)`
-with `G(r,δ) = I_{pc(r),r}(r-δ) - J_{pc(r)}(r)` for `0 < δ < δ₁`.  Then
+(`thm:boundary-excess-expansion`).  Let `r ∈ (0,1) ∖ {r_*}` and let `G` be analytic at `(r,0)`
+with `G(r,δ) = I_{p_c(r),r}(r-δ) - J_{p_c(r)}(r)` for `0 < δ < δ₁`.  Then
 `∂²_δG(r,0) = AHGlobal H d r`. -/
 theorem dDelta_dDelta_eq_AHGlobal {d : ℕ} (hd : 2 ≤ d) {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] (hreg : ∀ x, H.degree x = d)

@@ -2,9 +2,9 @@ import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.TCalcAB
 import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.PsiNondeg
 
 /-!
-# The desingularized stationarity equations of Appendix B, paragraph 3
+# The desingularized stationarity equations of Appendix A, paragraph 3
 
-Paragraph 3 of Appendix B of `paper/paper.tex` replaces the two stationarity equations of the
+Paragraph 3 of Appendix A of `paper/paper.tex` replaces the two stationarity equations of the
 reduced entropy `Σ(ε,a,b,ϑ)` by a system that extends analytically across the degenerate
 boundary `ϑ = 0`: with the quotient `L` of `eq:krrs-entropy-quotient` it sets `∂_aL = ϑ𝓕₁`
 (`eq:krrs-small-block-stationarity`) and `𝓕₂ := ∂_bL` (`eq:krrs-cross-block-stationarity`),
@@ -302,7 +302,7 @@ theorem hasDerivAt_F2_a_zero {V : Type*} [Fintype V] [DecidableEq V] (H : Simple
 
 Immediate from `F2_zero_eq` and `hasDerivAt_Wr`; at the KRR–S maximizer the factor
 `dWr` is strictly negative by `krrs_scalar_nondegenerate` — the quotient-free form of
-`eq:krrs-scalar-nondegeneracy`, which is what makes the paper's entry
+`eq:krrs-maximizer-nondegeneracy`, which is what makes the paper's entry
 `∂_z²ψ_d(ε₀,z₀)/(n_dε₀^{m-d})` nonzero. -/
 theorem hasDerivAt_F2_b_zero {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)
     [DecidableRel H.Adj] {d : ℕ} (hd : 2 ≤ d) (hreg : ∀ v, H.degree v = d)

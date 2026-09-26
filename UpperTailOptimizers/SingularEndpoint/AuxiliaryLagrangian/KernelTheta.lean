@@ -379,7 +379,7 @@ The outer operator is applied to the honest function `x ↦ 𝒟_{d,y}K_0(x,·)|
 `powDopOf_kernel_slice` identifies with `thetaSliceD d u_* 𝓛_* 𝓛_*'` on the whole of `(0,1)`
 — in particular on a neighbourhood of `u_*`, which is all `powDopOf_congr_nhds` needs.  The
 vanishing hypotheses of `powDopOf_thetaSliceD` are the triple contact
-`eq:endpoint-entropy-derivatives` and the remaining value is
+`eq:endpoint-contact-derivatives` and the remaining value is
 `Lstar3_rStar : Γ_d^{(4)}(r_*) = d⁵/(d-1)²`.
 
 This is the *value of the iterated operator*, not the coalescing limit of

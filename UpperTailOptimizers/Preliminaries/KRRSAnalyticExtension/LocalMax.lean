@@ -3,7 +3,7 @@ import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.Reduced
 /-!
 # From graphon maximality to a finite-dimensional local maximum
 
-Paragraph 3 of Appendix B of `paper/paper.tex`, in the proof of
+Paragraph 3 of Appendix A of `paper/paper.tex`, in the proof of
 `eq:krrs-boundary-stationarity`, argues:
 
 > Hence, by continuity of `C` and `Q`, every sufficiently nearby pair `(ã,b̃)`, with `c` and
@@ -45,7 +45,7 @@ open MeasureTheory Filter Topology
 
 /-! ### The bipodal competitor -/
 
-/-- **The competitor of Appendix B, paragraph 4.**  Given `(ε, a, b, c)` with the three
+/-- **The competitor of Appendix A, paragraph 4.**  Given `(ε, a, b, c)` with the three
 block densities `a`, `b`, `Q(ε,a,b,c)` in `[0,1]` and a pode size `0 ≤ c < 1`, the bipodal
 graphon `G(a, b, Q(ε,a,b,c), c)` is admissible and realises the reduced functionals:
 
@@ -70,7 +70,7 @@ private theorem exists_bipodal_competitor {V : Type*} [Fintype V] [DecidableEq V
 
 /-! ### Graphon maximality becomes a finite-dimensional local maximum -/
 
-/-- **Appendix B, paragraph 4 (and the same argument in paragraph 3).**  A graphon `W` that
+/-- **Appendix A, paragraph 4 (and the same argument in paragraph 3).**  A graphon `W` that
 maximises the entropy at `(ε, ε^m + ϑ)` and is, up to a measure-preserving relabelling `σ`,
 the bipodal graphon with parameters `(a, b, Q(ε,a,b,c), c)` where `c = C(ε,a,b,ϑ)`, makes
 `(a,b)` a local maximizer of the reduced entropy
@@ -159,7 +159,7 @@ theorem isLocalMax_reduced_entropy {V : Type*} [Fintype V] [DecidableEq V]
 
 /-- **The two partial derivatives vanish at a local maximum.**  This is the elementary
 half of "is an interior local maximizer of `Σ(ε₀,·,·,ϑ)` and therefore satisfies
-`𝓕₁ = 𝓕₂ = 0`" in paragraph 3 of Appendix B (repeated in paragraph 4):
+`𝓕₁ = 𝓕₂ = 0`" in paragraph 3 of Appendix A (repeated in paragraph 4):
 restrict the two-dimensional local maximum to the two coordinate lines through `(a,b)` and
 apply `IsLocalMax.hasDerivAt_eq_zero` on each. -/
 theorem partials_eq_zero_of_isLocalMax {f : ℝ × ℝ → ℝ} {a b : ℝ} {u v : ℝ}

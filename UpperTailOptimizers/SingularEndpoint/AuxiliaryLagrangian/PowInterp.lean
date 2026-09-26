@@ -301,8 +301,8 @@ theorem powResid_eq_powDD_mul {d : ℕ} (hd : d ≠ 0) (phi : ℝ → ℝ) {s t 
   have hlt : s ^ d < t ^ d := pow_lt_pow_left₀ hst hs hd
   have hne : t ^ d - s ^ d ≠ 0 := sub_ne_zero.mpr (ne_of_gt hlt)
   have hkey : (t ^ d - s ^ d) * dslope (powChart d phi) (s ^ d) (t ^ d) = phi t - phi s := by
-    have hsm := sub_mul_dslope (powChart d phi) (s ^ d) (t ^ d)
-    rwa [powChart_pow hd phi ht, powChart_pow hd phi hs] at hsm
+    have hsc := sub_mul_dslope (powChart d phi) (s ^ d) (t ^ d)
+    rwa [powChart_pow hd phi ht, powChart_pow hd phi hs] at hsc
   have hdsl : dslope (powChart d phi) (s ^ d) (t ^ d) = powCoefB d phi s t := by
     rw [powCoefB, eq_div_iff hne]
     linear_combination hkey

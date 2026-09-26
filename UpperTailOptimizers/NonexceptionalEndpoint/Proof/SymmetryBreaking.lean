@@ -3,12 +3,12 @@ import UpperTailOptimizers.NonexceptionalEndpoint.Proof.ReplicaSymmetric
 import UpperTailOptimizers.NonexceptionalEndpoint.QuadraticGrowth.AnalyticExcess
 
 /-!
-# The symmetry-breaking side `p < pc(r)` of `thm:nonexceptional-endpoint`
+# The symmetry-breaking side `p < p_c(r)` of `thm:nonexceptional-endpoint`
 
 The heart of the paper's `thm:nonexceptional-endpoint` (Theorem 4.1 of `paper/paper.tex`, proved
 in Section 4.3).  Near a non-exceptional `r₀` of a
 regular Lubetzky–Zhao boundary arc there are `ρ, η > 0` such that for every `r` with `|r - r₀| < ρ` and every
-`p` with `pc(r) - η < p < pc(r)`:
+`p` with `p_c(r) - η < p < p_c(r)`:
 
 * the optimizer of the upper-tail problem is unique up to relabelling, non-constant
   and bipodal;
@@ -22,8 +22,10 @@ regular Lubetzky–Zhao boundary arc there are `ρ, η > 0` such that for every 
 The assembly follows the paper.  The shift identity of `NonexceptionalEndpoint/Proof/Basic.lean` turns the
 reduction of Section 4.1 into the tilted scalar problem
 `Φ_H(p,r) = J_p(r) + min_{0<δ<δ₀} (G_r(δ) - λ(p,r)δ)` (eq. `eq:edge-deficit-minimization`); the
-chart `boundaryExcess_chart` of `thm:positive-second-variation` provides
-`G_r'' = A_H(r) + O(|δ|) ≥ A_H(r)/2 > 0`; and
+chart `boundaryExcess_chart` of `thm:boundary-excess-expansion` provides
+`G_r'' = A_H(r) + O(|δ|) ≥ A_H(r)/2 > 0` (the paper reaches the same lower bound
+`∂²_δG(r,δ) ≥ a₀/2`, with `a₀ = inf_{r∈I}A_H(r)`, from continuity and compactness of `Ī` after
+decreasing `δ₀`); and
 `tilted_critical_point` produces the unique minimiser `δ_*` together with its expansion.  Since
 distinct `δ` give distinct edge densities, *every* graphon optimizer has edge density exactly
 `r - δ_*`, hence is a relabelling of the single KRR-S maximizer `B_{r-δ_*, r}`.
@@ -42,7 +44,7 @@ open MeasureTheory Real Set Filter
 /-! ### Two scalar estimates -/
 
 /-- A bound for the log-odds displacement `λ(p,r)` in terms of the distance to the boundary,
-uniform as long as `pc(r)` stays a margin `m` away from `0` and `1`. -/
+uniform as long as `p_c(r)` stays a margin `m` away from `0` and `1`. -/
 private theorem lambdaDisp_le {d : ℕ} (M : LZBoundaryArc d) {r p m ζ : ℝ}
     (hm0 : 0 < m) (hpcm : m ≤ M.pc r) (hpc1m : m ≤ 1 - M.pc r)
     (hζm : ζ ≤ m / 2) (hlo : M.pc r - ζ < p) (hhi : p < M.pc r) :
@@ -175,7 +177,7 @@ private theorem value_expansion_bound {A CA Mch lam ds δ₀ G C : ℝ}
 
 /-- **`thm:nonexceptional-endpoint`, symmetry-breaking side, chart-relative core.**  The whole
 symmetry-breaking analysis, with
-the analytic chart of `thm:positive-second-variation` supplied as *hypotheses* rather than
+the analytic chart of `thm:boundary-excess-expansion` supplied as *hypotheses* rather than
 obtained internally, so that
 one caller can feed the **same** chart both here and to the implicit-function step of
 `NonexceptionalEndpoint/Proof/Analytic.lean`.  (Two independent calls to `boundaryExcess_chart` produce
@@ -187,7 +189,7 @@ that it is the **unique root** of `∂_δ Gc(r,·) = λ(p,r)` on `[-δ₀, δ₀
 identity `e(W) = r - δ_*` for every optimizer, the two value identities
 `Φ = I_{p,r}(r - δ_*) = J_p(r) + Gc(r, δ_*) - λ δ_*`, the raw first-order bound
 `|λ - A_H δ_*| ≤ Mch δ_*²` and the size bound `δ_* ≤ C λ`, together with the window
-bookkeeping `δ₀ ≤ ρc`, `2ρ ≤ w` and `η ≤ pc(r)`. -/
+bookkeeping `δ₀ ≤ ρc`, `2ρ ≤ w` and `η ≤ p_c(r)`. -/
 theorem symmetry_breaking_core {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
     (hreg : ∀ v, H.degree v = d) (hm : 1 ≤ H.edgeFinset.card)
@@ -261,7 +263,7 @@ theorem symmetry_breaking_core {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     rw [abs_sub_comm] at h1
     linarith
   have hKw : ∀ r ∈ K, |r - r₀| < w := fun r hr => by linarith [hKabs r hr]
-  -- ### Uniform second-variation and reduction data on `K`
+  -- ### Uniform boundary-excess and reduction data on `K`
   obtain ⟨CA, -, -, hCA0, -, -, -, hAHlow, -⟩ :=
     boundaryExcess_taylor hd M hKsub hKc hKne hKex H hreg hm
   obtain ⟨ρ₀, hρ₀0, What, hfam, hcore⟩ :=
@@ -458,7 +460,7 @@ theorem symmetry_breaking_core {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
 
 /-- **`thm:nonexceptional-endpoint`: the symmetry-breaking side.**  Near a non-exceptional `r₀` of a
 regular Lubetzky–Zhao boundary arc there are `ρ, η > 0` and a constant `C` such that for every `r` with
-`|r - r₀| < ρ` and every `p ∈ (pc(r) - η, pc(r))` there is a graphon `W_*` which is
+`|r - r₀| < ρ` and every `p ∈ (p_c(r) - η, p_c(r))` there is a graphon `W_*` which is
 
 * an optimizer of the upper-tail problem, **bipodal** and **non-constant**;
 * the optimizer **up to relabelling**: every optimizer is `W_*` relabelled;
@@ -470,7 +472,7 @@ and, writing `λ = λ(p,r)` for the log-odds displacement,
 
 these last two together with `A_H(r) > 0`, so that the divisions are not the degenerate
 `x / 0 = 0` reading.  The constants `ρ, η, C` do not depend on `r` or `p` in the stated
-range.  This is `symmetry_breaking_core` with the second-variation chart supplied by
+range.  This is `symmetry_breaking_core` with the boundary-excess chart supplied by
 `boundaryExcess_chart` and the chart-relative data projected away. -/
 theorem symmetry_breaking_side {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]

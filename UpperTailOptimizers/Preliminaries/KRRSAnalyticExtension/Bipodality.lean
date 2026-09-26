@@ -307,11 +307,11 @@ theorem krrs_bipodality (H : SimpleGraph V) [DecidableRel H.Adj] {d : ℕ} (hd :
     have hsplit : (Cb + 1 / (2 * Δ ε)) * (τ - ε ^ m)
         = Cb * (τ - ε ^ m) + 1 / (2 * Δ ε) * (τ - ε ^ m) := by ring
     rw [hsplit]
-    by_cases hsm : τ - ε ^ m < Δ ε
-    · have hb := hCb ε hεU (τ - ε ^ m) hs0 hsm
-      rw [hagree ε h1 h2 ε hεU τ hs0 hsm]
+    by_cases hsc : τ - ε ^ m < Δ ε
+    · have hb := hCb ε hεU (τ - ε ^ m) hs0 hsc
+      rw [hagree ε h1 h2 ε hεU τ hs0 hsc]
       linarith
-    · push Not at hsm
+    · push Not at hsc
       have hhalf : 1 / 2 ≤ 1 / (2 * Δ ε) * (τ - ε ^ m) := by
         rw [div_mul_eq_mul_div, one_mul, le_div_iff₀ (by positivity)]
         linarith

@@ -1,17 +1,17 @@
 import UpperTailOptimizers.NonexceptionalEndpoint.Proof.Basic
 
 /-!
-# The replica-symmetric side `p ≥ pc(r)`
+# The replica-symmetric side `p ≥ p_c(r)`
 
 On the replica-symmetric side of a regular Lubetzky–Zhao boundary arc, the **unique** optimizer
-of the upper-tail problem is the constant graphon `W ≡ r`, on the whole range `pc(r) ≤ p < r`.
+of the upper-tail problem is the constant graphon `W ≡ r`, on the whole range `p_c(r) ≤ p < r`.
 `paper/paper.tex` does not state this inside `thm:nonexceptional-endpoint`; it is the uniqueness
-clause of Lubetzky–Zhao (`thm:lz-criterion`) at a point where condition (M2) of
+clause of Lubetzky–Zhao (`thm:lz-criterion`) at a point where the criterion of condition (M1) of
 Theorem 3.1 supplies a supporting line.
 Here uniqueness is instead *derived*, so no new axiom is needed:
 
-* at the boundary value `p = pc(r)` it is exactly `boundary_uniqueness`;
-* for `pc(r) < p < r` a supporting line of `φ_{p,d}` at `x = r^d` is available, and its integral
+* at the boundary value `p = p_c(r)` it is exactly `boundary_uniqueness`;
+* for `p_c(r) < p < r` a supporting line of `φ_{p,d}` at `x = r^d` is available, and its integral
   against the law `μ` of `W^d` already gives the **value** `Φ_H(p,r) = J_p(r)` — so the
   `lubetzkyZhao` axiom is not needed here either — while uniqueness comes from the strict form of
   the same line: the supporting line forces the `d`-th moment `∫W^d` down to `r^d`, the
@@ -19,7 +19,7 @@ Here uniqueness is instead *derived*, so no new axiom is needed:
   forces `μ = δ_{r^d}`, i.e. `W ≡ r` a.e.
 
 Below `p_*` the line and its strict form are the arc's `orientation` and `noFlatTie` fields
-(the replica-symmetric half of (M2) and its Jensen companion), which are stated on the window
+(the replica-symmetric half of the criterion in (M1) and its Jensen companion), which are stated on the window
 `(pc r, p_*)` because `φ_{p,d}` is not convex there.  From `p_*` up they come instead from strict
 convexity of `φ_{p,d}` on all of `[0,1]`, through `orientation_of_pStar_le` and
 `noFlatTie_of_pStar_le`.
@@ -145,19 +145,19 @@ private theorem rs_supporting_bound {d : ℕ} (hd : 2 ≤ d) {p r a : ℝ}
 /-! ### The replica-symmetric side -/
 
 /-- **The replica-symmetric side.**  On a regular Lubetzky–Zhao boundary arc, for every `p`
-with `pc(r) ≤ p < r`:
+with `p_c(r) ≤ p < r`:
 
 * the upper-tail value is the constant-graphon value, `Φ_H(p,r) = J_p(r)`;
 * the constant graphon `W ≡ r` attains it;
 * it is the **unique** optimizer: every optimizer equals `r` almost everywhere.
 
-At `p = pc(r)` this is `boundary_uniqueness`; for `p > pc(r)` both the value and the uniqueness
+At `p = p_c(r)` this is `boundary_uniqueness`; for `p > p_c(r)` both the value and the uniqueness
 come from a supporting line of `φ_{p,d}` at `x = r^d` and its strict form, applied to
 `powDistribution W d` — below `p_*` the arc's `orientation` and `noFlatTie` fields, from `p_*` up
 `orientation_of_pStar_le` and `noFlatTie_of_pStar_le`.  So the whole statement rests on
 `generalized_holder` alone; in particular it does *not* consume `lubetzkyZhao`, the axiom behind
-`thm:lz-criterion`, from which (with condition (M2) of Theorem 3.1) the paper
-obtains this uniqueness.  As in the paper, no restriction on `p - pc(r)` is
+`thm:lz-criterion`, from which (with the criterion of condition (M1) of Theorem 3.1) the paper
+obtains this uniqueness.  As in the paper, no restriction on `p - p_c(r)` is
 needed — `replica_symmetric_unique_global` states the same conclusion in global boundary
 coordinates — and nothing depends on `r` through an unspecified radius, which is what lets
 `local_structure_on_arc` state this side on the same window, uniform in `r` near `r₀`, as the
@@ -251,7 +251,7 @@ theorem replica_symmetric_unique {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) 
 /-- **The replica-symmetric side above `p_*`**, for every `r ∈ (0,1)` (the exceptional density
 included, where no boundary arc exists): for `p_* ≤ p < r` the constant graphon `W ≡ r` is the
 unique optimizer and `Φ_H(p,r) = J_p(r)`.  The proof is that of `replica_symmetric_unique` on its
-`p > pc(r)` branch, with the supporting line `orientation_of_pStar_le` and its strict form
+`p > p_c(r)` branch, with the supporting line `orientation_of_pStar_le` and its strict form
 `noFlatTie_of_pStar_le`. -/
 theorem replica_symmetric_unique_of_pStar_le {d : ℕ} (hd : 2 ≤ d) {r : ℝ} (hr0 : 0 < r)
     (hr1 : r < 1) {p : ℝ} (hps : pStar d ≤ p) (hpr : p < r)

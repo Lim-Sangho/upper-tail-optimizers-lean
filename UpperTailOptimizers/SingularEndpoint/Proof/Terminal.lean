@@ -23,8 +23,8 @@ that argument is *pure arithmetic*, and that is what this file proves:
 
 The hypothesis `hmaster` carried here is discharged in `SingularEndpoint/GraphonComparison/GraphonComparisonMaster.lean`
 (`exists_comparison_master`, `exists_singular_endpoint_comparison_graph`). In
-`SingularEndpoint/Proof/TerminalUnique.lean`, `exists_singular_endpoint_full` adds feasibility and
-uniqueness for a given family. `singular_endpoint_full` constructs that family and collects
+`SingularEndpoint/Proof/TerminalUnique.lean`, `exists_singular_endpoint` adds feasibility and
+uniqueness for a given family. `singular_endpoint` constructs that family and collects
 the other proved clauses of Theorem 5.1, with the documented qualifications.
 
 ## Contents

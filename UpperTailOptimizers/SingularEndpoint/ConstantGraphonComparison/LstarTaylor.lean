@@ -6,7 +6,7 @@ import UpperTailOptimizers.SingularEndpoint.ConstantGraphonComparison.Fkkt4
 `SingularEndpoint/RankOneStationaryFamily/Contact.lean` and `SingularEndpoint/ConstantGraphonComparison/Fkkt4.lean` differentiate the KKT
 function `𝓛_*(z) = J_{p_*}'(z) - γ_* z^{d-1}` of `eq:kkt-quartic-expansion` four times and
 evaluate the results at the exceptional density `r_*`: that is the content of the triple
-contact `eq:endpoint-entropy-derivatives`, of `𝓛_*'''(r_*) = d⁵/(d-1)²`, and of
+contact `eq:endpoint-contact-derivatives`, of `𝓛_*'''(r_*) = d⁵/(d-1)²`, and of
 `𝓛_*^{(4)}(r_*) = 5d⁶(d-2)/(d-1)³`.  Those statements are `HasDerivAt` facts relating the
 *separately defined* functions `Lstar`, `Lstar1`, …, `Lstar4`.
 
@@ -213,11 +213,14 @@ private theorem iteratedDeriv_five_Gam_eventuallyEq (hd : 2 ≤ d) :
 
 /-! ## The Taylor data at `r_*`
 
-The `𝓛_*` list records the data of `app:rank-one-parameter-expansions`, whose `𝓛₀` is `𝓛_*`:
-"The triple-contact identities `eq:endpoint-entropy-derivatives` show that `𝓛₀` and its
-first two derivatives vanish at `r_*`", and direct differentiation gives
-`𝓛₀'''(r_*) = d⁵/(d-1)²` and `𝓛₀^{(4)}(r_*) = 5d⁶(d-2)/(d-1)³`, the latter being the fourth
-coefficient of `SingularEndpoint/ConstantGraphonComparison/Fkkt4.lean`. -/
+The `𝓛_*` list records the data of `app:rank-one-parameter-expansions`, whose `𝓜_0'` is `𝓛_*`.
+There `𝓜_0 - 𝓜_0(r_*) = Γ_d` by `eq:endpoint-supporting-gap`, so (M4) of `thm:lz-boundary`
+gives `eq:mh-cubic-derivative`,
+`𝓜_0'(z) = \frac{d⁵}{6(d-1)²}(z-r_*)³ + O_d(|z-r_*|⁴)`.  In derivative form that is the
+vanishing of `𝓛_*` and its first two derivatives at `r_*` — the triple contact
+`eq:endpoint-contact-derivatives` — together with `𝓛_*'''(r_*) = d⁵/(d-1)²`; direct
+differentiation adds `𝓛_*^{(4)}(r_*) = 5d⁶(d-2)/(d-1)³`, the fourth coefficient of
+`SingularEndpoint/ConstantGraphonComparison/Fkkt4.lean`. -/
 
 /-- `𝓛_*'(r_*) = 0`: the second of the triple-contact identities. -/
 theorem iteratedDeriv_one_Lstar (hd : 2 ≤ d) : iteratedDeriv 1 (Lstar d) (rStar d) = 0 := by
@@ -269,7 +272,7 @@ theorem iteratedDeriv_four_Gam (hd : 2 ≤ d) :
   exact Lstar3_rStar hd
 
 /-- **`Γ_d^{(5)}(r_*) = 5d⁶(d-2)/(d-1)³`**, which is the quartic coefficient of
-`eq:kkt-quartic-expansion` read through `𝓛₀ = Γ_d'` (Appendix E.2); it is
+`eq:kkt-quartic-expansion` read through `𝓛₀ = Γ_d'` (Appendix D.2); it is
 the `z⁵` coefficient `d⁶(d-2)/(24(d-1)³)` of the expansion of `Γ_d(r_* + z)`. -/
 theorem iteratedDeriv_five_Gam (hd : 2 ≤ d) :
     iteratedDeriv 5 (Gam d) (rStar d) = 5 * (d : ℝ) ^ 6 * ((d : ℝ) - 2) / ((d : ℝ) - 1) ^ 3 := by

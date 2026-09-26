@@ -3,8 +3,8 @@ import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.Reduced
 /-!
 # Nondegeneracy of the scalar KRR–S maximizer
 
-This file formalises paragraph 1 ("Nondegeneracy of the scalar maximizer") of Appendix B of
-`paper/paper.tex`, whose conclusion is `eq:krrs-scalar-nondegeneracy`,
+This file formalises paragraph 1 ("Nondegeneracy of the scalar maximizer") of Appendix A of
+`paper/paper.tex`, whose conclusion is `eq:krrs-maximizer-nondegeneracy`,
 `∂_z²ψ_d(ε₀,z₀) < 0`.
 
 Since `ψ_d(ε,z) = 𝒩_ε(z)/𝒟_ε(z)` (`eq:krrs-entropy-remainder`, `eq:krrs-moment-remainder`) has a denominator that
@@ -118,7 +118,7 @@ private theorem lt_of_hasDerivAt_neg {f f' : ℝ → ℝ} {x y : ℝ} (hxy : x <
     exact hp w hw
   exact hanti (Set.left_mem_Icc.mpr hxy.le) (Set.right_mem_Icc.mpr hxy.le) hxy
 
-/-- **The calculus core of Appendix B, paragraph 1.**  If `f` attains its maximum over an
+/-- **The calculus core of Appendix A, paragraph 1.**  If `f` attains its maximum over an
 open interval at an interior point `x`, and `f₁, f₂, f₃` are its first three derivatives
 there, then `f₁(x) = 0`, `f₂(x) ≤ 0`, and — the paper's "an interior local maximum cannot
 have a first nonzero derivative of odd order" step — `f₂(x) = 0` forces `f₃(x) = 0`. -/
@@ -236,7 +236,7 @@ theorem hasDerivAt_Wr (d : ℕ) (ε : ℝ) {z : ℝ} (h0 : z ≠ 0) (h1 : z ≠ 
 
 /-! ### The nondegeneracy statement -/
 
-/-- **Appendix B, paragraph 1** `eq:krrs-scalar-nondegeneracy`, in the quotient-free form
+/-- **Appendix A, paragraph 1** `eq:krrs-maximizer-nondegeneracy`, in the quotient-free form
 used downstream: at an interior maximizer `z ≠ ε` of `ψ_d(ε,·)` which is not the
 exceptional density `r_* = (d-1)/d`, the numerator `Wr` of `∂_zψ_d` vanishes and its
 derivative `dWr` is strictly negative.  Dividing by `𝒟_ε(z)^2 > 0` and `𝒟_ε(z) > 0` gives

@@ -12,8 +12,8 @@ The convex minorant is `lce 0 1 (phi p d)` (`LZBoundary/ConvexMinorant.lean`), a
 minimizer when `Feasible H r W` and `W.Ip p = phiVar H p r`.  A minimizer equal to `r` almost
 everywhere is the constant graphon up to relabelling.
 
-The first half does not use the axiom `lubetzkyZhao`: condition (M2) of Theorem 3.1
-turns the minorant condition into `pc(r) ≤ p`, and `replica_symmetric_unique_global` (or
+The first half does not use the axiom `lubetzkyZhao`: the criterion of condition (M1) of Theorem 3.1
+turns the minorant condition into `p_c(r) ≤ p`, and `replica_symmetric_unique_global` (or
 `replica_symmetric_unique_of_pStar_le` at `r = r_*`) gives the unique minimizer from
 `generalized_holder`.  The second half uses `lubetzkyZhao`, which states that `Φ_H(p,r) = J_p(r)`
 exactly when a supporting line touches `φ_{p,d}` at `r^d`.
@@ -47,7 +47,7 @@ theorem lz_criterion {d : ℕ} (hd : 2 ≤ d) {V : Type*} [Fintype V] [Decidable
     rw [← hphi_eq]
     exact exists_supportingLine_iff_lce_eq zero_lt_one (phi_continuousOn_Icc hd hp0 hp1) hrd
   refine ⟨fun hon => ?_, fun hoff hr => ?_⟩
-  · have hpc : pcGlobal d r ≤ p := (lz_boundary_M2_global hd hr0 hr1 hp0 hp1).mp (hsupp.mpr hon)
+  · have hpc : pcGlobal d r ≤ p := (lz_boundary_M1_global hd hr0 hr1 hp0 hp1).mp (hsupp.mpr hon)
     have hRS : phiVar H p r = Jp p r ∧
         (∀ hr' : r ∈ Set.Icc (0:ℝ) 1, (constGraphon r hr').Ip p = phiVar H p r) ∧
         (∀ W : Graphon, Feasible H r W → W.Ip p = phiVar H p r →

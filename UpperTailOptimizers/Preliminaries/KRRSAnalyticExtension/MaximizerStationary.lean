@@ -4,7 +4,7 @@ import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.CChart
 /-!
 # Stationarity of bipodal entropy maximizers
 
-Paragraph 3 of Appendix B of `paper/paper.tex` (in the proof of
+Paragraph 3 of Appendix A of `paper/paper.tex` (in the proof of
 `eq:krrs-boundary-stationarity`), and paragraph 4 again, turn graphon maximality of a bipodal
 graphon into the stationarity system `𝓕₁ = 𝓕₂ = 0` for its parameters.  This file is that
 step, with the `c`-normalised system `F₁ = F₂ = 0` of `Preliminaries/KRRSAnalyticExtension/Stationarity.lean` as target, at a
@@ -38,7 +38,7 @@ namespace UpperTailOptimizers
 open MeasureTheory Real Filter Topology
 
 /-- **Steps 1–6 of the module docstring — the constraint and local-maximality argument of
-Appendix B, paragraphs 3 and 4 — at a single excess `ϑ > 0`.**
+Appendix A, paragraphs 3 and 4 — at a single excess `ϑ > 0`.**
 
 A graphon `W` that maximises the entropy at `(ε, ε^m + ϑ)` and is a.e. the bipodal kernel
 with interior parameters `(a, b, q, c)`, `0 ≤ c < 1`, satisfies the desingularized

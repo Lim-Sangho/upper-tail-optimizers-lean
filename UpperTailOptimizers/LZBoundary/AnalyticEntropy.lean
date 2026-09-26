@@ -5,7 +5,7 @@ import UpperTailOptimizers.Preliminaries.Graphons.ScalarEntropy
 # Real-analyticity of the scalar entropy
 
 `analyticAt_shannonH` used to live in `NonexceptionalEndpoint/QuadraticGrowth/AnalyticTools.lean`, which sits high in
-the import order (it reaches `NonexceptionalEndpoint/LocalReduction/Main.lean`, hence `Preliminaries/KRRSAnalyticExtension/Main.lean`).  Once Appendix B
+the import order (it reaches `NonexceptionalEndpoint/LocalReduction/Main.lean`, hence `Preliminaries/KRRSAnalyticExtension/Main.lean`).  Once Appendix A
 was re-formalised, `Preliminaries/KRRSAnalyticExtension/Reduced.lean` needed this lemma too, and importing `AnalyticTools`
 from there closed an import cycle
 

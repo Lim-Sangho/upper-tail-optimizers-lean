@@ -29,8 +29,8 @@ they replace the ordinary two-contact supporting line at the singular endpoint.
 * `Jp_eq_Jp_pStar_add` — the scalar displacement `eq:entropy-parameter-shift`;
 * `Ip_eq_Ip_pStar_add` — its graphon integral, the second half of
   `eq:endpoint-supporting-gap`;
-* `Jp_pStar_eq_gam` — the pointwise form of `eq:endpoint-supporting-gap`;
-* `Ip_pStar_eq_moment_add_gam` — `eq:endpoint-supporting-gap` itself;
+* `Jp_pStar_eq_Gam` — the pointwise form of `eq:endpoint-supporting-gap`;
+* `Ip_pStar_eq_moment_add_GamInt` — `eq:endpoint-supporting-gap` itself;
 * `measurable_Gam` — measurability of `Γ_d`, shared with `SingularEndpoint/GraphonComparison/GraphonComparison.lean`;
 * `integrable_Gam` — `Γ_d ∘ W` is `gμ`-integrable for every graphon;
 * `Ip_sub_Jp_eq` — the cost gap of an arbitrary graphon against `J_p(r)`, from which
@@ -90,9 +90,9 @@ theorem Jp_eq_Jp_pStar_add (hd : 2 ≤ d) {p z : ℝ} (hp0 : 0 < p) (hp1 : p < 1
   ring
 
 /-- **The second half of `eq:endpoint-supporting-gap`**:
-the graphon form of the displacement, `I_p(W) = I_{p_*}(W) + Λ_p·e(W) + C_p`.  The paper
-now defines `Λ_h := ℓ(p_h) - ℓ_*` and `C_h := J_{p_h}(0) - J_{p_*}(0)` inline, just above
-the display. -/
+the graphon form of the displacement, `I_p(W) = I_{p_*}(W) + Λ_p·e(W) + C_p`.  The paper writes
+the coefficients out as `ℓ_h - ℓ_*` and `J_{p_h}(0) - J_{p_*}(0)`, with `ℓ(z) = log((1-z)/z)`,
+`ℓ_* = ℓ(p_*)` and `ℓ_h = ℓ(p_h)` defined just above the display. -/
 theorem Ip_eq_Ip_pStar_add (hd : 2 ≤ d) {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (W : Graphon) :
     W.Ip p = W.Ip (pStar d) + (ell p - ell (pStar d)) * W.edgeDensity
       + (Jp p 0 - Jp (pStar d) 0) := by
@@ -120,13 +120,13 @@ theorem Ip_eq_Ip_pStar_add (hd : 2 ≤ d) {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) 
 
 /-- The pointwise form of `eq:endpoint-supporting-gap`: by the definition of `Γ_d`,
 `J_{p_*}(z) = J_{p_*}(r_*) + β_d (z^d - r_*^d) + Γ_d(z)`. -/
-theorem Jp_pStar_eq_gam (d : ℕ) (z : ℝ) :
+theorem Jp_pStar_eq_Gam (d : ℕ) (z : ℝ) :
     Jp (pStar d) z = Jp (pStar d) (rStar d) + betaD d * (z ^ d - rStar d ^ d) + Gam d z := by
   rw [Gam]; ring
 
 /-- **`eq:endpoint-supporting-gap`**, the exact singular endpoint identity
 `I_{p_*}(W) = J_{p_*}(r_*) + β_d (∫W^d - r_*^d) + ∫Γ_d(W)`. -/
-theorem Ip_pStar_eq_moment_add_gam (hd : 2 ≤ d) (W : Graphon) :
+theorem Ip_pStar_eq_moment_add_GamInt (hd : 2 ≤ d) (W : Graphon) :
     W.Ip (pStar d)
       = Jp (pStar d) (rStar d) + betaD d * (W.Wmoment d - rStar d ^ d) + GamInt d W := by
   have hIpow : Integrable (fun z : ℝ × ℝ => (W.toFun z.1 z.2) ^ d) gμ :=
@@ -150,12 +150,12 @@ theorem Ip_pStar_eq_moment_add_gam (hd : 2 ≤ d) (W : Graphon) :
     simp only [measure_univ, ENNReal.toReal_one, smul_eq_mul, one_mul, measureReal_def]
     rfl
   show ∫ z, Jp (pStar d) (W.toFun z.1 z.2) ∂gμ = _
-  -- `simp_rw` would loop here: the right-hand side of `Jp_pStar_eq_gam` again contains
+  -- `simp_rw` would loop here: the right-hand side of `Jp_pStar_eq_Gam` again contains
   -- `J_{p_*}` evaluated at `r_*`.
   rw [integral_congr_ae (g := fun z : ℝ × ℝ =>
       (Jp (pStar d) (rStar d) + betaD d * ((W.toFun z.1 z.2) ^ d - rStar d ^ d))
         + Gam d (W.toFun z.1 z.2))
-    (Filter.Eventually.of_forall fun z => Jp_pStar_eq_gam d _),
+    (Filter.Eventually.of_forall fun z => Jp_pStar_eq_Gam d _),
     integral_add hIaff hIgam, haff]
   rfl
 
@@ -167,8 +167,8 @@ theorem Ip_sub_Jp_eq (hd : 2 ≤ d) {p r : ℝ} (hp0 : 0 < p) (hp1 : p < 1)
     W.Ip p - Jp p r
       = (GamInt d W - Gam d r) + betaD d * (W.Wmoment d - r ^ d)
         + (ell p - ell (pStar d)) * (W.edgeDensity - r) := by
-  rw [Ip_eq_Ip_pStar_add hd hp0 hp1 W, Ip_pStar_eq_moment_add_gam hd W,
-    Jp_eq_Jp_pStar_add hd hp0 hp1 hr0 hr1, Jp_pStar_eq_gam d r]
+  rw [Ip_eq_Ip_pStar_add hd hp0 hp1 W, Ip_pStar_eq_moment_add_GamInt hd W,
+    Jp_eq_Jp_pStar_add hd hp0 hp1 hr0 hr1, Jp_pStar_eq_Gam d r]
   ring
 
 end UpperTailOptimizers

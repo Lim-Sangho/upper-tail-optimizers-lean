@@ -139,12 +139,12 @@ theorem continuousOn_GamTilde (hd : 2 ≤ d) : ContinuousOn (GamTilde d) (Set.Ic
 /-- **The continuation of `eq:endpoint-gap-quartic-bound`.**  There is `C < ∞` with
 `|z - r_*|^4 ≤ C Γ̃_d(z)` for `0 ≤ z ≤ 4`.
 
-On `[0,1]` this is `exists_gam_quartic_lower` inverted, with `C ≥ 1/c_d`.  On `(1,4]` the
+On `[0,1]` this is `exists_exceptional_gap_quartic_lower` inverted, with `C ≥ 1/c_d`.  On `(1,4]` the
 continued gap is bounded below by `Γ_d(1) > 0` while `|z - r_*| ≤ 4`, so `C ≥ 256/Γ_d(1)`
 suffices; the constant is the maximum of the two. -/
 theorem exists_quartic_le_GamTilde (hd : 2 ≤ d) :
     ∃ C : ℝ, 0 < C ∧ ∀ z ∈ Set.Icc (0 : ℝ) 4, |z - rStar d| ^ 4 ≤ C * GamTilde d z := by
-  obtain ⟨c, hc, hcbound⟩ := exists_gam_quartic_lower hd
+  obtain ⟨c, hc, hcbound⟩ := exists_exceptional_gap_quartic_lower hd
   have hG1 : 0 < Gam d 1 := Gam_one_pos hd
   have hr0 := rStar_pos hd
   have hr1 := rStar_lt_one hd

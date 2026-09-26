@@ -2,16 +2,19 @@ import UpperTailOptimizers.NonexceptionalEndpoint.QuadraticGrowth.ArcBounds
 import UpperTailOptimizers.Preliminaries.Graphons.Basic
 
 /-!
-# The scalar quadratic lower bound (`lem:scalar-quadratic-bound` of `paper/paper.tex`)
+# The scalar step of the quadratic lower bound (`lem:quadratic-lower-bound` of `paper/paper.tex`)
 
-**`lem:scalar-quadratic-bound` (scalar quadratic lower bound).**  Let `X` be a `[0,1]`-valued random
+**The scalar form of `lem:quadratic-lower-bound`.**  Let `X` be a `[0,1]`-valued random
 variable with `E X = r - δ` and `E X^d ≥ r^d`.  If the quadratic separation
 `γ · min(|u-r|, |u-s|)² ≤ J_{p₀}(u) - (J_{p₀}(r) + L(u^d - r^d))` holds on `[0,1]`
 (with a positive supporting-line slope `L`), then
 `E J_{p₀}(X) ≥ J_{p₀}(r) + C δ²`.
 
-The paper's proof is likewise direct, with the nearest-point projection below and the constant
-`C_{d,I} = γ_{d,I}(η_{d,I}^{d-1}/(d + η_{d,I}^{d-1}))²`, stated for `0 < δ < δ₀`.  Here the
+The paper states `lem:quadratic-lower-bound` for graphons and reduces it, inside the proof, to
+exactly this scalar bound for `X = W(U,V)`.  Its proof is likewise direct: it compares the gap
+`g_{d,r}` of `eq:supporting-cost-gap` with the square of the affine interpolant
+`R_r(z) = z^d - r^d - k(z-r)`, `k = (s^d-r^d)/(s-r)`, and reaches the constant
+`C_{d,I} = γ_{d,Ī} η_{d,I}^{2(d-1)}/d²`, stated for `0 < δ < δ₀`.  Here the
 **direct quantitative proof** gives the explicit constant
 `C = γ / (1 + d/η_d)²`, where `η_d` is a positive lower bound for `r^d - s^d` in the
 case `s < r` (in the case `r < s` only the mean constraint is used).  In particular no
@@ -28,7 +31,7 @@ namespace UpperTailOptimizers
 
 open MeasureTheory Real Set
 
-/-- **`lem:scalar-quadratic-bound`, quantitative form.**
+/-- **The scalar form of `lem:quadratic-lower-bound`, quantitative version.**
 For a `[0,1]`-valued random variable `f` with mean `r - δ` and `d`-th moment `≥ r^d`,
 the quadratic separation of the supporting line at the contact pair `{r, s}` forces
 `E J_{p₀}(f) ≥ J_{p₀}(r) + (γ / (1 + d/η_d)²) δ²`. -/

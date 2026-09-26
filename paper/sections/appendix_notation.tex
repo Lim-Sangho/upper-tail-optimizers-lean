@@ -66,7 +66,7 @@ $\{t(H,G(n,p))\ge r^{|E(H)|}\}$; the upper-tail event under $G(n,p)$,
 with $n$ suppressed in the notation. \\
 $W,\W_0$ & $W:[0,1]^2\to[0,1]$ &
 A symmetric measurable function (a graphon), and the space of all
-graphons.  A scalar $r$ also denotes the constant graphon $W\equiv r$. \\
+graphons.  A number $r\in[0,1]$ also denotes the constant graphon $W\equiv r$. \\
 $e(W),t(H,W)$ & $W\in\W_0$ &
 $e(W)=\int W=t(K_2,W)$; $t(H,W)$ is the integral of
 $\prod_{ij\in E(H)}W(x_i,x_j)$ over the vertex variables. \\
@@ -112,14 +112,14 @@ $\eps=e(W)$, $\tau=t(H,W)$, and $\vartheta=\tau-\eps^m$. \\
 $\psi_d(\eps,z)$ & $\eps,z\in(0,1)$ &
 $\displaystyle\frac{2[S_0(z)-S_0(\eps)-S_0'(\eps)(z-\eps)]}
 {z^d-\eps^d-d\eps^{d-1}(z-\eps)}$, with the diagonal value filled in
-continuously; the scalar quotient selecting the limiting cross density. \\
+continuously; the quotient selecting the limiting cross density. \\
 $\zeta_d(\eps)$ & $\eps\in(0,1)$ &
 The unique maximizer of $z\mapsto\psi_d(\eps,z)$.
 For $\eps\ne r_*$, it is the limiting KRR--S cross density and
 satisfies $\zeta_d(\eps)\ne\eps$. \\
 \end{notationtable}
 
-\subsubsection*{\Cref{sec:lz-boundary}: The Lubetzky--Zhao boundary and its two contacts}
+\subsubsection*{\Cref{sec:lz-boundary}: The Lubetzky--Zhao boundary and its supporting gaps}
 
 \begin{notationtable}
 $r_*,p_*$ & Fixed by $d$ &
@@ -127,23 +127,35 @@ $r_*=(d-1)/d$ and
 $p_*=(d-1)/(d-1+\exp(d/(d-1)))$;
 the exceptional target density and boundary probability. \\
 $\varphi_{p,d}(x)$ & $p\in(0,1)$, $x\in[0,1]$ &
-$J_p(x^{1/d})$; its convex minorant determines the phase boundary. \\
+$J_p(x^{1/d})$, where the coordinate $x=z^d$ corresponds to density $z$;
+its convex minorant determines the phase boundary. \\
 $h_{p,d}(z)$ & $z\in(0,1)$ &
 $zJ_p''(z)-(d-1)J_p'(z)$; its sign is the sign of
 $\varphi_{p,d}''(z^d)$. \\
 $x_a(p),x_b(p)$ & $0<p<p_*$ &
 The two contact points of the affine part of the convex minorant.
-Their density coordinates are $u_a=x_a^{1/d}$ and $u_b=x_b^{1/d}$;
+The corresponding densities are $z_a=x_a^{1/d}$ and $z_b=x_b^{1/d}$;
 see \Cref{lem:contact-points}. \\
-$\pc(r),\sm(r)$ & $r\in(0,1)$ &
+$\pc(r),\sc(r)$ & $r\in(0,1)$ &
 The phase-boundary probability and the other contact density.
-They are analytic for $r\ne r_*$ and extend continuously by
-$\pc(r_*)=p_*$, $\sm(r_*)=r_*$.  For $r\ne r_*$,
-$\sm(r)=\zeta_d(r)$; see \Cref{rmk:bipodal-parameter-expansions}. \\
+They are analytic on $(0,1)$, with
+$\pc(r_*)=p_*$, $\sc(r_*)=r_*$.  For $r\ne r_*$,
+$\sc(r)=\zeta_d(r)$; see \Cref{rmk:bipodal-parameter-expansions}. \\
 $\ell_r(x)$ & $x\in[0,1]$ &
 $J_{\pc(r)}(r)+[J_{\pc(r)}'(r)/(dr^{d-1})](x-r^d)$;
-the supporting tangent, touching at $r^d$ and $\sm(r)^d$ when
-$r\ne r_*$.  It extends to $r=r_*$ in \Cref{sec:constant-graphon-comparison}. \\
+the supporting tangent, touching at $r^d$ and $\sc(r)^d$ when
+$r\ne r_*$.  At $r=r_*$, the contacts merge and the gap is quartic;
+see \Cref{thm:lz-boundary}. \\
+$g_{d,r}(z)$ & $r\in(0,1)\setminus\{r_*\}$, $z\in[0,1]$ &
+$J_{\pc(r)}(z)-\ell_r(z^d)$; the supporting cost gap in the density variable.
+Its quadratic leading coefficient at $u\in\{r,\sc(r)\}$ is
+$g_{d,r}''(u)/2>0$; see \eqref{eq:contact-gap-expansion}.
+It controls $\dist(z,\{r,\sc(r)\})^2$ by \eqref{eq:contact-quadratic-separation}. \\
+$\Gamma_d(z)$ & $z\in[0,1]$ &
+$J_{p_*}(z)-\ell_{r_*}(z^d)=\lim_{r\to r_*}g_{d,r}(z)$;
+the density gap at the merged contact.  Its quartic leading coefficient
+is $d^5/[24(d-1)^2]$; see \eqref{eq:endpoint-gap-expansion}.
+It controls $|z-r_*|^4$ by \eqref{eq:endpoint-gap-quartic-bound}. \\
 \end{notationtable}
 
 \subsubsection*{\Cref{sec:nonexceptional-endpoint}: Nonexceptional optimizers}
@@ -157,18 +169,22 @@ $I$ & Open interval containing $r_0$, with compact closure in
 $(0,1)\setminus\{r_*\}$ &
 A sufficiently small neighborhood of the fixed density $r_0$ on which
 the nonexceptional estimates are uniform; it may be shrunk as needed. \\
-$S_H(\eps,\tau)$ & $(\eps,\tau)\in[0,1]^2$ &
+$S(\eps,\tau)$ & $(\eps,\tau)\in[0,1]^2$ &
 $\sup\{s(W):e(W)=\eps,\ t(H,W)=\tau\}$;
 the entropy envelope, equal to $-\infty$ for an empty slice. \\
 $I_{p,r}(\eps)$ & $p,r\in(0,1)$,
 $\eps\in[0,1]$ &
-$-2S_H(\eps,r^m)-\log(1-p)+\eps\log((1-p)/p)$;
+$-2S(\eps,r^m)-\log(1-p)+\eps\log((1-p)/p)$;
 the relative-entropy infimum at densities $(\eps,r^m)$, equal to
 $+\infty$ for an empty slice. \\
+$\delta$, $\delta_0$ & $r\in I$, $0<\delta<\delta_0$ &
+$\delta=r-\eps$ is the edge-density deficit; $\delta_0>0$ is its common
+cutoff in the local reduction and cost estimates.  The cutoff may be
+decreased, with $\eta$ decreased accordingly to retain localization. \\
 $B_{\eps,\tau}$ & $\tau=r^m$, $r\in I$,
-$\eps\in(r-\rho_0,r)$ &
+$0<r-\eps<\delta_0$ &
 The unique bipodal entropy maximizer with $e(B_{\eps,\tau})=\eps$ and
-$t(H,B_{\eps,\tau})=\tau$, so $s(B_{\eps,\tau})=S_H(\eps,\tau)$.
+$t(H,B_{\eps,\tau})=\tau$, so $s(B_{\eps,\tau})=S(\eps,\tau)$.
 In particular,
 $I_p(B_{\eps,r^m})=I_{p,r}(\eps)$.
 See \Cref{lem:fixed-density-bipodality}. \\
@@ -179,26 +195,20 @@ See \Cref{lem:fixed-density-bipodality}. \\
 \par\nopagebreak[4]
 
 \begin{notationtable}
-$\delta$ & $r\in I$ &
-$\delta=r-\eps$ is the edge-density deficit. \\
-$g_r(z)$ & $r\in I$, $z\in[0,1]$ &
-$J_{\pc(r)}(z)-\ell_r(z^d)$;
-the nonnegative supporting cost gap, vanishing exactly at
-$r$ and $\sm(r)$; see \eqref{eq:supporting-cost-gap}. \\
 $D_d(r,z)$ & $r,z\in(0,1)$, $z\ne r$ &
 $\displaystyle\frac{z^d-r^d}{dr^{d-1}}-(z-r)>0$;
 the coefficient relating smaller-block size to edge-density deficit, used in
 the comparison construction and \eqref{eq:edge-deficit-coefficient}. \\
 $G_r(\delta)$,
-$G(r,\delta)$ & Small $\delta>0$;
-respectively, a neighborhood of $I\times\{0\}$ &
+$G(r,\delta)$ & $r\in I$, $0<\delta<\delta_0$;
+respectively, $(r,\delta)\in\mathcal N$ &
 $G_r(\delta)=I_{\pc(r),r}(r-\delta)-J_{\pc(r)}(r)$
 is the boundary excess cost.  $G$ is its two-sided analytic extension;
 derivatives at $\delta=0$ refer to $G$. \\
 $A_H(r)$ & $r\in(0,1)\setminus\{r_*\}$ &
 $\partial_\delta^2G(r,0)>0$;
 the analytic coefficient of the quadratic boundary cost, introduced
-in \Cref{thm:positive-second-variation}. \\
+in \Cref{thm:boundary-excess-expansion}. \\
 \end{notationtable}
 
 \noindent\emph{The nonexceptional optimizer
@@ -224,7 +234,7 @@ $\vartheta=r^m-(r-\delta_*)^m$. \\
 
 \subsubsection*{\Cref{sec:singular-endpoint}: The exceptional family and its comparison}
 
-\noindent\emph{Stationary family and scalar cost
+\noindent\emph{Stationary family and cost comparison
 (\Cref{sec:rank-one-stationary-family,sec:constant-graphon-comparison}).}
 
 \begin{notationtable}
@@ -257,30 +267,26 @@ $q_h=q(f_h)=\alpha_hs_h^d+(1-\alpha_h)t_h^d$, and target
 $r_h=q_h^{2/d}$; thus $t(H,W_h)=q_h^v=r_h^m$. \\
 $\gamma_h,\mu_h$,
 $\gamma_*$ & $|h|<h_0$ &
-$\gamma_h=\mu_h m q_h^{v-2}>0$ is the scalar stationarity coefficient;
+$\gamma_h=\mu_h m q_h^{v-2}>0$ is the stationarity coefficient;
 $\mu_h$ is the graphon constraint multiplier.
 $\gamma_*=r_*^{-d}$ is the value of $\gamma_h$ at $h=0$. \\
 $F_{p,\gamma}(z)$ & $z\in(0,1)$ &
 $J_p'(z)-\gamma z^{d-1}$; stationarity requires
 $F_{p,\gamma}(f(x)f(y))=0$ a.e., with
 $\gamma=\mu m q(f)^{v-2}$; see \eqref{eq:rank-one-kkt}. \\
-$\ell(z),\ell_*$,
-$\Lambda_h$ & $z\in(0,1)$ &
-$\ell(z)=\log((1-z)/z)$, $\ell_*=\ell(p_*)$,
-$\Lambda_h=\ell(p_h)-\ell_*$.
-$\Lambda_h$ is the slope of the affine change in
-$J_{p_h}-J_{p_*}$, not the displacement $\lambda(p_h,r_h)$. \\
+$\ell(z),\ell_*,\ell_h$ & $z\in(0,1)$; $|h|<h_0$ &
+$\ell(z)=\log((1-z)/z)$, $\ell_*=\ell(p_*)$, and $\ell_h=\ell(p_h)$.
+The difference $\ell_h-\ell_*$ is the slope of the affine change in
+$J_{p_h}-J_{p_*}$; see \eqref{eq:entropy-parameter-shift}. \\
 $\mathcal M_h(z)$,
 $R(h,z)$ & $z$ near $r_*$ &
 $\mathcal M_h(z)=J_{p_h}(z)-(\gamma_h/d)z^d$.
 The analytic quotient $R$ is defined by
 $\mathcal M_h'(z)=(z-s_h^2)(z-s_ht_h)(z-t_h^2)R(h,z)$;
 see \eqref{eq:mh-derivative-factorization}. \\
-$\beta_d,\Gamma_d(z)$ & $z\in[0,1]$ &
-$\beta_d=\gamma_*/d$ is the tangent slope at the singular endpoint;
-$\Gamma_d(z)=J_{p_*}(z)-\ell_{r_*}(z^d)$ is the corresponding supporting
-cost gap.  It vanishes to fourth order at $r_*$ and controls
-$|z-r_*|^4$; see \eqref{eq:endpoint-supporting-gap}. \\
+$\beta_d$ & Fixed by $d$ &
+$\varphi_{p_*,d}'(r_*^d)=\gamma_*/d$;
+the slope of the tangent $\ell_{r_*}$ at the exceptional contact. \\
 \end{notationtable}
 
 \noindent\emph{Localization and decomposition
@@ -310,51 +316,50 @@ $\|f-u_*\|_4,\|E\|_2=O_d(h)$. \\
 
 \begin{notationtable}
 $\nu,\nu_h$ & Probability measures on $[0,2]$ &
-$\nu=f_\#\lambda$ is the distribution of factor values;
-$\nu_h=(f_h)_\#\lambda=\alpha_h\delta_{s_h}+(1-\alpha_h)\delta_{t_h}$,
-where $\delta_x$ is the Dirac mass at $x$. \\
-$\xi,\sigma$ & Measures on $[0,2]$ &
-$\xi$ is a general probability measure and $\sigma=\xi-\nu_h$ is its
-signed difference from the reference measure; for a competitor,
-$\xi=\nu$. \\
-$m_d(\xi),\Delta_h(\xi)$ & Probability measures $\xi$ on $[0,2]$ &
-$m_d(\xi)=\int x^d\,d\xi(x)$ and
-$\Delta_h(\xi)=m_d(\xi)-q_h$;
-in particular $m_d(\nu)=q(f)$ and $m_d(\nu_h)=q_h$. \\
+$\nu=f_\#\lambda$ and $\nu_h=(f_h)_\#\lambda$ are the factor distributions.
+For $h>0$, $\nu_h$ is supported on $\{s_h,t_h\}$, with masses
+$\alpha_h,1-\alpha_h$, respectively; $\nu_0(\{u_*\})=1$. \\
+$\sigma$ & A signed measure on $[0,2]$ &
+$\sigma=\nu-\nu_h$, the difference between the factor distribution and
+the reference measure. \\
+$\Delta_h$ & Factor distribution $\nu$ and reference $\nu_h$ &
+$\Delta_h=q(f)-q_h$, the difference between the $d$-th moments of
+$\nu$ and $\nu_h$. \\
 $\widetilde\Gamma_d$,
-$\widetilde J_{p_h}$ & Scalar arguments in $[0,4]$ &
+$\widetilde J_{p_h}$ & Arguments in $[0,4]$ &
 The auxiliary continuations in \eqref{eq:entropy-continuation}.
 They agree with $\Gamma_d,J_{p_h}$ on $[0,1]$;
 above $1$, $\widetilde\Gamma_d(z)=\Gamma_d(1)+(z-1)^2$.
 The continued cost is not a relative entropy above $1$. \\
-$K_h(x,y)$ & $(x,y)\in[0,2]^2$ &
-$\widetilde J_{p_h}(xy)$; the cost kernel in factor-value coordinates,
+$K_h(u,u')$ & $(u,u')\in[0,2]^2$ &
+$\widetilde J_{p_h}(uu')$; the cost kernel in factor-value coordinates,
 as opposed to the graphon kernel on the vertex space. \\
-$\mathcal J_h(\xi)$,
-$\mathcal L_h(\xi)$ & Probability measures $\xi$ on $[0,2]$ &
-$\mathcal J_h(\xi)=\iint K_h\,d\xi\,d\xi$;
-$\mathcal L_h(\xi)=\mathcal J_h(\xi)-\mu_h\{m_d(\xi)^v-q_h^v\}$.
-These are the auxiliary factor functional and Lagrangian. \\
-$\Psi_h(x),\kappa_h$ & $x\in[0,2]$ &
-$\Psi_h(x)=2\int K_h(x,y)\,d\nu_h(y)
--(2\gamma_hq_h/d)x^d-\kappa_h$, with $\Psi_h(s_h)=0$.
+$\mathcal J_h(\nu)$,
+$\mathcal L_h(\nu)$ & The measures $\nu,\nu_h$ &
+$\mathcal J_h(\nu)=\iint K_h\,d\nu\,d\nu$;
+$\mathcal L_h(\nu)=\mathcal J_h(\nu)-\mu_h\{q(f)^v-q_h^v\}$.
+The auxiliary factor functional and Lagrangian; for $\nu_h$, replace
+$q(f)$ by $q_h$. \\
+$\Psi_h(u),\kappa_h$ & $u\in[0,2]$ &
+$\Psi_h(u)=2\int K_h(u,u')\,d\nu_h(u')
+-(2\gamma_hq_h/d)u^d-\kappa_h$, with $\Psi_h(s_h)=0$.
 It represents the first variation of $\mathcal L_h$ at $\nu_h$;
 see \eqref{eq:first-variation}. \\
 $\mathcal N_\rho$,
 $\mathcal T_\rho$ & Small fixed $\rho>0$ &
 $\mathcal N_\rho=(u_*-\rho,u_*+\rho)$ and
 $\mathcal T_\rho=[0,2]\setminus\mathcal N_\rho$;
-the central and tail regions in factor-value space. \\
-$Q_h(x)$,
-$A_{h,\rho}(\xi)$ & $x\in[0,2]$;
-probability measures $\xi$ &
-$Q_h(x)=(x-s_h)(x-t_h)$ and
-$A_{h,\rho}(\xi)=\int_{\mathcal N_\rho}Q_h^2\,d\xi$;
-the central deviation from the two reference factor values. \\
-$I_h^x,R_h^x$ & Functions of $(x,y)$ near $(u_*,u_*)$;
+the central and tail regions; $\nu(\mathcal T_\rho)$ is the tail mass. \\
+$Q_h(u)$,
+$A_{h,\rho}$ & $u\in[0,2]$; fixed factor distribution $\nu$ &
+$Q_h(u)=(u-s_h)(u-t_h)$ and
+$A_{h,\rho}=\int_{\mathcal N_\rho}Q_h(u)^2\,d\nu(u)$;
+the central deviation from the two reference factor values.
+Dependence on $\nu$ is implicit in $A_{h,\rho}$ and $\Delta_h$. \\
+$I_h^u,R_h^u$ & Functions of $(u,u')$ near $(u_*,u_*)$;
 $h>0$ &
-Interpolation in $x^d$ at $s_h^d,t_h^d$, and the remainder
-$R_h^xF=F-I_h^xF$; the $y$-operators are analogous.
+Interpolation in $u^d$ at $s_h^d,t_h^d$, and the remainder
+$R_h^uF=F-I_h^uF$; the $u'$-operators are analogous.
 See \eqref{eq:moment-interpolation}. \\
 $\Omega_\rho$ & A measurable subset of $[0,1]$ &
 $f^{-1}(\mathcal N_\rho)$, the central region in vertex space;

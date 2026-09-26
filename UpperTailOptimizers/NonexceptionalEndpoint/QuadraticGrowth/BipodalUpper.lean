@@ -2,15 +2,15 @@ import UpperTailOptimizers.NonexceptionalEndpoint.QuadraticGrowth.TDensityExpans
 import UpperTailOptimizers.NonexceptionalEndpoint.QuadraticGrowth.ArcBounds
 
 /-!
-# The matching quadratic upper bound (`lem:bipodal-quadratic-bound` of `paper/paper.tex`): scalar toolkit
+# The matching quadratic upper bound (`lem:quadratic-upper-bound` of `paper/paper.tex`): scalar toolkit
 
-**`lem:bipodal-quadratic-bound` (quadratic upper bound).**  Uniformly for `r` in a compact subarc `K` of a
-Lubetzky–Zhao boundary arc: for every small `δ > 0` there is a bipodal graphon `V_δ` with
-`e(V_δ) = r - δ`, `t(H, V_δ) = r^m`, and `I_{pc(r)}(V_δ) ≤ J_{pc(r)}(r) + C' δ²`.
+**`lem:quadratic-upper-bound` (quadratic upper bound).**  Uniformly for `r` in a compact subarc `K` of a
+Lubetzky–Zhao boundary arc: for every small `δ > 0` there is a bipodal graphon `W_{r,δ}` with
+`e(W_{r,δ}) = r - δ`, `t(H, W_{r,δ}) = r^m`, and `I_{p_c(r)}(W_{r,δ}) ≤ J_{p_c(r)}(r) + C' δ²`.
 
 The construction is the paper's: a small block of size `c` with internal density
-`a = 1/2`, cross density `s = sm(r)` (the second contact), and large-block density `q`
-adjusted to meet the constraints.  The formalisation replaces the paper's analytic
+`a = q₁₁ = 1/2`, cross density `s = q₁₂ = s_c(r)` (the second contact), and large-block density
+`q = q₂₂` adjusted to meet the constraints.  The formalisation replaces the paper's analytic
 implicit function theorem at `(r₀,0,0,r₀)` (followed by shrinking `I`) by a **quantitative
 one-variable solve**: the edge constraint determines `q = qSolve a s r δ c` explicitly, and the
 `H`-density constraint `tBip = r^m` is solved for `c` by the intermediate value

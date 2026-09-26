@@ -121,9 +121,9 @@ variable {K : ℝ → ℝ → ℝ} {g : ℝ → ℝ} {CK Cg : ℝ}
 theorem measurable_kernelOp (hK : Measurable (Function.uncurry K)) (hg : Measurable g) :
     Measurable (kernelOp K g) := by
   have hm : Measurable fun z : ℝ × ℝ => K z.1 z.2 * g z.2 := hK.mul (hg.comp measurable_snd)
-  have hsm : StronglyMeasurable fun x => ∫ y, K x y * g y ∂unitμ :=
+  have hsc : StronglyMeasurable fun x => ∫ y, K x y * g y ∂unitμ :=
     hm.stronglyMeasurable.integral_prod_right'
-  exact hsm.measurable
+  exact hsc.measurable
 
 /-- The crude sup bound `|(T_K g)(x)| ≤ C_K C_g`, from `|K| ≤ C_K`, `|g| ≤ C_g` and the fact
 that `unitμ` is a probability measure. -/

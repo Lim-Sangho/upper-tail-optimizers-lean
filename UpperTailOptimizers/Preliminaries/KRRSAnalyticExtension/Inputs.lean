@@ -1,9 +1,9 @@
 import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.PsiExists
 
 /-!
-# The Kenyon–Radin–Ren–Sadun statements of Appendix B
+# The Kenyon–Radin–Ren–Sadun statements of Appendix A
 
-Appendix B (`app:krrs-analytic-extension`) of `paper/paper.tex` opens with the sentence
+Appendix A (`app:krrs-analytic-extension`) of `paper/paper.tex` opens with the sentence
 
 > We first record the results from \[KRR–S\] needed for the proof of
 > `thm:krrs-analytic-extension`, restricting throughout to `d`-regular graphs.

@@ -11,7 +11,7 @@ import UpperTailOptimizers.LZBoundary.AnalyticIFT
 analytic function of `(p,r)`**, which is what the paper obtains from the analytic implicit
 function theorem applied to
 
-`Ψ(p, r, δ) = ∂_δG(r,δ) - λ(p,r) = 0`,   `∂_δΨ(pc(r₀), r₀, 0) = A_H(r₀) > 0`.
+`Ψ(p, r, δ) = ∂_δG(r,δ) - λ(p,r) = 0`,   `∂_δΨ(p_c(r₀), r₀, 0) = A_H(r₀) > 0`.
 
 `analytic_critical_family_of_chart` carries out exactly that step, using the scalar analytic
 implicit function theorem `analytic_implicit_scalar` (`LZBoundary/AnalyticIFT.lean`) with the
@@ -37,12 +37,12 @@ point `δ_*` of the tilted problem, and everything glues: on the window,
 `bipodal_family_smallBlock_zeta` (with its projection `bipodal_family_smallBlock`) keeps the same
 family on a smaller window and adds the block-size
 clauses of `thm:nonexceptional-endpoint`: at every point of that one window the first block
-`[0, c]` is the smaller block, `0 < c < 1/2`, and `c → 0` as `p ↑ pc(r)`.  The window is obtained from the uniform
+`[0, c]` is the smaller block, `0 < c < 1/2`, and `c → 0` as `p ↑ p_c(r)`.  The window is obtained from the uniform
 bounds `|c| ≤ L·Δ ≤ L·C·λ` and the explicit estimate `lambdaDisp_le_div`, not from the limit at
 each `r` separately.
 
 **Two conventions.**  (i) `Φ_H` is asserted analytic only at genuine symmetry-breaking points
-`p < pc(r)` — that is all that is true, since across the boundary the value function switches
+`p < p_c(r)` — that is all that is true, since across the boundary the value function switches
 to `J_p(r)`.  (ii) Uniqueness up to relabelling is stated relative to one reference optimizer
 `W_*`, in the form of the uniqueness clause of the theorem `kenyonRadinRenSadun` (every
 maximizer is the chosen one relabelled).  So the paper's description of the unique optimizer
@@ -101,8 +101,8 @@ theorem analyticAt_lambdaDisp {d : ℕ} (M : LZBoundaryArc d) {p r : ℝ}
 /-! ### The analytic critical family -/
 
 /-- **The critical point is an analytic function of `(p,r)`, chart-relative form.**  Given the
-second-variation chart as hypotheses, near a boundary point `(pc(rb), rb)` there is a real-analytic
-`Δ` with `Δ(pc(rb), rb) = 0` solving the critical-point equation `∂_δ Gc(r, Δ(p,r)) = λ(p,r)`.
+boundary-excess chart as hypotheses, near a boundary point `(p_c(rb), rb)` there is a real-analytic
+`Δ` with `Δ(p_c(rb), rb) = 0` solving the critical-point equation `∂_δ Gc(r, Δ(p,r)) = λ(p,r)`.
 
 Taking the chart as a hypothesis (rather than calling `boundaryExcess_chart` internally) is
 what lets `bipodal_family` run this step and `symmetry_breaking_core` on the **same** `Gc`. -/
@@ -178,7 +178,7 @@ theorem analytic_critical_family_of_chart {d : ℕ} (hd : 2 ≤ d) (M : LZBounda
   linarith [this]
 
 /-- **The critical point is an analytic function of `(p,r)`.**  Near each boundary point
-`(pc(rb), rb)` of the optimizer window there is a real-analytic `Δ` with `Δ(pc(rb), rb) = 0`
+`(p_c(rb), rb)` of the optimizer window there is a real-analytic `Δ` with `Δ(p_c(rb), rb) = 0`
 solving the critical-point equation `∂_δ G_r(Δ(p,r)) = λ(p,r)`, and the induced value function
 
 `(p,r) ↦ J_p(r) + G_r(Δ(p,r)) - λ(p,r)·Δ(p,r)`
@@ -333,7 +333,7 @@ theorem bipodal_family_zeta {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
   -- ### The a-priori parameter bounds
   obtain ⟨L, hL0, hLip⟩ := krrs_parameter_lipschitz (r₀ := r₀) hw0 hρch0 hparA
     (fun r hr => ⟨(hbdry r hr).1, (hbdry r hr).2.1⟩)
-  -- ### A ball around `(pc(r₀), r₀)` on which the family is analytic, solves, and is small
+  -- ### A ball around `(p_c(r₀), r₀)` on which the family is analytic, solves, and is small
   have hEv : ∀ᶠ q : ℝ × ℝ in 𝓝 (M.pc r₀, r₀),
       AnalyticAt ℝ Dl q ∧ dDelta Gc (q.2, Dl q) = lambdaDisp M q.1 q.2 ∧
         Dl q ∈ Set.Ioo (-δ₀) δ₀ := by
@@ -512,7 +512,7 @@ theorem bipodal_family_zeta {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
 
 /-- **The analytic bipodal family: one chart for both halves of Section 4.**
 
-On a window `|r - r₀| < ρ`, `pc(r) - η < p < pc(r)` there are an analytic edge-density deficit
+On a window `|r - r₀| < ρ`, `p_c(r) - η < p < p_c(r)` there are an analytic edge-density deficit
 `Δ = Dl` and the four Kenyon–Radin–Ren–Sadun parameter maps `q₁₁, q₁₂, q₂₂, c` such that
 
 * `Φ_H` and `(p,r) ↦ r - Δ(p,r)` are analytic at `(p,r)`, and every optimizer has edge
@@ -592,8 +592,8 @@ side of the window,
   and every optimizer — `B` included, by instantiating the last clause at `W := B` — is `W_*`
   up to a measure-preserving relabelling.
 
-Analyticity is asserted only for `p < pc(r)`, which is exactly what the paper claims (on
-`U ∩ {p < pc(r)}`); across `p = pc(r)` the value function switches to `J_p(r)`.  This is a
+Analyticity is asserted only for `p < p_c(r)`, which is exactly what the paper claims (on
+`U ∩ {p < p_c(r)}`); across `p = p_c(r)` the value function switches to `J_p(r)`.  This is a
 projection of `bipodal_family`. -/
 theorem symmetry_breaking_analytic {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
@@ -641,21 +641,21 @@ theorem symmetry_breaking_analytic {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d
 
 `bipodal_family` bounds the first pode by `|c| ≤ L·Δ` and `Δ ≤ Cd·λ`, with `L` and `Cd`
 independent of `(p,r)`.  To get `0 < c < 1/2` on *one* window, `λ(p,r)` has to be small uniformly
-over the window; knowing `c(p,r) → 0` as `p ↑ pc(r)` separately for each `r` would not give a
+over the window; knowing `c(p,r) → 0` as `p ↑ p_c(r)` separately for each `r` would not give a
 common `η`.  The uniform smallness is explicit:
 
-* `lambdaDisp_le_div`: `λ(p,r) ≤ (pc(r) - p) / (p (1 - pc(r)))`, from `log x ≤ x - 1`;
-* continuity of `pc` at `r₀` keeps `pc(r) ∈ (μ/2, 1 - μ/2)` for `r` near `r₀`, where
-  `μ = min(pc(r₀), 1 - pc(r₀))`;
-* hence `λ(p,r) < 8η/μ²` whenever `pc(r) - η < p < pc(r)` and `η ≤ μ/4`, and the choice
+* `lambdaDisp_le_div`: `λ(p,r) ≤ (p_c(r) - p) / (p (1 - p_c(r)))`, from `log x ≤ x - 1`;
+* continuity of `pc` at `r₀` keeps `p_c(r) ∈ (μ/2, 1 - μ/2)` for `r` near `r₀`, where
+  `μ = min(p_c(r₀), 1 - p_c(r₀))`;
+* hence `λ(p,r) < 8η/μ²` whenever `p_c(r) - η < p < p_c(r)` and `η ≤ μ/4`, and the choice
   `η ≤ μ²/(32(L·Cd + 1))` gives `c ≤ L·Cd·λ < 1/4` at every point of the window.
 
 `bipodal_family_smallBlock` records this for the family of `bipodal_family` itself — the
 parameter maps are not changed and the blocks are not swapped — together with all of its other
 clauses, the limit `c → 0` and the value expansion, on the shrunken window. -/
 
-/-- **An explicit bound for the log-odds displacement.**  For `p, pc(r) ∈ (0,1)`,
-`λ(p,r) ≤ (pc(r) - p) / (p (1 - pc(r)))`; this is `log x ≤ x - 1` for the odds ratio. -/
+/-- **An explicit bound for the log-odds displacement.**  For `p, p_c(r) ∈ (0,1)`,
+`λ(p,r) ≤ (p_c(r) - p) / (p (1 - p_c(r)))`; this is `log x ≤ x - 1` for the odds ratio. -/
 theorem lambdaDisp_le_div {d : ℕ} (M : LZBoundaryArc d) {p r : ℝ}
     (hp0 : 0 < p) (hp1 : p < 1) (hpc0 : 0 < M.pc r) (hpc1 : M.pc r < 1) :
     lambdaDisp M p r ≤ (M.pc r - p) / (p * (1 - M.pc r)) := by
@@ -675,8 +675,8 @@ theorem lambdaDisp_le_div {d : ℕ} (M : LZBoundaryArc d) {p r : ℝ}
   exact Real.log_le_sub_one_of_pos (div_pos hA hB)
 
 /-- **The squeeze behind `c(p,r) → 0`.**  A nonnegative quantity bounded by a constant multiple
-of `λ(p,r)` on a left neighbourhood of `pc(r)` tends to `0` as `p ↑ pc(r)`, because `λ` is
-analytic and vanishes at `p = pc(r)`. -/
+of `λ(p,r)` on a left neighbourhood of `p_c(r)` tends to `0` as `p ↑ p_c(r)`, because `λ` is
+analytic and vanishes at `p = p_c(r)`. -/
 theorem tendsto_blockSize_zero {d : ℕ} (M : LZBoundaryArc d) {r : ℝ} (hrU : r ∈ M.U)
     {η L Cd : ℝ} (hη : 0 < η) (hL : 0 ≤ L)
     {Dl : ℝ × ℝ → ℝ} {c : ℝ → ℝ}
@@ -787,7 +787,7 @@ theorem bipodal_family_smallBlock_zeta {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryA
   obtain ⟨ρ₁, η₁, L, Cd, hρ₁0, hη₁0, hL0, hCd0, Dl, q11, q12, q22, cc, hzeta, ⟨Δ, hΔ0, hKRS⟩,
     hbase, hmain⟩ := bipodal_family_zeta hd M H hreg hm hr₀U hr₀ex
   obtain ⟨ρ₂, η₂, C, hρ₂0, hη₂0, hC0, hsb⟩ := symmetry_breaking_side hd M H hreg hm hr₀U hr₀ex
-  -- ### `pc(r)` stays uniformly inside `(0,1)` for `r` near `r₀`
+  -- ### `p_c(r)` stays uniformly inside `(0,1)` for `r` near `r₀`
   obtain ⟨hpc₀0, hpc₀r, hr₀1, -⟩ := M.ordering r₀ hr₀U
   obtain ⟨μ, hμ_def⟩ : ∃ x : ℝ, x = min (M.pc r₀) (1 - M.pc r₀) := ⟨_, rfl⟩
   have hμ0 : 0 < μ := by rw [hμ_def]; exact lt_min hpc₀0 (by linarith)
@@ -907,13 +907,13 @@ This is `bipodal_family` restricted to a smaller window: the functions `Dl, q₁
 are the ones `bipodal_family` constructs, and the first pode is always `[0, c(ε,θ)]`.  Every clause
 of `bipodal_family` is kept, and three are added on the same window and for the same family:
 
-* `c(ε,θ) ∈ (0, 1/2)` at **every** point `|r - r₀| < ρ`, `pc(r) - η < p < pc(r)`: the first
+* `c(ε,θ) ∈ (0, 1/2)` at **every** point `|r - r₀| < ρ`, `p_c(r) - η < p < p_c(r)`: the first
   block of the optimizer `B` is the smaller block throughout the window;
-* `c(p,r) → 0` as `p ↑ pc(r)`, for every `r` of the window;
+* `c(p,r) → 0` as `p ↑ p_c(r)`, for every `r` of the window;
 * the value expansion `|Φ_H(p,r) - (J_p(r) - λ²/(2A_H(r)))| ≤ Cd·λ³` of `eq:optimizer-expansion`.
 
-One constant `Cd` serves all the expansions.  The window is only shrunk: `ρ` so that `pc(r)` stays
-in `(μ/2, 1 - μ/2)` with `μ = min(pc(r₀), 1 - pc(r₀))`, and `η ≤ μ/4`,
+One constant `Cd` serves all the expansions.  The window is only shrunk: `ρ` so that `p_c(r)` stays
+in `(μ/2, 1 - μ/2)` with `μ = min(p_c(r₀), 1 - p_c(r₀))`, and `η ≤ μ/4`,
 `η ≤ μ²/(32(L·Cd₀ + 1))`, where `L`, `Cd₀` are the constants of `bipodal_family`.  Then
 `λ(p,r) < 8η/μ²` by `lambdaDisp_le_div`, so `c ≤ L·Δ ≤ L·Cd₀·λ < 1/4`; positivity of `c` is
 `blockSize_pos`, because the family's graphon is an optimizer with edge density `r - Δ < r`. -/
@@ -971,8 +971,8 @@ theorem bipodal_family_smallBlock {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
   exact ⟨ρ, η, L, Cd, hρ, hη, hL, hCd, Dl, q11, q12, q22, cc, hbase, hwin⟩
 
 /-- **`thm:nonexceptional-endpoint`, the block size alone.**  On one window `|r - r₀| < ρ`,
-`pc(r) - η < p < pc(r)`, the first pode of the analytic family satisfies `0 < c(p,r) < 1/2`, and
-`c(p,r) → 0` as `p ↑ pc(r)` for every `r` of that window.
+`p_c(r) - η < p < p_c(r)`, the first pode of the analytic family satisfies `0 < c(p,r) < 1/2`, and
+`c(p,r) → 0` as `p ↑ p_c(r)` for every `r` of that window.
 
 This is a projection of `bipodal_family_smallBlock`, where the same clauses hold together with the
 analyticity, the optimizer representation with first pode `[0, c]`, uniqueness and the expansions

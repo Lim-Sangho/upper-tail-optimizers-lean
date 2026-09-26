@@ -3,9 +3,9 @@ import UpperTailOptimizers.LZBoundary.AnalyticEntropy
 import UpperTailOptimizers.NonexceptionalEndpoint.QuadraticGrowth.SliceDeriv
 
 /-!
-# Analytic toolkit for the full `thm:positive-second-variation`
+# Analytic toolkit for the full `thm:boundary-excess-expansion`
 
-Generic lemmas feeding the proof of `thm:positive-second-variation` (Section 4.2 of
+Generic lemmas feeding the proof of `thm:boundary-excess-expansion` (Section 4.2 of
 `paper/paper.tex`), i.e. the analytic upgrade of the boundary-excess theorem carried out in
 `NonexceptionalEndpoint/QuadraticGrowth/AnalyticExcess.lean`:
 

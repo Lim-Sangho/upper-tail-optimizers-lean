@@ -8,7 +8,7 @@ import UpperTailOptimizers.NonexceptionalEndpoint.LocalReduction.Global
 including the positive analytic coefficient and the analytic bipodal family, with one window per
 field.  `nonexceptional_endpoint` states `thm:nonexceptional-endpoint` of `paper/paper.tex` as the
 paper does: one pair `ρ, η` whose set
-`U = {(p,r) : |p - pc(r)| < η, |r - r₀| < ρ}` is an open neighbourhood of `(pc(r₀), r₀)`, on which
+`U = {(p,r) : |p - p_c(r)| < η, |r - r₀| < ρ}` is an open neighbourhood of `(p_c(r₀), r₀)`, on which
 every conclusion holds.  `nonexceptional_optimizers` is `thm:nonexceptional-optimizers`, obtained
 by taking this `U`.  `main_bipodal_optimizer` is the projection of `local_structure` onto
 `NonexceptionalOptimizers`.
@@ -27,8 +27,8 @@ theorem main_bipodal_optimizer {d : ℕ} (hd : 2 ≤ d)
 
 /-- **`thm:nonexceptional-endpoint`.**  Let `H` be `d`-regular, `d ≥ 2`, and
 `r₀ ∈ (0,1) \ {r_*}`.  There are `ρ, η > 0` such that
-`U = {(p,r) : |p - pc(r)| < η, |r - r₀| < ρ}` is an open neighbourhood of `(pc(r₀), r₀)`, and
-functions `c, q₁₁, q₁₂, q₂₂` and a constant `C` such that for `(p,r) ∈ U` with `p < pc(r)`:
+`U = {(p,r) : |p - p_c(r)| < η, |r - r₀| < ρ}` is an open neighbourhood of `(p_c(r₀), r₀)`, and
+functions `c, q₁₁, q₁₂, q₂₂` and a constant `C` such that for `(p,r) ∈ U` with `p < p_c(r)`:
 
 * the minimizer is unique up to relabelling, nonconstant and bipodal; it equals a.e. the bipodal
   graphon with smaller block `[0, c(p,r)]`, `c(p,r) ∈ (0,1/2)`, and densities
@@ -37,7 +37,7 @@ functions `c, q₁₁, q₁₂, q₂₂` and a constant `C` such that for `(p,r)
 * every optimizer `W` has `|e(W) - (r - λ/A_H(r))| ≤ Cλ²`, and
   `|Φ_H(p,r) - (J_p(r) - λ²/(2A_H(r)))| ≤ Cλ³`, with `λ = λ(p,r)`;
 
-for every `r` with `|r - r₀| < ρ`, `c(p,r) → 0` as `p ↑ pc(r)`; and `A_H` is positive and
+for every `r` with `|r - r₀| < ρ`, `c(p,r) → 0` as `p ↑ p_c(r)`; and `A_H` is positive and
 real-analytic on `(0,1) \ {r_*}`. -/
 theorem nonexceptional_endpoint {d : ℕ} (hd : 2 ≤ d)
     {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
@@ -125,10 +125,10 @@ theorem nonexceptional_endpoint {d : ℕ} (hd : 2 ≤ d)
     exact (hbase r hr).2.2.2.2.2.2.2.2.2.2
 
 /-- **`thm:nonexceptional-optimizers`.**  Let `H` be `d`-regular, `d ≥ 2`, and
-`r₀ ∈ (0,1) \ {r_*}`.  There is an open neighbourhood `U` of `(pc(r₀), r₀)` and a block-size
-function `c` such that for `(p,r) ∈ U` with `p < pc(r)` the minimizer is unique up to relabelling,
-nonconstant and bipodal, with smaller block `[0, c(p,r)]`; for every `r` with `(pc(r), r) ∈ U`,
-`c(p,r) → 0` as `p ↑ pc(r)`; the optimizers satisfy both expansions with one constant; and
+`r₀ ∈ (0,1) \ {r_*}`.  There is an open neighbourhood `U` of `(p_c(r₀), r₀)` and a block-size
+function `c` such that for `(p,r) ∈ U` with `p < p_c(r)` the minimizer is unique up to relabelling,
+nonconstant and bipodal, with smaller block `[0, c(p,r)]`; for every `r` with `(p_c(r), r) ∈ U`,
+`c(p,r) → 0` as `p ↑ p_c(r)`; the optimizers satisfy both expansions with one constant; and
 `A_H` is positive and analytic on `(0,1) \ {r_*}`. -/
 theorem nonexceptional_optimizers {d : ℕ} (hd : 2 ≤ d)
     {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]

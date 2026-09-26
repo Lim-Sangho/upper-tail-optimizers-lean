@@ -9,18 +9,20 @@ Section 4.2 of `paper/paper.tex` works uniformly for `r` in an open interval `I 
 compact closure in `(0,1) ∖ {r_*}`; here `r` ranges over a compact subarc `K ⊆ U` of a
 Lubetzky–Zhao boundary arc (such as the closure of `I`).  This file provides:
 
-* `LZBoundaryArc.continuousOn_pc` / `continuousOn_sm` — continuity of the arc maps;
+* `LZBoundaryArc.continuousOn_pc` / `continuousOn_sc` — continuity of the arc maps;
 * `arc_uniform_bounds` — a single margin `η > 0` with
-  `η ≤ r, sm r, pc r`, `r, sm r ≤ 1 - η` and `η ≤ |sm r - r|` for all `r ∈ K`
-  (it contains the paper's lower bound `η_{d,I}` for the contact densities `r`, `sm(r)`);
-* `quadSep_dist` — the `u`-coordinate (the paper's `z`) quadratic separation
-  (eq. `eq:supporting-gap-quadratic-bound`):
-  `γ · min(|u-r|, |u-sm r|)² ≤ J_{pc r}(u) - ℓ_r(u^d)` uniformly on `K`,
-  derived from the `x = u^d`-coordinate field `LZBoundaryArc.quadSep` ((M5) of Theorem 3.1) via
+  `η ≤ r, sc r, pc r`, `r, sc r ≤ 1 - η` and `η ≤ |sc r - r|` for all `r ∈ K`
+  (it contains the paper's lower bound `η_{d,I}` for the contact densities `r`, `s_c(r)`);
+* `quadSep_dist` — the `u`-coordinate (the paper's `z`) quadratic separation, i.e.
+  `eq:contact-quadratic-separation` on a compact subarc (its global form, for a compact subset of
+  `(0,1) ∖ {r_*}`, is `exists_nonexceptional_gap_quadratic_lower` of `LZBoundary/NonexceptionalGap.lean`, where the
+  gap itself is `gapD`):
+  `γ · min(|u-r|, |u-sc r|)² ≤ J_{pc r}(u) - ℓ_r(u^d)` uniformly on `K`,
+  derived from the `x = u^d`-coordinate field `LZBoundaryArc.quadSep` ((M3) of Theorem 3.1) via
   `|u^d - v^d| ≥ v^{d-1} |u - v|`;
 * explicit box bounds for the scalar entropy: `abs_log_le_box`, `Jp_abs_le_box`,
   `Jp'_abs_le_box`, the Lipschitz bound `Jp'_lipschitz_box`, and the first-order
-  Taylor bound `Jp_taylor_box` (used by the quadratic upper bound `lem:bipodal-quadratic-bound`).
+  Taylor bound `Jp_taylor_box` (used by the quadratic upper bound `lem:quadratic-upper-bound`).
 -/
 
 namespace UpperTailOptimizers
@@ -36,37 +38,37 @@ theorem continuousOn_min {f g : ℝ → ℝ} {s : Set ℝ} (hf : ContinuousOn f 
 theorem LZBoundaryArc.continuousOn_pc {d : ℕ} (M : LZBoundaryArc d) : ContinuousOn M.pc M.U :=
   fun r hr => (M.analytic_pc r hr).continuousAt.continuousWithinAt
 
-/-- The second-contact map `sm` of a Lubetzky–Zhao boundary arc is continuous on the arc. -/
-theorem LZBoundaryArc.continuousOn_sm {d : ℕ} (M : LZBoundaryArc d) : ContinuousOn M.sm M.U :=
-  fun r hr => (M.analytic_sm r hr).continuousAt.continuousWithinAt
+/-- The second-contact map `sc` of a Lubetzky–Zhao boundary arc is continuous on the arc. -/
+theorem LZBoundaryArc.continuousOn_sc {d : ℕ} (M : LZBoundaryArc d) : ContinuousOn M.sc M.U :=
+  fun r hr => (M.analytic_sc r hr).continuousAt.continuousWithinAt
 
 /-- **Uniform compactness margins on a compact subarc.**  On a compact `K ⊆ U` there is a
-single margin `η ∈ (0, 1/2]` with `η ≤ r ≤ 1-η`, `η ≤ sm r ≤ 1-η`, `η ≤ pc r`, and
-`η ≤ |sm r - r|`, for every `r ∈ K`. -/
+single margin `η ∈ (0, 1/2]` with `η ≤ r ≤ 1-η`, `η ≤ sc r ≤ 1-η`, `η ≤ pc r`, and
+`η ≤ |sc r - r|`, for every `r ∈ K`. -/
 theorem arc_uniform_bounds {d : ℕ} (M : LZBoundaryArc d) {K : Set ℝ} (hK : K ⊆ M.U)
     (hKc : IsCompact K) (hKne : K.Nonempty) :
     ∃ η : ℝ, 0 < η ∧ η ≤ 1/2 ∧ ∀ r ∈ K,
-      η ≤ r ∧ r ≤ 1 - η ∧ η ≤ M.sm r ∧ M.sm r ≤ 1 - η ∧ η ≤ M.pc r ∧ η ≤ |M.sm r - r| := by
-  have hsm : ContinuousOn M.sm K := M.continuousOn_sm.mono hK
+      η ≤ r ∧ r ≤ 1 - η ∧ η ≤ M.sc r ∧ M.sc r ≤ 1 - η ∧ η ≤ M.pc r ∧ η ≤ |M.sc r - r| := by
+  have hsc : ContinuousOn M.sc K := M.continuousOn_sc.mono hK
   have hpc : ContinuousOn M.pc K := M.continuousOn_pc.mono hK
   -- the pointwise margin, as a single continuous function
   set g : ℝ → ℝ := fun r =>
-    min (min (min r (1 - r)) (min (M.sm r) (1 - M.sm r))) (min (M.pc r) |M.sm r - r|) with hg
+    min (min (min r (1 - r)) (min (M.sc r) (1 - M.sc r))) (min (M.pc r) |M.sc r - r|) with hg
   have hgc : ContinuousOn g K := by
     refine continuousOn_min (continuousOn_min (continuousOn_min continuousOn_id ?_)
-      (continuousOn_min hsm ?_)) (continuousOn_min hpc ?_)
+      (continuousOn_min hsc ?_)) (continuousOn_min hpc ?_)
     · exact (continuous_const.sub continuous_id).continuousOn
-    · exact continuousOn_const.sub hsm
-    · exact (hsm.sub continuousOn_id).abs
+    · exact continuousOn_const.sub hsc
+    · exact (hsc.sub continuousOn_id).abs
   have hgpos : ∀ r ∈ K, 0 < g r := by
     intro r hr
-    obtain ⟨hpc0, hpcr, hr1, hsmne, hsm0, hsm1⟩ := M.ordering r (hK hr)
+    obtain ⟨hpc0, hpcr, hr1, hscne, hsc0, hsc1⟩ := M.ordering r (hK hr)
     have hr0 : 0 < r := lt_trans hpc0 hpcr
-    have habs : 0 < |M.sm r - r| := abs_pos.mpr (sub_ne_zero.mpr hsmne)
+    have habs : 0 < |M.sc r - r| := abs_pos.mpr (sub_ne_zero.mpr hscne)
     have h1 : (0:ℝ) < 1 - r := by linarith
-    have h2 : (0:ℝ) < 1 - M.sm r := by linarith
+    have h2 : (0:ℝ) < 1 - M.sc r := by linarith
     simp only [hg, lt_min_iff]
-    exact ⟨⟨⟨hr0, h1⟩, ⟨hsm0, h2⟩⟩, ⟨hpc0, habs⟩⟩
+    exact ⟨⟨⟨hr0, h1⟩, ⟨hsc0, h2⟩⟩, ⟨hpc0, habs⟩⟩
   obtain ⟨r₀, hr₀K, hmin⟩ := hKc.exists_isMinOn hKne hgc
   rw [isMinOn_iff] at hmin
   refine ⟨min (1/2) (g r₀), lt_min (by norm_num) (hgpos r₀ hr₀K), min_le_left _ _, ?_⟩
@@ -75,26 +77,26 @@ theorem arc_uniform_bounds {d : ℕ} (M : LZBoundaryArc d) {K : Set ℝ} (hK : K
   have h1 : g r ≤ r := le_trans (min_le_left _ _) (le_trans (min_le_left _ _) (min_le_left _ _))
   have h2 : g r ≤ 1 - r :=
     le_trans (min_le_left _ _) (le_trans (min_le_left _ _) (min_le_right _ _))
-  have h3 : g r ≤ M.sm r :=
+  have h3 : g r ≤ M.sc r :=
     le_trans (min_le_left _ _) (le_trans (min_le_right _ _) (min_le_left _ _))
-  have h4 : g r ≤ 1 - M.sm r :=
+  have h4 : g r ≤ 1 - M.sc r :=
     le_trans (min_le_left _ _) (le_trans (min_le_right _ _) (min_le_right _ _))
   have h5 : g r ≤ M.pc r := le_trans (min_le_right _ _) (min_le_left _ _)
-  have h6 : g r ≤ |M.sm r - r| := le_trans (min_le_right _ _) (min_le_right _ _)
+  have h6 : g r ≤ |M.sc r - r| := le_trans (min_le_right _ _) (min_le_right _ _)
   refine ⟨le_trans hle h1, ?_, le_trans hle h3, ?_, le_trans hle h5, le_trans hle h6⟩
   · linarith [le_trans hle h2]
   · linarith [le_trans hle h4]
 
-/-- **`u`-coordinate quadratic separation** (eq. `eq:supporting-gap-quadratic-bound` of the paper, whose
-scalar variable `z` is written `u` here).  On a compact
+/-- **`u`-coordinate quadratic separation** (`eq:contact-quadratic-separation`, whose scalar
+variable `z` is written `u` here).  On a compact
 subarc `K` there is `γ > 0`, uniform over `r ∈ K` and `u ∈ [0,1]`, with
-`γ · min(|u - r|, |u - sm r|)² ≤ J_{pc r}(u) - (J_{pc r}(r) + slope·(u^d - r^d))`.
-Derived from the `x`-coordinate field `LZBoundaryArc.quadSep` ((M5) of Theorem 3.1) via
+`γ · min(|u - r|, |u - sc r|)² ≤ J_{pc r}(u) - (J_{pc r}(r) + slope·(u^d - r^d))`.
+Derived from the `x`-coordinate field `LZBoundaryArc.quadSep` ((M3) of Theorem 3.1) via
 `|u^d - v^d| ≥ v^{d-1}|u - v|`. -/
 theorem quadSep_dist {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {K : Set ℝ} (hK : K ⊆ M.U)
     (hKc : IsCompact K) (hKne : K.Nonempty) :
     ∃ γ : ℝ, 0 < γ ∧ ∀ r ∈ K, ∀ u ∈ Set.Icc (0:ℝ) 1,
-      γ * (min |u - r| |u - M.sm r|) ^ 2
+      γ * (min |u - r| |u - M.sc r|) ^ 2
         ≤ Jp (M.pc r) u - (Jp (M.pc r) r + slope d M.pc r * (u ^ d - r ^ d)) := by
   obtain ⟨γ₀, hγ₀, hsep⟩ := M.quadSep K hK hKc
   obtain ⟨η, hη0, _, hηbd⟩ := arc_uniform_bounds M hK hKc hKne
@@ -102,7 +104,7 @@ theorem quadSep_dist {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {K : Set ℝ
   intro r hr u hu
   obtain ⟨hηr, hr1, hηs, hs1, _, _⟩ := hηbd r hr
   have hd1 : 1 ≤ d := le_trans (by norm_num) hd
-  -- `|u^d - v^d| ≥ η^{d-1} |u - v|` for the two contact points `v = r, sm r`
+  -- `|u^d - v^d| ≥ η^{d-1} |u - v|` for the two contact points `v = r, sc r`
   have hkey : ∀ v : ℝ, η ≤ v → η ^ (d - 1) * |u - v| ≤ |u ^ d - v ^ d| := by
     intro v hv
     have hv0 : 0 ≤ v := le_trans hη0.le hv
@@ -110,22 +112,22 @@ theorem quadSep_dist {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {K : Set ℝ
           mul_le_mul_of_nonneg_right (pow_le_pow_left₀ hη0.le hv _) (abs_nonneg _)
       _ ≤ |u ^ d - v ^ d| := pow_sub_pow_ge hu.1 hv0 hd1
   -- pass to the minimum over the two contacts
-  have hmin : η ^ (d - 1) * min |u - r| |u - M.sm r|
-      ≤ min |u ^ d - r ^ d| |u ^ d - (M.sm r) ^ d| := by
+  have hmin : η ^ (d - 1) * min |u - r| |u - M.sc r|
+      ≤ min |u ^ d - r ^ d| |u ^ d - (M.sc r) ^ d| := by
     refine le_min ?_ ?_
     · exact le_trans (mul_le_mul_of_nonneg_left (min_le_left _ _) (by positivity)) (hkey r hηr)
     · exact le_trans (mul_le_mul_of_nonneg_left (min_le_right _ _) (by positivity))
-        (hkey (M.sm r) hηs)
+        (hkey (M.sc r) hηs)
   -- square and chain with the `x`-coordinate separation `LZBoundaryArc.quadSep`
-  have hminnn : 0 ≤ η ^ (d - 1) * min |u - r| |u - M.sm r| := by
-    have : (0:ℝ) ≤ min |u - r| |u - M.sm r| := le_min (abs_nonneg _) (abs_nonneg _)
+  have hminnn : 0 ≤ η ^ (d - 1) * min |u - r| |u - M.sc r| := by
+    have : (0:ℝ) ≤ min |u - r| |u - M.sc r| := le_min (abs_nonneg _) (abs_nonneg _)
     positivity
-  have hsq : (η ^ (d - 1) * min |u - r| |u - M.sm r|) ^ 2
-      ≤ (min |u ^ d - r ^ d| |u ^ d - (M.sm r) ^ d|) ^ 2 :=
+  have hsq : (η ^ (d - 1) * min |u - r| |u - M.sc r|) ^ 2
+      ≤ (min |u ^ d - r ^ d| |u ^ d - (M.sc r) ^ d|) ^ 2 :=
     pow_le_pow_left₀ hminnn hmin 2
-  calc γ₀ * (η ^ (d - 1)) ^ 2 * (min |u - r| |u - M.sm r|) ^ 2
-      = γ₀ * (η ^ (d - 1) * min |u - r| |u - M.sm r|) ^ 2 := by ring
-    _ ≤ γ₀ * (min |u ^ d - r ^ d| |u ^ d - (M.sm r) ^ d|) ^ 2 :=
+  calc γ₀ * (η ^ (d - 1)) ^ 2 * (min |u - r| |u - M.sc r|) ^ 2
+      = γ₀ * (η ^ (d - 1) * min |u - r| |u - M.sc r|) ^ 2 := by ring
+    _ ≤ γ₀ * (min |u ^ d - r ^ d| |u ^ d - (M.sc r) ^ d|) ^ 2 :=
         mul_le_mul_of_nonneg_left hsq hγ₀.le
     _ ≤ Jp (M.pc r) u - (Jp (M.pc r) r + slope d M.pc r * (u ^ d - r ^ d)) := hsep r hr u hu
 

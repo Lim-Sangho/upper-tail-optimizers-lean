@@ -1,5 +1,5 @@
 \section{Introduction}\label{sec:introduction}
-The Erd\H{o}s--R\'enyi graph $G(n,p)$ is one of the standard models of random graphs, defined as a graph on $n$ vertices in which each edge is present independently with probability $p$.
+The \emph{Erd\H{o}s--R\'enyi graph} $G(n,p)$ is one of the standard models of random graphs, defined as a graph on $n$ vertices in which each edge is present independently with probability $p$.
 For a fixed graph $H$, let $X_H$ be the number of injective homomorphisms from
 $H$ to $G(n,p)$.  Thus, writing
 $(n)_k=n(n-1)\cdots(n-k+1)$,
@@ -54,8 +54,8 @@ showed that, in suitable sparse regimes, graphs conditioned on upper-tail
 events typically resemble an Erd\H{o}s--R\'enyi graph with a planted clique
 and/or a planted complete bipartite graph.
 
-In this paper, we primarily consider the dense regime, in which $p$ is a fixed constant.
-In this regime, it is convenient to frame the upper-tail event using
+We focus on the \emph{dense regime}, in which $p$ is a fixed constant.
+In this regime, we formulate the upper-tail event using
 homomorphism densities.  For a graph $G$ on $n$ vertices, define
 \[
   t(H,G):=\frac{\hom(H,G)}{n^{|V(H)|}},
@@ -75,8 +75,8 @@ $p<r<1$, write
   \{t(H,G(n,p))\ge r^{|E(H)|}\}.
 \]
 The count event in the first paragraph corresponds asymptotically to the
-choice $r^{|E(H)|}=(1+\delta)p^{|E(H)|}$. In this paper,
-a central role is played by the relative-entropy function
+choice $r^{|E(H)|}=(1+\delta)p^{|E(H)|}$. We use the
+\emph{relative-entropy function}
 \[
   J_p(z) = z \log \frac{z}{p} + (1-z) \log \frac{1-z}{1-p}.
 \]
@@ -112,14 +112,13 @@ neural graphon representation of Kim, Baek, Lee, and
 Yang~\cite{KimBaekLeeYangGraphons} provide further evidence for an
 affirmative answer to this question; see \Cref{fig:neural-bipodal-patterns}.
 
-Our main contribution is a step toward resolving this bipodality question
-and has two complementary parts.  Away from the exceptional density
+We address this bipodality question in two regimes.  Away from the \emph{exceptional density}
 $r_*=(d-1)/d$, we prove bipodality and uniqueness throughout a nontrivial
 neighborhood of the phase boundary on the symmetry-breaking side.  At $r_*$,
 where this nondegenerate local theory breaks down, we instead find a family of
 balanced bipodal optimizers along an analytic curve approaching the phase boundary.
 The Lubetzky--Zhao phase boundary can be written as $p=\pc(r)$,
-as we establish in \Cref{thm:scalar-lz-boundary}.
+as we establish in \Cref{thm:lz-boundary}.
 For the nonexceptional case, we express the expansions
 in terms of the log-odds distance to this boundary,
 \[
@@ -171,7 +170,7 @@ The exceptional case uses a separate parameter $h$, whose meaning is explained l
     is taken as $n\to\infty$ with $H,h$ fixed.
   \end{enumerate}
 \end{theorem}
-The two parts describe qualitatively different mechanisms by which a
+The two parts describe different ways in which a
 nonconstant bipodal optimizer approaches a constant graphon at the phase
 boundary.  Away from $r_*$, one pode shrinks to measure zero while the other
 occupies almost all of $[0,1]$ and its within-pode density tends to $r$.  The
@@ -201,15 +200,15 @@ For a graphon $W$, define the \emph{edge density}, \emph{homomorphism density}, 
   I_p(W) & =\int_{[0,1]^2}J_p(W(x,y))\,dx\,dy.
   \end{aligned}
 \end{equation}
-For $0<p<r<1$ and a graph $H$, define the Chatterjee--Varadhan variational problem~\cite{ChatterjeeVaradhanLDP} by
+For $0<p<r<1$ and a graph $H$, define the \emph{Chatterjee--Varadhan variational problem}~\cite{ChatterjeeVaradhanLDP} by
 \begin{equation}\label{eq:graphon-variational-problem}
     \inf_{W\in\W_0} I_p(W)\quad \text{subject to } t(H,W)\ge r^{|E(H)|}.
 \end{equation}
 We denote by $\Phi_H(p,r)$ the optimal value of the above variational problem
 and by $\W_H(p,r)$ its set of minimizers.  A graphon is \emph{feasible} for
 this problem if it satisfies the constraint
-$t(H,W)\ge r^{|E(H)|}$; the collection of all such graphons is the feasible
-set.  This set is nonempty because the constant graphon $W\equiv r$ is
+$t(H,W)\ge r^{|E(H)|}$; the collection of all such graphons is the \emph{feasible
+set}.  This set is nonempty because the constant graphon $W\equiv r$ is
 feasible.  Standard compactness, continuity, and lower-semicontinuity results
 for graphons imply that the infimum is attained, so $\W_H(p,r)$ is nonempty~\cite[Theorem~2.7]{lubetzky2015large}.
 The cut distance $\delta_\square$ measures the difference between two graphons
@@ -339,22 +338,21 @@ Let $r_*=(d-1)/d$ be the exceptional density.
 
 \begin{enumerate}[label=(\roman*),leftmargin=2.2em]
 \item \emph{Nonexceptional case (\Cref{thm:nonexceptional-optimizers}).}
-For $r\ne r_*$, we first prove a quadratic lower bound for the gap between
-the scalar function $x\mapsto J_{\pc(r)}(x^{1/d})$ and its supporting line
-at $x=r^d$.  This line also touches the curve at $x=\sm(r)^d$, with
-$\sm(r)\ne r$.  Then, we show that the gap is at least a
-positive constant times the squared distance from $x$ to the nearer of
-these two contact points.  The same positive constant works for every $r$
-in a fixed closed interval contained in $(0,1)$ that does not contain
-$r_*$.  We exclude $r_*$ because there the two contacts merge and the gap
-vanishes to fourth order, so a quadratic lower bound no longer holds.
+For $r\ne r_*$, the supporting line to
+$x\mapsto J_{\pc(r)}(x^{1/d})$ touches the graph at
+two distinct coordinates $r^d$ and $\sc(r)^d$.
+Writing $x=z^d$ expresses its gap as $g_{d,r}(z)$.
+At each contact density $z\in\{r,\sc(r)\}$,
+this gap has a quadratic expansion with a positive leading coefficient,
+yielding a quadratic lower bound in the distance to the contact densities,
+uniformly for $r$ in compact subsets of $(0,1)\setminus\{r_*\}$.
 See \Cref{sec:lz-boundary}.
 
 We next reduce the choice of an optimizing graphon to the choice of its
 edge density.  We show that every optimizer
 has exactly the required $H$-density $r^{|E(H)|}$, and that its edge density
 approaches $r$ from below as $p\uparrow\pc(r)$, so that we can constrain its
-edge density at $r-\delta$, where $\delta>0$, the edge-density deficit, is sufficiently small.
+edge density at $r-\delta$, where $\delta>0$, the \emph{edge-density deficit}, is sufficiently small.
 By using the relative entropy identity \eqref{eq:relative-entropy-identity},
 for each fixed $p$, $r$, and $\delta$, minimizing $I_p$ among graphons with the
 two constraints $e(W)=r-\delta$ and $t(H,W)=r^{|E(H)|}$ is equivalent to maximizing
@@ -373,7 +371,7 @@ compared to the constant graphon $W\equiv r$,
 since changing $p$ adds only an explicit linear correction in $\delta$, as shown below.
 The constant graphon is optimal there, so the comparison quantifies
 the cost of lowering the edge density while keeping the same $H$-density.
-For sufficiently small $\delta>0$, the scalar gap bound and generalized
+For sufficiently small $\delta>0$, the gap bound in \Cref{sec:lz-boundary} and generalized
 H\"older's inequality give a quadratic lower bound on this extra cost.
 We also obtain a quadratic upper bound by constructing a graphon with
 the same densities and an extra cost of order $\delta^2$; $B_\delta$ has no
@@ -411,11 +409,14 @@ gives the expansion of the minimum relative entropy $\Phi_H(p,r)$.
 See \Cref{sec:nonexceptional-proof}.
 
 \item \emph{Exceptional case (\Cref{thm:endpoint-optimizers}).}
-At $r=r_*$, the curve $x\mapsto J_{\pc(r_*)}(x^{1/d})$ has a supporting
-line at $x=r_*^d$, and the gap between the curve and this line vanishes
-to fourth order there.  Since the KRR--S theorem does not cover this density,
-we develop a separate argument in \Cref{sec:singular-endpoint}.
+As $r\to r_*$, the two contacts between $x\mapsto J_{\pc(r)}(x^{1/d})$
+and its supporting line coalesce at $x=r_*^d$.  At this limiting density,
+writing $x=z^d$ gives the gap $\Gamma_d(z)$, which has a quartic expansion
+with a positive leading coefficient and is bounded below on $[0,1]$ by
+a positive multiple of $|z-r_*|^4$.  See \Cref{sec:lz-boundary}.
 
+Since the KRR--S theorem does not cover this density,
+we develop a separate argument in \Cref{sec:singular-endpoint}.
 We first seek a family of candidate graphons of the product form $W(x,y)=f(x)f(y)$
 for the original relative entropy minimization problem.
 Here $f$ assigns a weight to each vertex, and the edge probability is the
@@ -425,7 +426,7 @@ since $H$ is $d$-regular,
   t(H,W)=\left(\int_0^1 f(x)^d\,dx\right)^{|V(H)|}.
 \]
 Thus, the $H$-density constraint reduces to a condition on a single
-integral of $f$.  We use the product form to construct candidate graphons;
+integral of $f^d$.  We use the product form to construct candidate graphons;
 we then prove their optimality by comparison with arbitrary graphons
 satisfying the required $H$-density constraint.
 
@@ -499,15 +500,16 @@ See \Cref{sec:auxiliary-lagrangian,sec:graphon-comparison,sec:singular-proof}.
 \paragraph{Organization.}
 \Cref{sec:preliminaries} records the graphon preliminaries and the
 entropy-maximization results.  \Cref{sec:lz-boundary} analyzes the Lubetzky--Zhao
-phase boundary, and \Cref{sec:nonexceptional-endpoint,sec:singular-endpoint}
+boundary and its quadratic and quartic supporting gaps.
+\Cref{sec:nonexceptional-endpoint,sec:singular-endpoint}
 prove the nonexceptional and exceptional results, respectively.
 \Cref{sec:lean-formalization} describes our Lean 4 formalization,
 including its scope and assumptions.
 \Cref{sec:concluding-remarks} discusses further directions.
 Technical arguments deferred from the main text
-appear in Appendices~\ref{app:krrs-analytic-extension}, \ref{app:lz-scalar-geometry},
+appear in Appendices~\ref{app:krrs-analytic-extension}, \ref{app:lz-geometry},
 \ref{app:nonexceptional-proofs}, and
-\ref{app:endpoint-calculations}, which contain, respectively, the derivation of the
-two-sided KRR--S parametrization, the scalar convex-analysis proofs,
+\ref{app:endpoint-calculations}, which contain, respectively, the
+two-sided KRR--S extension proof, the convex-analysis proofs,
 the reduction proofs and bipodal parameter expansions for nonexceptional endpoints,
 and the construction and parameter calculations for the singular-endpoint family.

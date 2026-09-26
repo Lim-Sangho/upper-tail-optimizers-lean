@@ -24,7 +24,7 @@ paper's proof: "`Δ_h(ν) = 0` implies `ν = α_hδ_{s_h} + (1-α_h)δ_{t_h}`.  
 implies that `W = f ⊗ f` and `W` is a measure-preserving relabeling of `W_h`".  That step is
 `SingularEndpoint/Proof/TerminalTwoValued.lean` and `SingularEndpoint/RankOneStationaryFamily/CdfTransport.lean`, and
 `SingularEndpoint/Proof/TerminalUnique.lean` assembles it with `exists_singular_endpoint_optimality` below into
-`exists_singular_endpoint_full` for a supplied family; `singular_endpoint_full` constructs the
+`exists_singular_endpoint` for a supplied family; `singular_endpoint` constructs the
 family and adds the other proved clauses, with the qualifications in `FORMALIZATION.md`.
 
 ## Contents

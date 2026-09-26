@@ -4,8 +4,8 @@ import UpperTailOptimizers.SingularEndpoint.RankOneStationaryFamily.Defs
 # The singular endpoint contact identities (Section 5, `paper/sections/singular.tex`)
 
 At the exceptional density `r_* = (d-1)/d` the two scalar Lubetzky–Zhao contacts of Section 3
-coalesce.  This file proves the resulting *triple-contact identities*
-`eq:endpoint-entropy-derivatives`,
+coalesce.  This file proves the resulting *triple-contact identities* — the density-variable
+form of `eq:endpoint-contact-derivatives`, which the paper states in the coordinate `x = z^d`,
 
 ```
 J_{p_*}'(r_*)   = γ_* r_*^{d-1},
@@ -29,7 +29,7 @@ non-degeneracy constant behind `eq:endpoint-gap-expansion`.  Since
   under `2 ≤ d`, shared with `SingularEndpoint/RankOneStationaryFamily/FamilyBase.lean`, `SingularEndpoint/RankOneStationaryFamily/FamilyDeriv.lean`,
   `SingularEndpoint/RankOneStationaryFamily/FkktDeriv.lean` and `SingularEndpoint/AuxiliaryLagrangian/FirstVariationBound.lean`;
 * `triple_contact_one`, `triple_contact_two`, `triple_contact_three` — the three
-  identities of `eq:endpoint-entropy-derivatives`;
+  identities of `eq:endpoint-contact-derivatives`;
 * `Lstar1`, `Lstar2`, `Lstar3` — the successive derivatives of `𝓛_*`, with their
   `HasDerivAt` chain `hasDerivAt_Lstar`, `hasDerivAt_Lstar1`, `hasDerivAt_Lstar2`;
 * `Lstar_rStar`, `Lstar1_rStar`, `Lstar2_rStar` — the vanishing of `𝓛_*` to order three,
@@ -96,7 +96,7 @@ theorem gammaStar_mul_rStar_pow_pred (hd : 2 ≤ d) :
   rw [gammaStar_mul_rStar_pow_sub hd (by omega : 1 ≤ d), rStar_eq]
   field_simp
 
-/-! ## The triple-contact identities `eq:endpoint-entropy-derivatives` -/
+/-! ## The triple-contact identities `eq:endpoint-contact-derivatives` -/
 
 /-- First contact identity: `J_{p_*}'(r_*) = γ_* r_*^{d-1}`. -/
 theorem triple_contact_one (hd : 2 ≤ d) :

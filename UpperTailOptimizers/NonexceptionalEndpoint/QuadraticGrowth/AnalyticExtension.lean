@@ -1,14 +1,15 @@
 import UpperTailOptimizers.NonexceptionalEndpoint.QuadraticGrowth.AnalyticExcess
 
 /-!
-# `thm:positive-second-variation`: one analytic extension over a neighbourhood of `K × {0}`
+# `thm:boundary-excess-expansion`: one analytic extension over a neighbourhood of `K × {0}`
 
 `boundaryExcess_chart` (`NonexceptionalEndpoint/QuadraticGrowth/AnalyticExcess.lean`) extends the boundary excess across
 `δ = 0` **near one density** `r₀`: it returns a box `|r - r₀| < w`, `|δ| ≤ ρ` and a function `Gc`
 analytic there, agreeing with `G_r(δ)` on the half-box `0 < δ < ρ`.
-`thm:positive-second-variation` of `paper/paper.tex` states a **single** real-analytic `G` on an
-open set `𝒩` containing `I × (-δ̄, δ̄)`, where `I ∋ r₀` is an open interval that the paper shrinks
-until one analytic parameter map of `thm:krrs-analytic-extension` covers it.  This file proves the
+`thm:boundary-excess-expansion` of `paper/paper.tex` states a **single** real-analytic `G` on an
+open neighbourhood `𝒩` of `Ī × [-δ₀, δ₀]`, where `I ∋ r₀` is an open interval with compact
+closure that the paper shrinks until one analytic parameter map of
+`thm:krrs-analytic-extension` covers it.  This file proves the
 statement over an arbitrary compact `K` of nonexceptional densities on a boundary arc, which gives
 the paper's form with `K` the closure of `I`.  Over such a `K` a single chart need not suffice, so
 the local charts are glued with the identity theorem.
@@ -26,11 +27,12 @@ to have it as its second `δ`-derivative at `δ = 0`.  Where the paper *defines*
 ## Contents
 
 * `eqOn_prod_Ioo_of_eventuallyEq` — the identity theorem on a product of intervals;
-* `boundaryExcess_extension` — the glued extension: the neighbourhood `𝒩`, the analytic `G`,
-  `eq:boundary-excess-extension`, clause (i), and clause (iii) with a constant depending only
-  on `K`;
-* `positive_second_variation` — `thm:positive-second-variation` in full, adding clauses (ii)
-  and (iv) from `boundaryExcess_taylor`.
+* `boundaryExcess_extension` — the glued extension: the neighbourhood `𝒩`, the analytic `G`, the
+  extension identity `G(r,δ) = G_r(δ)`, the vanishing `G(r,0) = ∂_δG(r,0) = 0` of the paper's
+  proof, and a curvature bound with a constant depending only on `K`;
+* `positive_second_variation` — `thm:boundary-excess-expansion` in full, adding the analyticity
+  and uniform positivity of `A_H` and the expansion `eq:boundary-excess-expansion` from
+  `boundaryExcess_taylor`.
 -/
 
 namespace UpperTailOptimizers
@@ -47,14 +49,14 @@ theorem eqOn_prod_Ioo_of_eventuallyEq {f g : ℝ × ℝ → ℝ} {a b c e : ℝ}
   AnalyticOnNhd.eqOn_of_preconnected_of_eventuallyEq hf hg
     ((convex_Ioo a b).prod (convex_Ioo c e)).isPreconnected hp₀ h
 
-/-- **`thm:positive-second-variation`, the extension clause.**  For a compact `K` of
+/-- **`thm:boundary-excess-expansion`, the extension clause.**  For a compact `K` of
 non-exceptional densities on a Lubetzky–Zhao boundary arc there are `δ̄ > 0`, a constant `C₂`
 depending only on `K`, an open `𝒩 ⊇ K × (-δ̄, δ̄)` and a real-analytic `G : 𝒩 → ℝ` with
 
-* `G(r,δ) = G_r(δ)` for `r ∈ K`, `0 < δ < δ̄`  (`eq:boundary-excess-extension`);
-* `G(r,0) = 0` and `∂_δG(r,0) = 0` for `r ∈ K`  (clause (i));
+* `G(r,δ) = G_r(δ)` for `r ∈ K`, `0 < δ < δ̄`  (the extension asserted by the theorem);
+* `G(r,0) = 0` and `∂_δG(r,0) = 0` for `r ∈ K`  (steps of the paper's proof);
 * `∂²_δG(r,0) = A_H(r)`, and `|∂²_δG(r,δ) - A_H(r)| ≤ C₂|δ|` for `r ∈ K`, `|δ| < δ̄`
-  (clause (iii)).
+  (a quantitative form of the paper's bound on `∂³_δG` over the compact rectangle).
 
 The single `G` is obtained by patching the local charts of `boundaryExcess_chart` over a finite
 subcover of `K`; it depends on that subcover, and any two choices agree on the common domain by
@@ -272,23 +274,24 @@ theorem boundaryExcess_extension {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     exact le_trans hδ.le (hδle i hi)
 
 
-/-- **`thm:positive-second-variation` ("Universal positivity of the scalar second variation").**
+/-- **`thm:boundary-excess-expansion` ("Quadratic expansion of the boundary excess").**
 For a compact set `K` of non-exceptional densities on a Lubetzky–Zhao boundary arc there are
 `δ̄ > 0`, an open neighbourhood `𝒩` of `K × (-δ̄, δ̄)` and a real-analytic `G : 𝒩 → ℝ` with
 
-* `G(r,δ) = G_r(δ)` for `r ∈ K` and `0 < δ < δ̄`  (`eq:boundary-excess-extension`);
-* **(i)** `G(r,0) = 0` and `∂_δG(r,0) = 0`;
-* **(ii)** `A_H` is real-analytic on `K` and `A_H ≥ a₀ > 0` there;
-* **(iii)** `∂²_δG(r,0) = A_H(r)` and `|∂²_δG(r,δ) - A_H(r)| ≤ C₂|δ|` for `|δ| < δ̄`,
-  with `C₂ ≥ 1` depending only on `H` and `K`  (`eq:boundary-excess-curvature`);
-* **(iv)** `|G_r(δ) - ½A_H(r)δ²| ≤ C_3δ³`  (`eq:boundary-excess-expansion`).
+* `G(r,δ) = G_r(δ)` for `r ∈ K` and `0 < δ < δ̄`  (the extension asserted by the theorem);
+* `G(r,0) = 0` and `∂_δG(r,0) = 0`  (steps of the paper's proof);
+* `A_H` is real-analytic on `K` and `A_H ≥ a₀ > 0` there  (`inf_{r ∈ I} A_H(r) > 0`);
+* `∂²_δG(r,0) = A_H(r)` and `|∂²_δG(r,δ) - A_H(r)| ≤ C₂|δ|` for `|δ| < δ̄`, with `C₂ ≥ 1`
+  depending only on `H` and `K`  (a quantitative form of the paper's bound on `∂³_δG`);
+* `|G_r(δ) - ½A_H(r)δ²| ≤ C_3δ³`  (`eq:boundary-excess-expansion`).
 
-The extension is `boundaryExcess_extension`; clauses (ii) and (iv) are `boundaryExcess_taylor`.
+The extension is `boundaryExcess_extension`; the last two items are `boundaryExcess_taylor`.
 Where the paper *defines* `A_H(r) := ∂²_δG(r,0)`, `AH` is here the chart-independent right limit
 `lim_{δ↓0} 2G_r(δ)/δ²` and the displayed equality is part of the conclusion.
 
 The paper states the theorem on an open interval `I ∋ r₀` with compact closure in
-`(0,1) ∖ {r_*}`, after shrinking `I`; taking `K` to be that closure gives its form, which is
+`(0,1) ∖ {r_*}`, after shrinking `I` and decreasing `δ₀`; taking `K` to be that closure gives its
+form, which is
 `positive_second_variation_interval` (`NonexceptionalEndpoint/QuadraticGrowth/Global.lean`). -/
 theorem positive_second_variation {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     {K : Set ℝ} (hK : K ⊆ M.U) (hKc : IsCompact K) (hKne : K.Nonempty)

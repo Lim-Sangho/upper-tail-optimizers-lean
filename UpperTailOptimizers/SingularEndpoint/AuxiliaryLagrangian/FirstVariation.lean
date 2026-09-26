@@ -9,6 +9,9 @@ The one-point dual potential `eq:first-variation` of
 `Ψ_h(x) = 2{α_h J_{p_h}(x s_h) + (1-α_h) J_{p_h}(x t_h)} - η_h x^d - κ_h`,
 `η_h = 2γ_h q_h / d`,
 
+(the paper writes the factor values of `sec:auxiliary-lagrangian` as `u, u'` and reserves `x, y`
+for points of `[0,1]`; here the Lean binders are `x` and `x, y`),
+
 with `κ_h` normalised so that `Ψ_h(s_h) = 0`.  This file proves the **four contact
 conditions** established in the paper's prose following `eq:first-variation`,
 

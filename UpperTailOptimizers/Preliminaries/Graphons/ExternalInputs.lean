@@ -24,7 +24,7 @@ graph at `x = r^d`.
 
 **`thm:krrs-analytic-extension` (Kenyon–Radin–Ren–Sadun)** used to live here, as the two
 monolithic axioms `kenyonRadinRenSadun` and `kenyonRadinRenSadunAnalytic`.  Both are now
-**theorems**, proved in `UpperTailOptimizers/Preliminaries/KRRSAnalyticExtension/Main.lean` following Appendix B of
+**theorems**, proved in `UpperTailOptimizers/Preliminaries/KRRSAnalyticExtension/Main.lean` following Appendix A of
 `paper/paper.tex`.  Neither Kenyon–Radin–Ren–Sadun statement it uses is assumed:
 their Theorem 3.3 is `krrs_thm33` (`UpperTailOptimizers/Preliminaries/KRRSAnalyticExtension/Inputs.lean`), and their
 Theorem 1.1 is proved for `d`-regular graphs in `UpperTailOptimizers/Preliminaries/KRRSBipodality/`, from

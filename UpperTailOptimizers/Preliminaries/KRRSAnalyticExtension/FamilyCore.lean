@@ -3,7 +3,7 @@ import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.BasePoint
 import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.MaximizerStationary
 
 /-!
-# The analytic bipodal family of Appendix B
+# The analytic bipodal family of Appendix A
 
 `krrs_rectangle` (`Preliminaries/KRRSAnalyticExtension/Main.lean`) needs the two-sided analytic family of stationary bipodal
 parameters and the fact that its bipodal graphon is the fixed-density entropy maximizer.  The
@@ -89,7 +89,7 @@ theorem exists_ball_pode_pos {V : Type*} [Fintype V] [DecidableEq V] (H : Simple
 /-! ### The family -/
 
 /-- **The two-sided analytic family of stationary bipodal parameters** around a nonexceptional
-edge density `ε₀` (Appendix B, paragraphs 2–4), with the properties that the proof of
+edge density `ε₀` (Appendix A, paragraphs 2–4), with the properties that the proof of
 bipodality consumes.  The second-pode density is `Qmap ε (q11 ε ϑ) (q12 ε ϑ) (c ε ϑ)`. -/
 structure KRRSFamily {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)
     [DecidableRel H.Adj] (d : ℕ) (ε₀ : ℝ) where

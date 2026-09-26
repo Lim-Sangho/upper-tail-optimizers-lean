@@ -50,7 +50,7 @@ vanishes at `d = 2` — where the whole `h⁵` coefficient still does not, being
 
 ## Contents
 
-* `contact_const_rel`, `gcoeff_trapezoid_term` — the two arithmetic reductions;
+* `contact_const_rel`, `Gcoeff_trapezoid_term` — the two arithmetic reductions;
 * `tendsto_increment_diff` — `(B_h - A_h)/h⁵ → -16d⁵u_*/(9(d-1))`;
 * `tendsto_alph_slope` — `(α_h - 1/2)/h → 2d²u_*/(3(d-1))`.
 -/
@@ -82,7 +82,7 @@ theorem contact_const_rel (hd : 2 ≤ d) :
 
 by `family_eq_diff` divided by `r_*`.  At `d = 2` both sides vanish through the factor
 `d - 2`, which is exactly the case in which `r_*^{d-3}` is not `r_*^{d-2}/r_*`. -/
-theorem gcoeff_trapezoid_term (hd : 2 ≤ d) :
+theorem Gcoeff_trapezoid_term (hd : 2 ≤ d) :
     Gcoeff B * (16 / 3 * ((d : ℝ) - 1) * ((d : ℝ) - 2) * uStar d ^ 3 * rStar d ^ (d - 3))
       = 32 * ((d : ℝ) - 2) * uStar d * rStar d * ((d : ℝ) ^ 5 / ((d : ℝ) - 1) ^ 2) / 9 := by
   have hu3 : uStar d ^ 3 = uStar d * rStar d := by rw [← uStar_sq hd]; ring
@@ -108,7 +108,7 @@ between increments at the contacts.
 The three contributions are the `Γ_d` difference, the `G₂`-weighted trapezoid error of the
 polynomial part, and the outer-node `𝓛_*` sum weighted by the node gap.  Their closed forms
 use `Ucoeff_eq` through `4u_*U₂ + 2 = (16-6d)/3`, `family_eq_diff` through
-`gcoeff_trapezoid_term`, and nothing else. -/
+`Gcoeff_trapezoid_term`, and nothing else. -/
 theorem tendsto_increment_diff (hd : 2 ≤ d) :
     Tendsto (fun h : ℝ => (Mfun d (B.p h) (B.gam h) (B.tVal h ^ 2)
         - Mfun d (B.p h) (B.gam h) (B.sVal h ^ 2)) / h ^ 5)
@@ -171,7 +171,7 @@ theorem tendsto_increment_diff (hd : 2 ≤ d) :
           * ((d : ℝ) * ((d : ℝ) - 1) * ((d : ℝ) - 2) / 6 * rStar d ^ (d - 3))
           = 16 / 3 * ((d : ℝ) - 1) * ((d : ℝ) - 2) * uStar d ^ 3 * rStar d ^ (d - 3) from by
         field_simp; ring]
-      exact gcoeff_trapezoid_term B hd
+      exact Gcoeff_trapezoid_term B hd
     have h2 : uStar d ^ 2 = rStar d := uStar_sq hd
     have h4 : uStar d ^ 4 = rStar d ^ 2 := by
       rw [show (4 : ℕ) = 2 * 2 from rfl, pow_mul, h2]

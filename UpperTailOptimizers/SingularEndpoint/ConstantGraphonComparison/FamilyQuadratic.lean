@@ -74,10 +74,10 @@ theorem tendsto_coeff2 {v : ℝ → ℝ} (hv : AnalyticAt ℝ v 0) (hev : ∀ h 
 /-- `U₂`, the `h²` coefficient of the midpoint `u_h` `eq:rank-one-parameter-expansions`. -/
 noncomputable def Ucoeff (B : KKTFamily d) : ℝ := coeff2 B.u
 
-/-- The `h²` coefficient of the log-odds `ℓ(p_h)`, i.e. of `Λ_h := ℓ(p_h) - ℓ_*`.  The
-paper introduces `Λ_h` without a label in Section 5.2, just before
-`lem:rank-one-parameter-expansions`; its quadratic rate is the `Λ_h` entry of
-`eq:rank-one-parameter-expansions`. -/
+/-- The `h²` coefficient `L₂` of the log-odds `ℓ_h = ℓ(p_h)`, equivalently of the displacement
+`Λ_h := ℓ_h - ℓ_*` written out inline by the paper.  `ℓ`, `ℓ_*` and `ℓ_h` are defined in
+Section 5.2, just above `eq:entropy-parameter-shift`; the quadratic rate of `ℓ_h` is the `ℓ_h`
+entry of `eq:rank-one-parameter-expansions`. -/
 noncomputable def Lcoeff (B : KKTFamily d) : ℝ := coeff2 (fun h => ell (B.p h))
 
 /-- The `h²` coefficient of the scalar multiplier `γ_h`. -/

@@ -4,7 +4,7 @@ import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.CChart
 /-!
 # `eq:krrs-stationary-densities`: the analytic stationary family `a_*(ε,ϑ)`, `b_*(ε,ϑ)`
 
-Paragraph 3 of Appendix B of `paper/paper.tex` solves its stationarity system
+Paragraph 3 of Appendix A of `paper/paper.tex` solves its stationarity system
 `𝓕₁ = 𝓕₂ = 0` (`eq:krrs-small-block-stationarity`, `eq:krrs-cross-block-stationarity`) for
 `(a,b)` as real-analytic functions of `(ε,ϑ)` on a **two-sided** window around `(ε₀, 0)`.
 Here the same step is run on the `c`-normalised system `F₁, F₂` of `Preliminaries/KRRSAnalyticExtension/Stationarity.lean`,

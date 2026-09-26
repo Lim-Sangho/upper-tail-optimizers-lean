@@ -1,9 +1,9 @@
 import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.Reduced
 
 /-!
-# The `H`-density half of Appendix B, paragraph 2
+# The `H`-density half of Appendix A, paragraph 2
 
-Paragraph 2 of Appendix B of `paper/paper.tex` expands the
+Paragraph 2 of Appendix A of `paper/paper.tex` expands the
 homomorphism-density sum according to the set of vertices assigned to the first pode and
 reads off the first `c`-derivative of the edge-constrained `H`-density `𝒯̂`.  This file
 carries out that computation.
@@ -103,7 +103,7 @@ noncomputable def Afun {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph 
   (Fintype.card V : ℝ) * ε ^ (H.edgeFinset.card - d) * Dfun d ε b
 
 /-- `𝒜(ε,b) > 0` for `0 ≤ b ≠ ε`, the paper's "in particular `𝒜(ε₀,z₀) > 0`".  This is the
-nonvanishing that drives both implicit function theorem steps of Appendix B: it is the
+nonvanishing that drives both implicit function theorem steps of Appendix A: it is the
 `c`-slot of the Jacobian in paragraph 2, and it enters the entry `S₀''(a₀)/𝒜(ε₀,z₀)²` of
 `eq:krrs-jacobian-aa` in paragraph 3 (a factor multiplying `S₀''(a)` in the normalisation of
 `Preliminaries/KRRSAnalyticExtension/Stationarity.lean`).  Strict convexity of `z ↦ z^d` gives `𝒟_ε(b) > 0` (`Dfun_pos`), and

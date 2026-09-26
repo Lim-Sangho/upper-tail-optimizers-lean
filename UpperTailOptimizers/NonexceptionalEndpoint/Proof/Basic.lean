@@ -8,8 +8,8 @@ This file collects the log-odds displacement recalled at the head of Section 4 o
 together with the algebraic identity that drives the proof of `thm:nonexceptional-endpoint`.
 
 * `logOdds p = log((1-p)/p)` and the **log-odds displacement**
-  `λ(p,r) = log((1-p)/p) - log((1-pc(r))/pc(r))` (`lambdaDisp`).  By strict antitonicity of
-  the log-odds, `λ(p,r) > 0` is equivalent to `p < pc(r)` — the symmetry-breaking side.
+  `λ(p,r) = log((1-p)/p) - log((1-p_c(r))/p_c(r))` (`lambdaDisp`).  By strict antitonicity of
+  the log-odds, `λ(p,r) > 0` is equivalent to `p < p_c(r)` — the symmetry-breaking side.
 * `D_d(r,z) = (z^d - r^d)/(d r^{d-1}) - (z - r)` (eq. `eq:edge-deficit-coefficient`), positive for `z ≠ r`
   by strict convexity of `z ↦ z^d` (`Dd_pos`).  Twice it is the first-order edge-density
   deficit produced per unit of small-pode mass; it enters `rmk:bipodal-parameter-expansions`.
@@ -19,8 +19,8 @@ together with the algebraic identity that drives the proof of `thm:nonexceptiona
 
   which converts the one-variable reduction of Section 4.1 at a general `p` into the boundary
   excess of Section 4.2 plus a linear term.  This is the display just before
-  `eq:edge-deficit-minimization` in the paper; note that the entropy envelope `S_H` cancels
-  entirely, so the identity is pure `log`-algebra and needs no property of `S_H`.
+  `eq:edge-deficit-minimization` in the paper; note that the entropy envelope `S` cancels
+  entirely, so the identity is pure `log`-algebra and needs no property of `S`.
 -/
 
 namespace UpperTailOptimizers
@@ -46,17 +46,17 @@ theorem logOdds_strictAntiOn : StrictAntiOn logOdds (Set.Ioo (0:ℝ) 1) := by
     nlinarith [ha.1, hb.1, hab]
   exact Real.log_lt_log hA hlt
 
-/-- **The log-odds displacement** `λ(p,r) = log((1-p)/p) - log((1-pc(r))/pc(r))` of Section 4.
-It vanishes on the Lubetzky–Zhao boundary `p = pc(r)` and is positive exactly on the
-symmetry-breaking side `p < pc(r)`. -/
+/-- **The log-odds displacement** `λ(p,r) = log((1-p)/p) - log((1-p_c(r))/p_c(r))` of Section 4.
+It vanishes on the Lubetzky–Zhao boundary `p = p_c(r)` and is positive exactly on the
+symmetry-breaking side `p < p_c(r)`. -/
 noncomputable def lambdaDisp {d : ℕ} (M : LZBoundaryArc d) (p r : ℝ) : ℝ :=
   logOdds p - logOdds (M.pc r)
 
-/-- `λ(pc(r), r) = 0`. -/
+/-- `λ(p_c(r), r) = 0`. -/
 @[simp] theorem lambdaDisp_self {d : ℕ} (M : LZBoundaryArc d) (r : ℝ) :
     lambdaDisp M (M.pc r) r = 0 := sub_self _
 
-/-- On the symmetry-breaking side `p < pc(r)` the displacement is positive. -/
+/-- On the symmetry-breaking side `p < p_c(r)` the displacement is positive. -/
 theorem lambdaDisp_pos {d : ℕ} (M : LZBoundaryArc d) {p r : ℝ} (hr : r ∈ M.U)
     (hp0 : 0 < p) (hp : p < M.pc r) : 0 < lambdaDisp M p r := by
   obtain ⟨hpc0, hpcr, hr1, _⟩ := M.ordering r hr
@@ -64,7 +64,7 @@ theorem lambdaDisp_pos {d : ℕ} (M : LZBoundaryArc d) {p r : ℝ} (hr : r ∈ M
   have := logOdds_strictAntiOn ⟨hp0, lt_trans hp hpc1⟩ ⟨hpc0, hpc1⟩ hp
   simpa [lambdaDisp] using sub_pos.mpr this
 
-/-- On the replica-symmetric side `pc(r) ≤ p < 1` the displacement is nonpositive. -/
+/-- On the replica-symmetric side `p_c(r) ≤ p < 1` the displacement is nonpositive. -/
 theorem lambdaDisp_nonpos {d : ℕ} (M : LZBoundaryArc d) {p r : ℝ} (hr : r ∈ M.U)
     (hp : M.pc r ≤ p) (hp1 : p < 1) : lambdaDisp M p r ≤ 0 := by
   obtain ⟨hpc0, hpcr, hr1, _⟩ := M.ordering r hr
@@ -104,7 +104,7 @@ theorem Dd_pos {d : ℕ} (hd : 2 ≤ d) {r z : ℝ} (hr : 0 < r) (hz : 0 ≤ z) 
 
 /-- The reduced objective minus the constant-graphon value, with the `p`-dependence isolated:
 
-`I_{p,r}(ε) - J_p(r) = -2 S_H(ε,τ) - [r log r + (1-r) log(1-r)] + (ε - r)·log((1-p)/p)`.
+`I_{p,r}(ε) - J_p(r) = -2 S(ε,τ) - [r log r + (1-r) log(1-r)] + (ε - r)·log((1-p)/p)`.
 
 Only the last term depends on `p`. -/
 theorem reducedObjective_sub_Jp {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)
@@ -124,8 +124,8 @@ theorem reducedObjective_sub_Jp {V : Type*} [Fintype V] [DecidableEq V] (H : Sim
 
 where `G_r` is the boundary excess of Section 4.2 and `λ(p,r)` the log-odds displacement.  This
 is the display preceding eq. `eq:edge-deficit-minimization`: changing `p` away from the boundary
-value `pc(r)` tilts the reduced objective by exactly the linear function `-λ(p,r)·δ`.  The
-entropy envelope cancels, so no property of `S_H` is used. -/
+value `p_c(r)` tilts the reduced objective by exactly the linear function `-λ(p,r)·δ`.  The
+entropy envelope cancels, so no property of `S` is used. -/
 theorem reducedObjective_sub_Jp_eq_boundaryExcess {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] {d : ℕ} (M : LZBoundaryArc d) {p r δ : ℝ}
     (hr : r ∈ M.U) (hp0 : 0 < p) (hp1 : p < 1) :

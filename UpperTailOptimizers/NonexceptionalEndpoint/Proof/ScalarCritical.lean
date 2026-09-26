@@ -18,7 +18,7 @@ needs about it in one go: existence, the equation `g'(δ_*) = λ`, the bound `δ
 expansion `|λ - A δ_*| ≤ Mc δ_*²` coming from `|g''(t) - A| ≤ Mc |t|`.
 
 Deviation from the paper: the paper locates the critical point with the analytic implicit
-function theorem at `(pc(r₀), r₀, 0)`, then bounds it by the mean value theorem and obtains
+function theorem at `(p_c(r₀), r₀, 0)`, then bounds it by the mean value theorem and obtains
 uniqueness from strict convexity.  Here it is located by the
 intermediate value theorem against the strictly increasing `g'`, which is *quantitative*
 (the admissible range `0 < λ < a δ₀` is explicit) and makes the sign and

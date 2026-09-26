@@ -12,7 +12,7 @@ symmetry-breaking candidate beats the constant graphon of the same `H`-density:
   `I_{p_h}(W_h) - J_{p_h}(r_h) = -\frac{d³}{3}h⁴ + O_d(h⁶)`,
 
 and in particular that the difference is **negative** for all sufficiently small `h > 0`, and
-consequently that `p_h < pc(r_h)`: `(p_h, r_h)` lies in the symmetry-breaking phase.
+consequently that `p_h < p_c(r_h)`: `(p_h, r_h)` lies in the symmetry-breaking phase.
 
 The exact identity `eq:constant-comparison-identity` is `cost_gap_eq`,
 
@@ -22,8 +22,8 @@ and its two brackets are now both known:
 
 * `tendsto_gamInt_sub_gamRVal` (`SingularEndpoint/ConstantGraphonComparison/GamRVal.lean`): the first is `\frac{d³}{3}h⁴ + o(h⁴)`.
   It needed only `α_h → 1/2`;
-* `tendsto_ell_coeff` with `Lcoeff_eq` gives `Λ_h = \frac{2d³}{3(d-1)}h² + o(h²)`
-  (the `Λ_h` entry of `eq:rank-one-parameter-expansions`), and `tendsto_edge_gap` gives
+* `tendsto_ell_coeff` with `Lcoeff_eq` gives `ℓ_h - ℓ_* = \frac{2d³}{3(d-1)}h² + o(h²)`
+  (the `ℓ_h` entry of `eq:rank-one-parameter-expansions`), and `tendsto_edge_gap` gives
   `e(W_h) - r_h = -(d-1)h² + o(h²)` (unlabelled in the proof of `lem:constant-graphon-comparison`),
   so the second bracket is `-\frac{2d³}{3}h⁴ + o(h⁴)`.
 
@@ -36,7 +36,7 @@ remainder, which comes from evenness in `h`, is `constant_graphon_comparison` in
 * `tendsto_cost_gap` — `(I_{p_h}(W_h) - J_{p_h}(r_h))/h⁴ → -d³/3`;
 * `singular_endpoint_strict_improvement` — `I_{p_h}(W_h) < J_{p_h}(r_h)` for all small `h > 0`, i.e.
   the strictness clause of `lem:constant-graphon-comparison`;
-* `singular_endpoint_symmetry_breaking` — its consequence `p_h < pc(r_h)`.
+* `singular_endpoint_symmetry_breaking` — its consequence `p_h < p_c(r_h)`.
 -/
 
 namespace UpperTailOptimizers
@@ -88,7 +88,7 @@ larger `I_{p_h}`-value".
 
 The constant graphon `W ≡ r_h` is feasible because its `H`-density is `r_h^m`, the value that
 `W_h` also attains (`graphon_tDensity_eq_rVal_pow`), so this places `(p_h, r_h)` in the
-symmetry-breaking phase; the lemma's consequence `p_h < pc(r_h)` is
+symmetry-breaking phase; the lemma's consequence `p_h < p_c(r_h)` is
 `singular_endpoint_symmetry_breaking`. -/
 theorem singular_endpoint_strict_improvement (hd : 2 ≤ d) (B : KKTFamily d) :
     ∃ δ > 0, ∀ (h : ℝ) (hh : |h| < B.h₀), 0 < h → h < δ →
@@ -125,10 +125,10 @@ of the Lubetzky–Zhao boundary.
 
 `lem:constant-graphon-comparison` (`singular_endpoint_strict_improvement`) says the symmetry-breaking optimizer
 beats the constant graphon of the same `H`-density, so `Φ_H(p_h, r_h) < J_{p_h}(r_h)`; the
-Lubetzky–Zhao dichotomy then denies a supporting line at `r_h^d`, and `lz_boundary_M2_global`
+Lubetzky–Zhao dichotomy then denies a supporting line at `r_h^d`, and `lz_boundary_M1_global`
 converts that into `p_h < p_c(r_h)`.
 
-This is the clause `p_h < pc(r_h)` of `thm:singular-endpoint` and `thm:endpoint-optimizers`,
+This is the clause `p_h < p_c(r_h)` of `thm:singular-endpoint` and `thm:endpoint-optimizers`,
 recorded in the `below_boundary` field of `SingularEndpointOptimizers`; it is the one singular endpoint
 statement that uses the `lubetzkyZhao` axiom. -/
 theorem singular_endpoint_symmetry_breaking (hd : 2 ≤ d) (H : SimpleGraph V) [DecidableRel H.Adj]
@@ -170,7 +170,7 @@ theorem singular_endpoint_symmetry_breaking (hd : 2 ≤ d) (H : SimpleGraph V) [
     exact absurd ((lubetzkyZhao H hd hreg hcard hp0 hlt hr1).mpr hsupp) (ne_of_lt hphi)
   by_contra hcon
   push Not at hcon
-  exact hno ((lz_boundary_M2_global hd hr0 hr1 hp0 hp1).mpr hcon)
+  exact hno ((lz_boundary_M1_global hd hr0 hr1 hp0 hp1).mpr hcon)
 
 
 end UpperTailOptimizers

@@ -10,12 +10,12 @@ import UpperTailOptimizers.SingularEndpoint.ConstantGraphonComparison.ParityOrde
 the rank-one KKT family: limits of difference quotients such as `(u_h - u_*)/h² → U₂`, which say
 `u_h = u_* + U₂h² + o(h²)`.  `eq:rank-one-parameter-expansions` states one order more:
 
-  `u_h = u_* + \frac{5-3d}{6u_*}h² + O_d(h⁴)`,   `Λ_h = \frac{2d³}{3(d-1)}h² + O_d(h⁴)`,
+  `u_h = u_* + \frac{5-3d}{6u_*}h² + O_d(h⁴)`,   `ℓ_h = ℓ_* + \frac{2d³}{3(d-1)}h² + O_d(h⁴)`,
   `α_h = \frac12 + \frac{2d²u_*}{3(d-1)}h + O_d(h³)`,   `r_h = r_* - \frac{2(4d-1)}3h² + O_d(h⁴)`.
 
 The paper's reason for the extra order is the parity recorded in `lem:rank-one-kkt-family`; the
 proof of `lem:rank-one-parameter-expansions` opens: "The symmetries in `lem:rank-one-kkt-family`
-show that `u_h,γ_h`, and `Λ_h` have expansions in even powers of `h`, while `α_h-1/2` has an
+show that `u_h,γ_h`, and `ℓ_h` have expansions in even powers of `h`, while `α_h-1/2` has an
 expansion in odd powers".  `SingularEndpoint/ConstantGraphonComparison/ParityOrder.lean` turns exactly that into the two-order gain,
 and this file applies it to each parameter.
 
@@ -84,7 +84,7 @@ theorem u_remainder (hd : 2 ≤ d) (B : KKTFamily d) :
       = B.u h - uStar d - (5 - 3 * (d : ℝ)) / (6 * uStar d) * h ^ 2 from by ring]
   exact h1
 
-/-- **`Λ_h = \frac{2d³}{3(d-1)}h² + O_d(h⁴)`**, where `Λ_h = ℓ(p_h) - ℓ_*`.  `p_h` is even, so
+/-- **`ℓ_h = ℓ_* + \frac{2d³}{3(d-1)}h² + O_d(h⁴)`**, where `ℓ_h = ℓ(p_h)`.  `p_h` is even, so
 `ℓ(p_h)` is. -/
 theorem lambda_remainder (hd : 2 ≤ d) (B : KKTFamily d) :
     ∃ C δ : ℝ, 0 < C ∧ 0 < δ ∧ ∀ h : ℝ, |h| < δ →
@@ -188,7 +188,7 @@ theorem muVal_remainder (hd : 2 ≤ d) (B : KKTFamily d) {m : ℝ} (hm : 0 < m) 
 /-- **`lem:rank-one-parameter-expansions`.**  The four expansions of
 `eq:rank-one-parameter-expansions`, on one window and with one constant:
 
-  `u_h = u_* + \frac{5-3d}{6u_*}h² + O_d(h⁴)`,   `Λ_h = \frac{2d³}{3(d-1)}h² + O_d(h⁴)`,
+  `u_h = u_* + \frac{5-3d}{6u_*}h² + O_d(h⁴)`,   `ℓ_h = ℓ_* + \frac{2d³}{3(d-1)}h² + O_d(h⁴)`,
   `α_h = \frac12 + \frac{2d²u_*}{3(d-1)}h + O_d(h³)`,   `r_h = r_* - \frac{2(4d-1)}3h² + O_d(h⁴)`.
 
 The remainders are the paper's: two orders past the leading term, by the parity of the

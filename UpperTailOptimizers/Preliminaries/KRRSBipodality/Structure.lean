@@ -333,7 +333,7 @@ theorem integral_Dfun_degFun_sub_le {d : ℕ} (hd : 1 ≤ d) (W : Graphon) {ε �
   have hSm : MeasurableSet S := measurableSet_nearSet W ε ζ
   set sx := sectionMeasure S with hsx
   set r : ℝ → ℝ := fun x => ∫ y, nearResid W ε ζ (x, y) ∂unitμ with hr
-  have hsm : Measurable sx := measurable_sectionMeasure hSm
+  have hsc : Measurable sx := measurable_sectionMeasure hSm
   have hrm : Measurable r :=
     ((measurable_nearResid W ε ζ).stronglyMeasurable).integral_prod_right'.measurable
   have hrb : ∀ x, |r x| ≤ 2 := fun x => by
@@ -377,11 +377,11 @@ theorem integral_Dfun_degFun_sub_le {d : ℕ} (hd : 1 ≤ d) (W : Graphon) {ε �
   have hDsec : Integrable (fun x => Dfun d ε (ε + (ζ - ε) * sx x)) unitμ := by
     obtain ⟨M, hM⟩ := exists_abs_Dfun_le d ε
     refine integrable_of_abs_le ((continuous_Dfun d ε).measurable.comp
-      (measurable_const.add (measurable_const.mul hsm))) M fun x => hM _ ?_
+      (measurable_const.add (measurable_const.mul hsc))) M fun x => hM _ ?_
     have hsmem := sectionMeasure_mem_Icc S x
     constructor <;> nlinarith [hsmem.1, hsmem.2, hε.1, hε.2, hζ.1, hζ.2]
   have hsr : Integrable (fun x => sx x * |r x|) unitμ :=
-    integrable_of_abs_le (hsm.mul hrm.abs) 2 fun x => by
+    integrable_of_abs_le (hsc.mul hrm.abs) 2 fun x => by
       have hsmem := sectionMeasure_mem_Icc S x
       rw [abs_mul, abs_abs, abs_of_nonneg hsmem.1]
       nlinarith [hrb x, abs_nonneg (r x), hsmem.1, hsmem.2]
@@ -390,7 +390,7 @@ theorem integral_Dfun_degFun_sub_le {d : ℕ} (hd : 1 ≤ d) (W : Graphon) {ε �
       rw [abs_of_nonneg (sq_nonneg _)]
       nlinarith [hrb x, abs_nonneg (r x), sq_abs (r x)]
   have hs2 : Integrable (fun x => sx x ^ 2) unitμ :=
-    integrable_of_abs_le (hsm.pow_const 2) 1 fun x => by
+    integrable_of_abs_le (hsc.pow_const 2) 1 fun x => by
       have hsmem := sectionMeasure_mem_Icc S x
       rw [abs_of_nonneg (sq_nonneg _)]
       nlinarith [hsmem.1, hsmem.2]

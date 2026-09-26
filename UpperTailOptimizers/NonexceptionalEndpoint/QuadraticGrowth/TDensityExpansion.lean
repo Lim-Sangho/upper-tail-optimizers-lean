@@ -4,8 +4,8 @@ import UpperTailOptimizers.NonexceptionalEndpoint.QuadraticGrowth.PowBounds
 /-!
 # The bipodal `H`-density polynomial and its small-block expansion
 
-For the two-block bipodal graphon `V_{r,c,q}` in the proof of `lem:bipodal-quadratic-bound`
-(block `A = [0,c]`, densities `a` on `A×A`, `s` across, `q` on `Aᶜ×Aᶜ`), the
+For the two-block bipodal graphon `V_{q₁₁,q₁₂,q₂₂,c}` in the proof of `lem:quadratic-upper-bound`
+(block `A = [0,c]`, densities `a = q₁₁` on `A×A`, `s = q₁₂` across, `q = q₂₂` on `Aᶜ×Aᶜ`), the
 homomorphism density `t(H, ·)` is the polynomial
 
 `tBip H a s q c = ∑_{τ : V → Bool} (∏_{e ∈ E(H)} B(τ)) · c^{k(τ)} (1-c)^{n-k(τ)}`,

@@ -360,7 +360,7 @@ theorem auxiliary_gap_bound_law (hd : 2 ≤ d) (B : KKTFamily d) :
       have := mul_le_mul_of_nonneg_left hh4 (by positivity : (0 : ℝ) ≤ (CC + 3 * CL) * K)
       linarith
     nlinarith
-  obtain ⟨δs, hδs, hsm⟩ := hsmall
+  obtain ⟨δs, hδs, hsc⟩ := hsmall
   refine ⟨min (min (min hF hC) hL₀) (min (min δa δs) B.h₀),
     lt_min (lt_min (lt_min hF0 hC0) hL₀pos) (lt_min (lt_min hδa hδs) B.h₀_pos),
     le_trans (min_le_right _ _) (min_le_right _ _), ?_⟩
@@ -468,7 +468,7 @@ theorem auxiliary_gap_bound_law (hd : 2 ≤ d) (B : KKTFamily d) :
   set Δ := (∫ x, x ^ d ∂ν) - B.qVal h with hΔdef
   have hA0 : 0 ≤ A := setIntegral_nonneg hS fun x _ => sq_nonneg _
   have hΔ2 : 0 ≤ Δ ^ 2 := sq_nonneg Δ
-  have hsm' := hsm h hpos hhs
+  have hsc' := hsc h hpos hhs
   have hIK : I ≤ K * Real.sqrt h := hI
   have htK : t ≤ K * h ^ 4 := htail
   have hsqrt0 : 0 ≤ Real.sqrt h := Real.sqrt_nonneg h

@@ -13,7 +13,7 @@ This file proves the results of Section 3 of `paper/paper.tex`:
 
 * `lz_boundary_contacts`        — `lem:contact-points` (existence of the two
                               Lubetzky–Zhao contacts and the common-tangent equations),
-* `lz_boundary_endpoint_limits` — `lem:contact-point-limits` (limits of the
+* `lz_boundary_endpoint_limits` — the contact limits of `lem:contact-points` (limits of the
                               contacts as `p → p_*`, `p → 0`),
 * `lz_boundary_arcs`     — Theorem 3.1 (existence of an
                               oriented regular Lubetzky–Zhao boundary arc through every
@@ -35,15 +35,15 @@ i.e. only the standard Lean axioms, no project axiom).  It is built on the keyst
 `u_a, u_b`, via a multivariate analytic implicit function theorem absent from Mathlib
 v4.28.0), the construction half `arcMaps_of_globalContacts` (the `ordering`,
 `supporting` and `secondContact` fields, by inverting the relevant contact family), and
-the three *regularity* fields `arcMaps_quadSep` (`quadSep` = condition (M5) of
+the three *regularity* fields `arcMaps_quadSep` (`quadSep` = condition (M3) of
 Theorem 3.1, uniform quadratic separation via a Heine–Cantor tube + Taylor +
-compactness), `arcMaps_orientation` (`orientation` = the replica-symmetric half of (M2),
+compactness), `arcMaps_orientation` (`orientation` = the replica-symmetric half of the criterion in (M1),
 the supporting-line ⟺ convex-minorant dichotomy), and `arcMaps_noFlatTie` (`noFlatTie`,
 the Lean-side window condition, Jensen via the strict supporting line + an ae→Dirac
 argument), each consuming the global contact data via `A.gc`.
 
 The `LZBoundaryArc` field labels used below are those of `LZBoundary/Arc.lean`, whose module
-docstring gives the dictionary to conditions (M1)–(M5) of Theorem 3.1.
+docstring gives the dictionary to conditions (M1)–(M4) of Theorem 3.1.
 
 `lem:convexity-defect` is *not* here: the convex–concave–convex structure of
 `φ_{p,d}` — including the one-sided packagings `strictConvexOn_phi_left` /
@@ -807,7 +807,7 @@ theorem lz_boundary_contacts {d : ℕ} (hd : 2 ≤ d) {p : ℝ} (hp0 : 0 < p) (h
   linarith [this]
 
 open Filter Topology in
-/-- **`lem:contact-point-limits`.**  Writing `u_a(p) = x_a(p)^{1/d}`,
+/-- **The contact limits of `lem:contact-points`.**  Writing `u_a(p) = x_a(p)^{1/d}`,
 `u_b(p) = x_b(p)^{1/d}` for the Lubetzky–Zhao contacts of `lem:contact-points`, as `p ↑ p_*` both
 tend to `r_* = (d-1)/d`, while as `p ↓ 0` we have `u_a → 0` and `u_b → 1`.
 
@@ -1002,7 +1002,7 @@ individually faithful sub-lemmas (the "`exists_lz_boundary_component`" pattern o
 `lem:contact-points`).  The
 structure `ArcMaps d r₀` packages the *construction* half — the parameter
 interval `U ∋ r₀` (avoiding the exceptional density `r_*`), the analytic boundary
-curve `pc` and second-contact map `sm`, and the three "shallow" `LZBoundaryArc` fields
+curve `pc` and second-contact map `sc`, and the three "shallow" `LZBoundaryArc` fields
 `ordering`, `supporting`, `secondContact` that follow directly from Lemmas 3.3–3.4
 (existence, analyticity, and the common-tangent / supporting-line / second-contact
 equations).  The three *regularity* fields `quadSep`, `orientation`, `noFlatTie` are
@@ -1093,7 +1093,7 @@ private theorem eventually_Ioo_zero {d : ℕ} (hd : 2 ≤ d) :
 
 open Filter Topology in
 /-- The left contact map is surjective onto `(0,r_*)` (continuous + strictly increasing,
-with the `lem:contact-point-limits` endpoint limits `u_a→0` and `u_a→r_*`; IVT). -/
+with the `lem:contact-points` endpoint limits `u_a→0` and `u_a→r_*`; IVT). -/
 theorem surjOn_ua (hd : 2 ≤ d) : Set.SurjOn G.ua (Set.Ioo 0 (pStar d)) (Set.Ioo 0 (rStar d)) := by
   obtain ⟨hev_gt, hev_lt⟩ := eventually_Ioo_zero hd
   intro y hy
@@ -1110,7 +1110,7 @@ theorem surjOn_ua (hd : 2 ≤ d) : Set.SurjOn G.ua (Set.Ioo 0 (pStar d)) (Set.Io
 
 open Filter Topology in
 /-- The right contact map is surjective onto `(r_*,1)` (continuous + strictly decreasing,
-with the `lem:contact-point-limits` endpoint limits `u_b→1` and `u_b→r_*`; IVT). -/
+with the `lem:contact-points` endpoint limits `u_b→1` and `u_b→r_*`; IVT). -/
 theorem surjOn_ub (hd : 2 ≤ d) : Set.SurjOn G.ub (Set.Ioo 0 (pStar d)) (Set.Ioo (rStar d) 1) := by
   obtain ⟨hev_gt, hev_lt⟩ := eventually_Ioo_zero hd
   intro y hy
@@ -1203,7 +1203,7 @@ open Filter Topology in
 Lubetzky–Zhao contact maps exist.  We pick, for each `p ∈ (0,p_*)`, the base solution
 `(u_a(p), u_b(p))` of `exists_contactF_zero` (via `Classical.choose`).  The
 `GlobalContacts` conditions are proved as follows: `contact` (directly), the
-endpoint limits `ua/ub_lim_*` (`lem:contact-point-limits` `lz_boundary_endpoint_limits`, after
+endpoint limits `ua/ub_lim_*` (`lz_boundary_endpoint_limits` of `lem:contact-points`, after
 converting `contactF = 0` to the `φ'`-form via the `x^d`-bridges),
 `mono_ua`/`mono_ub` (`contact_deriv_ua_pos`/`contact_deriv_ub_neg`
 + `strictMonoOn_of_deriv_pos`), and the **analyticity** of the chosen contacts
@@ -1236,7 +1236,7 @@ theorem exists_globalContacts {d : ℕ} (hd : 2 ≤ d) : Nonempty (GlobalContact
     obtain ⟨_, _, _, _, h5, _, _, _, _⟩ := spec p hp0 hp
     have hx := (Prod.ext_iff.mp h5).1
     simp only [contactF, Prod.fst_zero] at hx; linarith [hx]
-  -- endpoint limits via `lem:contact-point-limits`
+  -- endpoint limits via `lem:contact-points`
   have hcontacts : ∀ p, 0 < p → p < pStar d →
       0 < ua p ∧ ua p < rStar d ∧ rStar d < ub p ∧ ub p < 1 ∧
       deriv (phi p d) ((ua p) ^ d) = deriv (phi p d) ((ub p) ^ d) ∧
@@ -1352,10 +1352,10 @@ theorem exists_globalContacts {d : ℕ} (hd : 2 ≤ d) : Nonempty (GlobalContact
 
 /-- **Construction data for an oriented regular Lubetzky–Zhao boundary arc through `r₀`.**  Bundles
 the interval `U ∋ r₀` (with `r ≠ r_*` throughout), the analytic boundary curve `pc`
-and second-contact map `sm`, the three shallow `LZBoundaryArc` fields `ordering`,
+and second-contact map `sc`, the three shallow `LZBoundaryArc` fields `ordering`,
 `supporting`, `secondContact`, and — for the regularity fields `quadSep`, `orientation`,
 `noFlatTie` — the underlying `GlobalContacts` together with
-the family link identifying `(r, sm r)` with the contacts at parameter `pc r`. -/
+the family link identifying `(r, sc r)` with the contacts at parameter `pc r`. -/
 structure ArcMaps (d : ℕ) (r₀ : ℝ) where
   /-- The parameter interval. -/
   U : Set ℝ
@@ -1364,30 +1364,30 @@ structure ArcMaps (d : ℕ) (r₀ : ℝ) where
   mem : r₀ ∈ U
   /-- Every density in the interval is non-exceptional. -/
   notExc : ∀ r ∈ U, r ≠ rStar d
-  /-- The Lubetzky–Zhao boundary curve `p = pc(r)`. -/
+  /-- The Lubetzky–Zhao boundary curve `p = p_c(r)`. -/
   pc : ℝ → ℝ
-  /-- The second-contact density `s(r)`. -/
-  sm : ℝ → ℝ
+  /-- The second-contact density `s_c(r)`. -/
+  sc : ℝ → ℝ
   analytic_pc : AnalyticOnNhd ℝ pc U
-  analytic_sm : AnalyticOnNhd ℝ sm U
+  analytic_sc : AnalyticOnNhd ℝ sc U
   /-- The `LZBoundaryArc.ordering` field (part of (M1) of Theorem 3.1). -/
-  ordering : ∀ r ∈ U, 0 < pc r ∧ pc r < r ∧ r < 1 ∧ sm r ≠ r ∧ 0 < sm r ∧ sm r < 1
-  /-- The `LZBoundaryArc.supporting` field ((M3) of Theorem 3.1): the tangent line at
+  ordering : ∀ r ∈ U, 0 < pc r ∧ pc r < r ∧ r < 1 ∧ sc r ≠ r ∧ 0 < sc r ∧ sc r < 1
+  /-- The `LZBoundaryArc.supporting` field (part of (M2) of Theorem 3.1): the tangent line at
   `r^d` lies below the graph. -/
   supporting : ∀ r ∈ U, ∀ u ∈ Set.Icc (0:ℝ) 1,
     Jp (pc r) r + slope d pc r * (u ^ d - r ^ d) ≤ Jp (pc r) u
-  /-- The `LZBoundaryArc.secondContact` field (half of (M4) of Theorem 3.1): a second
-  contact at `sm(r)^d`. -/
+  /-- The `LZBoundaryArc.secondContact` field (half of (M2) of Theorem 3.1): a second
+  contact at `s_c(r)^d`. -/
   secondContact : ∀ r ∈ U,
-    Jp (pc r) (sm r) = Jp (pc r) r + slope d pc r * ((sm r) ^ d - r ^ d)
+    Jp (pc r) (sc r) = Jp (pc r) r + slope d pc r * ((sc r) ^ d - r ^ d)
   /-- The global contact data underlying this arc. -/
   gc : GlobalContacts d
   /-- Family link: `pc r ∈ (0,p_*)` is the parameter whose Lubetzky–Zhao contact at the
-  target is `r`, with `sm r` the other contact.  Lower family `r < r_*`: `r = u_a(pc r)`,
-  `sm r = u_b(pc r)`; upper family `r > r_*`: `r = u_b(pc r)`, `sm r = u_a(pc r)`. -/
+  target is `r`, with `sc r` the other contact.  Lower family `r < r_*`: `r = u_a(pc r)`,
+  `sc r = u_b(pc r)`; upper family `r > r_*`: `r = u_b(pc r)`, `sc r = u_a(pc r)`. -/
   family : ∀ r ∈ U, pc r ∈ Set.Ioo (0:ℝ) (pStar d) ∧
-    ((r < rStar d ∧ gc.ua (pc r) = r ∧ sm r = gc.ub (pc r)) ∨
-     (rStar d < r ∧ gc.ub (pc r) = r ∧ sm r = gc.ua (pc r)))
+    ((r < rStar d ∧ gc.ua (pc r) = r ∧ sc r = gc.ub (pc r)) ∨
+     (rStar d < r ∧ gc.ub (pc r) = r ∧ sc r = gc.ua (pc r)))
 
 /-- `J_p(u) = φ_{p,d}(u^d)` for `u ≥ 0` (the `x = u^d` form of `phi_pow_eq_Jp`,
 extended to `u = 0`). -/
@@ -1462,7 +1462,7 @@ theorem arcMaps_lower {d : ℕ} (hd : 2 ≤ d) (G : GlobalContacts d) {r₀ : �
     intro r hr; obtain ⟨p, hp, hpe⟩ := G.surjOn_ua hd hr; exact ⟨p, hp, hpe⟩
   -- the boundary curve and second-contact map
   let pc : ℝ → ℝ := fun r => if h : r ∈ U then (hex r h).choose else 0
-  let sm : ℝ → ℝ := fun r => G.ub (pc r)
+  let sc : ℝ → ℝ := fun r => G.ub (pc r)
   have hpc_spec : ∀ r ∈ U, pc r ∈ Set.Ioo (0:ℝ) (pStar d) ∧ G.ua (pc r) = r := by
     intro r hr
     have he : pc r = (hex r hr).choose := dif_pos hr
@@ -1521,7 +1521,7 @@ theorem arcMaps_lower {d : ℕ} (hd : 2 ≤ d) (G : GlobalContacts d) {r₀ : �
       (fun p hp => G.analytic_ua p hp.1 hp.2)
       (fun p hp => ne_of_gt (G.deriv_ua_pos p hp.1 hp.2))
       G.injOn_ua hpc_spec
-  have hsm_an : ∀ r ∈ U, AnalyticAt ℝ sm r := by
+  have hsc_an : ∀ r ∈ U, AnalyticAt ℝ sc r := by
     intro r hr
     obtain ⟨hpc_io, _⟩ := hpc_spec r hr
     exact (G.analytic_ub (pc r) hpc_io.1 hpc_io.2).comp (hpc_an r hr)
@@ -1546,7 +1546,7 @@ theorem arcMaps_lower {d : ℕ} (hd : 2 ≤ d) (G : GlobalContacts d) {r₀ : �
     exact key
   -- M3 second contact
   have hM3 : ∀ r ∈ U,
-      Jp (pc r) (sm r) = Jp (pc r) r + slope d pc r * ((sm r) ^ d - r ^ d) := by
+      Jp (pc r) (sc r) = Jp (pc r) r + slope d pc r * ((sc r) ^ d - r ^ d) := by
     intro r hr
     obtain ⟨hpc_io, hpc_ua⟩ := hpc_spec r hr
     have hp0 : 0 < pc r := hpc_io.1
@@ -1556,25 +1556,25 @@ theorem arcMaps_lower {d : ℕ} (hd : 2 ≤ d) (G : GlobalContacts d) {r₀ : �
         - sCM d (pc r) (G.ua (pc r)) * ((G.ub (pc r)) ^ d - (G.ua (pc r)) ^ d) = 0 := by
       have hx := (Prod.ext_iff.mp hcf).2
       simpa only [contactF, Prod.snd_zero] using hx
-    have hsm : sm r = G.ub (pc r) := rfl
+    have hsc : sc r = G.ub (pc r) := rfl
     have hslr : slope d pc r = sCM d (pc r) r := rfl
     rw [hpc_ua] at hsnd
-    rw [hsm, hslr]; linarith [hsnd]
+    rw [hsc, hslr]; linarith [hsnd]
   -- the `ordering` field
-  have hord : ∀ r ∈ U, 0 < pc r ∧ pc r < r ∧ r < 1 ∧ sm r ≠ r ∧ 0 < sm r ∧ sm r < 1 := by
+  have hord : ∀ r ∈ U, 0 < pc r ∧ pc r < r ∧ r < 1 ∧ sc r ≠ r ∧ 0 < sc r ∧ sc r < 1 := by
     intro r hr
     obtain ⟨hpc_io, _⟩ := hpc_spec r hr
     obtain ⟨_, _, hubs, hub1, _, _, _⟩ := G.contact (pc r) hpc_io.1 hpc_io.2
-    have hsm_eq : sm r = G.ub (pc r) := rfl
-    have hsm_gt : rStar d < sm r := by rw [hsm_eq]; exact hubs
+    have hsc_eq : sc r = G.ub (pc r) := rfl
+    have hsc_gt : rStar d < sc r := by rw [hsc_eq]; exact hubs
     refine ⟨hpc_io.1, hpc_lt r hr, lt_trans hr.2 hus1,
-      ne_of_gt (lt_trans hr.2 hsm_gt), lt_trans hus0 hsm_gt, ?_⟩
-    rw [hsm_eq]; exact hub1
+      ne_of_gt (lt_trans hr.2 hsc_gt), lt_trans hus0 hsc_gt, ?_⟩
+    rw [hsc_eq]; exact hub1
   -- assemble
   have A : ArcMaps d r₀ :=
     { U := U, isOpen_U := hUopen, mem := hr₀U,
       notExc := fun r hr => ne_of_lt hr.2,
-      pc := pc, sm := sm, analytic_pc := hpc_an, analytic_sm := hsm_an,
+      pc := pc, sc := sc, analytic_pc := hpc_an, analytic_sc := hsc_an,
       ordering := hord, supporting := hM2, secondContact := hM3,
       gc := G,
       family := fun r hr => ⟨(hpc_spec r hr).1, Or.inl ⟨hr.2, (hpc_spec r hr).2, rfl⟩⟩ }
@@ -1596,7 +1596,7 @@ theorem arcMaps_upper {d : ℕ} (hd : 2 ≤ d) (G : GlobalContacts d) {r₀ : �
   have hex : ∀ r ∈ U, ∃ p, p ∈ Set.Ioo (0:ℝ) (pStar d) ∧ G.ub p = r := by
     intro r hr; obtain ⟨p, hp, hpe⟩ := G.surjOn_ub hd hr; exact ⟨p, hp, hpe⟩
   let pc : ℝ → ℝ := fun r => if h : r ∈ U then (hex r h).choose else 0
-  let sm : ℝ → ℝ := fun r => G.ua (pc r)
+  let sc : ℝ → ℝ := fun r => G.ua (pc r)
   have hpc_spec : ∀ r ∈ U, pc r ∈ Set.Ioo (0:ℝ) (pStar d) ∧ G.ub (pc r) = r := by
     intro r hr
     have he : pc r = (hex r hr).choose := dif_pos hr
@@ -1607,7 +1607,7 @@ theorem arcMaps_upper {d : ℕ} (hd : 2 ≤ d) (G : GlobalContacts d) {r₀ : �
       (fun p hp => G.analytic_ub p hp.1 hp.2)
       (fun p hp => ne_of_lt (G.deriv_ub_neg p hp.1 hp.2))
       G.injOn_ub hpc_spec
-  have hsm_an : ∀ r ∈ U, AnalyticAt ℝ sm r := by
+  have hsc_an : ∀ r ∈ U, AnalyticAt ℝ sc r := by
     intro r hr
     obtain ⟨hpc_io, _⟩ := hpc_spec r hr
     exact (G.analytic_ua (pc r) hpc_io.1 hpc_io.2).comp (hpc_an r hr)
@@ -1632,7 +1632,7 @@ theorem arcMaps_upper {d : ℕ} (hd : 2 ≤ d) (G : GlobalContacts d) {r₀ : �
     exact key
   -- M3 second contact
   have hM3 : ∀ r ∈ U,
-      Jp (pc r) (sm r) = Jp (pc r) r + slope d pc r * ((sm r) ^ d - r ^ d) := by
+      Jp (pc r) (sc r) = Jp (pc r) r + slope d pc r * ((sc r) ^ d - r ^ d) := by
     intro r hr
     obtain ⟨hpc_io, hpc_ub⟩ := hpc_spec r hr
     have hp0 : 0 < pc r := hpc_io.1
@@ -1645,28 +1645,28 @@ theorem arcMaps_upper {d : ℕ} (hd : 2 ≤ d) (G : GlobalContacts d) {r₀ : �
     have hfst : sCM d (pc r) (G.ua (pc r)) - sCM d (pc r) (G.ub (pc r)) = 0 := by
       have hx := (Prod.ext_iff.mp hcf).1
       simpa only [contactF, Prod.fst_zero] using hx
-    have hsm : sm r = G.ua (pc r) := rfl
+    have hsc : sc r = G.ua (pc r) := rfl
     have hslr : slope d pc r = sCM d (pc r) r := rfl
     rw [hpc_ub] at hsnd hfst
     have hsCM_eq : sCM d (pc r) (G.ua (pc r)) = sCM d (pc r) r := by linarith [hfst]
-    rw [hsm, hslr, ← hsCM_eq]
+    rw [hsc, hslr, ← hsCM_eq]
     linear_combination -hsnd
   -- the `ordering` field
-  have hord : ∀ r ∈ U, 0 < pc r ∧ pc r < r ∧ r < 1 ∧ sm r ≠ r ∧ 0 < sm r ∧ sm r < 1 := by
+  have hord : ∀ r ∈ U, 0 < pc r ∧ pc r < r ∧ r < 1 ∧ sc r ≠ r ∧ 0 < sc r ∧ sc r < 1 := by
     intro r hr
     obtain ⟨hpc_io, _⟩ := hpc_spec r hr
     obtain ⟨hua0, huas, _, _, _, _, _⟩ := G.contact (pc r) hpc_io.1 hpc_io.2
-    have hsm_eq : sm r = G.ua (pc r) := rfl
-    have hsm_lt : sm r < rStar d := by rw [hsm_eq]; exact huas
+    have hsc_eq : sc r = G.ua (pc r) := rfl
+    have hsc_lt : sc r < rStar d := by rw [hsc_eq]; exact huas
     refine ⟨hpc_io.1, lt_trans hpc_io.2 (lt_trans hpsus hr.1), hr.2,
-      ne_of_lt (lt_trans hsm_lt hr.1), ?_, ?_⟩
-    · rw [hsm_eq]; exact hua0
-    · rw [hsm_eq]; exact lt_trans huas hus1
+      ne_of_lt (lt_trans hsc_lt hr.1), ?_, ?_⟩
+    · rw [hsc_eq]; exact hua0
+    · rw [hsc_eq]; exact lt_trans huas hus1
   -- assemble
   have A : ArcMaps d r₀ :=
     { U := U, isOpen_U := hUopen, mem := hr₀U,
       notExc := fun r hr => ne_of_gt hr.1,
-      pc := pc, sm := sm, analytic_pc := hpc_an, analytic_sm := hsm_an,
+      pc := pc, sc := sc, analytic_pc := hpc_an, analytic_sc := hsc_an,
       ordering := hord, supporting := hM2, secondContact := hM3,
       gc := G,
       family := fun r hr => ⟨(hpc_spec r hr).1, Or.inr ⟨hr.1, (hpc_spec r hr).2, rfl⟩⟩ }
@@ -1677,8 +1677,8 @@ Theorem 3.1).  Given the global Lubetzky–Zhao contact maps, invert the relevan
 `r₀ < r_*`, `u_b` if `r₀ > r_*`) to the analytic boundary curve `pc` on an interval
 `U ∋ r₀` (analytic inverse function theorem `contact_localInverse_analytic` patched
 over `U`, the bijection from `mono_ua`/`mono_ub` + the endpoint limits via
-`ContinuousOn.surjOn_of_tendsto`), set `sm` from the other family, and read off
-the three shallow fields: `ordering`'s `pc(r) < r` uses `pStar_lt_rStar` and the
+`ContinuousOn.surjOn_of_tendsto`), set `sc` from the other family, and read off
+the three shallow fields: `ordering`'s `p_c(r) < r` uses `pStar_lt_rStar` and the
 convex-minorant value at `p^d`; `secondContact` is the chord equation transported by
 `phi_eq_Jp_rpow`/`deriv_phi_eq_sCM`; `supporting` is the supporting line.  Carries the
 `GlobalContacts` and family link through. -/
@@ -1863,9 +1863,9 @@ theorem supportingLine_right_of_convex {d : ℕ} {p c x₀ : ℝ}
   · exact htan x ⟨hcx, hx.2⟩
   · -- `x ≤ c`: glue through the affine minorant
     have htan_c : phi p d x₀ + s * (c - x₀) ≤ phi p d c := htan c hcIcc
-    have hsm : s * (x - c) ≤ m * (x - c) := by nlinarith [hms, hxc]
+    have hsc : s * (x - c) ≤ m * (x - c) := by nlinarith [hms, hxc]
     have hmin_x := hmin x hx
-    linarith [htan_c, hsm, hmin_x]
+    linarith [htan_c, hsc, hmin_x]
 
 /-- **Supporting line on the left convex piece.**  Mirror of `supportingLine_right_of_convex`
 for `x₀ ∈ (0,c)` with `φ_{p,d}'' > 0` on `(0,c)` and an affine minorant tangent at `c`. -/
@@ -1902,7 +1902,7 @@ theorem supportingLine_left_of_convex {d : ℕ} {p c x₀ : ℝ}
   set m := deriv (phi p d) c with hmm
   have htan : ∀ y ∈ Set.Icc (0:ℝ) c, phi p d x₀ + s * (y - x₀) ≤ phi p d y :=
     convexOn_tangent_le hconvex hx₀Icc hHx₀
-  have hsm_le : s ≤ m := by
+  have hsc_le : s ≤ m := by
     have h1 := hconvex.le_slope_of_hasDerivAt hx₀Icc hcIcc hx₀c hHx₀
     have h2 := hconvex.slope_le_of_hasDerivAt hx₀Icc hcIcc hx₀c hHc
     exact le_trans h1 h2
@@ -1910,9 +1910,9 @@ theorem supportingLine_left_of_convex {d : ℕ} {p c x₀ : ℝ}
   rcases le_total x c with hxc | hcx
   · exact htan x ⟨hx.1, hxc⟩
   · have htan_c : phi p d x₀ + s * (c - x₀) ≤ phi p d c := htan c hcIcc
-    have hsm : s * (x - c) ≤ m * (x - c) := by nlinarith [hsm_le, hcx]
+    have hsc : s * (x - c) ≤ m * (x - c) := by nlinarith [hsc_le, hcx]
     have hmin_x := hmin x hx
-    linarith [htan_c, hsm, hmin_x]
+    linarith [htan_c, hsc, hmin_x]
 
 /-- `φ_{p,d}'' > 0` to the right of the right contact `b` (`r_* < b`, `0 < h_{p,d}(b)`):
 on `(b^d, 1)` the convexity defect `h_{p,d}` exceeds its positive value at `b`. -/
@@ -1998,9 +1998,9 @@ theorem supportingLine_right_of_convex_strict {d : ℕ} {p c x₀ : ℝ}
   · -- `x < c`: glue strictly through the affine minorant
     have htan_c : phi p d x₀ + s * (c - x₀) < phi p d c :=
       strictConvexOn_tangent_lt hsconv hx₀Icc hHx₀ c hcIcc (ne_of_lt hcx₀)
-    have hsm : s * (x - c) < m * (x - c) := by nlinarith [hms, hxc]
+    have hsc : s * (x - c) < m * (x - c) := by nlinarith [hms, hxc]
     have hmin_x := hmin x hx
-    linarith [htan_c, hsm, hmin_x]
+    linarith [htan_c, hsc, hmin_x]
   · -- `x ≥ c`: strict convexity directly
     exact strictConvexOn_tangent_lt hsconv hx₀Icc hHx₀ x ⟨hcx, hx.2⟩ hne
 
@@ -2023,7 +2023,7 @@ theorem supportingLine_left_of_convex_strict {d : ℕ} {p c x₀ : ℝ}
   have hcIcc : c ∈ Set.Icc (0:ℝ) c := ⟨hc0.le, le_refl c⟩
   set s := deriv (phi p d) x₀ with hs
   set m := deriv (phi p d) c with hmm
-  have hsm_lt : s < m := by
+  have hsc_lt : s < m := by
     have h1 := hsconv.lt_slope_of_hasDerivAt hx₀Icc hcIcc hx₀c hHx₀
     have h2 := hsconv.slope_lt_of_hasDerivAt hx₀Icc hcIcc hx₀c hHc
     exact lt_trans h1 h2
@@ -2034,17 +2034,19 @@ theorem supportingLine_left_of_convex_strict {d : ℕ} {p c x₀ : ℝ}
   · -- `x > c`: glue strictly through the affine minorant
     have htan_c : phi p d x₀ + s * (c - x₀) < phi p d c :=
       strictConvexOn_tangent_lt hsconv hx₀Icc hHx₀ c hcIcc (ne_of_gt hx₀c)
-    have hsm : s * (x - c) < m * (x - c) := by nlinarith [hsm_lt, hcx]
+    have hsc : s * (x - c) < m * (x - c) := by nlinarith [hsc_lt, hcx]
     have hmin_x := hmin x hx
-    linarith [htan_c, hsm, hmin_x]
+    linarith [htan_c, hsc, hmin_x]
 
-/-- **Quadratic lower bound from a second-derivative bound** (the Taylor heart of M4).
+/-- **Quadratic lower bound from a second-derivative bound** (the Taylor heart of the
+separation in (M3)).
 If `f` is `C²` on `[a,b]` with `f'' ≥ m`, and both `f` and `f'` vanish at an interior
 point `c`, then `f(x) ≥ (m/2)(x-c)²` throughout `[a,b]`.  Proof: `g := f − (m/2)(·−c)²`
 has `g'' = f'' − m ≥ 0`, so `g'` is monotone; since `g'(c) = 0`, `g` is antitone left of
 `c` and monotone right of `c`, hence `g ≥ g(c) = 0`.  Applied to the supporting-line gap
-`g_r = φ_{p_r} − ℓ_r` (which has `g_r = g_r' = 0` at each contact, `g_r'' = φ_{p_r}'' ≥ m_K`
-on the strictly-convex windows) this gives the near-contact half of `quadSep`. -/
+`φ_{p_r} − ℓ_r` in the `x`-coordinate (which vanishes to first order at each contact, with
+second derivative `φ_{p_r}'' ≥ m_K` on the strictly-convex windows) this gives the
+near-contact half of `quadSep`. -/
 theorem quadratic_lower_of_deriv2_ge {f f' f'' : ℝ → ℝ} {c m a b : ℝ}
     (hac : a ≤ c) (hcb : c ≤ b)
     (hf : ∀ x ∈ Set.Icc a b, HasDerivAt f (f' x) x)
@@ -2607,15 +2609,15 @@ theorem quadSep_pointwise {d : ℕ} (hd : 2 ≤ d) {p xa xb m η m_K b_mid x γ 
       rw [mul_one] at t; linarith [t, hgx]
 
 /-- **The `quadSep` field: uniform quadratic separation** for an `ArcMaps`.  Condition
-(M5) of Theorem 3.1): on a
+(M3) of Theorem 3.1, in the `x`-coordinate): on a
 compact subarc `K`, the zeros `u_±(p_r)` of `h_{p_r,d}` give, uniformly, two
-strictly-convex windows around the contacts `x_a(p_r), x_b(p_r) = {r^d, sm(r)^d}`;
+strictly-convex windows around the contacts `x_a(p_r), x_b(p_r) = {r^d, s_c(r)^d}`;
 Taylor's theorem with `φ'' ≥ m_K > 0` there (`quadratic_lower_of_deriv2_ge`) yields the
 quadratic bound near the contacts, and compactness gives a positive lower bound on the
 complement. -/
 theorem arcMaps_quadSep {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ} (A : ArcMaps d r₀) :
     ∀ K ⊆ A.U, IsCompact K → ∃ γ : ℝ, 0 < γ ∧ ∀ r ∈ K, ∀ u ∈ Set.Icc (0:ℝ) 1,
-      γ * (min |u ^ d - r ^ d| |u ^ d - (A.sm r) ^ d|) ^ 2
+      γ * (min |u ^ d - r ^ d| |u ^ d - (A.sc r) ^ d|) ^ 2
         ≤ Jp (A.pc r) u - (Jp (A.pc r) r + slope d A.pc r * (u ^ d - r ^ d)) := by
   intro K hKU hK
   rcases K.eq_empty_or_nonempty with hKe | hKne
@@ -2807,26 +2809,26 @@ theorem arcMaps_quadSep {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ} (A : ArcMaps d r�
   have hsl : slope d A.pc r = deriv (phi (A.pc r) d) (r ^ d) :=
     slope_eq_deriv_phi hd hp0 hp1 hr0 hr1
   rw [hJu, hJr, hsl]
-  rcases hfamily_r with ⟨hrlt, hua_eq, hsm_eq⟩ | ⟨hrgt, hub_eq, hsm_eq⟩
-  · -- lower family: `r^d = xa`, `sm^d = xb`
-    rw [hua_eq, ← hsm_eq] at hmain
+  rcases hfamily_r with ⟨hrlt, hua_eq, hsc_eq⟩ | ⟨hrgt, hub_eq, hsc_eq⟩
+  · -- lower family: `r^d = xa`, `sc^d = xb`
+    rw [hua_eq, ← hsc_eq] at hmain
     exact hmain
-  · -- upper family: `r^d = xb`, `sm^d = xa`
+  · -- upper family: `r^d = xb`, `sc^d = xa`
     have hxbr : (A.gc.ub (A.pc r)) ^ d = r ^ d := by rw [hub_eq]
     have hLineU : phi (A.pc r) d (r ^ d) + deriv (phi (A.pc r) d) (r ^ d) * (u ^ d - r ^ d)
         = phi (A.pc r) d ((A.gc.ua (A.pc r)) ^ d)
           + deriv (phi (A.pc r) d) ((A.gc.ua (A.pc r)) ^ d) * (u ^ d - (A.gc.ua (A.pc r)) ^ d) := by
       rw [← hxbr, hHxb.deriv, hchord]; ring
-    have hmin_eq : min |u ^ d - r ^ d| |u ^ d - (A.sm r) ^ d|
+    have hmin_eq : min |u ^ d - r ^ d| |u ^ d - (A.sc r) ^ d|
         = min |u ^ d - (A.gc.ua (A.pc r)) ^ d| |u ^ d - (A.gc.ub (A.pc r)) ^ d| := by
-      rw [hsm_eq, ← hxbr, min_comm]
+      rw [hsc_eq, ← hxbr, min_comm]
     rw [hLineU, hmin_eq]; exact hmain
 
 /-- **The `orientation` field** for an `ArcMaps`.  The replica-symmetric half of
-condition (M2) of Theorem 3.1: by the contact
+the criterion in condition (M1) of Theorem 3.1: by the contact
 monotonicity (`dx_a/dp > 0` on the lower family, `dx_b/dp < 0` on the upper), for
-`p > pc(r)` the relevant contact moves so that `r^d` sits on a strictly convex piece
-of the convex minorant (a supporting line at `r^d` persists), while for `p < pc(r)`
+`p > p_c(r)` the relevant contact moves so that `r^d` sits on a strictly convex piece
+of the convex minorant (a supporting line at `r^d` persists), while for `p < p_c(r)`
 the point `r^d` falls strictly between the two contacts (inside the affine segment),
 where no supporting line at `r^d` lies below `φ_{p,d}`. -/
 theorem arcMaps_orientation {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ} (A : ArcMaps d r₀) :
@@ -2869,9 +2871,9 @@ theorem arcMaps_orientation {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ} (A : ArcMaps d
       (A.gc.support_ub p hp0 hp_ps) x hx
 
 
-/-- **The broken side of the Lubetzky–Zhao boundary, globally** (the `p < pc(r)` half of
-condition (M2) of Theorem 3.1).
-For `r` on the arc and *every* `0 < p < pc(r)`, no supporting line lies below `φ_{p,d}` at
+/-- **The broken side of the Lubetzky–Zhao boundary, globally** (the `p < p_c(r)` half of
+the criterion in condition (M1) of Theorem 3.1).
+For `r` on the arc and *every* `0 < p < p_c(r)`, no supporting line lies below `φ_{p,d}` at
 `x = r^d`.  This strengthens the negative side of `arcMaps_orientation` from a local
 window `(pc r − δ, pc r)` to the full broken side `(0, pc r)`: the only role of `δ` there is
 to force `p > 0`, while the geometric input (`r^d` strictly between the contacts, which is
@@ -3053,7 +3055,7 @@ theorem noFlatTie_of_strict_supporting {d : ℕ} (hd : 2 ≤ d) {p r a : ℝ}
 open MeasureTheory in
 /-- **The `noFlatTie` field: no flat tie** (Jensen form) for an `ArcMaps`.  A Lean-side
 window condition with no counterpart in Theorem 3.1: on
-the whole replica-symmetric window `pc(r) < p < p_*`, the point `(r^d, J_p(r))`
+the whole replica-symmetric window `p_c(r) < p < p_*`, the point `(r^d, J_p(r))`
 is not on any nontrivial straight segment of the convex minorant of
 `x ↦ J_p(x^{1/d})`; equivalently, any `[0,1]`-valued law of mean `r^d` has
 `∫ φ_{p,d} ≥ J_p(r)`, with equality only at the Dirac mass at `r^d`. -/
@@ -3080,7 +3082,7 @@ below `p_*` the function `φ_{p,d}` is not convex and the supporting line has to
 the contact maps.  Above `p_*` there is nothing to produce: `φ_{p,d}` is strictly convex on the
 whole of `[0,1]`, so its tangent at `r^d` is a strict supporting line.  These two lemmas are the
 `p ≥ p_*` counterparts of the two fields, and let `replica_symmetric_unique` run on the full
-range `pc(r) ≤ p < r`. -/
+range `p_c(r) ≤ p < r`. -/
 
 /-- **The strict supporting line at `r^d` above `p_*`.**  For `p_* ≤ p < 1` the function
 `φ_{p,d}` is strictly convex on `[0,1]` (`strictConvexOn_phi_of_pStar_le`), so its tangent at the
@@ -3138,8 +3140,8 @@ theorem lz_boundary_arcs {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ}
     (hr₀0 : 0 < r₀) (hr₀1 : r₀ < 1) (hexc : r₀ ≠ rStar d) :
     ∃ M : LZBoundaryArc d, r₀ ∈ M.U ∧ M.NonExceptional r₀ := by
   obtain ⟨A⟩ := exists_arcMaps hd hr₀0 hr₀1 hexc
-  refine ⟨{ U := A.U, isOpen_U := A.isOpen_U, pc := A.pc, sm := A.sm,
-            analytic_pc := A.analytic_pc, analytic_sm := A.analytic_sm,
+  refine ⟨{ U := A.U, isOpen_U := A.isOpen_U, pc := A.pc, sc := A.sc,
+            analytic_pc := A.analytic_pc, analytic_sc := A.analytic_sc,
             ordering := A.ordering, supporting := A.supporting,
             secondContact := A.secondContact,
             quadSep := arcMaps_quadSep hd A,

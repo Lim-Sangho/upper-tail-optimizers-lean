@@ -13,8 +13,8 @@ paper fixes `r₀ ∈ (0,1) ∖ {r_*}` and works on the open interval `I ∋ r�
 `pcGlobal`: there is `w > 0` such that the conclusions hold on **every** open interval
 `I = (lo, hi)` with `r₀ - w ≤ lo < r₀ < hi ≤ r₀ + w`.  Every such `I` has compact closure in
 `(0,1) ∖ {r_*}`, and intersecting it with the interval of `lem:fixed-density-bipodality` gives
-the shrunken interval that the paper uses.  `lem:scalar-quadratic-bound` and
-`prop:graphon-quadratic-bound` need no shrinking in the paper; `scalar_quadratic_bound_Icc` and
+the shrunken interval that the paper uses.  `lem:quadratic-lower-bound` and its scalar form
+need no shrinking in the paper; `scalar_quadratic_bound_Icc` and
 `graphon_quadratic_bound_Icc` hold on every interval `I = (lo, hi)` with
 `[lo, hi] ⊆ (0,1) ∖ {r_*}`, which includes the interval of `fixed_density_bipodality_Icc`.
 
@@ -30,18 +30,18 @@ constants (`exists_uniform_constants_of_local`).
 
 * `exists_arc_window` — the arc `M ∋ r₀` and the radius `w`, with `[lo, hi] ⊆ M.U`,
   `[lo, hi] ⊆ (0,1) ∖ {r_*}`;
-* `scalar_quadratic_bound` — `lem:scalar-quadratic-bound` on the small intervals;
-* `graphon_bound_of_scalar` — the graph clause of `prop:graphon-quadratic-bound` from the scalar
+* `scalar_quadratic_bound` — the scalar form of `lem:quadratic-lower-bound` on the small
+  intervals;
+* `graphon_bound_of_scalar` — the graph clause of `lem:quadratic-lower-bound` from the scalar
   clause;
-* `graphon_quadratic_bound` — `lem:scalar-quadratic-bound` and
-  `prop:graphon-quadratic-bound` on the small intervals, with the same `C_{d,I}` and `δ₀` for
-  every graph;
+* `graphon_quadratic_bound` — `lem:quadratic-lower-bound` and its scalar form on the small
+  intervals, with the same `C_{d,I}` and `δ₀` for every graph;
 * `exists_uniform_constants_of_local` — local constants made uniform on a compact set;
 * `scalar_quadratic_bound_Icc`, `graphon_quadratic_bound_Icc` — the same two results on every
   interval with compact closure in `(0,1) ∖ {r_*}`, in particular on the interval of
   `lem:fixed-density-bipodality`;
-* `bipodal_quadratic_bound` — `lem:bipodal-quadratic-bound`;
-* `positive_second_variation_interval` — `thm:positive-second-variation`, with
+* `bipodal_quadratic_bound` — `lem:quadratic-upper-bound`;
+* `positive_second_variation_interval` — `thm:boundary-excess-expansion`, with
   `A_H(r) := ∂²_δG(r,0)` as in the paper.
 -/
 
@@ -83,10 +83,10 @@ theorem exists_arc_window {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ} (hr₀0 : 0 < r�
   obtain ⟨hpc0, hpcr, hr1, -⟩ := M.ordering r (hU hr)
   exact ⟨lt_trans hpc0 hpcr, hr1⟩
 
-/-- **`lem:scalar-quadratic-bound` (scalar quadratic lower bound).**  For every small open
+/-- **The scalar form of `lem:quadratic-lower-bound`.**  For every small open
 interval `I ∋ r₀` there are `C_{d,I} > 0` and `δ₀ > 0` such that, for `r ∈ I` and
 `0 < δ < δ₀`, every random variable `X` with values in `[0,1]`, `E X = r - δ` and
-`E X^d ≥ r^d` satisfies `E J_{pc(r)}(X) ≥ J_{pc(r)}(r) + C_{d,I} δ²`.
+`E X^d ≥ r^d` satisfies `E J_{p_c(r)}(X) ≥ J_{p_c(r)}(r) + C_{d,I} δ²`.
 
 The constant is `C_{d,I} = γ / (1 + d/η_d)²` of `expectation_quadratic_lower`, with `γ` from
 `quadSep_dist` and `η_d = η^d` from `arc_uniform_bounds` on `[lo, hi]`; `δ₀ = 1`. -/
@@ -107,42 +107,42 @@ theorem scalar_quadratic_bound {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ} (hr₀0 : 0
   obtain ⟨γ, hγ, hsep⟩ := quadSep_dist hd M hK isCompact_Icc hKne
   obtain ⟨η, hη0, -, hηbd⟩ := arc_uniform_bounds M hK isCompact_Icc hKne
   have hd1 : 1 ≤ d := le_trans one_le_two hd
-  -- the moment gap `η_d ≤ r^d - (sm r)^d` on the family `sm r < r`
+  -- the moment gap `η_d ≤ r^d - (sc r)^d` on the family `sc r < r`
   set ηd : ℝ := η ^ (d - 1) * η with hηddef
   have hηd0 : 0 < ηd := by positivity
   -- `C_{d,I}` depends only on `γ` and `η`, hence only on `d` and `I`
   refine ⟨hIcc, γ / (1 + d / ηd) ^ 2, 1, by positivity, one_pos, ?_⟩
   intro r hr δ hδ _ Ω _ μ _ X hX hXrange hmean hmom
   have hrK : r ∈ Set.Icc lo hi := Set.Ioo_subset_Icc_self hr
-  obtain ⟨hpc0, hpcr, hr1, hsmne, hsm0, hsm1⟩ := M.ordering r (hK hrK)
+  obtain ⟨hpc0, hpcr, hr1, hscne, hsc0, hsc1⟩ := M.ordering r (hK hrK)
   have hr0 : 0 < r := lt_trans hpc0 hpcr
   obtain ⟨-, -, hηs, -, -, hηdist⟩ := hηbd r hrK
   -- case dichotomy at the second contact, with the uniform moment gap on the lower side
-  have hcase : r < M.sm r ∨ (M.sm r < r ∧ ηd ≤ r ^ d - (M.sm r) ^ d) := by
-    rcases lt_or_gt_of_ne hsmne with hlt | hgt
+  have hcase : r < M.sc r ∨ (M.sc r < r ∧ ηd ≤ r ^ d - (M.sc r) ^ d) := by
+    rcases lt_or_gt_of_ne hscne with hlt | hgt
     · right
       refine ⟨hlt, ?_⟩
-      have hkey := pow_sub_pow_ge (x := r) (y := M.sm r) hr0.le hsm0.le hd1
-      have habs1 : |r - M.sm r| = r - M.sm r := abs_of_pos (by linarith)
-      have hpow_le : (M.sm r) ^ d ≤ r ^ d := pow_le_pow_left₀ hsm0.le hlt.le d
-      have habs2 : |r ^ d - (M.sm r) ^ d| = r ^ d - (M.sm r) ^ d :=
+      have hkey := pow_sub_pow_ge (x := r) (y := M.sc r) hr0.le hsc0.le hd1
+      have habs1 : |r - M.sc r| = r - M.sc r := abs_of_pos (by linarith)
+      have hpow_le : (M.sc r) ^ d ≤ r ^ d := pow_le_pow_left₀ hsc0.le hlt.le d
+      have habs2 : |r ^ d - (M.sc r) ^ d| = r ^ d - (M.sc r) ^ d :=
         abs_of_nonneg (by linarith)
       rw [habs1, habs2] at hkey
-      have h2 : η ≤ r - M.sm r := by
-        have habs : |M.sm r - r| = r - M.sm r := by
-          rw [abs_of_neg (by linarith : M.sm r - r < 0)]; ring
+      have h2 : η ≤ r - M.sc r := by
+        have habs : |M.sc r - r| = r - M.sc r := by
+          rw [abs_of_neg (by linarith : M.sc r - r < 0)]; ring
         linarith [habs]
-      have hstep : ηd ≤ (M.sm r) ^ (d - 1) * (r - M.sm r) := by
+      have hstep : ηd ≤ (M.sc r) ^ (d - 1) * (r - M.sc r) := by
         rw [hηddef]
-        exact mul_le_mul (pow_le_pow_left₀ hη0.le hηs _) h2 hη0.le (pow_nonneg hsm0.le _)
+        exact mul_le_mul (pow_le_pow_left₀ hη0.le hηs _) h2 hη0.le (pow_nonneg hsc0.le _)
       linarith
     · left; exact hgt
   rw [pcGlobal_eq_pc hd M (hK hrK)]
   exact expectation_quadratic_lower (μ := μ) hX hXrange hd1 hpc0 (lt_trans hpcr hr1) hr0 hr1
-    hsm0 hsm1 hδ.le (slope_pos hd1 hpc0 hpcr hr1) hγ hηd0 (hsep r hrK) hcase hmean hmom
+    hsc0 hsc1 hδ.le (slope_pos hd1 hpc0 hpcr hr1) hγ hηd0 (hsep r hrK) hcase hmean hmom
 
-/-- **The graph clause of `prop:graphon-quadratic-bound` from the scalar clause.**  If the
-conclusion of `lem:scalar-quadratic-bound` holds at `(r, δ)` for every random variable on a
+/-- **The graph clause of `lem:quadratic-lower-bound` from the scalar clause.**  If the
+conclusion of the scalar form holds at `(r, δ)` for every random variable on a
 probability space in `Type u`, then every graphon `W` with `e(W) = r - δ` and `t(H,W) ≥ r^m`, for a
 `d`-regular `H`, satisfies `I_p(W) ≥ J_p(r) + C δ²`.  Apply the scalar clause to `X = W(U,V)` with
 `(U,V)` uniform on `[0,1]²`, lifted to `Type u`; the generalized Hölder inequality
@@ -173,13 +173,13 @@ theorem graphon_bound_of_scalar {d : ℕ} (hd : 2 ≤ d) {r δ C p : ℝ} (hr0 :
     (W.measurable_uncurry.comp e.measurable) (fun ω => W.mem_Icc _ _) hmean hmom
   exact h.trans_eq (hint fun z => Jp p (W.toFun z.1 z.2))
 
-/-- **`lem:scalar-quadratic-bound` and `prop:graphon-quadratic-bound`.**  For every small open
+/-- **`lem:quadratic-lower-bound` and its scalar form.**  For every small open
 interval `I ∋ r₀` there are `C_{d,I} > 0` and `δ₀ > 0` such that, for `r ∈ I` and `0 < δ < δ₀`:
 
 * every random variable `X` with values in `[0,1]`, `E X = r - δ` and `E X^d ≥ r^d` satisfies
-  `E J_{pc(r)}(X) ≥ J_{pc(r)}(r) + C_{d,I} δ²`;
+  `E J_{p_c(r)}(X) ≥ J_{p_c(r)}(r) + C_{d,I} δ²`;
 * for every `d`-regular graph `H`, every graphon `W` with `e(W) = r - δ` and `t(H,W) ≥ r^m`
-  satisfies `I_{pc(r)}(W) ≥ J_{pc(r)}(r) + C_{d,I} δ²`, with the same `C_{d,I}` and `δ₀`.
+  satisfies `I_{p_c(r)}(W) ≥ J_{p_c(r)}(r) + C_{d,I} δ²`, with the same `C_{d,I}` and `δ₀`.
 
 The constants are those of `scalar_quadratic_bound`; the graph clause is its scalar clause for
 `X = W(U,V)` with `(U,V)` uniform on `[0,1]²`, lifted to `Type u`. -/
@@ -206,12 +206,13 @@ theorem graphon_quadratic_bound {d : ℕ} (hd : 2 ≤ d) {r₀ : ℝ} (hr₀0 : 
   exact graphon_bound_of_scalar hd (hIcc (Set.Ioo_subset_Icc_self hr)).1.1.le
     (fun μ _ X => hscalar r hr δ hδ hδ₀' μ X) H hreg hm W hWe hWt
 
-/-! ### Lemma 4.7 and Corollary 4.8 on an interval with compact closure
+/-! ### Lemma 4.7 on an interval with compact closure
 
-`sec:nonexceptional-quadratic-growth` states `lem:scalar-quadratic-bound` and
-`prop:graphon-quadratic-bound` for every `r` in the interval `I` of `lem:fixed-density-bipodality`,
+`sec:nonexceptional-quadratic-growth` states `lem:quadratic-lower-bound`
+for every `r` in the interval `I` of `lem:fixed-density-bipodality`,
 whose closure lies in `(0,1) ∖ {r_*}`, without shrinking `I`.  The two theorems below hold on every
-interval `I = (lo, hi)` with `[lo, hi] ⊆ (0,1) ∖ {r_*}`, for all `r ∈ [lo, hi]`; the interval of
+interval `I = (lo, hi)` with `[lo, hi] ⊆ (0,1) ∖ {r_*}`, for all `r ∈ [lo, hi]`, in the scalar
+form as well; the interval of
 `fixed_density_bipodality_Icc` (`NonexceptionalEndpoint/LocalReduction/Global.lean`) is one of them.  The constants on the
 small windows of `scalar_quadratic_bound` are made uniform on `[lo, hi]` by compactness
 (`exists_uniform_constants_of_local`). -/
@@ -238,12 +239,12 @@ theorem exists_uniform_constants_of_local {K : Set ℝ} (hKc : IsCompact K)
     obtain ⟨t, ht, C, δ₀, hC, hδ₀, h⟩ := hloc x hx
     exact ⟨t, mem_nhdsWithin_of_mem_nhds ht, C, δ₀, hC, hδ₀, h⟩
 
-/-- **`lem:scalar-quadratic-bound` (scalar quadratic lower bound) on the paper's interval.**  Let
+/-- **The scalar form of `lem:quadratic-lower-bound` on the paper's interval.**  Let
 `I = (lo, hi)` have closure `[lo, hi] ⊆ (0,1) ∖ {r_*}`, as the interval of
 `lem:fixed-density-bipodality` does (`fixed_density_bipodality_Icc`).  There are `C_{d,I} > 0` and
 `δ₀ > 0` such that, for every `r ∈ [lo, hi]` (in particular every `r ∈ I`) and `0 < δ < δ₀`, every
 random variable `X` with values in `[0,1]`, `E X = r - δ` and `E X^d ≥ r^d` satisfies
-`E J_{pc(r)}(X) ≥ J_{pc(r)}(r) + C_{d,I} δ²`.
+`E J_{p_c(r)}(X) ≥ J_{p_c(r)}(r) + C_{d,I} δ²`.
 
 The constants depend only on `d`, `lo` and `hi`.  Each point of `[lo, hi]` has a window on which
 `scalar_quadratic_bound` gives constants; `exists_uniform_constants_of_local` takes their minima
@@ -275,15 +276,15 @@ theorem scalar_quadratic_bound_Icc {d : ℕ} (hd : 2 ≤ d) {lo hi : ℝ}
       hmain (x - w) (x + w) (by linarith) (by linarith) le_rfl le_rfl
     exact ⟨Set.Ioo (x - w) (x + w), Ioo_mem_nhds (by linarith) (by linarith), C, δ₀, hC, hδ₀, h⟩
 
-/-- **`lem:scalar-quadratic-bound` and `prop:graphon-quadratic-bound` on the paper's interval.**  Let
+/-- **`lem:quadratic-lower-bound` and its scalar form on the paper's interval.**  Let
 `I = (lo, hi)` have closure `[lo, hi] ⊆ (0,1) ∖ {r_*}`, as the interval of
 `lem:fixed-density-bipodality` does (`fixed_density_bipodality_Icc`).  There are `C_{d,I} > 0` and
 `δ₀ > 0` such that, for every `r ∈ [lo, hi]` (in particular every `r ∈ I`) and `0 < δ < δ₀`:
 
 * every random variable `X` with values in `[0,1]`, `E X = r - δ` and `E X^d ≥ r^d` satisfies
-  `E J_{pc(r)}(X) ≥ J_{pc(r)}(r) + C_{d,I} δ²`;
+  `E J_{p_c(r)}(X) ≥ J_{p_c(r)}(r) + C_{d,I} δ²`;
 * for every `d`-regular graph `H`, every graphon `W` with `e(W) = r - δ` and `t(H,W) ≥ r^m`
-  satisfies `I_{pc(r)}(W) ≥ J_{pc(r)}(r) + C_{d,I} δ²`, with the same `C_{d,I}` and `δ₀`.
+  satisfies `I_{p_c(r)}(W) ≥ J_{p_c(r)}(r) + C_{d,I} δ²`, with the same `C_{d,I}` and `δ₀`.
 
 The constants are those of `scalar_quadratic_bound_Icc`; the graph clause is
 `graphon_bound_of_scalar`. -/
@@ -306,10 +307,10 @@ theorem graphon_quadratic_bound_Icc {d : ℕ} (hd : 2 ≤ d) {lo hi : ℝ}
   exact graphon_bound_of_scalar hd (hI hr).1.1.le
     (fun μ _ X => hscalar r hr δ hδ hδ₀' μ X) H hreg hm W hWe hWt
 
-/-- **`lem:bipodal-quadratic-bound` (quadratic upper bound).**  For every small open interval
+/-- **`lem:quadratic-upper-bound` (quadratic upper bound).**  For every small open interval
 `I ∋ r₀` there are `C_{H,I} > 0` and `δ₀ > 0` such that for `r ∈ I` and `0 < δ < δ₀` some bipodal
 graphon `V_δ` has `e(V_δ) = r - δ`, `t(H,V_δ) = r^m` and
-`I_{pc(r)}(V_δ) ≤ J_{pc(r)}(r) + C_{H,I} δ²`. -/
+`I_{p_c(r)}(V_δ) ≤ J_{p_c(r)}(r) + C_{H,I} δ²`. -/
 theorem bipodal_quadratic_bound {d : ℕ} (hd : 2 ≤ d) {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] (hreg : ∀ x, H.degree x = d)
     (hm : 1 ≤ H.edgeFinset.card) {r₀ : ℝ} (hr₀0 : 0 < r₀) (hr₀1 : r₀ < 1)
@@ -332,15 +333,16 @@ theorem bipodal_quadratic_bound {d : ℕ} (hd : 2 ≤ d) {V : Type*} [Fintype V]
   rw [pcGlobal_eq_pc hd M (hK hrK)]
   exact ⟨W, hWb, hWe, hWt, hWI⟩
 
-/-- **`thm:positive-second-variation` (universal positivity of the scalar second variation).**
+/-- **`thm:boundary-excess-expansion` (quadratic expansion of the boundary excess).**
 For every small open interval `I ∋ r₀` there are `δ̄ > 0`, an open `𝒩 ⊇ I × (-δ̄, δ̄)` and a
-real-analytic `G : 𝒩 → ℝ` with `G(r,δ) = G_r(δ) = I_{pc(r),r}(r-δ) - J_{pc(r)}(r)` for `r ∈ I`,
+real-analytic `G : 𝒩 → ℝ` with `G(r,δ) = G_r(δ) = I_{p_c(r),r}(r-δ) - J_{p_c(r)}(r)` for `r ∈ I`,
 `0 < δ < δ̄`, such that, with `A_H(r) := ∂²_δG(r,0)`:
 
-* (i) `G(r,0) = 0` and `∂_δG(r,0) = 0` for `r ∈ I`;
-* (ii) `A_H` is real-analytic on `I` and `A_H ≥ a₀ > 0` there;
-* (iii) `|∂²_δG(r,δ) - A_H(r)| ≤ C₂|δ|` for `r ∈ I`, `|δ| < δ̄`, with `C₂ ≥ 1`;
-* (iv) `|G_r(δ) - ½A_H(r)δ²| ≤ C₃δ³` for `r ∈ I`, `0 < δ < δ̄`. -/
+* `G(r,0) = 0` and `∂_δG(r,0) = 0` for `r ∈ I`  (steps of the paper's proof);
+* `A_H` is real-analytic on `I` and `A_H ≥ a₀ > 0` there;
+* `|∂²_δG(r,δ) - A_H(r)| ≤ C₂|δ|` for `r ∈ I`, `|δ| < δ̄`, with `C₂ ≥ 1`  (a quantitative form
+  of the paper's bound on `∂³_δG`);
+* `|G_r(δ) - ½A_H(r)δ²| ≤ C₃δ³` for `r ∈ I`, `0 < δ < δ̄`  (`eq:boundary-excess-expansion`). -/
 theorem positive_second_variation_interval {d : ℕ} (hd : 2 ≤ d) {V : Type*} [Fintype V]
     [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj] (hreg : ∀ x, H.degree x = d)
     (hm : 1 ≤ H.edgeFinset.card) {r₀ : ℝ} (hr₀0 : 0 < r₀) (hr₀1 : r₀ < 1)
@@ -350,19 +352,19 @@ theorem positive_second_variation_interval {d : ℕ} (hd : 2 ≤ d) {V : Type*} 
       ∃ (δbar : ℝ) (N : Set (ℝ × ℝ)) (G : ℝ × ℝ → ℝ),
         0 < δbar ∧ IsOpen N ∧ Set.Ioo lo hi ×ˢ Set.Ioo (-δbar) δbar ⊆ N ∧
         AnalyticOnNhd ℝ G N ∧
-        -- `eq:boundary-excess-extension`
+        -- the extension identity `G(r,δ) = G_r(δ)`
         (∀ r ∈ Set.Ioo lo hi, ∀ δ : ℝ, 0 < δ → δ < δbar →
           (G (r, δ) : EReal)
             = reducedObjective H (pcGlobal d r) r (r - δ) - (Jp (pcGlobal d r) r : EReal)) ∧
-        -- (i)
+        -- the degenerate boundary values
         (∀ r ∈ Set.Ioo lo hi, G (r, 0) = 0 ∧ dDelta G (r, 0) = 0) ∧
-        -- (ii)
+        -- analyticity and uniform positivity of `A_H`
         AnalyticOnNhd ℝ (fun r => dDelta (dDelta G) (r, 0)) (Set.Ioo lo hi) ∧
         (∃ a₀ : ℝ, 0 < a₀ ∧ ∀ r ∈ Set.Ioo lo hi, a₀ ≤ dDelta (dDelta G) (r, 0)) ∧
-        -- (iii) `eq:boundary-excess-curvature`
+        -- the curvature bound
         (∃ C₂ : ℝ, 1 ≤ C₂ ∧ ∀ r ∈ Set.Ioo lo hi, ∀ δ : ℝ, |δ| < δbar →
           |dDelta (dDelta G) (r, δ) - dDelta (dDelta G) (r, 0)| ≤ C₂ * |δ|) ∧
-        -- (iv) `eq:boundary-excess-expansion`
+        -- `eq:boundary-excess-expansion`
         (∃ C₃ : ℝ, 0 ≤ C₃ ∧ ∀ r ∈ Set.Ioo lo hi, ∀ δ : ℝ, 0 < δ → δ < δbar →
           |G (r, δ) - dDelta (dDelta G) (r, 0) / 2 * δ ^ 2| ≤ C₃ * δ ^ 3) := by
   obtain ⟨M, w, hw, hwin⟩ := exists_arc_window hd hr₀0 hr₀1 hr₀
@@ -372,7 +374,7 @@ theorem positive_second_variation_interval {d : ℕ} (hd : 2 ≤ d) {V : Type*} 
   obtain ⟨δbar, a₀, C₂, Ccub, N, G, hδbar, ha₀, hC₂, hCcub, hNopen, hNmem, hGana, hGagree,
     hG0, hAH, hd2G0, hcurv, hcubic⟩ :=
     positive_second_variation hd M hK isCompact_Icc hKne hKex H hreg hm
-  -- a graphon with edge density `r - δ` and `H`-density `r^m`, so `I_{pc(r),r}(r-δ)` is finite
+  -- a graphon with edge density `r - δ` and `H`-density `r^m`, so `I_{p_c(r),r}(r-δ)` is finite
   obtain ⟨Cup, δ₀, -, hδ₀, hup⟩ := quadratic_upper hd M hK isCompact_Icc hKne H hreg hm
   -- on `I` the boundary curve of the arc is `pcGlobal`, and `∂²_δG(r,0) = A_H(r)`
   have hpc : ∀ r ∈ Set.Ioo lo hi, pcGlobal d r = M.pc r := fun r hr =>

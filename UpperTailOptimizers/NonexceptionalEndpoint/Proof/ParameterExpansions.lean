@@ -10,7 +10,7 @@ import UpperTailOptimizers.NonexceptionalEndpoint.LocalReduction.Global
 `rmk:bipodal-parameter-expansions` on a Lubetzky–Zhao boundary arc, with the boundary value
 `q₁₂(r,0)` of the KRR–S parameter map in place of `ζ_d(r)`.  This file states the remark in
 global boundary coordinates (`pcGlobal`, `lambdaGlobal`, `AHGlobal`), on the neighbourhood
-`U = {|r - r₀| < ρ, |p - pc(r)| < η}` of `thm:nonexceptional-endpoint` with `p < pc(r)`, and with
+`U = {|r - r₀| < ρ, |p - p_c(r)| < η}` of `thm:nonexceptional-endpoint` with `p < p_c(r)`, and with
 `ζ_d(r)` itself.
 
 * `bipodal_parameter_expansions` — the remark: the relation `δ_* = 2D_d(r,z)c + O(δ_*²)`,
@@ -22,7 +22,7 @@ global boundary coordinates (`pcGlobal`, `lambdaGlobal`, `AHGlobal`), on the nei
 * `bipodal_block_size_two` — the specialization for `d = 2` used in the introduction:
   `c(p,r) = r λ(p,r)/((2r-1)² A_H(r)) + O(λ(p,r)²)`, from `ζ_2(r) = 1 - r`.
 
-The identity `ζ_d(r) = sm(r)` of the remark is `zetaFun_eq_smGlobal`
+The identity `ζ_d(r) = s_c(r)` of the remark is `zetaFun_eq_scGlobal`
 (`NonexceptionalEndpoint/Proof/CrossDensity.lean`).
 -/
 
@@ -31,7 +31,7 @@ namespace UpperTailOptimizers
 open MeasureTheory Real Set Filter Topology
 
 /-- **`rmk:bipodal-parameter-expansions` (first-order asymptotics of the bipodal parameters).**
-On `U = {|r - r₀| < ρ, pc(r) - η < p < pc(r)}`, the unique optimizer `W_{p,r}` is the bipodal
+On `U = {|r - r₀| < ρ, p_c(r) - η < p < p_c(r)}`, the unique optimizer `W_{p,r}` is the bipodal
 graphon whose first block `[0, c]` is its smaller block, with the parameters
 `(c, q₁₁, q₁₂, q₂₂)` of the KRR–S map at `(ε, ϑ) = (e(W_{p,r}), r^m - e(W_{p,r})^m)`.
 

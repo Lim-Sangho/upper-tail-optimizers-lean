@@ -136,7 +136,7 @@ it is symmetric in `h ↦ -h`, so a single `∀ᶠ` statement supplies the side 
 /-- Admissibility from the two-sided bound: if `u - |h| > 0` and `u + |h| < 1` then both
 `s = u - h` and `t = u + h` lie in `(0, 1)`, hence `s²`, `t²`, `st` all lie below `1` — the
 five side conditions of `Lell_sub_eq_mul`, `Lell_add_sub_two_eq_mul` and
-`lell_three_eq_iff`. -/
+`Lell_three_eq_iff`. -/
 private theorem admis_of_abs {u h : ℝ} (h1 : 0 < u - |h|) (h2 : u + |h| < 1) :
     0 < u - h ∧ 0 < u + h ∧ (u - h) ^ 2 < 1 ∧ (u + h) ^ 2 < 1 ∧ (u - h) * (u + h) < 1 := by
   have hle := le_abs_self h
@@ -233,7 +233,7 @@ theorem exists_scalar_family_symm (hd : 2 ≤ d) :
         Lell d (z h).2.1 (z h).2.2 (((z h).1 + h) ^ 2) = 0 := by
     filter_upwards [hzsol, hadm] with h hsol hah hne
     obtain ⟨hs, ht, hs1, ht1, hst⟩ := admis_of_abs hah.1 hah.2
-    refine (lell_three_eq_iff hd hne hs ht hs1 ht1 hst).mpr ?_
+    refine (Lell_three_eq_iff hd hne hs ht hs1 ht1 hst).mpr ?_
     have hsplit := congrArg (fun w : ℝ × ℝ × ℝ => (w.1, w.2.1, w.2.2)) hsol
     simp only [Fsys, Prod.mk.injEq] at hsplit
     exact ⟨hsplit.1, hsplit.2.1, hsplit.2.2⟩

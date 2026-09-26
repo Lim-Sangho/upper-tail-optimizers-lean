@@ -12,7 +12,7 @@ of the rank-one KKT family,
   `γ_h = γ_* + \frac{2d^{d+2}}{3(d-1)^d}h² + O_d(h⁴)`,
   `ℓ(p_h) = ℓ_* + \frac{2d³}{3(d-1)}h² + O_d(h⁴)`;
 
-the first and the last, written as `Λ_h = ℓ(p_h) - ℓ_*`, are entries of
+the first and the last (the latter in the form `ℓ_h = ℓ(p_h)`) are entries of
 `eq:rank-one-parameter-expansions`.  This file proves the three coefficients; the `O_d(h⁴)`
 remainders are added in `SingularEndpoint/ConstantGraphonComparison/ParameterRemainders.lean`.  Nothing here needs the implicit function theorem a
 second time: the coefficients are read off the **three KKT equations themselves**, by
@@ -27,7 +27,7 @@ Write `Λ_h = ℓ(p_h) - ℓ_*` and `Δ_h = γ_h - γ_*`.  Because `J_p'` depend
 
 so the three equations `eq:three-value-kkt` become three equations in `𝓛_*` alone.
 Into them we feed the Taylor expansion of `𝓛_*` at `r_*`, which by
-`eq:endpoint-entropy-derivatives` starts at the cube,
+`eq:endpoint-contact-derivatives` starts at the cube,
 
   `𝓛_*(z) = \frac{k₃}{6}(z-r_*)³ + (z-r_*)⁴ S(z)`,   `k₃ = d⁵/(d-1)²`, `S(r_*) = k₄/24`,
 
@@ -77,7 +77,7 @@ The two coefficients are the contact constants `k₃` and `k₄` used below. -/
 noncomputable def LstarTail (d : ℕ) : ℝ → ℝ := taylorTail (Lstar d) (rStar d) 4
 
 /-- **The cubic-plus-quartic expansion of `𝓛_*`.**  The first three Taylor coefficients of
-`𝓛_*` at `r_*` vanish `eq:endpoint-entropy-derivatives`, so the expansion of
+`𝓛_*` at `r_*` vanish `eq:endpoint-contact-derivatives`, so the expansion of
 `SingularEndpoint/ConstantGraphonComparison/TaylorTail.lean` starts at the cube, with the exact non-degenerate coefficient
 `k₃/6 = d⁵/(6(d-1)²)` of `Lstar3_rStar`. -/
 theorem Lstar_expand (hd : 2 ≤ d) (z : ℝ) :
@@ -439,7 +439,7 @@ theorem Gcoeff_eq (hd : 2 ≤ d) :
   rw [eq_div_of_mul_eq hd1 key, rStar_eq, gammaStar, div_pow, pow_add]
   field_simp
 
-/-- **The coefficient `L₂` of `ℓ(p_h)`**, which gives the `Λ_h` entry of
+/-- **The coefficient `L₂` of `ℓ_h = ℓ(p_h)`**, which gives the `ℓ_h` entry of
 `eq:rank-one-parameter-expansions`:
 
   `Λ_h = ℓ(p_h) - ℓ_* = \frac{2d³}{3(d-1)}h² + o(h²)`. -/

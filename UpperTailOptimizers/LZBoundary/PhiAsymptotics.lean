@@ -2,10 +2,10 @@ import UpperTailOptimizers.LZBoundary.PhiConvex
 import UpperTailOptimizers.LZBoundary.PhiDeriv
 
 /-!
-# Asymptotic and joint-limit analysis of `φ_{p,d}` for `lem:contact-point-limits` of `paper/paper.tex`
+# Asymptotic and joint-limit analysis of `φ_{p,d}` for the contact limits of `lem:contact-points`
 
-Supporting lemmas for `lz_boundary_endpoint_limits` (`lem:contact-point-limits`): joint (in `p`
-and `x`)
+Supporting lemmas for `lz_boundary_endpoint_limits` (the contact limits stated in
+`lem:contact-points` of `paper/paper.tex`): joint (in `p` and `x`)
 continuity and `±∞` limits of `φ_{p,d}'`, strict convexity of `φ_{p,d}` for `p ≥ p_*`, the
 `p↓0` blow-up of `h_{p,d}`, and the generic subsequence/cluster-point lemma used to
 turn "every joint subsequential limit is the same point" into convergence.

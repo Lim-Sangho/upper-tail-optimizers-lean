@@ -6,7 +6,7 @@ import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.TCalc
 
 `Preliminaries/KRRSAnalyticExtension/TCalc.lean` proves that the `a`-derivative of the edge-constrained `H`-density is
 *exactly* `c²` times the analytic function `Rda` (`hasDerivAt_That_a`).
-This file supplies the two facts that paragraph 3 of Appendix B of `paper/paper.tex`
+This file supplies the two facts that paragraph 3 of Appendix A of `paper/paper.tex`
 still needs from the `H`-density side:
 
 * **`Rda_zero_indep_a`** — `Rda(ε,·,b,0)` is *constant*.  This is the sentence of the
@@ -130,7 +130,7 @@ theorem edgeProd_eq_pow_bothCount {V : Type*} [Fintype V] [DecidableEq V] (H : S
 
 /-- **Simplicity of `H`**: two marked vertices support at most one edge, so a labelling with
 exactly two marked vertices contributes at most one factor `a`.  This is the sentence of
-Appendix B justifying `eq:krrs-density-expansion`. -/
+Appendix A justifying `eq:krrs-density-expansion`. -/
 theorem bothCount_le_one_of_trueCount_eq_two {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] {τ : V → Bool} (hτ : trueCount τ = 2) :
     bothCount H τ ≤ 1 := by
@@ -235,7 +235,7 @@ private theorem partialA_ThatRem_zero {V : Type*} [Fintype V] [DecidableEq V] (H
 
 At `c = 0` the first two summands of `Rda` reduce to `-m ε^{m-1}`, which is `a`-free, and
 the third is `tBipRem2A H a b ε 0`, which is `a`-free by `tBipRem2A_zero_indep_a`.  This is
-exactly the claim of Appendix B that the coefficient `B₁(ε,b)` of `a` at order `c²` in
+exactly the claim of Appendix A that the coefficient `B₁(ε,b)` of `a` at order `c²` in
 `eq:krrs-density-expansion` does not itself depend on `a`; it is what makes `∂²_aM` equal
 `S₀''(a)/𝒜(ε,b)²` `eq:krrs-coefficient-concavity`, hence nonzero. -/
 theorem Rda_zero_indep_a {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)

@@ -16,7 +16,7 @@ analytic implicit function theorem which constructs the family of
 `lem:rank-one-kkt-family`.
 
 The point of the reformulation is that the vanishing reduces *exactly* to the three
-contact identities `eq:endpoint-entropy-derivatives` already proved in
+contact identities `eq:endpoint-contact-derivatives` already proved in
 `SingularEndpoint/RankOneStationaryFamily/Contact.lean`.  Indeed, at `h = 0` the values recorded by `Esys2_zero`,
 `Esys3_zero` are `4u·𝓛′(u²)` and `4𝓛′(u²) + 4u²·𝓛″(u²)`, so with `u = u_*` and
 `u_*² = r_*` the three components become
@@ -72,7 +72,7 @@ with the real subtractions only above the truncation point, which is what `cast_
 
 At `h = 0` the middle root `s_h t_h` of `eq:three-value-kkt` is `u_*² = r_*`, so
 `E₁` is the value `𝓛_*(r_*)`, which vanishes by the first contact identity
-`eq:endpoint-entropy-derivatives`. -/
+`eq:endpoint-contact-derivatives`. -/
 theorem Esys1_base (hd : 2 ≤ d) : Esys1 d (ellStar d) (gammaStar d) (uStar d) 0 = 0 := by
   have harg : (uStar d - 0) * (uStar d + 0) = rStar d := by
     rw [sub_zero, add_zero, ← uStar_sq hd]; ring
@@ -87,7 +87,7 @@ theorem Esys1_base (hd : 2 ≤ d) : Esys1 d (ellStar d) (gammaStar d) (uStar d) 
 By `Esys2_zero` the value is `4u/(1-u²) + 4/u - 4γu(d-1)(u²)^{d-2}`, and the scalar identity
 `4u/(1-u²) + 4/u = 4u/(u²(1-u²))` turns it into `4u·𝓛_*′(u²)`.  At `u = u_*` this is
 `4u_*·𝓛_*′(r_*) = 0` by the second contact identity
-`eq:endpoint-entropy-derivatives`. -/
+`eq:endpoint-contact-derivatives`. -/
 theorem Esys2_base (hd : 2 ≤ d) : Esys2 d (gammaStar d) (uStar d) 0 = 0 := by
   set u : ℝ := uStar d with hu
   have hu0 : 0 < u := uStar_pos hd
@@ -109,7 +109,7 @@ By `Esys3_zero` the value is
 `4/(1-u²)² - 4γ((d-1)(u²)^{d-2} + u·(d-1)u^{d-2}·(d-2)u^{d-3})`, and the scalar identity
 `4/(1-w)² = 4(1/w + 1/(1-w)) + 4w(-(1/w²) + 1/(1-w)²)` at `w = u²` turns it into
 `4𝓛_*′(u²) + 4u²·𝓛_*″(u²)`.  At `u = u_*` this vanishes by the second and third contact
-identities `eq:endpoint-entropy-derivatives`.
+identities `eq:endpoint-contact-derivatives`.
 
 The exponent bookkeeping needs a case split: for `3 ≤ d` one has
 `u·u^{d-2}·u^{d-3} = u²·(u²)^{d-3}`, while at `d = 2` both `((d-2 : ℕ) : ℝ)` and `(d:ℝ) - 2`
@@ -155,7 +155,7 @@ theorem Esys3_base (hd : 2 ≤ d) : Esys3 d (gammaStar d) (uStar d) 0 = 0 := by
 This is the hypothesis `F(z₀, 0) = 0` of the analytic implicit function theorem that
 constructs the coalescing family of `lem:rank-one-kkt-family`; by
 `Esys1_base`–`Esys3_base` it is exactly the triple-contact system
-`eq:endpoint-entropy-derivatives`. -/
+`eq:endpoint-contact-derivatives`. -/
 theorem Fsys_base (hd : 2 ≤ d) : Fsys d (zBase d) 0 = 0 := by
   have hsplit : Fsys d (zBase d) 0
       = (Esys1 d (ellStar d) (gammaStar d) (uStar d) 0,

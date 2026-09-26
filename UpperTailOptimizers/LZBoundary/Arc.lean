@@ -6,7 +6,7 @@ import UpperTailOptimizers.LZBoundary.PhiConvex
 
 This file introduces the `LZBoundaryArc` record.  `paper/paper.tex` has no corresponding
 definition: its Theorem 3.1 (Section 3 `sec:lz-boundary`) states
-conditions (M1)–(M5) directly about the global analytic maps `pc`, `sm`.  The record is a
+conditions (M1)–(M4) directly about the global analytic maps `pc`, `sc`.  The record is a
 Lean-side abstraction that bundles those conditions on an interval `U`, plus one extra
 window condition the development needs (`noFlatTie`); `lz_boundary_arcs`
 (`LZBoundary/Existence.lean`) is the Lean form of Theorem 3.1 and constructs such an arc
@@ -21,16 +21,16 @@ each field docstring names its counterpart explicitly:
 
 | field           | Theorem 3.1                                                       |
 |-----------------|-------------------------------------------------------------------|
-| `ordering`      | part of (M1) (`0 < pc(r) < r < 1`, `sm(r) ≠ r`, `sm(r) ∈ (0,1)`)   |
-| `pcLtPStar`     | the `pc(r) < p_*` half of (M1)                                    |
-| `supporting`    | (M3) (the tangent line `ℓ_r` lies below the graph)                |
-| `secondContact` | the `⊇` half of (M4) (the contact set contains `sm(r)^d`)         |
-| `quadSep`       | (M5) (uniform quadratic separation, equation `eq:contact-quadratic-separation`)                 |
-| `orientation`   | the `p ≥ pc(r)` half of (M2), on the window `(pc r, p_*)`         |
-| `brokenSide`    | the `p < pc(r)` half of (M2)                                      |
+| `ordering`      | part of (M1) (`0 < p_c(r) < r < 1`, `s_c(r) ≠ r`, `s_c(r) ∈ (0,1)`)   |
+| `pcLtPStar`     | the `p_c(r) < p_*` half of (M1)                                    |
+| `supporting`    | part of (M2) (the tangent line `ℓ_r` lies below the graph)         |
+| `secondContact` | the `⊇` half of (M2) (the contact set contains `s_c(r)^d`)         |
+| `quadSep`       | (M3) in the `x`-coordinate (`eq:contact-quadratic-separation` is its density form) |
+| `orientation`   | the `p ≥ p_c(r)` half of (M1), on the window `(pc r, p_*)`         |
+| `brokenSide`    | the `p < p_c(r)` half of (M1)                                      |
 | `noFlatTie`     | no counterpart — a Lean-side window condition                     |
 
-Both halves of (M2) are stated on their *global* windows — `(0, pc r)` and `(pc r, p_*)` —
+Both halves of the criterion in (M1) are stated on their *global* windows — `(0, pc r)` and `(pc r, p_*)` —
 rather than on unspecified one-sided neighbourhoods, so that they are automatically uniform
 over compact subarcs.  An arc is `NonExceptional` at `r` when `r ≠ (d-1)/d`.
 `boundary_uniqueness` consumes `ordering`, `supporting` and `quadSep`.
@@ -45,7 +45,7 @@ open MeasureTheory Real
 noncomputable def slope (d : ℕ) (pc : ℝ → ℝ) (r : ℝ) : ℝ :=
   Jp' (pc r) r / ((d : ℝ) * r ^ (d - 1))
 
-/-- Positivity of the supporting-line slope, from `pc(r) < r` (used by
+/-- Positivity of the supporting-line slope, from `p_c(r) < r` (used by
 `boundary_uniqueness`). -/
 theorem slope_pos {d : ℕ} (hd : 1 ≤ d) {pc : ℝ → ℝ} {r : ℝ}
     (hpc0 : 0 < pc r) (hpcr : pc r < r) (hr1 : r < 1) : 0 < slope d pc r := by
@@ -63,41 +63,42 @@ theorem slope_pos {d : ℕ} (hd : 1 ≤ d) {pc : ℝ → ℝ} {r : ℝ}
 
 /-- An **oriented Lubetzky–Zhao boundary arc** for the degree-`d` problem.  A Lean-side record with
 no numbered counterpart in `paper/paper.tex`.  `U` is the arc, `pc` the boundary curve
-`p = pc(r)`, `sm` the second-contact density `s(r)`.  The condition labels below are those
+`p = p_c(r)`, `sc` the second-contact density `s_c(r)`.  The condition labels below are those
 of Theorem 3.1 of `paper/paper.tex`; see the module docstring for the dictionary. -/
 structure LZBoundaryArc (d : ℕ) where
   /-- The interval of target densities `r`. -/
   U : Set ℝ
   isOpen_U : IsOpen U
-  /-- The Lubetzky–Zhao boundary curve `p = pc(r)`. -/
+  /-- The Lubetzky–Zhao boundary curve `p = p_c(r)`. -/
   pc : ℝ → ℝ
-  /-- The second-contact density `s(r)`. -/
-  sm : ℝ → ℝ
+  /-- The second-contact density `s_c(r)`. -/
+  sc : ℝ → ℝ
   /-- `pc` is real-analytic on `U`. -/
   analytic_pc : AnalyticOnNhd ℝ pc U
-  /-- `sm` is real-analytic on `U`. -/
-  analytic_sm : AnalyticOnNhd ℝ sm U
-  /-- Part of (M1) of Theorem 3.1: `0 < pc(r) < r < 1` and `sm(r) ≠ r`, with
-  `sm(r) ∈ (0,1)`. -/
-  ordering : ∀ r ∈ U, 0 < pc r ∧ pc r < r ∧ r < 1 ∧ sm r ≠ r ∧ 0 < sm r ∧ sm r < 1
-  /-- (M3): the tangent line `ℓ_r` at `r^d` lies below the graph (supporting line). -/
+  /-- `sc` is real-analytic on `U`. -/
+  analytic_sc : AnalyticOnNhd ℝ sc U
+  /-- Part of (M1) of Theorem 3.1: `0 < p_c(r) < r < 1` and `s_c(r) ≠ r`, with
+  `s_c(r) ∈ (0,1)`. -/
+  ordering : ∀ r ∈ U, 0 < pc r ∧ pc r < r ∧ r < 1 ∧ sc r ≠ r ∧ 0 < sc r ∧ sc r < 1
+  /-- Part of (M2): the tangent line `ℓ_r` at `r^d` lies below the graph (supporting line). -/
   supporting : ∀ r ∈ U, ∀ u ∈ Set.Icc (0:ℝ) 1,
     Jp (pc r) r + slope d pc r * (u ^ d - r ^ d) ≤ Jp (pc r) u
-  /-- Half of (M4): a second contact at `sm(r)^d`.  (The full (M4) — that the contact set
-  is exactly `{r^d, sm(r)^d}` — is derived in `LZBoundary/Curve.lean` from this together with
+  /-- Half of (M2): a second contact at `s_c(r)^d`.  (The full contact statement — that the set
+  is exactly `{r^d, s_c(r)^d}` — is derived in `LZBoundary/Curve.lean` from this together with
   `quadSep`.) -/
   secondContact : ∀ r ∈ U,
-    Jp (pc r) (sm r) = Jp (pc r) r + slope d pc r * ((sm r) ^ d - r ^ d)
-  /-- (M5): uniform quadratic separation on compact subarcs (equation `eq:contact-quadratic-separation`,
+    Jp (pc r) (sc r) = Jp (pc r) r + slope d pc r * ((sc r) ^ d - r ^ d)
+  /-- (M3) in the `x`-coordinate: uniform quadratic separation on compact subarcs (the density
+  form is `eq:contact-quadratic-separation`,
   `eq:contact-quadratic-separation`). -/
   quadSep : ∀ K ⊆ U, IsCompact K → ∃ γ : ℝ, 0 < γ ∧ ∀ r ∈ K, ∀ u ∈ Set.Icc (0:ℝ) 1,
-    γ * (min |u ^ d - r ^ d| |u ^ d - (sm r) ^ d|) ^ 2
+    γ * (min |u ^ d - r ^ d| |u ^ d - (sc r) ^ d|) ^ 2
       ≤ Jp (pc r) u - (Jp (pc r) r + slope d pc r * (u ^ d - r ^ d))
-  /-- The remaining half of (M1): `pc(r) < p_*`, i.e. the boundary curve stays below the
+  /-- The remaining half of (M1): `p_c(r) < p_*`, i.e. the boundary curve stays below the
   threshold probability above which `φ_{p,d}` is convex.  This is what makes the
   replica-symmetric window `(pc r, p_*)` of `orientation`/`noFlatTie` non-empty. -/
   pcLtPStar : ∀ r ∈ U, pc r < pStar d
-  /-- The replica-symmetric half of (M2): for every `p` with `pc(r) < p < p_*`
+  /-- The replica-symmetric half of the criterion in (M1): for every `p` with `p_c(r) < p < p_*`
   a supporting line of `φ_{p,d}` at `x = r^d` persists.  (The broken side is the
   global field `brokenSide` below.)  Stating the window as `(pc r, p_*)` rather than
   as an unspecified `(pc r, pc r + δ)` is what makes the window uniform over compact
@@ -105,7 +106,7 @@ structure LZBoundaryArc (d : ℕ) where
   orientation : ∀ r ∈ U, ∀ p, pc r < p → p < pStar d →
     ∃ a : ℝ, ∀ x ∈ Set.Icc (0:ℝ) 1, Jp p r + a * (x - r ^ d) ≤ phi p d x
   /-- **No flat tie** — a Lean-side window condition with no counterpart in Theorem 3.1.
-  On the replica-symmetric side (Jensen form): for `pc(r) < p < p_*`, any `[0,1]`-valued
+  On the replica-symmetric side (Jensen form): for `p_c(r) < p < p_*`, any `[0,1]`-valued
   law `μ` with mean `r^d` has `∫ φ_{p,d} dμ ≥ J_p(r)`, with equality only at the Dirac
   mass at `r^d`. -/
   noFlatTie : ∀ r ∈ U, ∀ p, pc r < p → p < pStar d →
@@ -113,9 +114,9 @@ structure LZBoundaryArc (d : ℕ) where
       (∫ x, x ∂μ = r ^ d) →
         Jp p r ≤ ∫ x, phi p d x ∂μ ∧
           (∫ x, phi p d x ∂μ = Jp p r → μ = Measure.dirac (r ^ d))
-  /-- The symmetry-breaking half of (M2): for every `0 < p < pc(r)` the point `r^d` is not
+  /-- The symmetry-breaking half of the criterion in (M1): for every `0 < p < p_c(r)` the point `r^d` is not
   on the convex minorant of `φ_{p,d}`, i.e. no supporting affine line touches `φ_{p,d}` at
-  `x = r^d`.  The `orientation` field above is the `p ≥ pc(r)` half of the same
+  `x = r^d`.  The `orientation` field above is the `p ≥ p_c(r)` half of the same
   condition. -/
   brokenSide : ∀ r ∈ U, ∀ p, 0 < p → p < pc r →
     ¬ ∃ a : ℝ, ∀ x ∈ Set.Icc (0:ℝ) 1, Jp p r + a * (x - r ^ d) ≤ phi p d x

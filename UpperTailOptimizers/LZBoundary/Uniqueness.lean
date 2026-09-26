@@ -2,21 +2,21 @@ import UpperTailOptimizers.LZBoundary.Arc
 import UpperTailOptimizers.Preliminaries.Graphons.ExternalInputs
 
 /-!
-# Boundary uniqueness at `p = pc(r)` (the boundary case of the replica-symmetric side)
+# Boundary uniqueness at `p = p_c(r)` (the boundary case of the replica-symmetric side)
 
-At a boundary point `p₀ = pc(r)` of an oriented regular Lubetzky–Zhao boundary arc, the constant
+At a boundary point `p₀ = p_c(r)` of an oriented regular Lubetzky–Zhao boundary arc, the constant
 graphon `W ≡ r` is the unique minimizer of
 `inf { I_{p₀}(W) : t(H,W) ≥ r^m }`.
 
-`paper/paper.tex` has no separate lemma for this: the closed side `p ≥ pc(r)` follows in one
-step from condition (M2) of Theorem 3.1 — an equivalence valid for every
+`paper/paper.tex` has no separate lemma for this: the closed side `p ≥ p_c(r)` follows in one
+step from the criterion of (M1) of Theorem 3.1 — an equivalence valid for every
 `p ∈ (0,1)` — together with the uniqueness clause of `thm:lz-criterion`.  The Lean development instead
 *derives* uniqueness from the Lubetzky–Zhao-arc fields, so it needs the boundary case as a
 standalone lemma.
 
-The proof integrates the supporting-line inequality (M3) against any feasible
+The proof integrates the supporting-line inequality of (M2) against any feasible
 graphon, uses the generalized-Hölder moment bound `r^d ≤ ∫ W^d`, and the
-quadratic separation (M5) for the equality/uniqueness case.
+quadratic separation of (M3) for the equality/uniqueness case.
 -/
 
 namespace UpperTailOptimizers
@@ -33,7 +33,7 @@ theorem Ip_constGraphon {r : ℝ} (hr : r ∈ Set.Icc (0:ℝ) 1) (p : ℝ) :
   rw [integral_const]
   simp
 
-/-- **Boundary uniqueness.**  At `p₀ = pc(r)`, the constant graphon
+/-- **Boundary uniqueness.**  At `p₀ = p_c(r)`, the constant graphon
 `W ≡ r` attains the value `J_{p₀}(r)`, is optimal among all feasible graphons, and
 is the unique optimizer (almost everywhere). -/
 theorem boundary_uniqueness (hd : 2 ≤ d) (M : LZBoundaryArc d) {r : ℝ} (hr : r ∈ M.U)
@@ -46,7 +46,7 @@ theorem boundary_uniqueness (hd : 2 ≤ d) (M : LZBoundaryArc d) {r : ℝ} (hr :
     -- uniqueness: equality forces `W = r` almost everywhere
     (∀ W : Graphon, Feasible H r W → W.Ip (M.pc r) = Jp (M.pc r) r →
       ∀ᵐ z ∂gμ, W.toFun z.1 z.2 = r) := by
-  obtain ⟨hpc0, hpcr, hr1, hsmr, hsm0, hsm1⟩ := M.ordering r hr
+  obtain ⟨hpc0, hpcr, hr1, hscr, hsc0, hsc1⟩ := M.ordering r hr
   set p₀ := M.pc r with hp₀
   have hr0 : 0 < r := lt_trans hpc0 hpcr
   have hp1 : p₀ < 1 := lt_trans hpcr hr1
@@ -136,44 +136,44 @@ theorem boundary_uniqueness (hd : 2 ≤ d) (M : LZBoundaryArc d) {r : ℝ} (hr :
       (integral_eq_zero_iff_of_nonneg_ae hgap_nonneg hgap_int).mp hgap_intzero
     -- quadratic separation at the single point `r`
     obtain ⟨γ, hγ, hquad⟩ := M.quadSep {r} (by simpa using hr) isCompact_singleton
-    -- a.e., `W z ∈ {r, sm r}`
-    have htwo : ∀ᵐ z ∂gμ, W.toFun z.1 z.2 = r ∨ W.toFun z.1 z.2 = M.sm r := by
+    -- a.e., `W z ∈ {r, sc r}`
+    have htwo : ∀ᵐ z ∂gμ, W.toFun z.1 z.2 = r ∨ W.toFun z.1 z.2 = M.sc r := by
       filter_upwards [hgap_zero] with z hz
       have hzgap : Jp p₀ (W.toFun z.1 z.2)
           - (Jp p₀ r + slope d M.pc r * ((W.toFun z.1 z.2) ^ d - r ^ d)) = 0 := by
         simpa using hz
       have hbound := hquad r rfl (W.toFun z.1 z.2) (W.mem_Icc z.1 z.2)
       have hmin0 : min |(W.toFun z.1 z.2) ^ d - r ^ d|
-          |(W.toFun z.1 z.2) ^ d - (M.sm r) ^ d| = 0 := by
+          |(W.toFun z.1 z.2) ^ d - (M.sc r) ^ d| = 0 := by
         by_contra hmne
         have hmn : 0 ≤ min |(W.toFun z.1 z.2) ^ d - r ^ d|
-            |(W.toFun z.1 z.2) ^ d - (M.sm r) ^ d| := le_min (abs_nonneg _) (abs_nonneg _)
+            |(W.toFun z.1 z.2) ^ d - (M.sc r) ^ d| := le_min (abs_nonneg _) (abs_nonneg _)
         have hpos : 0 < (min |(W.toFun z.1 z.2) ^ d - r ^ d|
-            |(W.toFun z.1 z.2) ^ d - (M.sm r) ^ d|) ^ 2 := by
+            |(W.toFun z.1 z.2) ^ d - (M.sc r) ^ d|) ^ 2 := by
           have : 0 < min |(W.toFun z.1 z.2) ^ d - r ^ d|
-              |(W.toFun z.1 z.2) ^ d - (M.sm r) ^ d| := lt_of_le_of_ne hmn (Ne.symm hmne)
+              |(W.toFun z.1 z.2) ^ d - (M.sc r) ^ d| := lt_of_le_of_ne hmn (Ne.symm hmne)
           positivity
         nlinarith [hbound, hzgap, mul_pos hγ hpos]
       rcases min_choice |(W.toFun z.1 z.2) ^ d - r ^ d|
-        |(W.toFun z.1 z.2) ^ d - (M.sm r) ^ d| with hch | hch
+        |(W.toFun z.1 z.2) ^ d - (M.sc r) ^ d| with hch | hch
       · left
         have hA0 : |(W.toFun z.1 z.2) ^ d - r ^ d| = 0 := by rw [← hch]; exact hmin0
         have : (W.toFun z.1 z.2) ^ d = r ^ d := by
           have := abs_eq_zero.mp hA0; linarith
         exact pow_inj _ _ (W.mem_Icc z.1 z.2).1 hr0.le this
       · right
-        have hB0 : |(W.toFun z.1 z.2) ^ d - (M.sm r) ^ d| = 0 := by rw [← hch]; exact hmin0
-        have : (W.toFun z.1 z.2) ^ d = (M.sm r) ^ d := by
+        have hB0 : |(W.toFun z.1 z.2) ^ d - (M.sc r) ^ d| = 0 := by rw [← hch]; exact hmin0
+        have : (W.toFun z.1 z.2) ^ d = (M.sc r) ^ d := by
           have := abs_eq_zero.mp hB0; linarith
-        exact pow_inj _ _ (W.mem_Icc z.1 z.2).1 hsm0.le this
+        exact pow_inj _ _ (W.mem_Icc z.1 z.2).1 hsc0.le this
     -- `(W z)^d - r^d` has a fixed sign a.e. and integrates to 0, so `W = r` a.e.
-    rcases lt_or_gt_of_ne hsmr with hslt | hsgt
-    · -- `sm r < r`: then `(W z)^d ≤ r^d` a.e.
+    rcases lt_or_gt_of_ne hscr with hslt | hsgt
+    · -- `sc r < r`: then `(W z)^d ≤ r^d` a.e.
       have hle : ∀ᵐ z ∂gμ, (0:ℝ) ≤ r ^ d - (W.toFun z.1 z.2) ^ d := by
         filter_upwards [htwo] with z hz
         rcases hz with h | h
         · rw [h]; simp
-        · rw [h]; have := pow_le_pow_left₀ hsm0.le (le_of_lt hslt) d; linarith
+        · rw [h]; have := pow_le_pow_left₀ hsc0.le (le_of_lt hslt) d; linarith
       have hint0 : ∫ z, (r ^ d - (W.toFun z.1 z.2) ^ d) ∂gμ = 0 := by
         rw [integral_sub (integrable_const _) (hWd_int W)]
         have h1 : ∫ _ : ℝ × ℝ, r ^ d ∂gμ = r ^ d := by rw [integral_const]; simp
@@ -187,7 +187,7 @@ theorem boundary_uniqueness (hd : 2 ≤ d) (M : LZBoundaryArc d) {r : ℝ} (hr :
         have : r ^ d - (W.toFun z.1 z.2) ^ d = 0 := by simpa using hz
         linarith
       exact pow_inj _ _ (W.mem_Icc z.1 z.2).1 hr0.le this
-    · -- `sm r > r`: then `(W z)^d ≥ r^d` a.e.
+    · -- `sc r > r`: then `(W z)^d ≥ r^d` a.e.
       have hge : ∀ᵐ z ∂gμ, (0:ℝ) ≤ (W.toFun z.1 z.2) ^ d - r ^ d := by
         filter_upwards [htwo] with z hz
         rcases hz with h | h

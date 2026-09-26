@@ -16,9 +16,9 @@ names are relative to the namespace `UpperTailOptimizers`.
 | [Theorem 1.5][thm:nonexceptional-optimizers] — Nonexceptional optimizers; corollary of [Theorem 4.1][thm:nonexceptional-endpoint] | Introduction corollary: [nonexceptional_optimizers](UpperTailOptimizers/NonexceptionalEndpoint/Proof/Global.lean#L133) |
 | [Theorem 1.6][thm:endpoint-optimizers] — Singular endpoint optimizers; corollary of [Theorem 5.1][thm:singular-endpoint] | Introduction corollary: [singular_endpoint_optimizers](UpperTailOptimizers/SingularEndpoint/Proof/IntroSingularEndpointOptimizers.lean#L19) |
 | [Theorem 2.1][thm:krrs-analytic-extension] — Two-sided analytic extension of the KRR–S family | Analytic extension: [krrs_analytic_extension](UpperTailOptimizers/Preliminaries/KRRSAnalyticExtension/Extension.lean#L105) |
-| [Theorem 3.1][thm:lz-boundary] — Lubetzky–Zhao boundary | Boundary and contact geometry: [lz_boundary](UpperTailOptimizers/LZBoundary/PaperForm.lean#L472) |
+| [Theorem 3.1][thm:lz-boundary] — Lubetzky–Zhao boundary | Boundary and contact geometry: [lz_boundary](UpperTailOptimizers/LZBoundary/PaperForm.lean#L477); nonexceptional gap and exceptional gap: [lz_boundary_nonexceptional_gap](UpperTailOptimizers/LZBoundary/NonexceptionalGap.lean#L531) and [lz_boundary_exceptional_gap](UpperTailOptimizers/SingularEndpoint/ExceptionalGap.lean#L194) |
 | [Theorem 4.1][thm:nonexceptional-endpoint] — Nonexceptional optimizer structure | Uniqueness, analyticity and asymptotics: [nonexceptional_endpoint](UpperTailOptimizers/NonexceptionalEndpoint/Proof/Global.lean#L42) |
-| [Theorem 5.1][thm:singular-endpoint] — Singular endpoint optimizer structure | Family, uniqueness and both expansions: [singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/Proof/TerminalUnique.lean#L266) |
+| [Theorem 5.1][thm:singular-endpoint] — Singular endpoint optimizer structure | Family, uniqueness and both expansions: [singular_endpoint](UpperTailOptimizers/SingularEndpoint/Proof/TerminalUnique.lean#L266) |
 | [Theorem A.1][thm:krrs-bipodality] — KRR–S bipodal entropy maximizers | Bipodality and parameter family: [krrs_bipodality](UpperTailOptimizers/Preliminaries/KRRSAnalyticExtension/Bipodality.lean#L120) |
 | [Theorem A.2][thm:krrs-cross-density] — KRR–S cross density | Cross-density selector: [krrs_cross_density](UpperTailOptimizers/Preliminaries/KRRSAnalyticExtension/PsiFill.lean#L286) |
 | [Remark C.1][rmk:bipodal-parameter-expansions] — Bipodal parameter asymptotics | Parameter expansions: [bipodal_parameter_expansions](UpperTailOptimizers/NonexceptionalEndpoint/Proof/ParameterExpansions.lean#L56) |
@@ -38,7 +38,8 @@ The proofs use six axioms, together with Lean's foundational axioms
 | `Ip_cut_lowerSemicontinuous` | Lower semicontinuity of relative entropy under cut convergence |
 
 The $d$-regular restriction of KRR–S results is proved within the project.
-Some proofs use different arguments from the paper.
+Some proofs use different arguments from the paper; these are detailed in
+[FORMALIZATION.md](FORMALIZATION.md).
 
 ## Build
 
@@ -71,12 +72,12 @@ For definitions, the proof overview, detailed theorem correspondence and exact
 assumptions, read [FORMALIZATION.md](FORMALIZATION.md).
 
 <!-- Paper citations link to the corresponding source labels. -->
-[thm:nonexceptional-optimizers]: paper/sections/intro.tex#L256
-[thm:nonexceptional-endpoint]: paper/sections/nonexceptional.tex#L23
-[thm:endpoint-optimizers]: paper/sections/intro.tex#L310
-[thm:singular-endpoint]: paper/sections/singular.tex#L37
-[thm:krrs-analytic-extension]: paper/sections/preliminaries.tex#L166
-[thm:lz-boundary]: paper/sections/lz_boundary.tex#L21
+[thm:nonexceptional-optimizers]: paper/sections/intro.tex#L255
+[thm:nonexceptional-endpoint]: paper/sections/nonexceptional.tex#L24
+[thm:endpoint-optimizers]: paper/sections/intro.tex#L309
+[thm:singular-endpoint]: paper/sections/singular.tex#L38
+[thm:krrs-analytic-extension]: paper/sections/preliminaries.tex#L167
+[thm:lz-boundary]: paper/sections/lz_boundary.tex#L26
 [thm:krrs-bipodality]: paper/sections/appendix_preliminaries.tex#L12
 [thm:krrs-cross-density]: paper/sections/appendix_preliminaries.tex#L46
-[rmk:bipodal-parameter-expansions]: paper/sections/appendix_nonexceptional_endpoint.tex#L181
+[rmk:bipodal-parameter-expansions]: paper/sections/appendix_nonexceptional_endpoint.tex#L168

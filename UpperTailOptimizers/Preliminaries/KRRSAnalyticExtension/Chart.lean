@@ -3,9 +3,9 @@ import UpperTailOptimizers.Preliminaries.Graphons.Attainment
 import UpperTailOptimizers.LZBoundary.AnalyticIFT
 
 /-!
-# The bipodal parameter chart of Appendix B
+# The bipodal parameter chart of Appendix A
 
-Appendix B of `paper/paper.tex` works with the bipodal parameter
+Appendix A of `paper/paper.tex` works with the bipodal parameter
 vector
 
 `θ = (q₁₁, q₁₂, q₂₂, c)`,
@@ -58,7 +58,7 @@ noncomputable def bipEdge (θ : Theta) : ℝ :=
   θ.1 * θ.2.2.2 ^ 2 + θ.2.1 * (2 * θ.2.2.2 * (1 - θ.2.2.2)) + θ.2.2.1 * (1 - θ.2.2.2) ^ 2
 
 /-- `T_H(θ) = t(H, G_θ)`, as the labelling polynomial `tBip` of
-`NonexceptionalEndpoint/QuadraticGrowth/TDensityExpansion.lean` (the construction for `lem:bipodal-quadratic-bound`). -/
+`NonexceptionalEndpoint/QuadraticGrowth/TDensityExpansion.lean` (the construction for `lem:quadratic-upper-bound`). -/
 noncomputable def bipTd {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)
     [DecidableRel H.Adj] (θ : Theta) : ℝ := tBip H θ.1 θ.2.1 θ.2.2.1 θ.2.2.2
 

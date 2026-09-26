@@ -2,9 +2,9 @@ import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.TCalc
 import UpperTailOptimizers.LZBoundary.AnalyticIFT
 
 /-!
-# The pode-size chart `C(ε,a,b,ϑ)` of Appendix B
+# The pode-size chart `C(ε,a,b,ϑ)` of Appendix A
 
-Paragraph 2 of Appendix B of `paper/paper.tex` solves the
+Paragraph 2 of Appendix A of `paper/paper.tex` solves the
 `H`-density constraint
 
   `𝒯̂(ε,a,b,c) = ε^m + ϑ`,   `m = |E(H)|`,

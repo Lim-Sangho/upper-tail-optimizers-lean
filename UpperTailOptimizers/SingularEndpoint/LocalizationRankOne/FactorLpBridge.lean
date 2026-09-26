@@ -190,18 +190,18 @@ theorem lpBridge_dist_integral_le (F G : Lp ℝ 4 unitμ) :
     |(∫ x, F x ∂unitμ) - ∫ x, G x ∂unitμ| ≤ dist F G := by
   have hF : Integrable (⇑F) unitμ := (Lp.memLp F).integrable (by norm_num)
   have hG : Integrable (⇑G) unitμ := (Lp.memLp G).integrable (by norm_num)
-  have hsm : AEStronglyMeasurable (fun x => F x - G x) unitμ :=
+  have hsc : AEStronglyMeasurable (fun x => F x - G x) unitμ :=
     (Lp.aestronglyMeasurable F).sub (Lp.aestronglyMeasurable G)
   have htop : eLpNorm (fun x => F x - G x) 4 unitμ ≠ ⊤ := ((Lp.memLp F).sub (Lp.memLp G)).2.ne
   calc |(∫ x, F x ∂unitμ) - ∫ x, G x ∂unitμ| = |∫ x, (F x - G x) ∂unitμ| := by
         rw [integral_sub hF hG]
     _ ≤ ∫ x, |F x - G x| ∂unitμ := abs_integral_le_integral_abs
     _ = (eLpNorm (fun x => F x - G x) 1 unitμ).toReal := by
-        rw [lpBridge_toReal_eLpNorm (μ := unitμ) (p := 1) (by norm_num) (by norm_num) hsm,
+        rw [lpBridge_toReal_eLpNorm (μ := unitμ) (p := 1) (by norm_num) (by norm_num) hsc,
           show (1 : ℝ≥0∞).toReal = (1 : ℝ) by norm_num, lpBridge_Lnorm_one]
     _ ≤ (eLpNorm (fun x => F x - G x) 4 unitμ).toReal :=
-        ENNReal.toReal_mono htop (eLpNorm_le_eLpNorm_of_exponent_le (by norm_num) hsm)
-    _ = dist F G := by rw [lpBridge_dist_eq]; exact lpBridge_toReal_eLpNorm_four hsm
+        ENNReal.toReal_mono htop (eLpNorm_le_eLpNorm_of_exponent_le (by norm_num) hsc)
+    _ = dist F G := by rw [lpBridge_dist_eq]; exact lpBridge_toReal_eLpNorm_four hsc
 
 /-- The mass functional `F ↦ ∫ F` is continuous on `Lp ℝ 4 unitμ`, by
 `lpBridge_dist_integral_le`. -/

@@ -5,7 +5,7 @@ import UpperTailOptimizers.SingularEndpoint.RankOneStationaryFamily.FkktDeriv
 # The exact quartic order of `Γ_d` at `r_*` (Section 5, `paper/sections/singular.tex`)
 
 `SingularEndpoint/LocalizationRankOne/Quartic.lean` extracts from the contact identities
-`eq:endpoint-entropy-derivatives` the *one-sided* consequence
+`eq:endpoint-contact-derivatives` the *one-sided* consequence
 `Γ_d(z) ≥ c_d |z - r_*|^4`, which is all the localization argument needs.  Section 5 needs
 more: the averaged-gap display in the proof of `lem:constant-graphon-comparison`
 
@@ -86,7 +86,7 @@ private theorem continuousAt_Lstar3_rStar (hd : 2 ≤ d) : ContinuousAt (Lstar3 
 
 /-- A closed window `[r_* - δ, r_* + δ] ⊆ (0,1)` on which `Γ_d⁽⁴⁾ = 𝓛_*'''` stays within `ε`
 of its singular endpoint value `K = d⁵/(d-1)²` (`Lstar3_rStar`). -/
-private theorem exists_lstar3_band (hd : 2 ≤ d) {ε : ℝ} (hε : 0 < ε) :
+private theorem exists_Lstar3_band (hd : 2 ≤ d) {ε : ℝ} (hε : 0 < ε) :
     ∃ δ : ℝ, 0 < δ ∧ 0 < rStar d - δ ∧ rStar d + δ < 1 ∧
       ∀ x ∈ Set.Icc (rStar d - δ) (rStar d + δ),
         (d : ℝ) ^ 5 / ((d : ℝ) - 1) ^ 2 - ε ≤ Lstar3 d x ∧
@@ -125,12 +125,12 @@ private theorem exists_lstar3_band (hd : 2 ≤ d) {ε : ℝ} (hε : 0 < ε) :
 
 for all `z ∈ [r_* - δ, r_* + δ]`.  This is `quartic_lower_of_deriv4_ge` and
 `quartic_upper_of_deriv4_le` applied to `f = Γ_d` with derivatives `𝓛_*, 𝓛_*', 𝓛_*'', 𝓛_*'''`
-on the band produced by `exists_lstar3_band`. -/
-private theorem exists_gam_quartic_band (hd : 2 ≤ d) {ε : ℝ} (hε : 0 < ε) :
+on the band produced by `exists_Lstar3_band`. -/
+private theorem exists_Gam_quartic_band (hd : 2 ≤ d) {ε : ℝ} (hε : 0 < ε) :
     ∃ δ : ℝ, 0 < δ ∧ ∀ z ∈ Set.Icc (rStar d - δ) (rStar d + δ),
       ((d : ℝ) ^ 5 / ((d : ℝ) - 1) ^ 2 - ε) / 24 * (z - rStar d) ^ 4 ≤ Gam d z ∧
         Gam d z ≤ ((d : ℝ) ^ 5 / ((d : ℝ) - 1) ^ 2 + ε) / 24 * (z - rStar d) ^ 4 := by
-  obtain ⟨δ, hδ, hlo, hhi, hL3⟩ := exists_lstar3_band hd hε
+  obtain ⟨δ, hδ, hlo, hhi, hL3⟩ := exists_Lstar3_band hd hε
   have hmem : ∀ x ∈ Set.Icc (rStar d - δ) (rStar d + δ), 0 < x ∧ x < 1 := by
     intro x hx
     exact ⟨by linarith [hx.1], by linarith [hx.2]⟩
@@ -171,7 +171,7 @@ theorem tendsto_Gam_div_pow_four (hd : 2 ≤ d) :
       (𝓝 ((d : ℝ) ^ 5 / ((d : ℝ) - 1) ^ 2 / 24)) := by
   rw [Metric.tendsto_nhds]
   intro ε hε
-  obtain ⟨δ, hδ, hband⟩ := exists_gam_quartic_band hd hε
+  obtain ⟨δ, hδ, hband⟩ := exists_Gam_quartic_band hd hε
   have hIcc : Set.Icc (rStar d - δ) (rStar d + δ) ∈ 𝓝[≠] (rStar d) :=
     nhdsWithin_le_nhds (Icc_mem_nhds (by linarith) (by linarith))
   filter_upwards [self_mem_nhdsWithin, hIcc] with z hzne hzmem
@@ -207,7 +207,7 @@ shows the middle block contributes `o(h⁴)`. -/
 theorem Gam_le_of_near (hd : 2 ≤ d) :
     ∃ C δ : ℝ, 0 < C ∧ 0 < δ ∧
       ∀ z ∈ Set.Icc (rStar d - δ) (rStar d + δ), Gam d z ≤ C * (z - rStar d) ^ 4 := by
-  obtain ⟨δ, hδ, hband⟩ := exists_gam_quartic_band hd (ε := 1) one_pos
+  obtain ⟨δ, hδ, hband⟩ := exists_Gam_quartic_band hd (ε := 1) one_pos
   exact ⟨((d : ℝ) ^ 5 / ((d : ℝ) - 1) ^ 2 + 1) / 24, δ, by positivity, hδ,
     fun z hz => (hband z hz).2⟩
 

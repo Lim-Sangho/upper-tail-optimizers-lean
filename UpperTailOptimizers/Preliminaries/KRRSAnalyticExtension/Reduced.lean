@@ -3,9 +3,9 @@ import UpperTailOptimizers.LZBoundary.AnalyticEntropy
 import UpperTailOptimizers.Preliminaries.Graphons.ScalarEntropy
 
 /-!
-# The scalar objects of Appendix B
+# The scalar objects of Appendix A
 
-Appendix B of `paper/paper.tex` runs a finite-dimensional
+Appendix A of `paper/paper.tex` runs a finite-dimensional
 calculation in the four bipodal parameters.  This file sets up the scalar functions it
 uses — everything that appears in its paragraphs 1 and 2 as a *definition* — together
 with their derivatives and analyticity.  Nothing here is assumed; the two KRR–S inputs

@@ -18,8 +18,8 @@ $m=vd/2$ edges; in particular $m\ge3$.  For a graphon $W$ write
   t(H,W)=\int_{[0,1]^{V(H)}}\prod_{ij\in E(H)}W(x_i,x_j)\,dx,\qquad
   s(W)=\iint S_0(W),
 \]
-with $S_0(u)=-\tfrac12[u\log u+(1-u)\log(1-u)]$, so that
-$S_0''(u)=-1/(2u(1-u))\le-2$.  For $\eps\in(0,1)$ let $\delta W:=W-\eps$ and
+with $S_0(z)=-\tfrac12[z\log z+(1-z)\log(1-z)]$, so that
+$S_0''(z)=-1/(2z(1-z))\le-2$.  For $\eps\in(0,1)$ let $\delta W:=W-\eps$ and
 \[
   \mathcal C(\eps,\vartheta)
   :=\{W:\ e(W)=\eps,\ t(H,W)=\eps^m+\vartheta\}.
@@ -91,7 +91,7 @@ $\eps_0$ fixed once and for all, and may change from line to line.
 \label{kb:sec:base}
 
 Recall \eqref{eq:krrs-second-coefficient}.  Since
-$S_0'(u)=\tfrac12\log\frac{1-u}{u}$ is a strictly decreasing bijection
+$S_0'(z)=\tfrac12\log\frac{1-z}{z}$ is a strictly decreasing bijection
 $(0,1)\to\RR$, with inverse $\lambda(y):=(1+e^{2y})^{-1}$, the following
 definition makes sense.
 
@@ -321,26 +321,26 @@ maximality for small $h$; the set $\{W=1\}$ is treated symmetrically.
 
 Write $\psi_*:=\psi_d(\eps,\zeta)<0$ and define the \emph{gap function}
 \[
-  \Gamma^{\mathrm{gap}}_\eps(u):=\psi_*\,\mathcal D_\eps(u)-\mathcal N_\eps(u),
-  \qquad u\in[0,1].
+  \Gamma^{\mathrm{gap}}_\eps(z):=\psi_*\,\mathcal D_\eps(z)-\mathcal N_\eps(z),
+  \qquad z\in[0,1].
 \]
 
 \begin{lemma}[Gap function]\label{kb:lem:gap}
 $\Gamma^{\mathrm{gap}}_\eps\ge0$ on $[0,1]$, its zeros are exactly $\eps$ and
 $\zeta$, and there is $\kappa>0$, uniform for $\eps$ in a compact subset of
 $(0,1)\setminus\{\eps_*\}$, with
-$\Gamma^{\mathrm{gap}}_\eps(u)\ge\kappa\min\{(u-\eps)^2,(u-\zeta)^2\}$.
+$\Gamma^{\mathrm{gap}}_\eps(z)\ge\kappa\min\{(z-\eps)^2,(z-\zeta)^2\}$.
 \end{lemma}
 
 \begin{proof}
-For $u\ne\eps$, $\mathcal D_\eps(u)>0$ and $\psi_d(\eps,u)\le\psi_*$ with
-equality only at $u=\zeta$ (\Cref{thm:krrs-cross-density}); this gives
+For $z\ne\eps$, $\mathcal D_\eps(z)>0$ and $\psi_d(\eps,z)\le\psi_*$ with
+equality only at $z=\zeta$ (\Cref{thm:krrs-cross-density}); this gives
 nonnegativity and the zero set.  Both zeros are double:
 $(\Gamma^{\mathrm{gap}}_\eps)'(\zeta)=\psi_*\mathcal D_\eps'(\zeta)
 -\mathcal N_\eps'(\zeta)=0$ because $\mathcal N'/\mathcal D'=\mathcal N/\mathcal D$ at
 a critical point, and
-$(\Gamma^{\mathrm{gap}}_\eps)''(u)=\mathcal D''(u)\bigl(\psi_*-R_d(u)\bigr)$ is
-positive at $u=\eps$ and $u=\zeta$ because $R_d(\eps),R_d(\zeta)<\psi_*$ at a
+$(\Gamma^{\mathrm{gap}}_\eps)''(z)=\mathcal D''(z)\bigl(\psi_*-R_d(z)\bigr)$ is
+positive at $z=\eps$ and $z=\zeta$ because $R_d(\eps),R_d(\zeta)<\psi_*$ at a
 critical pair (the sign statement proved for Step~2 of
 \Cref{thm:krrs-cross-density}).  Continuity and compactness give $\kappa$.
 \end{proof}
@@ -453,7 +453,7 @@ $\vartheta=v\eps^{m-d}\int\mathcal D_\eps(d_W)+o(\vartheta)
 
 \begin{lemma}[One-row factorization]\label{kb:lem:pinned}
 Let $R_c(y):=\int_0^1|W(y,t)-c|\,dt$, $\kappa:=\|W-\eps\|_1=\int R_\eps$ and
-$\gamma(u):=m\eps^{m-d}u^{d-1}$.  For $ab\in E(H)$, all $x,y$ and every vertex $i$,
+$\gamma(z):=m\eps^{m-d}z^{d-1}$.  For $ab\in E(H)$, all $x,y$ and every vertex $i$,
 \[
   \bigl|t_{ab}(W;x,y)-\eps^{m-d}d_W(x)^{d-1}\bigr|\le m\bigl(R_\eps(y)+\kappa\bigr),
   \qquad
@@ -610,7 +610,7 @@ Let $W$ be as in \Cref{kb:lem:row} with $e(W)=\eps$, write $\kappa=\|W-\eps\|_1$
 $\lambda=(S_0')^{-1}$ and
 \[
   w(x):=\lambda\bigl(\alpha+\beta\gamma(d_W(x))\bigr),\qquad
-  \varphi_{\alpha,\beta}(u):=2S_0(u)-2\alpha u-\beta\,v\eps^{m-d}u^d .
+  \varphi_{\alpha,\beta}(z):=2S_0(z)-2\alpha z-\beta\,v\eps^{m-d}z^d .
 \]
 Call $x$ \emph{regular} if \eqref{kb:eq:el} holds at $(x,y)$ for a.e.\ $y$; almost every $x$ is
 regular.
@@ -635,18 +635,18 @@ $|t^{(i)}_W(x)-\eps^{m-d}d_W(x)^d|\le m\kappa$ by \Cref{kb:lem:pinned}.
 \end{proof}
 
 \begin{lemma}[Limiting profile]\label{kb:lem:profile}
-$\varphi_{\alpha_0,\beta_0}(u)=\varphi_{\alpha_0,\beta_0}(\eps)-\Gamma^{\mathrm{gap}}_\eps(u)$;
+$\varphi_{\alpha_0,\beta_0}(z)=\varphi_{\alpha_0,\beta_0}(\eps)-\Gamma^{\mathrm{gap}}_\eps(z)$;
 $|\varphi_{\alpha,\beta}-\varphi_{\alpha_0,\beta_0}|\le2|\alpha-\alpha_0|+v|\beta-\beta_0|$ on $[0,1]$;
-and if $\eps\in[\eta,1-\eta]$ and $|u-\eps|\le\eta/2$ then
-$\Gamma^{\mathrm{gap}}_\eps(u)\le\frac4\eta(u-\eps)^2$.
+and if $\eps\in[\eta,1-\eta]$ and $|z-\eps|\le\eta/2$ then
+$\Gamma^{\mathrm{gap}}_\eps(z)\le\frac4\eta(z-\eps)^2$.
 \end{lemma}
 
 \begin{proof}
 By \Cref{kb:lem:beta0}, $\beta_0v\eps^{m-d}=\psi_*$, so the difference of the two sides of the
-identity is affine in $u$, vanishes at $u=\eps$, and has slope
+identity is affine in $z$, vanishes at $z=\eps$, and has slope
 $2S_0'(\eps)-2\alpha_0-\psi_*d\eps^{d-1}=2\beta_0\gamma(\eps)-\beta_0vd\,\eps^{m-1}=0$ since
 $vd=2m$.  The second claim is immediate.  For the third, $\psi_*<0\le\mathcal D_\eps$ and
-$-\mathcal N_\eps(u)\le\frac4\eta(u-\eps)^2$ by \eqref{kb:eq:first-variation-s} in one variable.
+$-\mathcal N_\eps(z)\le\frac4\eta(z-\eps)^2$ by \eqref{kb:eq:first-variation-s} in one variable.
 \end{proof}
 
 \begin{proposition}[Two clusters]\label{kb:prop:pointwise}
@@ -745,7 +745,7 @@ below near $\eps_0$; choose $\delta$ and then $\vartheta$ small.
 \label{kb:sec:ident}
 
 Let $P_0$ bound $|\alpha|+|\beta|m$ uniformly, so that the first-pode density of every maximizer
-lies in the compact $K:=[\lambda(P_0),\lambda(-P_0)]\subset(0,1)$.
+lies in the compact $K:=[\lambda(P_0),\lambda(-P_0)]\subseteq(0,1)$.
 
 \emph{Stationarity, uniformly in $a$.}  For each $a'\in K$ the pode-size chart of Appendix~A
 at $(\eps_0,a',\zeta_0,0)$ and the reduction of paragraph~3 (graphon maximality of a bipodal

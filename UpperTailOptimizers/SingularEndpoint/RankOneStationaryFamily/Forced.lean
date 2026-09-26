@@ -17,7 +17,7 @@ Coalescence means that the three roots `s²`, `st`, `t²` of `eq:three-value-kkt
 merge at a common interior value `w`.  In the limit, the rank-one scalar KKT function
 `F_{p,γ}(z) = J_p'(z) - γ z^{d-1}` of `eq:rank-one-kkt` therefore has a
 **triple zero** at `w`, which is exactly the system
-`eq:endpoint-entropy-derivatives`.  The content of this file is the converse of
+`eq:endpoint-contact-derivatives`.  The content of this file is the converse of
 `SingularEndpoint/RankOneStationaryFamily/Contact.lean`: a triple zero can only sit at `(w, p, γ) = (r_*, p_*, γ_*)`.
 
 The key computation is `triple_zero_abscissa`.  Eliminating `γ` between the second and the
@@ -65,7 +65,7 @@ theorem ell_injOn : Set.InjOn ell (Set.Ioo (0 : ℝ) 1) :=
 
 /-- **The forced abscissa.**  If the rank-one KKT function `F_{p,γ}` has a zero of order at
 least three at an interior point `w` — so that the second and third equations of
-`eq:endpoint-entropy-derivatives` hold at `w` with multiplier `γ` — then `w = r_*`.
+`eq:endpoint-contact-derivatives` hold at `w` with multiplier `γ` — then `w = r_*`.
 
 Only the last two contact equations are used; the density `p` never enters, since
 `J_p''` and `J_p^{(3)}` do not depend on `p`.  Eliminating `γ` gives

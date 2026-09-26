@@ -44,7 +44,7 @@ variable {d : ℕ}
 /-! ## The displacement identity for increments of `𝓜` -/
 
 /-- **Increments of `𝓜_{p,γ}` in terms of `Γ_d`.**  Combining `eq:entropy-parameter-shift`
-(`Jp_eq_Jp_pStar_add`) with `eq:endpoint-supporting-gap` (`Jp_pStar_eq_gam`),
+(`Jp_eq_Jp_pStar_add`) with `eq:endpoint-supporting-gap` (`Jp_pStar_eq_Gam`),
 
   `𝓜_{p,γ}(z) - 𝓜_{p,γ}(z') = (Γ_d(z) - Γ_d(z')) + (ℓ(p)-ℓ_*)(z - z')
       - \frac{γ - γ_*}{d}(z^d - z'^d)`.
@@ -59,7 +59,7 @@ theorem Mfun_sub_eq (hd : 2 ≤ d) {p γ : ℝ} (hp0 : 0 < p) (hp1 : p < 1)
   have hdne : (d : ℝ) ≠ 0 := ne_of_gt (dpos hd)
   have hb : betaD d = gammaStar d / (d : ℝ) := rfl
   rw [Mfun, Mfun, Jp_eq_Jp_pStar_add hd hp0 hp1 hz0 hz1,
-    Jp_eq_Jp_pStar_add hd hp0 hp1 hz0' hz1', Jp_pStar_eq_gam d z, Jp_pStar_eq_gam d z', hb]
+    Jp_eq_Jp_pStar_add hd hp0 hp1 hz0' hz1', Jp_pStar_eq_Gam d z, Jp_pStar_eq_Gam d z', hb]
   field_simp
   ring
 

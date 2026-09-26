@@ -2,10 +2,10 @@ import UpperTailOptimizers.NonexceptionalEndpoint.QuadraticGrowth.AnalyticTools
 import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.Extension
 
 /-!
-# The full `thm:positive-second-variation`: the analytic second variation `A_H`
+# The full `thm:boundary-excess-expansion`: the analytic quadratic coefficient `A_H`
 
-This file completes Section 4.2 of `paper/paper.tex` by proving its **`thm:positive-second-variation`**
-("Universal positivity of the scalar second variation", eq. `eq:boundary-excess-expansion`):
+This file completes Section 4.2 of `paper/paper.tex` by proving its **`thm:boundary-excess-expansion`**
+("Quadratic expansion of the boundary excess", eq. `eq:boundary-excess-expansion`):
 uniformly for `r` in a compact subarc `K` (the paper's open interval `I`, up to closure),
 
 `G_r(δ) = ½ A_H(r) δ² + O_K(δ³)`,
@@ -26,7 +26,7 @@ with the **chart function**
 `ε = r - δ`, `t = r^m - ε^m`, where `Σ` is the bipodal entropy formula composed with
 the analytic KRRS parameter maps — a function jointly analytic near `(r₀, 0)`.
 
-The second-variation coefficient is *defined* chart-independently as the right limit
+The quadratic coefficient is *defined* chart-independently as the right limit
 
 `AH H M r = lim_{δ ↓ 0} 2 G_r(δ)/δ²` (`limUnder`),
 
@@ -43,15 +43,15 @@ are the analytically extended KRR–S parameter maps of `krrs_analytic_extension
 `boundaryExcess_chart`, which carries only the clauses about `Gc`:
 analyticity of `Gc` and of its `δ`-derivative on a **two-sided** box in `δ`, the boundary
 values `Gc(r,0) = ∂_δ Gc(r,0) = 0` and `∂²_δ Gc(r,0) = A_H(r)`, and the two-sided Lipschitz
-bound `|∂²_δ Gc(r,δ) - A_H(r)| ≤ Mc |δ|` (the paper's `eq:boundary-excess-curvature`,
-`|∂²_δG(r,δ) - A_H(r)| ≤ C₂|δ|`).
+bound `|∂²_δ Gc(r,δ) - A_H(r)| ≤ Mc |δ|` (a quantitative form of the bound on `∂³_δG` used in
+the paper's proof).
 -/
 
 namespace UpperTailOptimizers
 
 open MeasureTheory Real Set Filter Topology
 
-/-- **The second-variation coefficient `A_H`** of the boundary excess (`thm:positive-second-variation`):
+/-- **The quadratic coefficient `A_H`** of the boundary excess (`thm:boundary-excess-expansion`):
 the right limit `A_H(r) = lim_{δ↓0} 2 G_r(δ)/δ²`.  This definition is global and
 chart-independent; on a Lubetzky–Zhao boundary arc it agrees with `∂²_δ` of the analytic extension
 of `G_r` (`boundaryExcess_taylor`). -/
@@ -724,8 +724,8 @@ four Kenyon–Radin–Ren–Sadun parameter maps `q₁₁, q₁₂, q₂₂, c` 
   (one-sided: the regime needs a strictly positive `H`-density excess);
 * the degenerate boundary values `Gc(r,0) = 0`, `∂_δ Gc(r,0) = 0`,
   `∂²_δ Gc(r,0) = A_H(r)`;
-* the **two-sided** Lipschitz control `|∂²_δ Gc(r,δ) - A_H(r)| ≤ Mc |δ|`, i.e. the paper's
-  `eq:boundary-excess-curvature`;
+* the **two-sided** Lipschitz control `|∂²_δ Gc(r,δ) - A_H(r)| ≤ Mc |δ|`, a quantitative form of
+  the bound on `∂³_δG` used in the paper's proof;
 * the cubic Taylor bound `|G_r(δ) - A_H(r) δ²/2| ≤ Mc δ³`;
 * joint analyticity, in `(r, δ)`, of the four parameter maps evaluated at the chart
   substitution `(ε, τ - ε^m) = (r - δ, r^m - (r-δ)^m)`, their interior values, their
@@ -733,7 +733,7 @@ four Kenyon–Radin–Ren–Sadun parameter maps `q₁₁, q₁₂, q₂₂, c` 
   Kenyon–Radin–Ren–Sadun regime — the fact that the concrete two-block graphon they describe
   **is** the fixed-`(e, t_H)` entropy maximizer.
 
-This is the chart form of `thm:positive-second-variation`; the two-sided clauses are what Section 4 needs (the
+This is the chart form of `thm:boundary-excess-expansion`; the two-sided clauses are what Section 4 needs (the
 critical point `δ_*(p,r)` of the tilted objective must be located by an implicit function
 theorem in a full neighbourhood of `δ = 0`, and its sign read off from a mean value estimate),
 and the parameter clauses are what the analyticity and block-size assertions of
@@ -895,13 +895,13 @@ theorem krrs_parameter_lipschitz {m : ℕ} {q11 q12 q22 cc : ℝ → ℝ → ℝ
   · rw [hL_def]; exact le_trans (le_max_left _ _) (le_max_right _ _)
   · rw [hL_def]; exact le_trans (le_max_right _ _) (le_max_right _ _)
 
-/-- **`thm:positive-second-variation` of `paper/paper.tex`, full form** ("Universal positivity of the scalar
-second variation").  Uniformly for `r` in a compact subarc `K` avoiding the exceptional
+/-- **`thm:boundary-excess-expansion` of `paper/paper.tex`, full form** ("Quadratic expansion of the
+boundary excess").  Uniformly for `r` in a compact subarc `K` avoiding the exceptional
 density: the boundary excess has the expansion
 
 `G_r(δ) = ½ A_H(r) δ² + O_K(δ³)`
 
-with second-variation coefficient `A_H` (the definition `AH`, a chart-independent right
+with quadratic coefficient `A_H` (the definition `AH`, a chart-independent right
 limit) that is **real-analytic at every `r ∈ K`** and **uniformly positive**
 (`A_H ≥ CA > 0` on `K`, i.e. bounded away from zero).  Consumes `generalized_holder`
 (through the quadratic lower bound and the chart) together with the footprint of

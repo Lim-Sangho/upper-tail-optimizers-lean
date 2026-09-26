@@ -17,17 +17,18 @@ and `m = |E(H)| ≥ 1`. It minimizes the relative entropy `I_p(W)` subject to
 | `e(W)` and `t(H,W)` | `Graphon.edgeDensity` and `Graphon.tDensity`. Homomorphism density integrates one kernel value per unordered edge of `H`. |
 | `J_p`, `I_p` and `s(W)` | `Jp`, `Graphon.Ip` and `Graphon.entropy`. Only `s(W)` includes the factor `1/2`, giving the coefficient `−2` in [Eq. (7)][eq:relative-entropy-identity]. |
 | `Φ_H(p,r)` | `phiVar H p r`, the infimum over `Feasible H r W`. `phiVar_isGLB` proves that it is the infimum of a nonempty, bounded-below set for `0 < p < 1` and `r ∈ [0,1]`. |
-| `S_H(ε,τ)` and `I_{p,r}(ε)` | `entropyEnvelope` and `reducedObjective`, valued in `EReal`. Empty constraint sets give `−∞` and `+∞`, respectively. Their `Real` variants agree on nonempty slices. |
+| `S(ε,τ)` and `I_{p,r}(ε)` | `entropyEnvelope` and `reducedObjective`, valued in `EReal`. Empty constraint sets give `−∞` and `+∞`, respectively. Their `Real` variants agree on nonempty slices. |
 | Bipodality and relabeling | `IsBipodal` means a.e. agreement with a three-value kernel on two measurable blocks. `IsRelabelling` is measure preserving and has an a.e. inverse. Optimizer uniqueness is stated up to such relabelings. |
 | Cut distance and the graphon space | `cutDist` is a pseudometric; `GraphonSpace` is its metric quotient. A.e. equality after relabeling implies equality in this quotient. |
-| `pc(r)`, `sm(r)`, `A_H(r)` and `λ(p,r)` | `pcGlobal`, `smGlobal`, `AHGlobal` and `lambdaGlobal`: the boundary curve, second contact density, second-variation coefficient and log-odds displacement. |
+| `p_c(r)`, `s_c(r)`, `A_H(r)` and `λ(p,r)` | `pcGlobal`, `scGlobal`, `AHGlobal` and `lambdaGlobal`: the boundary curve, second contact density, quadratic coefficient of the boundary excess and log-odds displacement. |
+| `g_{d,r}(z)` and `Γ_d(z)` | `gapD` and `Gam`: the supporting cost gap in the density variable and its value at the exceptional density, with `gapD d (rStar d) = Gam d`. `gapD1`, `gapD2`, `gapD3` are its `z`-derivatives. |
 | The convex minorant and its contacts | `lce` is the lower convex envelope. `uMinus`, `uPlus`, `contactXa` and `contactXb` name the zeros and contacts used in the Lubetzky–Zhao boundary theorem. |
 | `ζ_d(ε)` and `ψ_d(ε,z)` | `zetaFun` is the cross-density selector. `psiFill` fills the removable singularity of the scalar quotient at `z = ε` with its continuous value. |
 | The rank-one family | `KKTFamily d` contains the analytic parameters, base values, symmetries and KKT equations. It depends on `d`; the graph enters the optimality statement. |
 
 The **exceptional density** is `r_* = (d−1)/d`. The **singular endpoint** is the
-boundary point `(pc(r_*), r_*)`, where the two contacts merge. At other boundary
-points, `λ(p,r)` measures displacement into the symmetry-breaking region `p < pc(r)`.
+boundary point `(p_c(r_*), r_*)`, where the two contacts merge. At other boundary
+points, `λ(p,r)` measures displacement into the symmetry-breaking region `p < p_c(r)`.
 The singular endpoint family instead uses `h`, half the difference between the two
 values of its rank-one factor.
 
@@ -57,11 +58,11 @@ estimate to force two classes of identical rows. Together these give
 The [local reduction](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/) shows that an upper-tail
 optimizer has `t(H,W) = r^m` and lies in this fixed-density regime. Thus its only
 remaining choice is the edge density `ε`, or equivalently the deficit `δ = r − ε`.
-[Corollary 4.6][cor:scalar-reduction] identifies the graphon optimizers with the scalar minimizers.
+[Corollary 4.6][cor:one-dimensional-reduction] identifies the graphon optimizers with the scalar minimizers.
 
-The [second-variation estimates](UpperTailOptimizers/NonexceptionalEndpoint/QuadraticGrowth/) show that the
+The [quadratic-growth estimates](UpperTailOptimizers/NonexceptionalEndpoint/QuadraticGrowth/) show that the
 boundary cost has a positive quadratic term. Writing
-`G_r(δ) = I_{pc(r),r}(r−δ) − J_{pc(r)}(r)`, the exact identity
+`G_r(δ) = I_{p_c(r),r}(r−δ) − J_{p_c(r)}(r)`, the exact identity
 
 `I_{p,r}(r−δ) − J_p(r) = G_r(δ) − λ(p,r)δ`
 
@@ -136,15 +137,52 @@ statements are derived from boundary arcs, which provide the local analytic data
 
 | Paper result | Lean declaration |
 |---|---|
-| [Theorem 3.1][thm:lz-boundary] — Lubetzky–Zhao boundary | Boundary and contacts: [lz_boundary](UpperTailOptimizers/LZBoundary/PaperForm.lean#L472) |
-| [Lemma 3.2][lem:convexity-defect] — Convexity defect | Curvature and its zeros: [convexity_defect_zeros](UpperTailOptimizers/LZBoundary/PaperForm.lean#L96) |
-| [Lemma 3.3][lem:contact-points] — Contact points | Contact functions: [contact_points](UpperTailOptimizers/LZBoundary/PaperForm.lean#L246) |
-| [Lemma 3.4][lem:contact-point-limits] — Contact-point limits | Limiting values: [contact_point_limits](UpperTailOptimizers/LZBoundary/PaperForm.lean#L356) |
+| [Theorem 3.1][thm:lz-boundary] — Lubetzky–Zhao boundary | (M1)–(M2), boundary and contacts: [lz_boundary](UpperTailOptimizers/LZBoundary/PaperForm.lean#L477), with the analyticity through `r_*`: [lz_boundary_analytic](UpperTailOptimizers/LZBoundary/Merge/CurveAnalytic.lean#L425); (M3), the nonexceptional gap: [lz_boundary_nonexceptional_gap](UpperTailOptimizers/LZBoundary/NonexceptionalGap.lean#L531), assembled from the curvature bounds [exists_nonexceptional_gap_curvature_bounds](UpperTailOptimizers/LZBoundary/NonexceptionalGap.lean#L254), the quadratic expansion [exists_nonexceptional_gap_expansion](UpperTailOptimizers/LZBoundary/NonexceptionalGap.lean#L353) and the quadratic lower bound [exists_nonexceptional_gap_quadratic_lower](UpperTailOptimizers/LZBoundary/NonexceptionalGap.lean#L472); (M4), the exceptional gap: [lz_boundary_exceptional_gap](UpperTailOptimizers/SingularEndpoint/ExceptionalGap.lean#L194), assembled from the quartic expansion [exists_exceptional_gap_expansion](UpperTailOptimizers/SingularEndpoint/ExceptionalGap.lean#L104) and the quartic lower bound [exists_exceptional_gap_quartic_lower](UpperTailOptimizers/SingularEndpoint/LocalizationRankOne/Quartic.lean#L155) |
+| [Lemma 3.2][lem:convexity-defect] — Convexity defect | Curvature and its zeros: [convexity_defect_zeros](UpperTailOptimizers/LZBoundary/PaperForm.lean#L95) |
+| [Lemma 3.3][lem:contact-points] — Contact points | Contact functions: [contact_points](UpperTailOptimizers/LZBoundary/PaperForm.lean#L244); their limits as `p ↑ p_*` and `p ↓ 0`: [contact_point_limits](UpperTailOptimizers/LZBoundary/PaperForm.lean#L354) |
 
-The local data are constructed by [lz_boundary_arcs](UpperTailOptimizers/LZBoundary/Existence.lean#L3137) and stored in
-`LZBoundaryArc`. For individual clauses of Theorem 3.1, [lz_boundary_M2_lce](UpperTailOptimizers/LZBoundary/PaperForm.lean#L390)
-provides the convex-minorant criterion and [lz_boundary_quadSep](UpperTailOptimizers/LZBoundary/PaperForm.lean#L426) provides uniform
-quadratic separation.
+The local data are constructed by [lz_boundary_arcs](UpperTailOptimizers/LZBoundary/Existence.lean#L3139) and stored in
+`LZBoundaryArc`. For individual clauses of Theorem 3.1, [lz_boundary_M1_lce](UpperTailOptimizers/LZBoundary/PaperForm.lean#L388)
+provides the convex-minorant criterion of (M1) and [lz_boundary_quadSep](UpperTailOptimizers/LZBoundary/PaperForm.lean#L425) provides uniform
+quadratic separation in the `x` coordinate.
+
+The gap of (M3)–(M4) is measured in the density variable: `gapD` is the paper's `g_{d,r}`, with
+`gapD1`, `gapD2`, `gapD3` its `z`-derivatives, and `Gam` is the exceptional gap `Γ_d`, which
+[gapD_rStar](UpperTailOptimizers/SingularEndpoint/ExceptionalGap.lean#L60) identifies with
+`gapD d (rStar d)`. At a contact density `u`,
+[gapD2_contact](UpperTailOptimizers/LZBoundary/DensityGap.lean#L212) proves the paper's formula
+`g_{d,r}''(u) = h_{p_c(r),d}(u)/u`.
+
+`lz_boundary_nonexceptional_gap` and `lz_boundary_exceptional_gap` are deliberate twins, with matching
+conjuncts in the same order: the gap as the tangent defect, its nonnegativity and zero set, the
+curvature data, the local expansion, and the global lower bound. They are the entry points for
+comparing the quadratic regime of Section 4 with the quartic regime of Section 5 — the
+nonexceptional gap grows like `(z − u)²` at each of two contacts, the exceptional gap like
+`(z − r_*)⁴` at the merged one.
+Each named part carries the same `nonexceptional`/`exceptional` pairing:
+`exists_nonexceptional_gap_expansion` ↔ `exists_exceptional_gap_expansion` and
+`exists_nonexceptional_gap_quadratic_lower` ↔ `exists_exceptional_gap_quartic_lower`.
+
+The analyticity of `pc` and `sc` **through** the exceptional density, asserted in (M1), is
+[lz_boundary_analytic](UpperTailOptimizers/LZBoundary/Merge/CurveAnalytic.lean#L425). Away from `r_*`
+it comes from the contact maps
+([analyticAt_pcGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L391),
+[analyticAt_scGlobal](UpperTailOptimizers/LZBoundary/Curve.lean#L695)); at `r_*` the two contacts
+merge and both the contact system and the selector equation degenerate, so the files in
+[LZBoundary/Merge/](UpperTailOptimizers/LZBoundary/Merge/) normalize them first. Writing
+`z = ε + u`, the entropy and moment remainders of the Kenyon–Radin–Ren–Sadun selector each lose a
+factor `u²` — the entropy one through the filled quotient
+[bennett](UpperTailOptimizers/LZBoundary/Merge/Bennett.lean#L238) of `((1+x)log(1+x) - x)/x²`, the
+moment one through a polynomial — so the critical-point equation `Wr = 0` becomes
+`u⁴ · What d ε u = 0` ([Wr_shift](UpperTailOptimizers/LZBoundary/Merge/Critical.lean#L50)) with
+`What` jointly analytic. At `(r_*, 0)` it vanishes with a **negative** `u`-derivative, equal to
+`-d⁴(d-1)r_*^{d-4}/24`
+([deriv_What_rStar_neg](UpperTailOptimizers/LZBoundary/Merge/ZetaAnalytic.lean#L109)), so the
+analytic implicit function theorem gives an analytic solution branch that the uniqueness clause
+identifies with `sc`
+([analyticAt_scGlobal_rStar](UpperTailOptimizers/LZBoundary/Merge/CurveAnalytic.lean#L73)). The
+equal-slope identity at the second contact, normalized the same way, then gives `pc`
+([analyticAt_pcGlobal_rStar](UpperTailOptimizers/LZBoundary/Merge/CurveAnalytic.lean#L228)).
 
 ### Nonexceptional optimizers
 
@@ -155,17 +193,16 @@ family to prove uniqueness and asymptotics on one neighborhood.
 | Paper result | Lean declaration |
 |---|---|
 | [Theorem 4.1][thm:nonexceptional-endpoint] — Optimizer structure | Uniqueness, analyticity and asymptotics: [nonexceptional_endpoint](UpperTailOptimizers/NonexceptionalEndpoint/Proof/Global.lean#L42) |
-| [Lemma 4.2][lem:active-constraint] — Active density constraint | Equality `t(H,W) = r^m`: [active_constraint](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/Main.lean#L275) |
-| [Lemma 4.3][lem:edge-density-deficit] — Strict edge-density deficit | Inequality `e(W) < r`: [edge_density_deficit](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/Global.lean#L99) |
-| [Lemma 4.4][lem:boundary-convergence] — Boundary convergence | Cut and edge-density convergence: [boundary_convergence](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/Global.lean#L113) |
-| [Lemma 4.5][lem:fixed-density-bipodality] — Localization and bipodality | Fixed-density optimizers: [fixed_density_bipodality](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/Global.lean#L617) |
-| [Corollary 4.6][cor:scalar-reduction] — One-dimensional reduction | Bijection of minimizers: [one_dimensional_reduction](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/Global.lean#L326) |
-| [Lemma 4.7][lem:scalar-quadratic-bound] — Scalar quadratic lower bound | Uniform lower bound: [scalar_quadratic_bound_Icc](UpperTailOptimizers/NonexceptionalEndpoint/QuadraticGrowth/Global.lean#L251) |
-| [Corollary 4.8][prop:graphon-quadratic-bound] — Graphon quadratic lower bound | Bound with the constants of Lemma 4.7: [graphon_quadratic_bound_Icc](UpperTailOptimizers/NonexceptionalEndpoint/QuadraticGrowth/Global.lean#L290) |
-| [Lemma 4.9][lem:bipodal-quadratic-bound] — Bipodal quadratic upper bound | Bipodal competitor: [bipodal_quadratic_bound](UpperTailOptimizers/NonexceptionalEndpoint/QuadraticGrowth/Global.lean#L313) |
-| [Theorem 4.10][thm:positive-second-variation] — Positive second variation | Analytic extension and Taylor bounds: [positive_second_variation_interval](UpperTailOptimizers/NonexceptionalEndpoint/QuadraticGrowth/Global.lean#L344) |
+| [Lemma 4.2][lem:active-constraint] — Active density constraint | Equality `t(H,W) = r^m`: [active_constraint](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/Main.lean#L277) |
+| [Lemma 4.3][lem:edge-density-deficit] — Strict edge-density deficit | Inequality `e(W) < r`: [edge_density_deficit](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/Global.lean#L107) |
+| [Lemma 4.4][lem:boundary-convergence] — Boundary convergence | Cut and edge-density convergence: [boundary_convergence](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/Global.lean#L121) |
+| [Lemma 4.5][lem:fixed-density-bipodality] — Localization and bipodality | Fixed-density optimizers: [fixed_density_bipodality](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/Global.lean#L625) |
+| [Corollary 4.6][cor:one-dimensional-reduction] — One-dimensional reduction | Bijection of minimizers: [one_dimensional_reduction](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/Global.lean#L334) |
+| [Lemma 4.7][lem:quadratic-lower-bound] — Quadratic lower bound | Scalar bound: [scalar_quadratic_bound_Icc](UpperTailOptimizers/NonexceptionalEndpoint/QuadraticGrowth/Global.lean#L252); graphon form: [graphon_quadratic_bound_Icc](UpperTailOptimizers/NonexceptionalEndpoint/QuadraticGrowth/Global.lean#L291) |
+| [Lemma 4.8][lem:quadratic-upper-bound] — Quadratic upper bound | Bipodal competitor: [bipodal_quadratic_bound](UpperTailOptimizers/NonexceptionalEndpoint/QuadraticGrowth/Global.lean#L314) |
+| [Theorem 4.9][thm:boundary-excess-expansion] — Quadratic expansion of the boundary excess | Analytic extension and Taylor bounds: [positive_second_variation_interval](UpperTailOptimizers/NonexceptionalEndpoint/QuadraticGrowth/Global.lean#L346) |
 
-[uniform_scalar_reduction](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/Global.lean#L530) combines localization with scalar minimization.
+[uniform_scalar_reduction](UpperTailOptimizers/NonexceptionalEndpoint/LocalReduction/Global.lean#L538) combines localization with scalar minimization.
 [local_structure](UpperTailOptimizers/NonexceptionalEndpoint/Proof/Main.lean#L354) collects the optimizer conclusions as a structure;
 `nonexceptional_endpoint` states them on one common open neighborhood.
 The coefficient identity `A_H(r) = ∂²_δG(r,0)` is
@@ -179,14 +216,14 @@ constants depending on `d` or `(d,m)` are chosen before the graph, as in the pap
 
 | Paper result | Lean declaration |
 |---|---|
-| [Theorem 5.1][thm:singular-endpoint] — Optimizer structure | Family, optimality, uniqueness and expansions: [singular_endpoint_full](UpperTailOptimizers/SingularEndpoint/Proof/TerminalUnique.lean#L266) |
+| [Theorem 5.1][thm:singular-endpoint] — Optimizer structure | Family, optimality, uniqueness and expansions: [singular_endpoint](UpperTailOptimizers/SingularEndpoint/Proof/TerminalUnique.lean#L266) |
 | [Lemma 5.2][lem:stationary-rank-one-bipodality] — Stationary rank-one bipodality | Bipodality from stationarity: [stationary_rank_one_bipodality](UpperTailOptimizers/SingularEndpoint/RankOneStationaryFamily/StationaryBipodality.lean#L95) |
 | [Lemma 5.3][lem:rank-one-kkt-family] — Analytic KKT family | Stationarity and local exhaustiveness: [rank_one_kkt_family](UpperTailOptimizers/SingularEndpoint/RankOneStationaryFamily/RankOneKKTFamily.lean#L998) |
 | [Remark 5.4][rmk:rank-one-family-universality] — Dependence on `d` | Family structure: [KKTFamily](UpperTailOptimizers/SingularEndpoint/RankOneStationaryFamily/Family.lean#L124) |
 | [Lemma 5.5][lem:rank-one-parameter-expansions] — Parameter expansions | All four expansions: [rank_one_parameter_expansions](UpperTailOptimizers/SingularEndpoint/ConstantGraphonComparison/ParameterRemainders.lean#L196) |
 | [Lemma 5.6][lem:constant-graphon-comparison] — Constant-graphon comparison | Both expansions, strict improvement and boundary placement: [constant_graphon_comparison_full](UpperTailOptimizers/SingularEndpoint/ConstantGraphonComparison/ConstantComparison.lean#L32) |
 | [Lemma 5.7][lem:localization-rank-one] — Localization and rank-one reduction | Decomposition and bounds: [localization_rank_one_reduction](UpperTailOptimizers/SingularEndpoint/LocalizationRankOne/LocalizationRankOne.lean#L118) |
-| [Lemma 5.8][lem:continuation-kernel-bounds] — Continuation and kernel bounds | All six estimates: [continuation_kernel_bounds](UpperTailOptimizers/SingularEndpoint/AuxiliaryLagrangian/ContinuationKernelBounds.lean#L201) |
+| [Lemma 5.8][lem:continuation-kernel-bounds] — Continuation and kernel bounds | All six estimates: [continuation_kernel_bounds](UpperTailOptimizers/SingularEndpoint/AuxiliaryLagrangian/ContinuationKernelBounds.lean#L204) |
 | [Lemma 5.9][lem:first-variation-bound] — First-variation lower bound | Central and tail estimates: [first_variation_bound](UpperTailOptimizers/SingularEndpoint/AuxiliaryLagrangian/FirstVariationCentralKernel.lean#L74) |
 | [Lemma 5.10][lem:central-kernel-bound] — Central kernel bound | Bound uniform in the radius: [central_kernel_bound](UpperTailOptimizers/SingularEndpoint/AuxiliaryLagrangian/FirstVariationCentralKernel.lean#L162) |
 | [Lemma 5.11][lem:auxiliary-lagrangian-bound] — Auxiliary Lagrangian bound | Uniform comparison for the factor: [auxiliary_lagrangian_bound_uniform](UpperTailOptimizers/SingularEndpoint/GraphonComparison/PaperForms.lean#L136) |
@@ -195,7 +232,7 @@ constants depending on `d` or `(d,m)` are chosen before the graph, as in the pap
 The family is constructed by [exists_kktFamily](UpperTailOptimizers/SingularEndpoint/RankOneStationaryFamily/FamilyBuild.lean#L40).
 [constant_graphon_comparison](UpperTailOptimizers/SingularEndpoint/ConstantGraphonComparison/CostRemainder.lean#L127) gives the scalar expansions, while
 [singular_endpoint_symmetry_breaking](UpperTailOptimizers/SingularEndpoint/ConstantGraphonComparison/StrictImprovement.lean#L134) uses the Lubetzky–Zhao
-criterion to show `p_h < pc(r_h)`.
+criterion to show `p_h < p_c(r_h)`.
 [anyBlock_of_singularEndpointOptimizers](UpperTailOptimizers/SingularEndpoint/Proof/TerminalUnique.lean#L176) transfers the optimizer
 conclusions from the canonical block to any block of the prescribed measure.
 
@@ -212,10 +249,10 @@ listed in the preceding table.
 | [Lemma B.1][lem:two-point-convex-minorant] — Two-point convex minorant | Attained representation: [lce_isLeast_twoPoint](UpperTailOptimizers/LZBoundary/ConvexMinorant.lean#L1056) |
 | [Remark C.1][rmk:bipodal-parameter-expansions] — Parameter asymptotics | Expansions with `ζ_d(r)`: [bipodal_parameter_expansions](UpperTailOptimizers/NonexceptionalEndpoint/Proof/ParameterExpansions.lean#L56) |
 
-For Remark C.1, the identities [zetaFun_eq_smGlobal](UpperTailOptimizers/NonexceptionalEndpoint/Proof/CrossDensity.lean#L42) and [zetaFun_two](UpperTailOptimizers/NonexceptionalEndpoint/Proof/CrossDensity.lean#L92) identify
+For Remark C.1, the identities [zetaFun_eq_scGlobal](UpperTailOptimizers/NonexceptionalEndpoint/Proof/CrossDensity.lean#L42) and [zetaFun_two](UpperTailOptimizers/NonexceptionalEndpoint/Proof/CrossDensity.lean#L92) identify
 the cross density, and [bipodal_block_size_two](UpperTailOptimizers/NonexceptionalEndpoint/Proof/ParameterExpansions.lean#L148) gives the block-size expansion
-for `d = 2`. The general parameter theorem includes [Eq. (103)][eq:optimizer-block-size] and
-[Eq. (104)][eq:optimizer-block-density] with bounds uniform on a smaller neighborhood.
+for `d = 2`. The general parameter theorem includes [Eq. (99)][eq:optimizer-block-size] and
+[Eq. (100)][eq:optimizer-block-density] with bounds uniform on a smaller neighborhood.
 
 ## Axioms and dependencies
 
@@ -267,10 +304,23 @@ The differences are explained below for each result.
 - **KRR–S results ([Theorem A.1][thm:krrs-bipodality] and [Theorem A.2][thm:krrs-cross-density]).** Lean
   constructs the stationary family and proves its optimality directly. The paper
   invokes the external bipodality theorem and identifies its optimizers with the
-  analytic family in [Eq. (95)][eq:krrs-map-agreement]. The Lean cross-density proof shows
+  analytic family in [Eq. (91)][eq:krrs-map-agreement]. The Lean cross-density proof shows
   that every critical point is a strict local maximum, which yields uniqueness.
   The separate [bipodality proof](paper/sections/krrs_bipodality.tex) describes the
   argument used by Lean and is not included in the compiled paper.
+- **Analyticity through the exceptional density ((M1) of [Theorem 3.1][thm:lz-boundary]).** The
+  paper normalizes the contact equations by the divided differences `F₁`, `F₂`, which extend
+  jointly analytically across coincident contacts, and applies the implicit function theorem to
+  them. Mathlib has no joint analyticity for divided differences, so Lean normalizes the
+  cross-density selector instead: after `z = ε + u` its numerator and denominator each lose an
+  explicit factor `u²`, leaving one-variable filled quotients that `analyticOrderAt` factorization
+  makes analytic. The Lubetzky–Zhao boundary section above describes the route.
+- **Quadratic separation ((M3) of [Theorem 3.1][thm:lz-boundary]).** The paper obtains
+  [Eq. (16)][eq:contact-quadratic-separation] from the local expansion, by extending the ratio
+  `g_{d,r}(z)/dist(z,{r,s_c(r)})²` continuously and taking its minimum on a compact set. Lean
+  proves the separation first in the `x` coordinate, from a window bound on `φ_{p,d}''` and a
+  compactness argument, and then converts it to the density variable with
+  `|z^d - u^d| ≥ η^{d-1}|z - u|`. Both the expansion and the separation are available.
 - **Rank-one factor ([Lemma 5.7][lem:localization-rank-one]).** The paper constructs the factor
   variationally. Lean obtains it as a fixed point of a contraction in `L⁴`, then
   proves the localization bounds.
@@ -281,43 +331,42 @@ The differences are explained below for each result.
 
 <!-- Paper citations link to the corresponding source labels. -->
 [eq:relative-entropy-identity]: paper/sections/preliminaries.tex#L96
-[thm:krrs-analytic-extension]: paper/sections/preliminaries.tex#L166
-[cor:scalar-reduction]: paper/sections/nonexceptional_local_reduction.tex#L189
-[thm:nonexceptional-endpoint]: paper/sections/nonexceptional.tex#L23
-[thm:nonexceptional-optimizers]: paper/sections/intro.tex#L256
-[rmk:bipodal-parameter-expansions]: paper/sections/appendix_nonexceptional_endpoint.tex#L181
-[thm:singular-endpoint]: paper/sections/singular.tex#L37
-[thm:endpoint-optimizers]: paper/sections/intro.tex#L310
-[thm:graphon-large-deviations]: paper/sections/intro.tex#L223
-[thm:lz-criterion]: paper/sections/intro.tex#L245
-[thm:lz-boundary]: paper/sections/lz_boundary.tex#L21
-[lem:convexity-defect]: paper/sections/lz_boundary.tex#L65
-[lem:contact-points]: paper/sections/lz_boundary.tex#L95
-[lem:contact-point-limits]: paper/sections/lz_boundary.tex#L113
+[thm:krrs-analytic-extension]: paper/sections/preliminaries.tex#L167
+[cor:one-dimensional-reduction]: paper/sections/nonexceptional_local_reduction.tex#L193
+[lem:quadratic-lower-bound]: paper/sections/nonexceptional_quadratic_growth.tex#L37
+[lem:quadratic-upper-bound]: paper/sections/nonexceptional_quadratic_growth.tex#L103
+[thm:boundary-excess-expansion]: paper/sections/nonexceptional_quadratic_growth.tex#L210
+[thm:nonexceptional-endpoint]: paper/sections/nonexceptional.tex#L24
+[thm:nonexceptional-optimizers]: paper/sections/intro.tex#L255
+[rmk:bipodal-parameter-expansions]: paper/sections/appendix_nonexceptional_endpoint.tex#L168
+[thm:singular-endpoint]: paper/sections/singular.tex#L38
+[thm:endpoint-optimizers]: paper/sections/intro.tex#L309
+[thm:graphon-large-deviations]: paper/sections/intro.tex#L222
+[thm:lz-criterion]: paper/sections/intro.tex#L244
+[thm:lz-boundary]: paper/sections/lz_boundary.tex#L26
+[eq:contact-quadratic-separation]: paper/sections/lz_boundary.tex#L267
+[lem:convexity-defect]: paper/sections/lz_boundary.tex#L96
+[lem:contact-points]: paper/sections/lz_boundary.tex#L123
 [lem:active-constraint]: paper/sections/nonexceptional_local_reduction.tex#L12
 [lem:edge-density-deficit]: paper/sections/nonexceptional_local_reduction.tex#L54
 [lem:boundary-convergence]: paper/sections/nonexceptional_local_reduction.tex#L75
-[lem:fixed-density-bipodality]: paper/sections/nonexceptional_local_reduction.tex#L128
-[lem:scalar-quadratic-bound]: paper/sections/nonexceptional_quadratic_growth.tex#L64
-[prop:graphon-quadratic-bound]: paper/sections/nonexceptional_quadratic_growth.tex#L122
-[lem:bipodal-quadratic-bound]: paper/sections/nonexceptional_quadratic_growth.tex#L151
-[thm:positive-second-variation]: paper/sections/nonexceptional_quadratic_growth.tex#L247
+[lem:fixed-density-bipodality]: paper/sections/nonexceptional_local_reduction.tex#L135
 [lem:stationary-rank-one-bipodality]: paper/sections/singular_stationary_family.tex#L85
 [lem:rank-one-kkt-family]: paper/sections/singular_stationary_family.tex#L204
-[rmk:rank-one-family-universality]: paper/sections/singular_stationary_family.tex#L413
+[rmk:rank-one-family-universality]: paper/sections/singular_stationary_family.tex#L415
 [lem:rank-one-parameter-expansions]: paper/sections/singular_constant_comparison.tex#L31
 [lem:constant-graphon-comparison]: paper/sections/singular_constant_comparison.tex#L84
-[lem:localization-rank-one]: paper/sections/singular_localization.tex#L82
-[lem:continuation-kernel-bounds]: paper/sections/singular_auxiliary_lagrangian.tex#L133
-[lem:first-variation-bound]: paper/sections/singular_auxiliary_lagrangian.tex#L320
-[lem:central-kernel-bound]: paper/sections/singular_auxiliary_lagrangian.tex#L417
-[lem:auxiliary-lagrangian-bound]: paper/sections/singular_auxiliary_lagrangian.tex#L627
-[lem:graphon-lagrangian-bound]: paper/sections/singular_graphon_comparison.tex#L14
+[lem:localization-rank-one]: paper/sections/singular_localization.tex#L57
+[lem:continuation-kernel-bounds]: paper/sections/singular_auxiliary_lagrangian.tex#L117
+[lem:first-variation-bound]: paper/sections/singular_auxiliary_lagrangian.tex#L272
+[lem:central-kernel-bound]: paper/sections/singular_auxiliary_lagrangian.tex#L369
+[lem:auxiliary-lagrangian-bound]: paper/sections/singular_auxiliary_lagrangian.tex#L577
+[lem:graphon-lagrangian-bound]: paper/sections/singular_graphon_comparison.tex#L9
 [thm:krrs-bipodality]: paper/sections/appendix_preliminaries.tex#L12
 [thm:krrs-cross-density]: paper/sections/appendix_preliminaries.tex#L46
-[lem:two-point-convex-minorant]: paper/sections/appendix_lz_boundary.tex#L14
-[eq:optimizer-block-size]: paper/sections/appendix_nonexceptional_endpoint.tex#L215
-[eq:optimizer-block-density]: paper/sections/appendix_nonexceptional_endpoint.tex#L221
+[lem:two-point-convex-minorant]: paper/sections/appendix_lz_boundary.tex#L12
+[eq:optimizer-block-size]: paper/sections/appendix_nonexceptional_endpoint.tex#L202
+[eq:optimizer-block-density]: paper/sections/appendix_nonexceptional_endpoint.tex#L208
 [eq:generalized-holder]: paper/sections/preliminaries.tex#L76
 [sec:graphons]: paper/sections/preliminaries.tex#L13
 [eq:krrs-map-agreement]: paper/sections/appendix_preliminaries.tex#L612

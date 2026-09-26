@@ -24,7 +24,7 @@ of `𝓜_h'` in `app:rank-one-kkt-family`.)
 `SingularEndpoint/RankOneStationaryFamily/FamilyEqs.lean`, through `logSlope` on the logarithmic halves and through the
 geometric-sum identity on the polynomial halves.  Nothing here is a limit or a quotient of
 functions; the two factorisation theorems `Lell_sub_eq_mul` and `Lell_add_sub_two_eq_mul`
-are algebraic identities valid for every `h`, and `lell_three_eq_iff` records that for
+are algebraic identities valid for every `h`, and `Lell_three_eq_iff` records that for
 `h ≠ 0` the desingularized system `(E₁, E₂, E₃) = 0` has exactly the same solutions as
 `eq:three-value-kkt`.
 
@@ -41,7 +41,7 @@ ones that are true for every `d ≥ 2`.
   `lem:rank-one-kkt-family`;
 * `Lell_sub_eq_mul`, `Lell_add_sub_two_eq_mul` — the exact factorisations
   `G₂ = h·E₂` and `G₃ = h²·E₃`;
-* `lell_three_eq_iff` — for `h ≠ 0` the desingularized system is equivalent to
+* `Lell_three_eq_iff` — for `h ≠ 0` the desingularized system is equivalent to
   `eq:three-value-kkt`;
 * `Esys2_zero`, `Esys3_zero` — the values of `E₂` and `E₃` at `h = 0`, with the
   hypothesis-free forms `Esys2_zero'`, `Esys3_zero'` that `SingularEndpoint/RankOneStationaryFamily/FamilyDeriv.lean` uses.
@@ -138,7 +138,7 @@ exactly the solutions of `eq:three-value-kkt`.
 Forward, `h` and `h²` are cancelled from `Lell_sub_eq_mul` and `Lell_add_sub_two_eq_mul`.
 Backward, `E₁ = 0` gives the middle root, and then the same two identities give
 `𝓛(t²) - 𝓛(s²) = 0` and `𝓛(t²) + 𝓛(s²) = 0`, so both outer values vanish. -/
-theorem lell_three_eq_iff (hd : 2 ≤ d) (hne : h ≠ 0) (hs : 0 < u - h) (ht : 0 < u + h)
+theorem Lell_three_eq_iff (hd : 2 ≤ d) (hne : h ≠ 0) (hs : 0 < u - h) (ht : 0 < u + h)
     (hs1 : (u - h) ^ 2 < 1) (ht1 : (u + h) ^ 2 < 1) (hst : (u - h) * (u + h) < 1) :
     (Lell d lv g ((u - h) ^ 2) = 0 ∧ Lell d lv g ((u - h) * (u + h)) = 0
         ∧ Lell d lv g ((u + h) ^ 2) = 0)

@@ -12,30 +12,6 @@ Along this curve, the unique optimizers are rank-one and bipodal, and
 both block sizes tend to $1/2$.  This differs from the vanishing-block
 behavior as $p\uparrow\pc(r)$ at a fixed nonexceptional density~$r$.
 
-A natural question is whether the bipodality and uniqueness established in
-\Cref{thm:nonexceptional-optimizers,thm:endpoint-optimizers} persist throughout
-the symmetry-breaking region.
-For $H=K_3$, the experiments in \Cref{fig:neural-bipodal-patterns}, based on
-the neural representation of Kim, Baek, Lee, and Yang~\cite{KimBaekLeeYangGraphons},
-support bipodality throughout this region.
-Restricting to bipodal graphons, the experiments in \Cref{fig:bipodal-parameter-maps}
-use the Sequential Least Squares Programming algorithm~\cite{Kraft1988SLSQP} to track the two within-block
-edge densities, the cross-block edge density, and the size of the denser block as $(p,r)$ varies.
-These computations suggest a curve of rank-one optimizers approaching the
-phase boundary at $P_*=(\pc(r_*),r_*)$,
-which motivated the rank-one bipodal family constructed in \Cref{sec:rank-one-stationary-family}.
-We extract this curve from sign changes of
-$D:=q_{11}q_{22}-q_{12}^2$ along the $r$-grid at fixed $p$.
-The experiments also suggest another curve along which uniqueness fails and across
-which some of the bipodal parameters change discontinuously.
-Such discontinuities would prevent an analytic continuation of the bipodal
-parameters throughout the region, even if the optimizers remain bipodal.
-Understanding the optimizers throughout this region and resolving the
-bipodality question raised by Lubetzky and
-Zhao~\cite[Section~7]{lubetzky2015large} would therefore require methods that can
-accommodate possible nonuniqueness and discontinuous changes in the
-parameters.
-
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}
@@ -86,6 +62,30 @@ motivating the rank-one bipodal family constructed in
 curve across which the bipodal parameters change discontinuously.}
 \label{fig:bipodal-parameter-maps}
 \end{figure}
+
+We ask whether the bipodality and uniqueness established in
+\Cref{thm:nonexceptional-optimizers,thm:endpoint-optimizers} persist throughout
+the symmetry-breaking region.
+For $H=K_3$, the experiments in \Cref{fig:neural-bipodal-patterns}, based on
+the neural representation of Kim, Baek, Lee, and Yang~\cite{KimBaekLeeYangGraphons},
+support bipodality throughout this region.
+Restricting to bipodal graphons, the experiments in \Cref{fig:bipodal-parameter-maps}
+use the Sequential Least Squares Programming algorithm~\cite{Kraft1988SLSQP} to track the two within-block
+edge densities, the cross-block edge density, and the size of the denser block as $(p,r)$ varies.
+These computations suggest a curve of rank-one optimizers approaching the
+phase boundary at $P_*=(\pc(r_*),r_*)$,
+which motivated the rank-one bipodal family constructed in \Cref{sec:rank-one-stationary-family}.
+We extract this curve from sign changes of
+$D:=q_{11}q_{22}-q_{12}^2$ along the $r$-grid at fixed $p$.
+The experiments also suggest another curve along which uniqueness fails and across
+which some of the bipodal parameters change discontinuously.
+Such discontinuities would prevent an analytic continuation of the bipodal
+parameters throughout the region, even if the optimizers remain bipodal.
+Understanding the optimizers throughout this region and resolving the
+bipodality question raised by Lubetzky and
+Zhao~\cite[Section~7]{lubetzky2015large} would therefore require methods that can
+accommodate possible nonuniqueness and discontinuous changes in the
+parameters.
 
 Our numerical observations for $H=K_3$ suggest the following conjecture for
 general regular graphs.  Its final assertion extends the $\alpha_*=1/2$ case proved

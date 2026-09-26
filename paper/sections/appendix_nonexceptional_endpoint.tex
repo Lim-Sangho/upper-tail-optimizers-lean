@@ -13,7 +13,7 @@ Put
 \]
 By continuity of $\pc$ at $r_0$, we have $q_n\to p_0$, and
 $|p_n-q_n|\to0$ gives $p_n\to p_0$ as well.
-Choose a compact interval $P\subset(0,1)$ with $p_0$ in its interior.
+Choose a compact interval $P\subseteq(0,1)$ with $p_0$ in its interior.
 After discarding finitely many terms, both $p_n$ and $q_n$ lie in $P$.
 The role of $P$ is only to keep the logarithms in $I_p$ uniformly away from the
 singular endpoints $p=0,1$.
@@ -111,7 +111,7 @@ constant graphon:
 \[
   I_{p_0}(W_*)\le J_{p_0}(r_0).
 \]
-By condition (M2) of \Cref{thm:scalar-lz-boundary},
+By condition (M1) of \Cref{thm:lz-boundary},
 $(r_0^d,J_{p_0}(r_0))$ lies on the convex minorant of
 $x\mapsto J_{p_0}(x^{1/d})$.  Hence
 Theorem~\ref{thm:lz-criterion} gives that the constant graphon $r_0$
@@ -121,56 +121,43 @@ sequence converges to $r_0$ in the quotient cut metric.  Finally, edge
 density is continuous in the cut metric, so $e(W_n)\to r_0$.
 \end{proof}
 
-\begin{proof}[Proof of \Cref{cor:scalar-reduction}]
-Let $I$ and $\rho_0$ be as in \Cref{lem:fixed-density-bipodality}.
-Fix $0<\rho<\rho_0$, choose $\eta>0$ as in that lemma, and take
-$r\in I$, $p\in(\pc(r)-\eta,\pc(r))$, and an optimizer $W^*$ attaining
-$\Phi_H(p,r)$.  By \Cref{lem:active-constraint}, $t(H,W^*)=r^m$, and by
+\begin{proof}[Proof of \Cref{cor:one-dimensional-reduction}]
+Let $I$, $\delta_0$, and $\eta$ be as in \Cref{lem:fixed-density-bipodality}.
+Take
+$r\in I$, $p\in(\pc(r)-\eta,\pc(r))$, and an optimizer $\widehat W$ attaining
+$\Phi_H(p,r)$.  By \Cref{lem:active-constraint}, $t(H,\widehat W)=r^m$, and by
 \Cref{lem:fixed-density-bipodality},
-$\eps^*=e(W^*)\in(r-\rho,r)$.  Thus, $W^*$ is admissible in the variational
-problem defining $S_H(\eps^*,r^m)$, and hence
+$\widehat\delta:=r-e(\widehat W)\in(0,\delta_0)$.
+Since $\widehat W$ is admissible for the infimum defining $I_{p,r}(r-\widehat\delta)$
+and $B_{r-\widehat\delta,r^m}$ is feasible for the original problem,
+\eqref{eq:reduced-objective-attainment} gives
 \[
-  s(W^*)\le S_H(\eps^*,r^m).
+  I_{p,r}(r-\widehat\delta)\le I_p(\widehat W)=\Phi_H(p,r)
+  \le I_p(B_{r-\widehat\delta,r^m})=I_{p,r}(r-\widehat\delta).
 \]
-Hence, by \eqref{eq:relative-entropy-identity},
+All inequalities are therefore equalities.  By
+\eqref{eq:relative-entropy-identity},
 \[
-  I_{p,r}(\eps^*)\le I_p(W^*)=\Phi_H(p,r).
+  s(\widehat W)=S(r-\widehat\delta,r^m).
 \]
-On the other hand, $B_{\eps^*,r^m}$ has edge density $\eps^*$ and
-$H$-density $r^m$, so it is feasible for the variational problem defining
-$\Phi_H(p,r)$ in \eqref{eq:graphon-variational-problem}.  Using
-\eqref{eq:reduced-objective-attainment}, we get
-\[
-  \Phi_H(p,r)\le I_p(B_{\eps^*,r^m})=I_{p,r}(\eps^*).
-\]
-Thus, the preceding inequalities are all equalities, and in particular,
-\[
-  I_{p,r}(\eps^*)=\Phi_H(p,r),
-\]
-and
-\[
-  s(W^*)=S_H(\eps^*,r^m).
-\]
-To see this, suppose that the entropy inequality
-$s(W^*)\le S_H(\eps^*,r^m)$ were strict.  Then the inequality
-$I_{p,r}(\eps^*)\le I_p(W^*)$ would also be strict.  Therefore,
-$W^*$ is an entropy maximizer under the fixed constraints
-$e(W)=\eps^*$ and $t(H,W)=r^m$.  By the uniqueness part of
-\Cref{thm:krrs-analytic-extension}, $W^*$ agrees with $B_{\eps^*,r^m}$ up to relabeling.
+Thus $\widehat W$ is an entropy maximizer at densities $(r-\widehat\delta,r^m)$,
+and the uniqueness in \Cref{lem:fixed-density-bipodality} implies that
+$\widehat W$ agrees with $B_{r-\widehat\delta,r^m}$ up to relabeling.
 
-For any $\eps\in(r-\rho,r)$, the graphon $B_{\eps,r^m}$ is feasible for the
+For any $0<\delta<\delta_0$, the graphon $B_{r-\delta,r^m}$ is feasible for the
 variational problem defining $\Phi_H(p,r)$ in \eqref{eq:graphon-variational-problem}, so
 \[
-  I_{p,r}(\eps)=I_p(B_{\eps,r^m})\ge\Phi_H(p,r)
-  =I_{p,r}(\eps^*).
+  I_{p,r}(r-\delta)=I_p(B_{r-\delta,r^m})\ge\Phi_H(p,r)
+  =I_{p,r}(r-\widehat\delta).
 \]
-Therefore, $\eps^*$ minimizes $I_{p,r}$ on $(r-\rho,r)$, and
+Therefore, $\widehat\delta$ minimizes $\delta\mapsto I_{p,r}(r-\delta)$ on
+$(0,\delta_0)$, and
 \eqref{eq:edge-density-minimization} follows.  The same inequality gives the converse
-statement: if $\eps$ minimizes $I_{p,r}$ on $(r-\rho,r)$, then
-$I_p(B_{\eps,r^m})=I_{p,r}(\eps)=I_{p,r}(\eps^*)
-=\Phi_H(p,r)$, and $B_{\eps,r^m}$ is feasible, so it is an optimizer
+statement: if $\delta$ is any minimizer on $(0,\delta_0)$, then
+$I_p(B_{r-\delta,r^m})=I_{p,r}(r-\delta)=\Phi_H(p,r)$,
+and $B_{r-\delta,r^m}$ is feasible, so it is an optimizer
 attaining $\Phi_H(p,r)$.
-Finally, distinct $\eps$ give graphons of distinct edge density, hence
+Finally, distinct deficits give graphons of distinct edge density, hence
 inequivalent under relabeling, which gives the asserted bijection.
 \end{proof}
 
@@ -242,17 +229,17 @@ mechanism described in the introduction.
 
 Although they arise from different formulations, the KRR--S limiting cross
 density and the second contact density of the Lubetzky--Zhao supporting line
-coincide: \(\zeta_d(r)=\sm(r)\) for every \(r\ne r_*\).
+coincide: \(\zeta_d(r)=\sc(r)\) for every \(r\ne r_*\).
 Indeed, put \(\beta:=J_{\pc(r)}'(r)/(d r^{d-1})\).
 Since \(J_{\pc(r)}+2S_0\) is affine,
 \eqref{eq:supporting-cost-gap} and \eqref{eq:edge-deficit-coefficient} give
 \[
-  g_r(z)=-d r^{d-1}D_d(r,z)\bigl\{\psi_d(r,z)+\beta\bigr\}
+  g_{d,r}(z)=-d r^{d-1}D_d(r,z)\bigl\{\psi_d(r,z)+\beta\bigr\}
   \qquad(z\in(0,1)\setminus\{r\}).
 \]
-The positivity of \(D_d(r,z)\) and \(g_r\ge0\) imply
+The positivity of \(D_d(r,z)\) and \(g_{d,r}\ge0\) imply
 \(\psi_d(r,z)\le-\beta\), also at \(z=r\) by continuity.
-Equality holds at \(z=\sm(r)\) by \Cref{thm:scalar-lz-boundary}, so
+Equality holds at \(z=\sc(r)\) by \Cref{thm:lz-boundary}, so
 the uniqueness of the maximizer in \Cref{thm:krrs-cross-density} proves the
 identity.  Thus, the comparison graphons in \Cref{sec:nonexceptional-quadratic-growth} use
 exactly the limiting cross density of the optimizer.
@@ -264,8 +251,8 @@ arguments \((p,r)\) and evaluate the analytic KRR--S parameter map at
   =\bigl(r-\delta_*,\,r^m-(r-\delta_*)^m\bigr).
 \]
 After shrinking $U$, the segments from $(r,0)$ to these parameter pairs
-lie in a compact subset of the KRR--S analytic domain, as in
-\Cref{sec:nonexceptional-proof}.  Uniform Taylor estimates, the boundary
+lie in a compact subset of the KRR--S analytic domain, as in the proof of
+\Cref{thm:boundary-excess-expansion}.  Uniform Taylor estimates, the boundary
 values in \Cref{thm:krrs-analytic-extension}, and
 \(\vartheta=O_{H,U}(\delta_*)\) therefore give
 \[

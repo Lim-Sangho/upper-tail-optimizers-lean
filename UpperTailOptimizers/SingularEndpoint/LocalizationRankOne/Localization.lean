@@ -108,8 +108,8 @@ theorem Ip_sub_Ip_eq (hd : 2 ≤ d) {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (W W' 
         - (ell p - ell (pStar d)) * (RdInt d W - RdInt d W') := by
   have hW := Ip_eq_Ip_pStar_add hd hp0 hp1 W
   have hW' := Ip_eq_Ip_pStar_add hd hp0 hp1 W'
-  have hsW := Ip_pStar_eq_moment_add_gam hd W
-  have hsW' := Ip_pStar_eq_moment_add_gam hd W'
+  have hsW := Ip_pStar_eq_moment_add_GamInt hd W
+  have hsW' := Ip_pStar_eq_moment_add_GamInt hd W'
   have heW := edge_eq_moment_sub_rdInt hd W
   have heW' := edge_eq_moment_sub_rdInt hd W'
   have hden : ((d : ℝ) * rStar d ^ (d - 1)) ≠ 0 := by
@@ -137,7 +137,7 @@ theorem Ip_sub_Ip_eq_edgeDensity (hd : 2 ≤ d) {p : ℝ} (hp0 : 0 < p) (hp1 : p
       = (GamInt d W - GamInt d W') + betaD d * (W.Wmoment d - W'.Wmoment d)
         + (ell p - ell (pStar d)) * (W.edgeDensity - W'.edgeDensity) := by
   rw [Ip_eq_Ip_pStar_add hd hp0 hp1 W, Ip_eq_Ip_pStar_add hd hp0 hp1 W',
-    Ip_pStar_eq_moment_add_gam hd W, Ip_pStar_eq_moment_add_gam hd W']
+    Ip_pStar_eq_moment_add_GamInt hd W, Ip_pStar_eq_moment_add_GamInt hd W']
   ring
 
 /-- The inequality form actually used in `lem:localization-rank-one`: if `W` costs
@@ -179,7 +179,7 @@ the proof of `lem:localization-rank-one` that applies the pointwise bound
 `∫Γ_d(W)^{1/2} ≤ (∫Γ_d(W))^{1/2}`. -/
 theorem RdInt_sq_le_gamInt (hd : 2 ≤ d) :
     ∃ C : ℝ, 0 < C ∧ ∀ W : Graphon, RdInt d W ^ 2 ≤ C * GamInt d W := by
-  obtain ⟨C, hC0, hC⟩ := exists_rd_sq_le_gam hd
+  obtain ⟨C, hC0, hC⟩ := exists_Rd_sq_le_Gam hd
   refine ⟨C, hC0, fun W => ?_⟩
   have hIrd : Integrable (fun z : ℝ × ℝ => Rd d (W.toFun z.1 z.2)) gμ := integrable_Rd d W
   have hIrd2 : Integrable (fun z : ℝ × ℝ => Rd d (W.toFun z.1 z.2) ^ 2) gμ :=
@@ -199,7 +199,7 @@ what converts a bound on the singular endpoint gap into `eq:graphon-quartic-loca
 theorem integral_dist_pow_four_le_gamInt (hd : 2 ≤ d) :
     ∃ c : ℝ, 0 < c ∧ ∀ W : Graphon,
       c * ∫ z, |W.toFun z.1 z.2 - rStar d| ^ 4 ∂gμ ≤ GamInt d W := by
-  obtain ⟨c, hc0, hc⟩ := exists_gam_quartic_lower hd
+  obtain ⟨c, hc0, hc⟩ := exists_exceptional_gap_quartic_lower hd
   refine ⟨c, hc0, fun W => ?_⟩
   have hcont : Continuous fun x : ℝ => |x - rStar d| ^ 4 :=
     ((continuous_id.sub continuous_const).abs).pow 4

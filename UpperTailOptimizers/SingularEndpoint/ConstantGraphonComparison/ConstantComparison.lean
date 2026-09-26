@@ -6,7 +6,7 @@ import UpperTailOptimizers.SingularEndpoint.LocalizationRankOne.Localization
 
 `lem:constant-graphon-comparison` of `paper/paper.tex` in one statement: for small `h > 0` the
 edge and cost expansions of `constant_graphon_comparison` hold, the constant graphon `W ≡ r_h` is
-feasible but has strictly larger `I_{p_h}`-value, and consequently `p_h < pc(r_h)`.
+feasible but has strictly larger `I_{p_h}`-value, and consequently `p_h < p_c(r_h)`.
 
 The threshold and the remainder constant depend only on the family `B`, hence only on `d`; the
 graph `H` is quantified afterwards.  The last clause uses the axiom `lubetzkyZhao`, as in
@@ -28,7 +28,7 @@ variable {d : ℕ}
   `e(W_h) = r_h - (d-1)h² + O_d(h⁴)`,   `I_{p_h}(W_h) = J_{p_h}(r_h) - \frac{d³}{3}h⁴ + O_d(h⁶)`,
 
 and for every `d`-regular `H` and `0 < h < δ` the constant graphon `W ≡ r_h` is feasible, has
-strictly larger `I_{p_h}`-value than `W_h`, and `p_h < pc(r_h)`. -/
+strictly larger `I_{p_h}`-value than `W_h`, and `p_h < p_c(r_h)`. -/
 theorem constant_graphon_comparison_full (hd : 2 ≤ d) (B : KKTFamily d) :
     ∃ C δ : ℝ, 0 < C ∧ 0 < δ ∧
       (∀ (h : ℝ) (hh : |h| < B.h₀), |h| < δ →
@@ -75,7 +75,7 @@ theorem constant_graphon_comparison_full (hd : 2 ≤ d) (B : KKTFamily d) :
     Ip_constGraphon hrI (B.p h)
   have hstrict := himp h hh hh0 hδ₁'
   refine ⟨hcfeas, hcIp ▸ hstrict, ?_⟩
-  -- `W_h` is feasible, so `Φ_H(p_h,r_h) < J_{p_h}(r_h)`; no supporting line, hence `p_h < pc(r_h)`
+  -- `W_h` is feasible, so `Φ_H(p_h,r_h) < J_{p_h}(r_h)`; no supporting line, hence `p_h < p_c(r_h)`
   have hfeas : Feasible H (B.rVal h) (B.graphon hh) := by
     rw [Feasible, KKTFamily.graphon_tDensity_eq_rVal_pow H hd hreg hh]
   have hphi : phiVar H (B.p h) (B.rVal h) < Jp (B.p h) (B.rVal h) :=
@@ -85,7 +85,7 @@ theorem constant_graphon_comparison_full (hd : 2 ≤ d) (B : KKTFamily d) :
     absurd ((lubetzkyZhao H hd hreg hcard hp0 hlt hr1).mpr hsupp) (ne_of_lt hphi)
   by_contra hcon
   push Not at hcon
-  exact hno ((lz_boundary_M2_global hd hr0 hr1 hp0 hp1).mpr hcon)
+  exact hno ((lz_boundary_M1_global hd hr0 hr1 hp0 hp1).mpr hcon)
 
 /-- **`eq:graphon-cost-decomposition`.**  For every graphon `W` and `|h| < h₀`, with
 `Λ_h = ℓ(p_h) - ℓ(p_*)`,

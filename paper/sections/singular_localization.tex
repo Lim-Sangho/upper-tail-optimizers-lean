@@ -12,50 +12,25 @@ the auxiliary Lagrangian difference obtained in
 \Cref{sec:auxiliary-lagrangian} will control the distributions of
 the values of $f$, while the arbitrary-graphon comparison in
 \Cref{sec:graphon-comparison} will control $E$.
-Thus, the decomposition is the form in which the localization is used in the
-remainder of the proof.
 
-For the first stage, we use the supporting cost gap $\Gamma_d$ from
-\eqref{eq:endpoint-supporting-gap}.  The mechanism is to bound
-$\int\Gamma_d(W)$ using the $I_{p_h}$-comparison and then convert that bound
-into an $L^4$-bound on $W-r_*$.  Its quartic expansion gives the required
-control near $r_*$; to extend this control to all of $[0,1]$, we also need
-strict positivity away from $r_*$.  This follows from the supporting-line
-interpretation above: by \Cref{lem:convexity-defect}, $\varphi_{p_*,d}$ is
-convex on $[0,1]$ and its tangent $\ell_{r_*}$ has no other contact.
-Therefore,
-\begin{equation}\label{eq:endpoint-gap-positivity}
-  \Gamma_d(z)\ge0,
-  \qquad
-  \Gamma_d(z)=0\iff z=r_*.
-\end{equation}
-This makes $\int\Gamma_d(W)$ a nonnegative measure of how far $W$ is from
-the constant graphon $W\equiv r_*$.  For $L^4$-localization, we use the
-stronger pointwise bound
-\begin{equation}\label{eq:endpoint-gap-quartic-bound}
-  \Gamma_d(z)\ge c_d|z-r_*|^4
-  \qquad(0\le z\le1)
-\end{equation}
-for some $c_d>0$.  Indeed, the ratio $\Gamma_d(z)/|z-r_*|^4$ has a positive
-limit at $r_*$ by \eqref{eq:endpoint-gap-expansion}, hence a
-positive lower bound in a neighborhood of $r_*$.  On the compact complement
-of this neighborhood, it has a positive minimum by continuity and
-\eqref{eq:endpoint-gap-positivity}.  This proves
-\eqref{eq:endpoint-gap-quartic-bound}, whose integral form is
+For the first stage, we use the quartic bound
+\eqref{eq:endpoint-gap-quartic-bound} from \Cref{sec:lz-boundary}.
+It measures distance in the density variable, so substituting $z=W(x,y)$
+and integrating gives
 \[
   \int\Gamma_d(W)\ge c_d\|W-r_*\|_4^4.
 \]
-Thus, $\int\Gamma_d(W)=O_d(h^4)$ implies the desired localization
-$\|W-r_*\|_4=O_d(h)$.
+Thus, it suffices to show that $\int\Gamma_d(W)=O_d(h^4)$ to obtain the
+desired localization $\|W-r_*\|_4=O_d(h)$.
 
 To derive this integral bound from the $I_{p_h}$-comparison, we relate
-$I_{p_h}$ to the support cost gap $\Gamma_d$.  Repeating the calculation leading to
+$I_{p_h}$ to the supporting cost gap $\Gamma_d$.  Repeating the calculation leading to
 \eqref{eq:constant-comparison-decomposition}, instead using $W$ and $W_h$, gives
 \begin{equation}\label{eq:graphon-cost-decomposition}
   I_{p_h}(W)-I_{p_h}(W_h)
   =\int\Gamma_d(W)-\int\Gamma_d(W_h)
   +\beta_d\left(\int W^d-r_h^d\right)
-  +\Lambda_h\{e(W)-e(W_h)\}.
+  +\{\ell_h-\ell_*\}\{e(W)-e(W_h)\}.
 \end{equation}
 The proof of the next lemma uses this decomposition to obtain the required
 bound on $\int\Gamma_d(W)$.
@@ -127,7 +102,7 @@ Combining the $I_{p_h}$-comparison with \eqref{eq:graphon-cost-decomposition} gi
   0\ge I_{p_h}(W)-I_{p_h}(W_h)
   =\int\Gamma_d(W)-\int\Gamma_d(W_h)
   +\beta_d\left(\int W^d-r_h^d\right)
-  +\Lambda_h\{e(W)-e(W_h)\}.
+  +\{\ell_h-\ell_*\}\{e(W)-e(W_h)\}.
 \]
 Generalized H\"older \eqref{eq:generalized-holder} and feasibility give $\int W^d\ge r_h^d$.
 To absorb the edge-density correction, convexity, Taylor's theorem, and
@@ -147,7 +122,7 @@ $\int W_h^d=r_h^d$, yields
   \ge-C_d\int\Gamma_d(W)^{1/2}.
 \]
 By \eqref{eq:rank-one-parameter-expansions} and \eqref{eq:family-gap-expansion},
-we have $\Lambda_h=O_d(h^2)$ and $\int\Gamma_d(W_h)=O_d(h^4)$.
+we have $0<\ell_h-\ell_*=O_d(h^2)$ and $\int\Gamma_d(W_h)=O_d(h^4)$.
 Substitution into the cost comparison gives
 \begin{align*}
   \beta_d \left(\int W^d-r_h^d\right)+\int\Gamma_d(W)
@@ -211,7 +186,7 @@ Since $W\ge0$, taking the absolute value cannot decrease $\mathcal Q_W$,
 and positivity of $\theta$ and homogeneity force every maximizer to have norm
 one.  We may therefore choose a maximizer $g_0\ge0$ with $\|g_0\|_{d'}=1$.
 
-Since \(d'>1\), the \(L^{d'}\)-unit sphere is smooth.  Therefore, applying the
+Since \(1<d'<\infty\), the \(L^{d'}\)-unit sphere is smooth.  Therefore, applying the
 Lagrange-multiplier theorem to the maximization of $\mathcal Q_W$ on this sphere
 gives \(T_Wg_0=\mu g_0^{d'-1}\) for some constant \(\mu\). This gives
 \[

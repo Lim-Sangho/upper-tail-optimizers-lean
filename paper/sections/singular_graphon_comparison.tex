@@ -4,11 +4,6 @@
 We now restore the remainder $E$ and convert the lower bound for the auxiliary
 Lagrangian difference into the corresponding bound for the Lagrangian
 difference between the actual graphons $W$ and $W_h$.
-By \Cref{lem:localization-rank-one}, every feasible graphon satisfying
-$I_{p_h}(W)\le I_{p_h}(W_h)$ can be written as $W=f\otimes f+E$, while
-\Cref{lem:auxiliary-lagrangian-bound} controls the auxiliary Lagrangian
-difference between $f$ and $f_h$.  The next lemma estimates the contribution
-of $E$ and gives the required full-graphon bound.
 
 \begin{lemma}[Lower bound for the full-graphon Lagrangian difference]
 \label{lem:graphon-lagrangian-bound}
@@ -19,19 +14,14 @@ the following property.  Let $0<h<h_\rho$, and let $W$ satisfy the hypotheses of
 decomposition provided there, and let $\nu$ be the distribution of the
 values of $f$.  Then,
 \begin{equation}\label{eq:graphon-lagrangian-bound}
-\begin{aligned}
-  &\left[I_{p_h}(W)-\mu_h\{t(H,W)-r_h^m\}\right]
-   -\left[I_{p_h}(W_h)-\mu_h\{t(H,W_h)-r_h^m\}\right]\\
-  &\qquad\qquad\qquad\qquad\qquad\qquad\qquad=I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}\\
-  &\qquad\qquad\qquad\qquad\qquad\qquad\qquad
-  \ge C_{d,\rho}^{-1}\!\left[A_{h,\rho}(\nu)+\nu(\mathcal T_\rho)+\|E\|_2^2\right]
-  -C_{d,m}\Delta_h(\nu)^2.
-\end{aligned}
+  I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}
+  \ge C_{d,\rho}^{-1}\!\left[A_{h,\rho}+\nu(\mathcal T_\rho)+\|E\|_2^2\right]
+  -C_{d,m}\Delta_h^2.
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-Put $q:=q(f)=m_d(\nu)$ and
+Put $q:=q(f)$ and
 $\Omega_\rho:=\{x:f(x)\in\mathcal N_\rho\}$.  Then
 $\lambda(\Omega_\rho^c)=\nu(\mathcal T_\rho)$.
 Combining the localization results in \Cref{lem:localization-rank-one}
@@ -39,7 +29,7 @@ and \eqref{eq:factor-tail-mass}, we may use throughout the proof
 \begin{equation}\label{eq:graphon-comparison-estimates}
   \begin{gathered}
     \nu(\mathcal T_\rho)\le C_{d,\rho}h^4,
-    \qquad |\Delta_h(\nu)|\le C_dh^2,
+    \qquad |\Delta_h|\le C_dh^2,
     \qquad \|E\|_2\le C_dh,
     \qquad \|f-u_*\|_4\le C_dh,\\
     |t(H,W)-q^v|\le C_{d,m}\|E\|_2^3,
@@ -64,8 +54,8 @@ exact decomposition
 \begin{aligned}
   &I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}\\
   &\quad=\bigl[\mathcal L_h(\nu)-\mathcal L_h(\nu_h)\bigr]
-  +\iint\{J_{p_h}(W(x,y))-\widetilde J_{p_h}(f(x)f(y))\}\,dx\,dy\\
-  &\qquad-\mu_h\{t(H,W)-q^v\}.
+  +\iint\{J_{p_h}(W(x,y))-\widetilde J_{p_h}(f(x)f(y))\}\,dx\,dy
+  -\mu_h\{t(H,W)-q^v\}.
 \end{aligned}
 \end{equation*}
 The first term is controlled by \Cref{lem:auxiliary-lagrangian-bound}, and
@@ -79,9 +69,9 @@ $x,y\in\Omega_\rho$.  Put
 \[
   \|E\|_{2,G}
   :=\left( \iint_G E(x,y)^2\,dx\,dy \right)^{1/2}
-  \qquad (G \subset[0,1]^2).
+  \qquad (G \subseteq[0,1]^2).
 \]
-On $\Omega_\rho^2$, the identity $\mathcal M_h'(xy)=J_{p_h}'(xy)-\gamma_h(xy)^{d-1}$ yields
+On $\Omega_\rho^2$, the identity $\mathcal M_h'(uu')=J_{p_h}'(uu')-\gamma_h(uu')^{d-1}$ yields
 the decomposition of the integrand:
 \begin{equation*}
   J_{p_h}(W)-J_{p_h}(f\otimes f)
@@ -98,21 +88,21 @@ Since $J_{p_h}''(z)=1/(z(1-z))\ge4$, strong convexity gives the first bound
 \]
 For the second bound, we divide $\mathcal M_h'$ by $Q_h$ in each variable and write
 \[
-  \mathcal M_h'(xy)=Q_h(x)U_h(x,y)+Q_h(y)V_h(x,y)+C_h(x,y),
+  \mathcal M_h'(uu')=Q_h(u)U_h(u,u')+Q_h(u')V_h(u,u')+C_h(u,u'),
 \]
 where $C_h$ has degree at most one in each variable.  The factorization
 \eqref{eq:mh-derivative-factorization} then gives
-$\mathcal M_h'(xy)=0$ for every $(x,y)\in\{s_h,t_h\}^2$.  Since
+$\mathcal M_h'(uu')=0$ for every $(u,u')\in\{s_h,t_h\}^2$.  Since
 $Q_h(s_h)=Q_h(t_h)=0$, the bilinear remainder $C_h$ must vanish identically.
-At $h=0$, $\mathcal M_0'(xy)$ is an analytic multiple of $(xy-r_*)^3$ and
-$Q_0(z)=(z-u_*)^2$, so $U_0$ and $V_0$ vanish at $(u_*,u_*)$.  By
+At $h=0$, $\mathcal M_0'(uu')$ is an analytic multiple of $(uu'-r_*)^3$ and
+$Q_0(u)=(u-u_*)^2$, so $U_0$ and $V_0$ vanish at $(u_*,u_*)$.  By
 joint continuity, after decreasing $\rho_0$ and $h_\rho$, we may ensure that
 $|U_h|$ and $|V_h|$ are at most $\sqrt{a/4}$ on $\mathcal N_\rho^2$, and
 \[
-  |\mathcal M_h'(xy)|
+  |\mathcal M_h'(uu')|
   \le\sqrt{\frac a4}
-    \{|Q_h(x)|+|Q_h(y)|\}
-  \qquad(x,y\in\mathcal N_\rho,\ 0<h<h_\rho).
+    \{|Q_h(u)|+|Q_h(u')|\}
+  \qquad(u,u'\in\mathcal N_\rho,\ 0<h<h_\rho).
 \]
 Then, $uv \le (1/4)u^2+v^2$ and
 $(u+v)^2\le 2(u^2+v^2)$ give
@@ -120,7 +110,7 @@ $(u+v)^2\le 2(u^2+v^2)$ give
   \left|\iint_{\Omega_\rho^2} \{\mathcal M_h'(f(x)f(y))\} E(x,y)\,dx\,dy\right|
   &\le \frac{1}{4} \iint_{\Omega_\rho^2} \frac{a}{4}\{|Q_h(f(x))|+|Q_h(f(y))|\}^2 \,dx\,dy + \|E\|_{2,\Omega_\rho^2}^2 \\
   &\le \frac{a}{16} \iint_{\Omega_\rho^2} 2|Q_h(f(x))|^2+2|Q_h(f(y))|^2 \,dx\,dy + \|E\|_{2,\Omega_\rho^2}^2 \\
-  &\le \frac a4 A_{h,\rho}(\nu) + \|E\|_{2,\Omega_\rho^2}^2.
+  &\le \frac a4 A_{h,\rho} + \|E\|_{2,\Omega_\rho^2}^2.
 \end{align*}
 For the third bound, the orthogonality in \eqref{eq:rank-one-orthogonality} moves
 the remaining linear term to the tail--tail square:
@@ -132,12 +122,12 @@ the remaining linear term to the tail--tail square:
 Combining the three bounds gives
 \begin{equation*}
   \iint_{\Omega_\rho^2} \{J_{p_h}(W)-J_{p_h}(f\otimes f)\}
-  \ge \|E\|_{2,\Omega_\rho^2}^2 -\frac a4 A_{h,\rho}(\nu)-C_d\nu(\mathcal T_\rho)^2.
+  \ge \|E\|_{2,\Omega_\rho^2}^2 -\frac a4 A_{h,\rho}-C_d\nu(\mathcal T_\rho)^2.
 \end{equation*}
 
 We next consider the mixed rectangles.  For almost every $x$, the
 orthogonality in
-\eqref{eq:rank-one-orthogonality}, together with
+\eqref{eq:rank-one-orthogonality}, with
 \eqref{eq:graphon-comparison-estimates}, gives
 \begin{equation*}
   u_*^{d-1}\left|\int_{\Omega_\rho}E(x,y)\,dy\right|
@@ -146,17 +136,17 @@ orthogonality in
   +\int_{\Omega_\rho^c}f(y)^{d-1}|E(x,y)|\,dy
   \le C_{d,\rho}h.
 \end{equation*}
-Consequently, if $\overline W_x:= (\int_{\Omega_\rho}W(x,y)\,dy)/\lambda(\Omega_\rho)$,
+Consequently, if $\overline{W_x}:= (\int_{\Omega_\rho}W(x,y)\,dy)/\lambda(\Omega_\rho)$,
 then
 \begin{equation*}
-  |\overline W_x-u_*f(x)|
+  |\overline{W_x}-u_*f(x)|
   \le |f(x)|\left|
     \frac1{\lambda(\Omega_\rho)}\int_{\Omega_\rho} (f(y)-u_*)\,dy\right|
     +\frac1{\lambda(\Omega_\rho)}\left|\int_{\Omega_\rho}E(x,y)\,dy\right|
   \le C_{d,\rho}h.
 \end{equation*}
-Since $\overline W_x\in[0,1]$, we have
-$J_{p_h}(\overline W_x)=\widetilde J_{p_h}(\overline W_x)$.
+Since $\overline{W_x}\in[0,1]$, we have
+$J_{p_h}(\overline{W_x})=\widetilde J_{p_h}(\overline{W_x})$.
 By Jensen's and H\"older's inequalities, with
 \eqref{eq:continuation-kernel-bounds} and
 \eqref{eq:graphon-comparison-estimates},
@@ -164,9 +154,9 @@ By Jensen's and H\"older's inequalities, with
 \begin{aligned}
 &\int_{\Omega_\rho}
   \{J_{p_h}(W(x,y))-\widetilde J_{p_h}(f(x)f(y))\}\,dy\\
-&\quad\ge \lambda(\Omega_\rho) \left\{J_{p_h}(\overline W_x)-\widetilde J_{p_h}(u_*f(x))\right\}
+&\quad\ge \lambda(\Omega_\rho) \left\{J_{p_h}(\overline{W_x})-\widetilde J_{p_h}(u_*f(x))\right\}
 -\int_{\Omega_\rho} \left\{\widetilde J_{p_h}(f(x)f(y))-\widetilde J_{p_h}(u_*f(x))\right\}\,dy\\
-&\quad\ge-C_d |\overline W_x - u_*f(x)|^{1/2} -C_d\int_{\Omega_\rho}|f(y)-u_*|^{1/2}\,dy \ge-C_{d,\rho}h^{1/2} \ge -\frac{b_\rho}{16}.
+&\quad\ge-C_d |\overline{W_x} - u_*f(x)|^{1/2} -C_d\int_{\Omega_\rho}|f(y)-u_*|^{1/2}\,dy \ge-C_{d,\rho}h^{1/2} \ge -\frac{b_\rho}{16}.
 \end{aligned}
 \end{equation*}
 Integrating this bound over $x\in\Omega_\rho^c$ yields
@@ -191,10 +181,10 @@ and $|t(H,W)-q^v|\le C_{d,m}\|E\|_2^3$ gives
 \begin{equation*}
 \begin{aligned}
   I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}
-  &\ge\frac a4 A_{h,\rho}(\nu)
+  &\ge\frac a4 A_{h,\rho}
     +\frac{3b_\rho}{8}\nu(\mathcal T_\rho)
     +\|E\|_{2,\Omega_\rho^2}^2\\
-  &\quad-C_{d,m}\Delta_h(\nu)^2
+  &\quad-C_{d,m}\Delta_h^2
     -C_d\nu(\mathcal T_\rho)^2
     -C_{d,m}\|E\|_2^3.
 \end{aligned}
@@ -217,10 +207,10 @@ $C_d\nu(\mathcal T_\rho)\le b_\rho/16$ and $C_{d,m}\|E\|_2\le C_{d,\rho}^{-1}/2$
 Consequently,
 \begin{equation*}
   I_{p_h}(W)-I_{p_h}(W_h)-\mu_h\{t(H,W)-r_h^m\}
-  \ge\frac a4 A_{h,\rho}(\nu)
+  \ge\frac a4 A_{h,\rho}
   +\frac{b_\rho}{4}\nu(\mathcal T_\rho)
   +\frac{1}{2}C_{d,\rho}^{-1}\|E\|_2^2
-  -C_{d,m}\Delta_h(\nu)^2.
+  -C_{d,m}\Delta_h^2.
 \end{equation*}
 Increasing $C_{d,\rho}$ if necessary proves \eqref{eq:graphon-lagrangian-bound}.
 \end{proof}

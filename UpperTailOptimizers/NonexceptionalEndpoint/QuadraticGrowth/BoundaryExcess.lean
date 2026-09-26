@@ -3,38 +3,37 @@ import UpperTailOptimizers.NonexceptionalEndpoint.QuadraticGrowth.QuadraticUpper
 import UpperTailOptimizers.NonexceptionalEndpoint.LocalReduction.Main
 
 /-!
-# The boundary excess has a non-degenerate quadratic minimum (`thm:positive-second-variation`)
+# The boundary excess has a non-degenerate quadratic minimum (`thm:boundary-excess-expansion`)
 
 The boundary excess of `paper/paper.tex` (eq. `eq:boundary-excess`) is
 
-`G_r(δ) = I_{pc(r),r}(r - δ) - J_{pc(r)}(r)`,
+`G_r(δ) = I_{p_c(r),r}(r - δ) - J_{p_c(r)}(r)`,
 
-the extra entropy cost, at the boundary point `p = pc(r)`, of forcing edge density
+the extra entropy cost, at the boundary point `p = p_c(r)`, of forcing edge density
 `r - δ` while keeping the `H`-density at the constant-graphon level `r^m`.  In the
 Lean development `I_{p,r}` is `reducedObjectiveReal` (`NonexceptionalEndpoint/LocalReduction/Main.lean`).
 
-**`thm:positive-second-variation` (`boundaryExcess_quadratic`)** — the quantitative core of the paper's
-Theorem "Universal positivity of the scalar second variation": uniformly for `r` in a
+**`thm:boundary-excess-expansion` (`boundaryExcess_quadratic`)** — the quantitative core of the paper's
+Theorem "Quadratic expansion of the boundary excess": uniformly for `r` in a
 compact subarc `K`,
 
 `C δ² ≤ G_r(δ) ≤ C' δ²` for `0 < δ < δ₀`, with `C, C' > 0`.
 
 This is exactly the two-sided bound (`C_{d,I}δ² ≤ G_r(δ) ≤ C_{H,I}δ²` in the paper) from which
 the paper concludes that the Taylor expansion of the (analytic) boundary excess begins in degree
-exactly two, with `A_H(r) = lim_{δ↓0} 2G_r(δ)/δ² > 0`.  The paper then obtains a uniform lower
-bound `a₀ = A_H(r₀)/2` by continuity after shrinking `I`; here `A_H(r) ∈ [2C, 2C']` gives
-`A_H > 0` uniformly on `K` directly.
+exactly two, with `A_H(r) = lim_{δ↓0} 2G_r(δ)/δ² ≥ 2C_{d,I} > 0` uniformly on `I`; here the
+two-sided bound `A_H(r) ∈ [2C, 2C']` gives the same uniform positivity on `K`.
 
-The proof combines the quadratic lower bound for graphons (`prop:graphon-quadratic-bound`,
+The proof combines the quadratic lower bound for graphons (`lem:quadratic-lower-bound`,
 `quadratic_lower_graphon`) — applied to **every** graphon in the fixed-`(e, t_H)`
 constraint set, so that no attainment or Kenyon–Radin–Ren–Sadun input is needed on
-this side — with the bipodal competitor of `lem:bipodal-quadratic-bound` (`quadratic_upper`), whose
-entropy is a lower bound for the entropy envelope `S_H`.  Consequently the theorem
-consumes only the `generalized_holder` axiom (through `prop:graphon-quadratic-bound`), and **not**
+this side — with the bipodal competitor of `lem:quadratic-upper-bound` (`quadratic_upper`), whose
+entropy is a lower bound for the entropy envelope `S`.  Consequently the theorem
+consumes only the `generalized_holder` axiom (through `lem:quadratic-lower-bound`), and **not**
 `kenyonRadinRenSadun` or `lubetzkyZhao`.
 
-The remaining (qualitative) part of the paper's `thm:positive-second-variation` — that `G_r(δ)` agrees
-for small `δ > 0` with a function analytic in `δ`, so that the second-variation
+The remaining (qualitative) part of the paper's `thm:boundary-excess-expansion` — that `G_r(δ)` agrees
+for small `δ > 0` with a function analytic in `δ`, so that the quadratic
 coefficient `A_H` is well defined and equals the limit `2 G_r(δ)/δ²` — rests on the
 analytic parametrization clause of `thm:krrs-analytic-extension` (KRRS), the theorem
 `kenyonRadinRenSadunAnalytic` of `Preliminaries/KRRSAnalyticExtension/Main.lean`.  That part is proved
@@ -46,13 +45,13 @@ namespace UpperTailOptimizers
 
 open MeasureTheory Real Set
 
-/-- **The boundary excess** `G_r(δ) = I_{pc(r),r}(r-δ) - J_{pc(r)}(r)`
+/-- **The boundary excess** `G_r(δ) = I_{p_c(r),r}(r-δ) - J_{p_c(r)}(r)`
 (eq. `eq:boundary-excess` of `paper/paper.tex`). -/
 noncomputable def boundaryExcess {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] {d : ℕ} (M : LZBoundaryArc d) (r δ : ℝ) : ℝ :=
   reducedObjectiveReal H (M.pc r) (r - δ) (r ^ H.edgeFinset.card) - Jp (M.pc r) r
 
-/-- **`thm:positive-second-variation`, quantitative form.**
+/-- **`thm:boundary-excess-expansion`, quantitative form.**
 Uniformly for `r` in a compact subarc `K` of a Lubetzky–Zhao boundary arc there are `C, C' > 0` and
 `δ₀ > 0` with
 
@@ -73,7 +72,7 @@ theorem boundaryExcess_quadratic {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
   intro r hr δ hδ0 hδlt
   obtain ⟨hpc0, hpcr, hr1, _, _, _⟩ := M.ordering r (hK hr)
   have hpc1 : M.pc r < 1 := lt_trans hpcr hr1
-  -- the bipodal competitor of `lem:bipodal-quadratic-bound`
+  -- the bipodal competitor of `lem:quadratic-upper-bound`
   obtain ⟨W, hWe, hWt, _, hWIp⟩ := hupp r hr δ hδ0 hδlt
   -- the fixed-(e, t_H) entropy constraint set
   have hWmem : W.entropy ∈ {s | ∃ W' : Graphon, W'.edgeDensity = r - δ
@@ -96,7 +95,7 @@ theorem boundaryExcess_quadratic {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     rw [boundaryExcess, reducedObjectiveReal]
     linarith
   · -- upper bound: the competitor's entropy is a lower bound for the envelope, and
-    -- its `I_p`-value is controlled by `lem:bipodal-quadratic-bound`.
+    -- its `I_p`-value is controlled by `lem:quadratic-upper-bound`.
     have hσ : W.entropy ≤ entropyEnvelopeReal H (r - δ) (r ^ H.edgeFinset.card) :=
       le_csSup hbdd hWmem
     have hent := W.Ip_eq_entropy hpc0 hpc1

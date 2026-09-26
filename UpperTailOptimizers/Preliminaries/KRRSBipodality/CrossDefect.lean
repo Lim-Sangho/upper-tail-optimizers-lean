@@ -93,8 +93,8 @@ theorem cross_defect {S : Set (ℝ × ℝ)} (hS : MeasurableSet S)
   classical
   set s := sectionMeasure S with hs
   set I : Set ℝ := {x | τ ≤ s x} with hI
-  have hsm : Measurable s := measurable_sectionMeasure hS
-  have hIm : MeasurableSet I := measurableSet_le measurable_const hsm
+  have hsc : Measurable s := measurable_sectionMeasure hS
+  have hIm : MeasurableSet I := measurableSet_le measurable_const hsc
   have hsint := sectionMeasure_integrable S hS
   have hφb : ∀ x, |φ (s x)| ≤ |C| := fun x => by
     have hmem := sectionMeasure_mem_Icc S x
@@ -105,7 +105,7 @@ theorem cross_defect {S : Set (ℝ × ℝ)} (hS : MeasurableSet S)
           nlinarith [le_abs_self C, abs_nonneg C, sq_nonneg (s x)]
       _ = |C| := mul_one _
   have hφint : Integrable (fun x => φ (s x)) unitμ :=
-    Integrable.of_bound (hφm.comp hsm).aestronglyMeasurable |C|
+    Integrable.of_bound (hφm.comp hsc).aestronglyMeasurable |C|
       (Eventually.of_forall fun x => by rw [Real.norm_eq_abs]; exact hφb x)
   have hφ1 : 0 ≤ φ 1 := hφnn 1 ⟨zero_le_one, le_rfl⟩
   -- the mass over `I`
@@ -191,9 +191,9 @@ theorem measure_symmDiff_cross_le_aux {S : Set (ℝ × ℝ)} (hS : MeasurableSet
   set s := sectionMeasure S with hs
   set Iτ : Set ℝ := {x | τ ≤ s x} with hIτ
   set I : Set ℝ := {x | 1 / 2 ≤ s x} with hIdef
-  have hsm : Measurable s := measurable_sectionMeasure hS
-  have hIτm : MeasurableSet Iτ := measurableSet_le measurable_const hsm
-  have hIm : MeasurableSet I := measurableSet_le measurable_const hsm
+  have hsc : Measurable s := measurable_sectionMeasure hS
+  have hIτm : MeasurableSet Iτ := measurableSet_le measurable_const hsc
+  have hIm : MeasurableSet I := measurableSet_le measurable_const hsc
   have hsub : I ⊆ Iτ := fun x hx => le_trans hτ hx
   have hJm : MeasurableSet (Iτ \ I) := hIτm.diff hIm
   -- the covering
@@ -280,8 +280,8 @@ theorem convex_le_chord {φ : ℝ → ℝ} (hφc : ConvexOn ℝ (Icc 0 1) φ) (h
 /-- Markov: `|{s_x ≥ τ}| ≤ |S|/τ`. -/
 theorem measure_sectionMeasure_ge_le {S : Set (ℝ × ℝ)} (hS : MeasurableSet S) {τ : ℝ}
     (hτ0 : 0 < τ) : (unitμ {x | τ ≤ sectionMeasure S x}).toReal ≤ (gμ S).toReal / τ := by
-  have hsm := measurable_sectionMeasure hS
-  have hIm : MeasurableSet {x | τ ≤ sectionMeasure S x} := measurableSet_le measurable_const hsm
+  have hsc := measurable_sectionMeasure hS
+  have hIm : MeasurableSet {x | τ ≤ sectionMeasure S x} := measurableSet_le measurable_const hsc
   have hsint := sectionMeasure_integrable S hS
   rw [le_div_iff₀ hτ0, ← integral_sectionMeasure hS]
   have h1 : ∫ x in {x | τ ≤ sectionMeasure S x}, τ ∂unitμ
@@ -321,9 +321,9 @@ theorem cross_structure {S : Set (ℝ × ℝ)} (hS : MeasurableSet S)
   set Iτ : Set ℝ := {x | τ ≤ s x} with hIτ
   set I : Set ℝ := {x | 1 / 2 ≤ s x} with hIdef
   set E : ℝ := (φ 1 * σ / 2 - ∫ x, φ (s x) ∂unitμ) + φ 1 * (σ / τ) ^ 2 / 2 + C * τ * σ with hE
-  have hsm : Measurable s := measurable_sectionMeasure hS
-  have hIτm : MeasurableSet Iτ := measurableSet_le measurable_const hsm
-  have hIm : MeasurableSet I := measurableSet_le measurable_const hsm
+  have hsc : Measurable s := measurable_sectionMeasure hS
+  have hIτm : MeasurableSet Iτ := measurableSet_le measurable_const hsc
+  have hIm : MeasurableSet I := measurableSet_le measurable_const hsc
   have hsub : I ⊆ Iτ := fun x hx => le_trans hτ hx
   have hsint := sectionMeasure_integrable S hS
   have hφ1 : 0 ≤ φ 1 := hφnn 1 ⟨zero_le_one, le_rfl⟩
@@ -341,7 +341,7 @@ theorem cross_structure {S : Set (ℝ × ℝ)} (hS : MeasurableSet S)
           nlinarith [le_abs_self C, abs_nonneg C, sq_nonneg (s x)]
       _ = |C| := mul_one _
   have hφint : Integrable (fun x => φ (s x)) unitμ :=
-    Integrable.of_bound (hφm.comp hsm).aestronglyMeasurable |C|
+    Integrable.of_bound (hφm.comp hsc).aestronglyMeasurable |C|
       (Eventually.of_forall fun x => by rw [Real.norm_eq_abs]; exact hφb x)
   have hgint : Integrable (fun x => φ 1 * s x - φ (s x)) unitμ := (hsint.const_mul _).sub hφint
   -- the defect inequality

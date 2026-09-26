@@ -6,18 +6,17 @@ import UpperTailOptimizers.LZBoundary.Curve
 `LZBoundary/PhiDeriv.lean`, `LZBoundary/Existence.lean` and `LZBoundary/Curve.lean` prove the
 results of `sec:lz-boundary` with the zeros of `h_{p,d}` and the two contact points produced
 existentially (`convexity_defect`, `lz_boundary_contacts`) or carried by a `GlobalContacts`
-datum, and with (M1)–(M5) of Theorem 3.1 packaged on boundary arcs
-(`lz_boundary_arcs`).  This file states `lem:convexity-defect`, `lem:contact-points`,
-`lem:contact-point-limits` and Theorem 3.1 as the paper does, with named
-functions:
+datum, and with (M1)–(M4) of Theorem 3.1 packaged on boundary arcs
+(`lz_boundary_arcs`).  This file states `lem:convexity-defect`, `lem:contact-points` (including
+its contact limits) and Theorem 3.1 as the paper does, with named functions:
 
 * `uMinus p d`, `uPlus p d` — the zeros `u₋(p)`, `u₊(p)` of `h_{p,d}`: the infimum and the
   supremum of its zero set in `(0,1)`;
 * `contactXa d p`, `contactXb d p` — the contact points `x_a(p)`, `x_b(p)`: the infimum and the
   supremum of the set of `x ∈ (0,1)` where the convex minorant of `φ_{p,d}` is strictly below
   `φ_{p,d}`;
-* `pcGlobal d`, `smGlobal d` (`LZBoundary/Curve.lean`) — the boundary curve `pc` and the second
-  contact `sm`.
+* `pcGlobal d`, `scGlobal d` (`LZBoundary/Curve.lean`) — the boundary curve `pc` and the second
+  contact `sc`.
 
 The convex minorant of the footnote of Section 3 is `lce 0 1 (phi p d)`
 (`lce_phi_convexMinorant`).
@@ -26,7 +25,7 @@ The contact points are identified with the `d`-th powers of the contacts `u_a(p)
 `exists_globalContacts` (`contactXa_eq_gc`): for `0 < p < p_*` the detached set of the convex
 minorant is exactly `(u_a(p)^d, u_b(p)^d)` (`gc_lce_eq_outside`, `contact_bundle`).  Analyticity,
 the signs of the derivatives, the limits and monotonicity transfer from `GlobalContacts`, and
-uniqueness of the contact pair is `contact_unique`.  (M5) for an arbitrary compact
+uniqueness of the contact pair is `contact_unique`.  The separation of (M3) for an arbitrary compact
 `K ⊆ (0,1) ∖ {r_*}` follows from the arc-wise `quadSep` field by covering `K` with closed balls
 inside arcs (`lz_boundary_quadSep`).
 
@@ -35,8 +34,8 @@ inside arcs (`lz_boundary_quadSep`).
 * `uMinus_uPlus_eq_of_zeros`, `convexity_defect_zeros` — `lem:convexity-defect`;
 * `lce_phi_convexMinorant` — `lce 0 1 (phi p d)` is the convex minorant of `φ_{p,d}`;
 * `gc_lce_eq_outside`, `contactXa_eq_gc`, `contact_points` — `lem:contact-points`;
-* `contact_point_limits` — `lem:contact-point-limits`;
-* `lz_boundary_M2_lce`, `LZBoundaryArc.quadSep_x`, `lz_boundary_quadSep`,
+* `contact_point_limits` — the contact limits of `lem:contact-points`;
+* `lz_boundary_M1_lce`, `LZBoundaryArc.quadSep_x`, `lz_boundary_quadSep`,
   `lz_boundary` — Theorem 3.1.
 -/
 
@@ -232,8 +231,7 @@ and the zeros of `h_{p,d}` named `uMinus p d`, `uPlus p d`.
 
 For every `p ∈ (0,p_*)`:
 * `0 < x_a(p) < u₋(p)^d < u₊(p)^d < x_b(p) < 1`;
-* the equal-slope equation `eq:contact-equal-slopes` and the chord identity
-  `eq:contact-chord-identity` hold;
+* the equal-slope equation and the chord identity of `eq:contact-identity` hold;
 * `(x_a(p), x_b(p))` is the only pair with `0 < x₁ < u₋(p)^d`, `u₊(p)^d < x₂ < 1` satisfying
   these two equations;
 * the convex minorant `lce 0 1 φ_{p,d}` agrees with `φ_{p,d}` at every `x ∈ [0,1]` with
@@ -347,9 +345,9 @@ theorem contact_points {d : ℕ} (hd : 2 ≤ d) :
     rw [(hevB p hp).deriv_eq, hH.deriv]
     exact mul_neg_of_pos_of_neg (mul_pos (dpos hd) (pow_pos hub0 _)) (G.deriv_ub_neg p hp.1 hp.2)
 
-/-! ### `lem:contact-point-limits` -/
+/-! ### The contact limits of `lem:contact-points` -/
 
-/-- **`lem:contact-point-limits`**, for `u_a(p) := x_a(p)^{1/d}` and `u_b(p) := x_b(p)^{1/d}`
+/-- **The contact limits of `lem:contact-points`**, for `u_a(p) := x_a(p)^{1/d}` and `u_b(p) := x_b(p)^{1/d}`
 built from the named contact points: as `p ↑ p_*` both tend to `r_*`; as `p ↓ 0`, `u_a(p) → 0`
 and `u_b(p) → 1`.  The monotone approach (`u_a ↓ 0`, `u_b ↑ 1`) is recorded as strict
 monotonicity of `u_a` and strict antitonicity of `u_b` on `(0,p_*)`. -/
@@ -383,25 +381,26 @@ theorem contact_point_limits {d : ℕ} (hd : 2 ≤ d) :
 
 /-! ### Theorem 3.1 -/
 
-/-- Condition (M2) of Theorem 3.1 in its convex-minorant form, for every
+/-- The criterion of condition (M1) of Theorem 3.1 in its convex-minorant form, for every
 `r ∈ (0,1)` (the exceptional density included): `(r^d, J_p(r))` lies on the convex minorant
-`lce 0 1 φ_{p,d}` iff `p ≥ pcGlobal d r`.  This is `lz_boundary_M2_global` read through
+`lce 0 1 φ_{p,d}` iff `p ≥ pcGlobal d r`.  This is `lz_boundary_M1_global` read through
 `exists_supportingLine_iff_lce_eq`. -/
-theorem lz_boundary_M2_lce {d : ℕ} (hd : 2 ≤ d) {r p : ℝ} (hr0 : 0 < r) (hr1 : r < 1)
+theorem lz_boundary_M1_lce {d : ℕ} (hd : 2 ≤ d) {r p : ℝ} (hr0 : 0 < r) (hr1 : r < 1)
     (hp0 : 0 < p) (hp1 : p < 1) :
     lce 0 1 (phi p d) (r ^ d) = Jp p r ↔ pcGlobal d r ≤ p := by
   have hrIoo : r ^ d ∈ Set.Ioo (0:ℝ) 1 := ⟨pow_pos hr0 d, pow_lt_one₀ hr0.le hr1 (by omega)⟩
-  rw [← lz_boundary_M2_global hd hr0 hr1 hp0 hp1, Jp_eq_phi_pow hd hr0.le,
+  rw [← lz_boundary_M1_global hd hr0 hr1 hp0 hp1, Jp_eq_phi_pow hd hr0.le,
     ← exists_supportingLine_iff_lce_eq (by norm_num) (phi_continuousOn_Icc hd hp0 hp1) hrIoo]
 
-/-- The `quadSep` field of a Lubetzky–Zhao boundary arc ((M5) of Theorem 3.1 on
+/-- The `quadSep` field of a Lubetzky–Zhao boundary arc ((M3) of Theorem 3.1, in the
+`x`-coordinate, on
 compact subsets of the arc), rewritten in the `x`-coordinate with the tangent line
-`ℓ_r(x) = φ_{pc(r),d}(r^d) + φ_{pc(r),d}'(r^d)(x - r^d)` and the global maps `pcGlobal`,
-`smGlobal`. -/
+`ℓ_r(x) = φ_{p_c(r),d}(r^d) + φ_{p_c(r),d}'(r^d)(x - r^d)` and the global maps `pcGlobal`,
+`scGlobal`. -/
 theorem LZBoundaryArc.quadSep_x {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {K : Set ℝ}
     (hKU : K ⊆ M.U) (hK : IsCompact K) :
     ∃ γ : ℝ, 0 < γ ∧ ∀ r ∈ K, ∀ x ∈ Set.Icc (0:ℝ) 1,
-      γ * (min |x - r ^ d| |x - smGlobal d r ^ d|) ^ 2 ≤
+      γ * (min |x - r ^ d| |x - scGlobal d r ^ d|) ^ 2 ≤
         phi (pcGlobal d r) d x - (phi (pcGlobal d r) d (r ^ d) +
           deriv (phi (pcGlobal d r) d) (r ^ d) * (x - r ^ d)) := by
   obtain ⟨γ, hγ, hq⟩ := M.quadSep K hKU hK
@@ -417,20 +416,20 @@ theorem LZBoundaryArc.quadSep_x {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {
   have h := hq r hr (Real.rpow x (1/(d:ℝ))) ⟨hu0, hu1⟩
   rw [hud, ← phi_eq_Jp_rpow, Jp_eq_phi_pow hd hr0.le,
     slope_eq_deriv_phi (pc := M.pc) hd hpc0 (hpcr.trans hr1) hr0 hr1] at h
-  rwa [pcGlobal_eq_pc hd M hrU, smGlobal_eq_sm hd M hrU]
+  rwa [pcGlobal_eq_pc hd M hrU, scGlobal_eq_sc hd M hrU]
 
-/-- Condition (M5) of Theorem 3.1 for an arbitrary compact
+/-- The separation of condition (M3) of Theorem 3.1, in the `x`-coordinate, for an arbitrary compact
 `K ⊆ (0,1) ∖ {r_*}`: cover `K` by closed balls lying inside boundary arcs
 (`lz_boundary_arcs`), apply `LZBoundaryArc.quadSep_x` on each, and take the smallest
 constant (`IsCompact.induction_on`). -/
 theorem lz_boundary_quadSep {d : ℕ} (hd : 2 ≤ d) {K : Set ℝ}
     (hKS : K ⊆ Set.Ioo 0 1 \ {rStar d}) (hK : IsCompact K) :
     ∃ γ : ℝ, 0 < γ ∧ ∀ r ∈ K, ∀ x ∈ Set.Icc (0:ℝ) 1,
-      γ * (min |x - r ^ d| |x - smGlobal d r ^ d|) ^ 2 ≤
+      γ * (min |x - r ^ d| |x - scGlobal d r ^ d|) ^ 2 ≤
         phi (pcGlobal d r) d x - (phi (pcGlobal d r) d (r ^ d) +
           deriv (phi (pcGlobal d r) d) (r ^ d) * (x - r ^ d)) := by
   refine hK.induction_on (p := fun s => ∃ γ : ℝ, 0 < γ ∧ ∀ r ∈ s, ∀ x ∈ Set.Icc (0:ℝ) 1,
-      γ * (min |x - r ^ d| |x - smGlobal d r ^ d|) ^ 2 ≤
+      γ * (min |x - r ^ d| |x - scGlobal d r ^ d|) ^ 2 ≤
         phi (pcGlobal d r) d x - (phi (pcGlobal d r) d (r ^ d) +
           deriv (phi (pcGlobal d r) d) (r ^ d) * (x - r ^ d))) ?_ ?_ ?_ ?_
   · exact ⟨1, one_pos, fun r hr => hr.elim⟩
@@ -438,7 +437,7 @@ theorem lz_boundary_quadSep {d : ℕ} (hd : 2 ≤ d) {K : Set ℝ}
     exact ⟨γ, hγ, fun r hr => h r (hst hr)⟩
   · rintro s t ⟨γ₁, hγ₁, h₁⟩ ⟨γ₂, hγ₂, h₂⟩
     refine ⟨min γ₁ γ₂, lt_min hγ₁ hγ₂, fun r hr x hx => ?_⟩
-    have hsq : 0 ≤ (min |x - r ^ d| |x - smGlobal d r ^ d|) ^ 2 := sq_nonneg _
+    have hsq : 0 ≤ (min |x - r ^ d| |x - scGlobal d r ^ d|) ^ 2 := sq_nonneg _
     rcases hr with hr | hr
     · exact le_trans (mul_le_mul_of_nonneg_right (min_le_left _ _) hsq) (h₁ r hr x hx)
     · exact le_trans (mul_le_mul_of_nonneg_right (min_le_right _ _) hsq) (h₂ r hr x hx)
@@ -452,65 +451,71 @@ theorem lz_boundary_quadSep {d : ℕ} (hd : 2 ≤ d) {K : Set ℝ}
         (isCompact_closedBall r (ε / 2))⟩
 
 /-- **Theorem 3.1 (Lubetzky–Zhao boundary)**, for the named global maps
-`pc = pcGlobal d` and `sm = smGlobal d`.  Write `S = (0,1) ∖ {r_*}`.
+`pc = pcGlobal d` and `sc = scGlobal d`.  Write `S = (0,1) ∖ {r_*}`.
 
-* `pc` and `sm` are analytic on `S` and map `S` into `(0,1)`.
-* For every `r ∈ S`, with `x_r = r^d`, `x_s = sm(r)^d` and the tangent line
-  `ℓ_r(x) = φ_{pc(r),d}(x_r) + φ_{pc(r),d}'(x_r)(x - x_r)`:
-  (M1) `0 < pc(r) < min(r, p_*)` and `sm(r) ≠ r`;
-  (M2) for every `p ∈ (0,1)`, the point `(r^d, J_p(r))` lies on the convex minorant of
-  `φ_{p,d}` (i.e. `lce 0 1 φ_{p,d}` takes the value `J_p(r)` at `r^d`, see
-  `lce_phi_convexMinorant`) iff `p ≥ pc(r)`;
-  (M3) `ℓ_r(x) ≤ φ_{pc(r),d}(x)` for all `x ∈ [0,1]`;
-  (M4) equality in (M3) holds exactly when `x ∈ {x_r, x_s}`.
-* (M5) For every compact `K ⊆ S` there is `γ_K > 0` with
-  `φ_{pc(r),d}(x) - ℓ_r(x) ≥ γ_K dist(x, {r^d, sm(r)^d})²` for all `r ∈ K`, `x ∈ [0,1]`
-  (the distance to the two-point set is `min |x - r^d| |x - sm(r)^d|`).  (M5) does not refer to
-  the `r` of (M1)–(M4), so it is stated as a separate conjunct.
-* The continuous extension: `pc(r_*) = p_*`, `sm(r_*) = r_*`, both maps are continuous on
-  `(0,1)`, and (M2) holds for every `r ∈ (0,1)`. -/
+* `pc` and `sc` are analytic on `S` and map `S` into `(0,1)`.
+* For every `r ∈ S`, with `x_r = r^d`, `x_s = s_c(r)^d` and the tangent line
+  `ℓ_r(x) = φ_{p_c(r),d}(x_r) + φ_{p_c(r),d}'(x_r)(x - x_r)`:
+  (M1) `0 < p_c(r) < min(r, p_*)`, `s_c(r) ≠ r`, and for every `p ∈ (0,1)` the point
+  `(r^d, J_p(r))` lies on the convex minorant of `φ_{p,d}` (i.e. `lce 0 1 φ_{p,d}` takes the
+  value `J_p(r)` at `r^d`, see `lce_phi_convexMinorant`) iff `p ≥ p_c(r)`;
+  (M2) `ℓ_r(x) ≤ φ_{p_c(r),d}(x)` for all `x ∈ [0,1]`, with equality exactly when
+  `x ∈ {x_r, x_s}`.
+* The separation behind (M3): for every compact `K ⊆ S` there is `γ_K > 0` with
+  `φ_{p_c(r),d}(x) - ℓ_r(x) ≥ γ_K dist(x, {r^d, s_c(r)^d})²` for all `r ∈ K`, `x ∈ [0,1]`
+  (the distance to the two-point set is `min |x - r^d| |x - s_c(r)^d|`).  It does not refer to
+  the `r` of the previous item, so it is stated as a separate conjunct.  The density form of
+  (M3) — the paper's `eq:contact-quadratic-separation`, together with the curvature bounds and
+  the quadratic expansion — is `exists_nonexceptional_gap_quadratic_lower`, `exists_nonexceptional_gap_curvature_bounds` and
+  `exists_nonexceptional_gap_expansion` of `LZBoundary/NonexceptionalGap.lean`; (M4) is
+  `lz_boundary_exceptional_gap` of `SingularEndpoint/ExceptionalGap.lean`.
+* The continuous extension: `p_c(r_*) = p_*`, `s_c(r_*) = r_*`, both maps are continuous on
+  `(0,1)`, and the criterion holds for every `r ∈ (0,1)`.  The paper's (M1) also asserts that
+  `pc` and `sc` are analytic **through** `r_*`; that strengthening is `lz_boundary_analytic` of
+  `LZBoundary/Merge/CurveAnalytic.lean`, proved by normalising the contact equations at the
+  merged contact. -/
 theorem lz_boundary {d : ℕ} (hd : 2 ≤ d) :
     AnalyticOnNhd ℝ (pcGlobal d) (Set.Ioo 0 1 \ {rStar d}) ∧
-    AnalyticOnNhd ℝ (smGlobal d) (Set.Ioo 0 1 \ {rStar d}) ∧
+    AnalyticOnNhd ℝ (scGlobal d) (Set.Ioo 0 1 \ {rStar d}) ∧
     Set.MapsTo (pcGlobal d) (Set.Ioo 0 1 \ {rStar d}) (Set.Ioo 0 1) ∧
-    Set.MapsTo (smGlobal d) (Set.Ioo 0 1 \ {rStar d}) (Set.Ioo 0 1) ∧
+    Set.MapsTo (scGlobal d) (Set.Ioo 0 1 \ {rStar d}) (Set.Ioo 0 1) ∧
     (∀ r ∈ Set.Ioo (0:ℝ) 1 \ {rStar d},
-      -- (M1)
-      (0 < pcGlobal d r ∧ pcGlobal d r < min r (pStar d) ∧ smGlobal d r ≠ r) ∧
-      -- (M2)
+      -- (M1), the ordering
+      (0 < pcGlobal d r ∧ pcGlobal d r < min r (pStar d) ∧ scGlobal d r ≠ r) ∧
+      -- (M1), the criterion
       (∀ p ∈ Set.Ioo (0:ℝ) 1, lce 0 1 (phi p d) (r ^ d) = Jp p r ↔ pcGlobal d r ≤ p) ∧
-      -- (M3)
+      -- (M2), the supporting line
       (∀ x ∈ Set.Icc (0:ℝ) 1,
         phi (pcGlobal d r) d (r ^ d) + deriv (phi (pcGlobal d r) d) (r ^ d) * (x - r ^ d)
           ≤ phi (pcGlobal d r) d x) ∧
-      -- (M4)
+      -- (M2), the contact set
       (∀ x ∈ Set.Icc (0:ℝ) 1,
         phi (pcGlobal d r) d (r ^ d) + deriv (phi (pcGlobal d r) d) (r ^ d) * (x - r ^ d)
-          = phi (pcGlobal d r) d x ↔ x = r ^ d ∨ x = smGlobal d r ^ d)) ∧
-    -- (M5)
+          = phi (pcGlobal d r) d x ↔ x = r ^ d ∨ x = scGlobal d r ^ d)) ∧
+    -- the `x`-coordinate separation behind (M3)
     (∀ K : Set ℝ, K ⊆ Set.Ioo 0 1 \ {rStar d} → IsCompact K →
       ∃ γ : ℝ, 0 < γ ∧ ∀ r ∈ K, ∀ x ∈ Set.Icc (0:ℝ) 1,
-        γ * (min |x - r ^ d| |x - smGlobal d r ^ d|) ^ 2 ≤
+        γ * (min |x - r ^ d| |x - scGlobal d r ^ d|) ^ 2 ≤
           phi (pcGlobal d r) d x - (phi (pcGlobal d r) d (r ^ d) +
             deriv (phi (pcGlobal d r) d) (r ^ d) * (x - r ^ d))) ∧
     -- the continuous extension to `r_*`
-    pcGlobal d (rStar d) = pStar d ∧ smGlobal d (rStar d) = rStar d ∧
-    ContinuousOn (pcGlobal d) (Set.Ioo 0 1) ∧ ContinuousOn (smGlobal d) (Set.Ioo 0 1) ∧
+    pcGlobal d (rStar d) = pStar d ∧ scGlobal d (rStar d) = rStar d ∧
+    ContinuousOn (pcGlobal d) (Set.Ioo 0 1) ∧ ContinuousOn (scGlobal d) (Set.Ioo 0 1) ∧
     (∀ r ∈ Set.Ioo (0:ℝ) 1, ∀ p ∈ Set.Ioo (0:ℝ) 1,
       lce 0 1 (phi p d) (r ^ d) = Jp p r ↔ pcGlobal d r ≤ p) := by
   have hM2 : ∀ r ∈ Set.Ioo (0:ℝ) 1, ∀ p ∈ Set.Ioo (0:ℝ) 1,
       lce 0 1 (phi p d) (r ^ d) = Jp p r ↔ pcGlobal d r ≤ p :=
-    fun r hr p hp => lz_boundary_M2_lce hd hr.1 hr.2 hp.1 hp.2
+    fun r hr p hp => lz_boundary_M1_lce hd hr.1 hr.2 hp.1 hp.2
   refine ⟨fun r hr => analyticAt_pcGlobal hd hr.1.1 hr.1.2 hr.2,
-    fun r hr => analyticAt_smGlobal hd hr.1.1 hr.1.2 hr.2,
+    fun r hr => analyticAt_scGlobal hd hr.1.1 hr.1.2 hr.2,
     fun r hr => ⟨(pcGlobal_pos_le hd hr.1.1 hr.1.2).1,
       (pcGlobal_pos_le hd hr.1.1 hr.1.2).2.trans_lt (pStar_lt_one hd)⟩,
-    fun r hr => smGlobal_mem_Ioo hd hr.1.1 hr.1.2, fun r hr => ?_,
-    fun K hKS hK => lz_boundary_quadSep hd hKS hK, pcGlobal_rStar hd, smGlobal_rStar hd,
-    continuousOn_pcGlobal hd, continuousOn_smGlobal hd, hM2⟩
+    fun r hr => scGlobal_mem_Ioo hd hr.1.1 hr.1.2, fun r hr => ?_,
+    fun K hKS hK => lz_boundary_quadSep hd hKS hK, pcGlobal_rStar hd, scGlobal_rStar hd,
+    continuousOn_pcGlobal hd, continuousOn_scGlobal hd, hM2⟩
   obtain ⟨⟨hr0, hr1⟩, hexc⟩ := hr
   obtain ⟨M, hrU, -⟩ := lz_boundary_arcs hd hr0 hr1 hexc
-  obtain ⟨hpc0, hpcr, -, hsmne, -, -⟩ := M.ordering r hrU
+  obtain ⟨hpc0, hpcr, -, hscne, -, -⟩ := M.ordering r hrU
   have hpcs := M.pcLtPStar r hrU
   obtain ⟨hsupp, htouch⟩ := M.contact_data hd hrU
   rw [slope_eq_deriv_phi (pc := M.pc) hd hpc0 (hpcr.trans hr1) hr0 hr1] at hsupp htouch
@@ -520,19 +525,19 @@ theorem lz_boundary {d : ℕ} (hd : 2 ≤ d) :
   refine ⟨⟨?_, ?_, ?_⟩, hM2 r ⟨hr0, hr1⟩, ?_, ?_⟩
   · rw [pcGlobal_eq_pc hd M hrU]; exact hpc0
   · rw [pcGlobal_eq_pc hd M hrU]; exact lt_min hpcr hpcs
-  · rw [smGlobal_eq_sm hd M hrU]; exact hsmne
+  · rw [scGlobal_eq_sc hd M hrU]; exact hscne
   · rw [pcGlobal_eq_pc hd M hrU]; exact hsupp
-  · rw [pcGlobal_eq_pc hd M hrU, smGlobal_eq_sm hd M hrU] at hq' ⊢
+  · rw [pcGlobal_eq_pc hd M hrU, scGlobal_eq_sc hd M hrU] at hq' ⊢
     intro x hx
     constructor
     · intro heq
       have h := hq' x hx
       rw [heq, sub_self] at h
-      have hm0 : 0 ≤ min |x - r ^ d| |x - M.sm r ^ d| := le_min (abs_nonneg _) (abs_nonneg _)
-      have hsq : (min |x - r ^ d| |x - M.sm r ^ d|) ^ 2 = 0 :=
+      have hm0 : 0 ≤ min |x - r ^ d| |x - M.sc r ^ d| := le_min (abs_nonneg _) (abs_nonneg _)
+      have hsq : (min |x - r ^ d| |x - M.sc r ^ d|) ^ 2 = 0 :=
         le_antisymm (by nlinarith [h, hγ, hm0]) (sq_nonneg _)
-      have hmin0 : min |x - r ^ d| |x - M.sm r ^ d| = 0 := pow_eq_zero_iff two_ne_zero |>.mp hsq
-      rcases min_cases |x - r ^ d| |x - M.sm r ^ d| with ⟨he, -⟩ | ⟨he, -⟩
+      have hmin0 : min |x - r ^ d| |x - M.sc r ^ d| = 0 := pow_eq_zero_iff two_ne_zero |>.mp hsq
+      rcases min_cases |x - r ^ d| |x - M.sc r ^ d| with ⟨he, -⟩ | ⟨he, -⟩
       · left; rwa [he, abs_eq_zero, sub_eq_zero] at hmin0
       · right; rwa [he, abs_eq_zero, sub_eq_zero] at hmin0
     · rintro (h | h) <;> subst h

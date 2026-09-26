@@ -62,7 +62,7 @@ theorem Ip_nonneg (W : Graphon) {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) : 0 ≤ W.
   · exact (Jp_pos_of_ne hp0 hp1 (W.nonneg' z.1 z.2) (W.le_one' z.1 z.2) h).le
 
 /-- **The entropy is bounded above by `½ log 2`** (binary-entropy bound).  Used to show the
-fixed-density entropy envelope `S_H` is bounded above. -/
+fixed-density entropy envelope `S` is bounded above. -/
 theorem entropy_le (W : Graphon) : W.entropy ≤ (1 / 2) * Real.log 2 := by
   have hpt : ∀ z : ℝ × ℝ, -Real.log 2 ≤ entIntegrand (W.toFun z.1 z.2) := by
     intro z

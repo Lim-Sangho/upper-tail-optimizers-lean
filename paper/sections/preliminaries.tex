@@ -12,7 +12,7 @@ unless stated.
 
 \subsection{Graphons}\label{sec:graphons}
 
-A graphon is a symmetric measurable function
+A \emph{graphon} is a symmetric measurable function
 $W:[0,1]^2\to[0,1]$.  We view $W$ as specifying a random graph model with
 vertex labels in $[0,1]$, where $W(x,y)$ gives the probability of an edge
 between vertices labeled $x$ and $y$.  We denote the space of all graphons
@@ -43,7 +43,7 @@ relabeling of $[0,1]$ are identified.  Every homomorphism density
 $t(H,\cdot)$ is $\delta_\cut$-continuous, and $I_p$ is lower semicontinuous
 in the cut metric.  See~\cite{LovaszGraphLimits} for these facts.
 
-For a finite graph $G$, define its associated step graphon $W_G$ by
+For a finite graph $G$, define its associated \emph{step graphon} $W_G$ by
 partitioning $[0,1]$ into $|V(G)|$ intervals $I_i$ of equal length,
 indexed by the vertices of $G$, and setting $W_G=1$ on $I_i\times I_j$
 when $ij\in E(G)$ and $W_G=0$ otherwise.
@@ -52,7 +52,7 @@ This is independent of the vertex ordering, which changes $W_G$ only
 by a measure-preserving relabeling.
 
 We say that a graphon $W$ is \emph{bipodal} if there is a measurable set
-$A\subset[0,1]$ such that, writing $A^c=[0,1]\setminus A$, the graphon $W$
+$A\subseteq[0,1]$ such that, writing $A^c=[0,1]\setminus A$, the graphon $W$
 is almost everywhere equal to a constant on each of
 \[
   A\times A,
@@ -82,16 +82,16 @@ the following bound for every graphon $W$ (see \cite{lubetzky2015large} for a pr
 The entropy-maximization problem reviewed here is closely related to the
 Chatterjee--Varadhan variational problem~\eqref{eq:graphon-variational-problem}.
 The connection between such constrained entropy problems and large
-deviations for the uniform random graph $G(n,M)$ was established by Dembo
-and Lubetzky~\cite{DemboLubetzky2018}.  For related work on constrained
-graphon entropy maximization, see
+deviations for the uniform random graph $G(n,M)$ on $n$ vertices and $M$ edges
+was established by Dembo and Lubetzky~\cite{DemboLubetzky2018}.
+For related work on constrained graphon entropy maximization, see
 \cite{KenyonRadinRenSadun2017,KenyonRadinRenSadun2017b,NeemanRadinSadun2023}.
-Define the entropy density and the graphon entropy by
+Define the \emph{entropy density} and the \emph{graphon entropy} by
 \begin{equation}\label{eq:graphon-entropy}
   S_0(z):=-\frac12\bigl[z\log z+(1-z)\log(1-z)\bigr], \qquad
   s(W)=\int_{[0,1]^2}S_0(W(x,y))\,dx\,dy.
 \end{equation}
-For fixed $p$ and fixed edge density, minimizing $I_p$ is equivalent to
+For fixed $p$ and fixed edge density $e(W)$, minimizing $I_p$ is equivalent to
 maximizing $s$, since
 \begin{equation}\label{eq:relative-entropy-identity}
   I_p(W)=-2s(W)-\log(1-p)+e(W)\log\frac{1-p}{p}.
@@ -100,15 +100,14 @@ maximizing $s$, since
 Fix a $d$-regular graph $H$ with $d\ge2$ and write
 $m:=|E(H)|$.  For $0<\eps<1$ and $\eps^m<\tau<1$, consider the
 entropy-maximization problem with edge density $\eps$ and $H$-density $\tau$:
-\[
+\begin{equation}\label{eq:entropy-maximization-problem}
   \sup\{s(W):e(W)=\eps,\ t(H,W)=\tau\}.
-\]
+\end{equation}
 The constant graphon $W\equiv\eps$ has $H$-density $\eps^m$.
-Accordingly, define
+We define the \emph{excess $H$-density} relative to $W\equiv\eps$ by
 \[
-  \vartheta:=\tau-\eps^m
+  \vartheta:=\tau-\eps^m.
 \]
-which is the excess $H$-density above the constant-graphon value.
 
 For small positive excess, Kenyon, Radin, Ren,
 and Sadun~\cite[Theorem~1.1]{kenyon2014entropy} proved
@@ -116,16 +115,17 @@ that for every $\eps\ne(d-1)/d$ there is a threshold
 $\tau_0(\eps)>\eps^m$ such that, whenever
 $\eps^m<\tau<\tau_0(\eps)$, this problem has a unique maximizer up to
 relabeling, and the maximizer is bipodal.  Its four bipodal parameters are
-real-analytic in $(\eps,\tau)$ throughout this region, which
-is therefore open.  Consequently, for every fixed
-$\eps_0\ne(d-1)/d$, one can choose a neighborhood $U$ of $\eps_0$ and a
-single $\Delta>0$ such that the KRR--S conclusions hold for every $\eps\in U$
-whenever $0<\vartheta<\Delta$.
+real-analytic in $(\eps,\tau)$ throughout this region.
+Theorem~\ref{thm:krrs-analytic-extension} below implies its slightly stronger
+version. In particular, for every fixed $\eps_0\ne(d-1)/d$,
+one can choose an open neighborhood $U$ of $\eps_0$ and a
+single $\Delta>0$ such that the KRR--S conclusions hold for every
+$(\eps,\vartheta)\in U\times(0,\Delta)$.
 
 In addition to establishing this analytic parametrization for
 $\vartheta>0$, KRR--S determined its one-sided behavior as
-$\vartheta\downarrow0$.  To state their result for the limiting cross density
-$q_{12}$, define
+$\vartheta\downarrow0$.  To state their result for the limiting cross density,
+define
 \[
   \psi_d(\eps,z):=
   \frac{2\bigl[S_0(z)-S_0(\eps)-S_0'(\eps)(z-\eps)\bigr]}
@@ -134,59 +134,58 @@ $q_{12}$, define
 where the removable singularity at $z=\eps$ is filled in continuously.  For
 each $\eps\in(0,1)$, the function $z\mapsto\psi_d(\eps,z)$ has a unique
 maximizer on $(0,1)$, denoted by $\zeta_d(\eps)$; see
-\cite[Theorem~3.3 and Section~4]{kenyon2014entropy}.  With this notation, for
-each fixed $\eps\ne(d-1)/d$, their result gives
+\cite[Theorem~3.3 and Section~4]{kenyon2014entropy}.  With this notation,
+if $(q_{11},q_{12},q_{22},c)$ is the bipodal
+parameterization as explained above, their result gives for each $\eps\ne(d-1)/d$,
 \[
-  q_{22}\longrightarrow\eps,
+  q_{11}\longrightarrow a_d(\eps),
   \qquad
   q_{12}\longrightarrow\zeta_d(\eps),
   \qquad
+  q_{22}\longrightarrow\eps,
+  \qquad
   c=O_{H,\eps}(\vartheta)
-  \qquad(\vartheta\downarrow0).
+  \qquad(\vartheta\downarrow0)
 \]
-\Cref{thm:krrs-analytic-extension} below also implies that $\zeta_d$ is real-analytic on
-$(0,1)\setminus\{(d-1)/d\}$.
-
-Because the four parameters depend on $(\eps,\tau)$, we call the function
+where $a_d(\eps) \in (0,1)$ and $\zeta_d(\eps)\ne\eps$.
+See \Cref{thm:krrs-bipodality} for a precise statement of the KRR--S result.
+  
+The four bipodal parameters define a map
 \[
-  (\eps,\tau)\longmapsto(q_{11},q_{12},q_{22},c)
+  (\eps,\tau)\longmapsto(q_{11},q_{12},q_{22},c),
 \]
-the KRR--S parameter map.  Equivalently, using
-$\tau=\eps^m+\vartheta$, we view it as a function of
-$(\eps,\vartheta)$.  Our later analysis differentiates its components and
+which we may equivalently view as a function of $(\eps,\vartheta)$ using
+$\tau=\eps^m+\vartheta$.  Our later analysis differentiates its components and
 uses their Taylor expansions at the boundary $\vartheta=0$.  For this
 purpose, the parameter map must be defined on an open neighborhood of the
-boundary, whereas KRR--S define it only for $\vartheta>0$.
+boundary, whereas the original KRR--S result defines it only for fixed $\eps\ne(d-1)/d$ and
+$0<\vartheta<\tau_0(\eps)-\eps^m$.
 
-The following theorem serves two purposes.  It records the KRR--S
-conclusions for $\vartheta>0$ in the form used throughout the rest of the
-paper, so that later arguments can refer directly to this theorem.  It also
-adds the two-sided real-analytic continuation of the parameter map through
-$\vartheta=0$ that those arguments require.
+The following theorem strengthens the KRR--S result by providing a uniform
+excess threshold for nearby edge densities and extending the bipodal
+parameter map real-analytically through $\vartheta=0$.
 \begin{theorem}[Two-sided KRR--S extension for regular graphs]\label{thm:krrs-analytic-extension}
 Fix an integer $d\ge2$.  Let $H$ be a $d$-regular graph with $m=|E(H)|\ge2$.
 Fix an edge density
 \[
-  \eps_0\in(0,1)\setminus\left\{\frac{d-1}{d}\right\}.
+  \eps_0\in(0,1)\setminus\{(d-1)/d\}.
 \]
-Then, there are an open neighborhood
+Then, there exist an open neighborhood
 $U\subseteq(0,1)\setminus\{(d-1)/d\}$ of $\eps_0$ and a constant $\Delta>0$
 with the following property.  For every $\eps\in U$ and every $\tau$ such that
-$0<\vartheta:=\tau-\eps^m<\Delta$, the entropy maximizer among graphons satisfying
-\[
-  e(W)=\eps,
-  \qquad
-  t(H,W)=\tau
-\]
+$0<\tau-\eps^m<\Delta$, the entropy maximizer of \eqref{eq:entropy-maximization-problem}
 is unique up to relabeling and is bipodal.  After relabeling so that the
-smaller block is the first block, the corresponding bipodal parameters define a map
+smaller block is the first block, the corresponding bipodal parameters define a map,
+parametrized by $\eps$ and $\vartheta:=\tau-\eps^m$,
 \[
   (\eps,\vartheta)\longmapsto
   \bigl(q_{11}(\eps,\vartheta),q_{12}(\eps,\vartheta),
   q_{22}(\eps,\vartheta),c(\eps,\vartheta)\bigr)
+  \qquad
+  (\eps,\vartheta)\in U\times(0,\Delta)
 \]
-on $U\times(0,\Delta)$ that extends real-analytically
-to $U\times(-\Delta,\Delta)$.  On $U\times\{0\}$, the extension satisfies
+that extends real-analytically
+to $U\times(-\Delta,\Delta)$.  For $\eps \in U$, the extension satisfies
 \[
   q_{11}(\eps,0)\in(0,1),
   \qquad
@@ -196,12 +195,11 @@ to $U\times(-\Delta,\Delta)$.  On $U\times\{0\}$, the extension satisfies
   \qquad
   c(\eps,0)=0.
 \]
-Moreover,
+Moreover, uniformly over $\eps \in U$,
 \[
   c(\eps,\vartheta)=O_{H,U}(\vartheta)
-  \qquad(\vartheta\downarrow0),
+  \qquad(\vartheta\downarrow0).
 \]
-uniformly for $\eps\in U$.
 \end{theorem}
 At $\vartheta=0$, the first pode has size zero, and hence the bipodal graphon
 reduces to the constant graphon $W\equiv\eps$.  Consequently, the values of

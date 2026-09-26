@@ -29,7 +29,7 @@ The passage has three steps, matching the three theorems below.
 
 ## Contents
 
-* `finite_fkkt_zeros` — the zero set of `F_{p,γ}` in `(0,1)` is finite;
+* `finite_Fkkt_zeros` — the zero set of `F_{p,γ}` in `(0,1)` is finite;
 * `ae_mem_finite_of_kkt` — a rank-one KKT factor lies a.e. in a finite set;
 * `exists_two_values` — **`lem:stationary-rank-one-bipodality`, final form**: a rank-one KKT factor
   is almost everywhere equal to one of two constants.
@@ -49,7 +49,7 @@ The rank-one KKT function `F_{p,γ}` has only finitely many zeros in the open un
 Indeed an infinite zero set would contain a four-element `Finset`; listing it in increasing
 order via `Finset.orderEmbOfFin` produces `z₁ < z₂ < z₃ < z₄` in `(0,1)` with
 `F_{p,γ}(zᵢ) = 0`, which `four_zeros_absurd` forbids. -/
-theorem finite_fkkt_zeros (hd : 2 ≤ d) {p g : ℝ} (hp0 : 0 < p) (hp1 : p < 1) :
+theorem finite_Fkkt_zeros (hd : 2 ≤ d) {p g : ℝ} (hp0 : 0 < p) (hp1 : p < 1) :
     {z : ℝ | z ∈ Set.Ioo (0:ℝ) 1 ∧ Fkkt d p g z = 0}.Finite := by
   by_contra hinf
   obtain ⟨t, hts, htc⟩ := Set.Infinite.exists_subset_card_eq hinf 4
@@ -76,7 +76,7 @@ theorem ae_mem_finite_of_kkt (hd : 2 ≤ d) {p g : ℝ} (hp0 : 0 < p) (hp1 : p <
     (hkkt : ∀ᵐ z ∂gμ, Fkkt d p g (f z.1 * f z.2) = 0) :
     ∃ S : Set ℝ, S.Finite ∧ ∀ᵐ x ∂unitμ, f x ∈ S := by
   have hZ : {z : ℝ | z ∈ Set.Ioo (0:ℝ) 1 ∧ Fkkt d p g z = 0}.Finite :=
-    finite_fkkt_zeros hd hp0 hp1
+    finite_Fkkt_zeros hd hp0 hp1
   have hkkt' : ∀ᵐ z ∂(unitμ.prod unitμ), Fkkt d p g (f z.1 * f z.2) = 0 := by
     rw [← gμ]; exact hkkt
   have hprod : ∀ᵐ x ∂unitμ, ∀ᵐ y ∂unitμ, Fkkt d p g (f x * f y) = 0 :=

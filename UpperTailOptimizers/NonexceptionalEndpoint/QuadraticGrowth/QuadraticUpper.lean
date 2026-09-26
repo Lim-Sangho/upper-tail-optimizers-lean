@@ -1,14 +1,14 @@
 import UpperTailOptimizers.NonexceptionalEndpoint.QuadraticGrowth.BipodalUpper
 
 /-!
-# The matching quadratic upper bound (`lem:bipodal-quadratic-bound` of `paper/paper.tex`)
+# The matching quadratic upper bound (`lem:quadratic-upper-bound` of `paper/paper.tex`)
 
 The headline theorem `quadratic_upper`: uniformly for `r` in a compact subarc `K` of a
-Lubetzky–Zhao boundary arc, for every `0 < δ < δ₀` there is a **bipodal** graphon `V_δ` with
+Lubetzky–Zhao boundary arc, for every `0 < δ < δ₀` there is a **bipodal** graphon `W_{r,δ}` with
 
-* `e(V_δ) = r - δ`,
-* `t(H, V_δ) = r^m`, and
-* `I_{pc(r)}(V_δ) ≤ J_{pc(r)}(r) + C' δ²`.
+* `e(W_{r,δ}) = r - δ`,
+* `t(H, W_{r,δ}) = r^m`, and
+* `I_{p_c(r)}(W_{r,δ}) ≤ J_{p_c(r)}(r) + C' δ²`.
 
 See the module documentation of `NonexceptionalEndpoint/QuadraticGrowth/BipodalUpper.lean` for the proof
 strategy (a quantitative one-variable intermediate-value solve replacing the paper's
@@ -47,10 +47,10 @@ theorem alpha_eq {n m d : ℕ} (hd1 : 1 ≤ d) (hdm : d ≤ m) (hnd : n * d = 2 
 -- The heartbeat budget is raised because this single proof carries a ~90-hypothesis
 -- context through its final assembly; each individual step is small.
 set_option maxHeartbeats 1600000 in
-/-- **`lem:bipodal-quadratic-bound` (quadratic upper bound).**  There are `C' > 0` and `δ₀ > 0`, uniform over
+/-- **`lem:quadratic-upper-bound` (quadratic upper bound).**  There are `C' > 0` and `δ₀ > 0`, uniform over
 the compact subarc `K`, such that for every `r ∈ K` and `0 < δ < δ₀` there is a bipodal
 graphon `W` with edge density `r - δ`, `H`-density exactly `r^m`, and
-`I_{pc(r)}(W) ≤ J_{pc(r)}(r) + C' δ²`. -/
+`I_{p_c(r)}(W) ≤ J_{p_c(r)}(r) + C' δ²`. -/
 theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     {K : Set ℝ} (hK : K ⊆ M.U) (hKc : IsCompact K) (hKne : K.Nonempty)
     {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
@@ -164,7 +164,7 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     mul_pos hCI0 (add_pos_of_nonneg_of_pos (sq_nonneg C₁) one_pos), hδ₀0, ?_⟩
   intro r hr δ hδ0 hδlt
   -- ### Per-`r` data
-  obtain ⟨hpc0, hpcr, hr1, hsmne, hsm0, hsm1⟩ := M.ordering r (hK hr)
+  obtain ⟨hpc0, hpcr, hr1, hscne, hsc0, hsc1⟩ := M.ordering r (hK hr)
   have hr0 : 0 < r := lt_trans hpc0 hpcr
   obtain ⟨hηr, hr1', hηs, hs1', hηpc, hηdist⟩ := hηbd r hr
   have hpc1 : M.pc r < 1 := lt_trans hpcr hr1
@@ -172,29 +172,29 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
   have hδη : δ < η / 32 := lt_of_lt_of_le hδlt hδ₀η
   have haIcc : (1/2 : ℝ) ∈ Set.Icc (0:ℝ) 1 := by norm_num
   have hrIcc : r ∈ Set.Icc (0:ℝ) 1 := ⟨hr0.le, hr1.le⟩
-  have hsIcc : M.sm r ∈ Set.Icc (0:ℝ) 1 := ⟨hsm0.le, hsm1.le⟩
+  have hsIcc : M.sc r ∈ Set.Icc (0:ℝ) 1 := ⟨hsc0.le, hsc1.le⟩
   -- the strict-convexity gap and the linear coefficient
   obtain ⟨G, hG_def⟩ :
-      ∃ x : ℝ, x = (M.sm r) ^ d - r ^ d - (d : ℝ) * r ^ (d - 1) * (M.sm r - r) := ⟨_, rfl⟩
+      ∃ x : ℝ, x = (M.sc r) ^ d - r ^ d - (d : ℝ) * r ^ (d - 1) * (M.sc r - r) := ⟨_, rfl⟩
   have hGge : η ^ d ≤ G := by
-    have h1 : r ^ (d - 2) * (M.sm r - r) ^ 2 ≤ G := by
+    have h1 : r ^ (d - 2) * (M.sc r - r) ^ 2 ≤ G := by
       rw [hG_def]
-      exact pow_convex_gap_ge hr0.le hsm0.le hd
-    have h2 : η ^ (d - 2) * η ^ 2 ≤ r ^ (d - 2) * (M.sm r - r) ^ 2 := by
+      exact pow_convex_gap_ge hr0.le hsc0.le hd
+    have h2 : η ^ (d - 2) * η ^ 2 ≤ r ^ (d - 2) * (M.sc r - r) ^ 2 := by
       refine mul_le_mul (pow_le_pow_left₀ hη0.le hηr _) ?_ (sq_nonneg η)
         (pow_nonneg hr0.le _)
-      calc η ^ 2 ≤ |M.sm r - r| ^ 2 := pow_le_pow_left₀ hη0.le hηdist 2
-        _ = (M.sm r - r) ^ 2 := sq_abs _
+      calc η ^ 2 ≤ |M.sc r - r| ^ 2 := pow_le_pow_left₀ hη0.le hηdist 2
+        _ = (M.sc r - r) ^ 2 := sq_abs _
     have h3 : η ^ (d - 2) * η ^ 2 = η ^ d := by
       rw [← pow_add]; congr 1; omega
     linarith [h3 ▸ h2]
   have hG0 : 0 < G := lt_of_lt_of_le (pow_pos hη0 d) hGge
   obtain ⟨αL, hαL_def⟩ :
-      ∃ x : ℝ, x = 2 * (m : ℝ) * r ^ (m - 1) * (r - M.sm r)
-        + (n : ℝ) * ((M.sm r) ^ d * r ^ (m - d) - r ^ m) := ⟨_, rfl⟩
+      ∃ x : ℝ, x = 2 * (m : ℝ) * r ^ (m - 1) * (r - M.sc r)
+        + (n : ℝ) * ((M.sc r) ^ d * r ^ (m - d) - r ^ m) := ⟨_, rfl⟩
   have hαLG : αL = (n : ℝ) * (r ^ (m - d) * G) := by
     rw [hαL_def, hG_def]
-    exact alpha_eq hd1 hdm hnd r (M.sm r)
+    exact alpha_eq hd1 hdm hnd r (M.sc r)
   have hαLmin : αmin ≤ αL := by
     rw [hαLG, hαmin_def]
     have h1 : η ^ (m - d) * η ^ d ≤ r ^ (m - d) * G :=
@@ -206,7 +206,7 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     exact mul_le_mul_of_nonneg_left h3 hn0R.le
   -- ### The box for the large-block density
   have hqbox : ∀ c ∈ Set.Icc (0:ℝ) c₀,
-      qSolve (1/2) (M.sm r) r δ c ∈ Set.Icc (η / 2) (1 - η / 2) := by
+      qSolve (1/2) (M.sc r) r δ c ∈ Set.Icc (η / 2) (1 - η / 2) := by
     intro c hc
     have hc2 : c ≤ 1/2 := le_trans hc.2 hc₀12
     have hdev := qSolve_dev_bound haIcc hsIcc hrIcc hc.1 hc2 hδ0.le
@@ -216,19 +216,19 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     · linarith
     · linarith
   have hqbox01 : ∀ c ∈ Set.Icc (0:ℝ) c₀,
-      qSolve (1/2) (M.sm r) r δ c ∈ Set.Icc (0:ℝ) 1 := by
+      qSolve (1/2) (M.sc r) r δ c ∈ Set.Icc (0:ℝ) 1 := by
     intro c hc
     obtain ⟨h1, h2⟩ := hqbox c hc
     exact ⟨by linarith, by linarith⟩
   -- ### The linearisation of the constraint function
   have hlin : ∀ c ∈ Set.Icc (0:ℝ) c₀,
-      |tBip H (1/2) (M.sm r) (qSolve (1/2) (M.sm r) r δ c) c - r ^ m
+      |tBip H (1/2) (M.sc r) (qSolve (1/2) (M.sc r) r δ c) c - r ^ m
           - (αL * c - (m : ℝ) * r ^ (m - 1) * δ)|
         ≤ CΨ * (c ^ 2 + δ ^ 2) := by
     intro c hc
     have hc2 : c ≤ 1/2 := le_trans hc.2 hc₀12
     have hc1 : c ≤ 1 := le_trans hc2 (by norm_num)
-    obtain ⟨q, hq_def⟩ : ∃ x : ℝ, x = qSolve (1/2) (M.sm r) r δ c := ⟨_, rfl⟩
+    obtain ⟨q, hq_def⟩ : ∃ x : ℝ, x = qSolve (1/2) (M.sc r) r δ c := ⟨_, rfl⟩
     rw [← hq_def]
     have hq01 : q ∈ Set.Icc (0:ℝ) 1 := by rw [hq_def]; exact hqbox01 c hc
     have hw : |q - r| ≤ 16 * c + 4 * δ := by
@@ -238,51 +238,51 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     have hcw : c * |q - r| ≤ 18 * (c ^ 2 + δ ^ 2) := abs_le_mul_bound hc.1 hδ0.le hw
     have hT := tBip_linearization H hreg haIcc hsIcc hq01 hrIcc hc.1 hc1
     rw [← hn_def, ← hm_def] at hT
-    have hlb : |q - r - (2 * c * (r - M.sm r) - δ)| ≤ 28 * (c ^ 2 + δ ^ 2) := by
+    have hlb : |q - r - (2 * c * (r - M.sc r) - δ)| ≤ 28 * (c ^ 2 + δ ^ 2) := by
       rw [hq_def]
       exact qSolve_linear_bound haIcc hsIcc hrIcc hc.1 hc2 hδ0.le
     -- the middle linear form in `(q - r)`
     have hmid : αL * c - (m : ℝ) * r ^ (m - 1) * δ
-        = (m : ℝ) * r ^ (m - 1) * (2 * c * (r - M.sm r) - δ)
-          + (n : ℝ) * c * ((M.sm r) ^ d * r ^ (m - d) - r ^ m) := by
+        = (m : ℝ) * r ^ (m - 1) * (2 * c * (r - M.sc r) - δ)
+          + (n : ℝ) * c * ((M.sc r) ^ d * r ^ (m - d) - r ^ m) := by
       rw [hαL_def]; ring
     have hrpow1 : |r ^ (m - 1)| ≤ 1 := by
       rw [abs_of_nonneg (pow_nonneg hr0.le _)]
       exact pow_le_one₀ hr0.le hr1.le
     have hbridge : |(m : ℝ) * r ^ (m - 1) * (q - r)
-        - (m : ℝ) * r ^ (m - 1) * (2 * c * (r - M.sm r) - δ)|
+        - (m : ℝ) * r ^ (m - 1) * (2 * c * (r - M.sc r) - δ)|
         ≤ (m : ℝ) * (28 * (c ^ 2 + δ ^ 2)) := by
       have h1 : (m : ℝ) * r ^ (m - 1) * (q - r)
-          - (m : ℝ) * r ^ (m - 1) * (2 * c * (r - M.sm r) - δ)
-          = (m : ℝ) * r ^ (m - 1) * (q - r - (2 * c * (r - M.sm r) - δ)) := by ring
+          - (m : ℝ) * r ^ (m - 1) * (2 * c * (r - M.sc r) - δ)
+          = (m : ℝ) * r ^ (m - 1) * (q - r - (2 * c * (r - M.sc r) - δ)) := by ring
       rw [h1, abs_mul, abs_mul]
       have hmabs : |(m : ℝ)| = (m : ℝ) := abs_of_pos hm0R
       rw [hmabs]
-      calc (m : ℝ) * |r ^ (m - 1)| * |q - r - (2 * c * (r - M.sm r) - δ)|
+      calc (m : ℝ) * |r ^ (m - 1)| * |q - r - (2 * c * (r - M.sc r) - δ)|
           ≤ (m : ℝ) * 1 * (28 * (c ^ 2 + δ ^ 2)) := by
             refine mul_le_mul (mul_le_mul_of_nonneg_left hrpow1 hm0R.le) hlb
               (abs_nonneg _) (mul_nonneg hm0R.le zero_le_one)
         _ = (m : ℝ) * (28 * (c ^ 2 + δ ^ 2)) := by ring
     -- assemble via the triangle inequality
     have htri := abs_sub_le
-      (tBip H (1/2) (M.sm r) q c - r ^ m)
-      ((m : ℝ) * r ^ (m - 1) * (q - r) + (n : ℝ) * c * ((M.sm r) ^ d * r ^ (m - d) - r ^ m))
+      (tBip H (1/2) (M.sc r) q c - r ^ m)
+      ((m : ℝ) * r ^ (m - 1) * (q - r) + (n : ℝ) * c * ((M.sc r) ^ d * r ^ (m - d) - r ^ m))
       (αL * c - (m : ℝ) * r ^ (m - 1) * δ)
     have hT2 : |(m : ℝ) * r ^ (m - 1) * (q - r)
-        + (n : ℝ) * c * ((M.sm r) ^ d * r ^ (m - d) - r ^ m)
+        + (n : ℝ) * c * ((M.sc r) ^ d * r ^ (m - d) - r ^ m)
         - (αL * c - (m : ℝ) * r ^ (m - 1) * δ)| ≤ (m : ℝ) * (28 * (c ^ 2 + δ ^ 2)) := by
       rw [hmid]
       have heq : (m : ℝ) * r ^ (m - 1) * (q - r)
-          + (n : ℝ) * c * ((M.sm r) ^ d * r ^ (m - d) - r ^ m)
-          - ((m : ℝ) * r ^ (m - 1) * (2 * c * (r - M.sm r) - δ)
-            + (n : ℝ) * c * ((M.sm r) ^ d * r ^ (m - d) - r ^ m))
+          + (n : ℝ) * c * ((M.sc r) ^ d * r ^ (m - d) - r ^ m)
+          - ((m : ℝ) * r ^ (m - 1) * (2 * c * (r - M.sc r) - δ)
+            + (n : ℝ) * c * ((M.sc r) ^ d * r ^ (m - d) - r ^ m))
           = (m : ℝ) * r ^ (m - 1) * (q - r)
-            - (m : ℝ) * r ^ (m - 1) * (2 * c * (r - M.sm r) - δ) := by ring
+            - (m : ℝ) * r ^ (m - 1) * (2 * c * (r - M.sc r) - δ) := by ring
       rw [heq]
       exact hbridge
-    have hTfinal : |tBip H (1/2) (M.sm r) q c - r ^ m
+    have hTfinal : |tBip H (1/2) (M.sc r) q c - r ^ m
         - ((m : ℝ) * r ^ (m - 1) * (q - r)
-          + (n : ℝ) * c * ((M.sm r) ^ d * r ^ (m - d) - r ^ m))|
+          + (n : ℝ) * c * ((M.sc r) ^ d * r ^ (m - d) - r ^ m))|
         ≤ (m : ℝ) ^ 2 * (512 * (c ^ 2 + δ ^ 2))
           + 2 * (n : ℝ) * (m : ℝ) * (18 * (c ^ 2 + δ ^ 2)) + CE * c ^ 2 := by
       refine le_trans hT ?_
@@ -298,7 +298,7 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
           _ ≤ 2 * (n : ℝ) * (m : ℝ) * (18 * (c ^ 2 + δ ^ 2)) := h3
       have h4 : (2 * (n : ℝ) ^ 2 + 2 ^ n) * c ^ 2 = CE * c ^ 2 := by rw [hCE_def]
       linarith only [hT, h1, h2, h4]
-    calc |tBip H (1/2) (M.sm r) q c - r ^ m - (αL * c - (m : ℝ) * r ^ (m - 1) * δ)|
+    calc |tBip H (1/2) (M.sc r) q c - r ^ m - (αL * c - (m : ℝ) * r ^ (m - 1) * δ)|
         ≤ _ + _ := htri
       _ ≤ ((m : ℝ) ^ 2 * (512 * (c ^ 2 + δ ^ 2))
             + 2 * (n : ℝ) * (m : ℝ) * (18 * (c ^ 2 + δ ^ 2)) + CE * c ^ 2)
@@ -307,31 +307,31 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
           rw [hCΨ_def]
           linarith only [mul_nonneg hCE0.le (sq_nonneg δ)]
   -- ### Continuity and the endpoint signs
-  have hqcont : ContinuousOn (fun c => qSolve (1/2) (M.sm r) r δ c) (Set.Icc 0 c₀) :=
-    continuousOn_qSolve (1/2) (M.sm r) r δ (fun x hx => le_trans hx.2 hc₀12)
+  have hqcont : ContinuousOn (fun c => qSolve (1/2) (M.sc r) r δ c) (Set.Icc 0 c₀) :=
+    continuousOn_qSolve (1/2) (M.sc r) r δ (fun x hx => le_trans hx.2 hc₀12)
   have hΨcont : ContinuousOn
-      (fun c => tBip H (1/2) (M.sm r) (qSolve (1/2) (M.sm r) r δ c) c - r ^ m)
+      (fun c => tBip H (1/2) (M.sc r) (qSolve (1/2) (M.sc r) r δ c) c - r ^ m)
       (Set.Icc 0 c₀) :=
-    continuousOn_tBip_comp_sub H (1/2) (M.sm r) (r ^ m) hqcont
-  have hΨ0 : tBip H (1/2) (M.sm r) (qSolve (1/2) (M.sm r) r δ 0) 0 - r ^ m < 0 := by
+    continuousOn_tBip_comp_sub H (1/2) (M.sc r) (r ^ m) hqcont
+  have hΨ0 : tBip H (1/2) (M.sc r) (qSolve (1/2) (M.sc r) r δ 0) 0 - r ^ m < 0 := by
     rw [qSolve_zero]
     have hrδIcc : (r - δ) ∈ Set.Icc (0:ℝ) 1 := by
       constructor
       · have hδη' : δ < η := by linarith
         linarith
       · linarith
-    have hRem0 : tBipRem H (1/2) (M.sm r) (r - δ) 0 = 0 := by
+    have hRem0 : tBipRem H (1/2) (M.sc r) (r - δ) 0 = 0 := by
       refine le_antisymm ?_ (tBipRem_nonneg H haIcc hsIcc hrδIcc le_rfl zero_le_one)
       have h1 := tBipRem_le H haIcc hsIcc hrδIcc le_rfl zero_le_one
       simpa using h1
-    have hval : tBip H (1/2) (M.sm r) (r - δ) 0 = (r - δ) ^ m := by
+    have hval : tBip H (1/2) (M.sc r) (r - δ) 0 = (r - δ) ^ m := by
       rw [tBip_expansion H hreg, hRem0, ← hn_def, ← hm_def]
       simp
     rw [hval]
     have hlt : (r - δ) ^ m < r ^ m :=
       pow_lt_pow_left₀ (by linarith) hrδIcc.1 (by omega)
     linarith
-  have hΨc₀ : 0 < tBip H (1/2) (M.sm r) (qSolve (1/2) (M.sm r) r δ c₀) c₀ - r ^ m := by
+  have hΨc₀ : 0 < tBip H (1/2) (M.sc r) (qSolve (1/2) (M.sc r) r δ c₀) c₀ - r ^ m := by
     have hc₀mem : c₀ ∈ Set.Icc (0:ℝ) c₀ := ⟨hc₀0.le, le_rfl⟩
     obtain ⟨hl, _⟩ := abs_le.mp (hlin c₀ hc₀mem)
     have hα1 : αmin * c₀ ≤ αL * c₀ := mul_le_mul_of_nonneg_right hαLmin hc₀0.le
@@ -363,11 +363,11 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
   -- ### The intermediate-value solve
   have hivt := intermediate_value_Icc hc₀0.le hΨcont
   have h0mem : (0:ℝ) ∈ Set.Icc
-      (tBip H (1/2) (M.sm r) (qSolve (1/2) (M.sm r) r δ 0) 0 - r ^ m)
-      (tBip H (1/2) (M.sm r) (qSolve (1/2) (M.sm r) r δ c₀) c₀ - r ^ m) :=
+      (tBip H (1/2) (M.sc r) (qSolve (1/2) (M.sc r) r δ 0) 0 - r ^ m)
+      (tBip H (1/2) (M.sc r) (qSolve (1/2) (M.sc r) r δ c₀) c₀ - r ^ m) :=
     ⟨hΨ0.le, hΨc₀.le⟩
   obtain ⟨c, hcmem, hroot⟩ := hivt h0mem
-  have hrootΨ : tBip H (1/2) (M.sm r) (qSolve (1/2) (M.sm r) r δ c) c - r ^ m = 0 := hroot
+  have hrootΨ : tBip H (1/2) (M.sc r) (qSolve (1/2) (M.sc r) r δ c) c - r ^ m = 0 := hroot
   have hc0 : 0 ≤ c := hcmem.1
   have hcc₀ : c ≤ c₀ := hcmem.2
   have hc2 : c ≤ 1/2 := le_trans hcc₀ hc₀12
@@ -404,21 +404,21 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     rw [hC₁_def, div_mul_eq_mul_div, le_div_iff₀ hαmin0]
     linarith only [hkey, mul_nonneg hmCΨ0.le hδ0.le]
   -- ### The slope-times-`X` bound for the entropy expansion
-  obtain ⟨q, hq_def⟩ : ∃ x : ℝ, x = qSolve (1/2) (M.sm r) r δ c := ⟨_, rfl⟩
+  obtain ⟨q, hq_def⟩ : ∃ x : ℝ, x = qSolve (1/2) (M.sc r) r δ c := ⟨_, rfl⟩
   rw [← hq_def] at hrootΨ
   have hq01 : q ∈ Set.Icc (0:ℝ) 1 := by rw [hq_def]; exact hqbox01 c ⟨hc0, hcc₀⟩
   have hqβ : q ∈ Set.Icc (η / 2) (1 - η / 2) := by
     rw [hq_def]; exact hqbox c ⟨hc0, hcc₀⟩
-  have hlb : |q - r - (2 * c * (r - M.sm r) - δ)| ≤ 28 * (c ^ 2 + δ ^ 2) := by
+  have hlb : |q - r - (2 * c * (r - M.sc r) - δ)| ≤ 28 * (c ^ 2 + δ ^ 2) := by
     rw [hq_def]
     exact qSolve_linear_bound haIcc hsIcc hrIcc hc0 hc2 hδ0.le
-  have hXbound : |(d : ℝ) * r ^ (d - 1) * (q - r) + 2 * c * ((M.sm r) ^ d - r ^ d)|
+  have hXbound : |(d : ℝ) * r ^ (d - 1) * (q - r) + 2 * c * ((M.sc r) ^ d - r ^ d)|
       ≤ CX * (c ^ 2 + δ ^ 2) := by
-    have hXsplit : (d : ℝ) * r ^ (d - 1) * (q - r) + 2 * c * ((M.sm r) ^ d - r ^ d)
+    have hXsplit : (d : ℝ) * r ^ (d - 1) * (q - r) + 2 * c * ((M.sc r) ^ d - r ^ d)
         = (2 * c * G - (d : ℝ) * r ^ (d - 1) * δ)
-          + (d : ℝ) * r ^ (d - 1) * (q - r - (2 * c * (r - M.sm r) - δ)) := by
+          + (d : ℝ) * r ^ (d - 1) * (q - r - (2 * c * (r - M.sc r) - δ)) := by
       rw [hG_def]; ring
-    have hE3 : |(d : ℝ) * r ^ (d - 1) * (q - r - (2 * c * (r - M.sm r) - δ))|
+    have hE3 : |(d : ℝ) * r ^ (d - 1) * (q - r - (2 * c * (r - M.sc r) - δ))|
         ≤ (d : ℝ) * (28 * (c ^ 2 + δ ^ 2)) := by
       rw [abs_mul, abs_mul]
       have hdabs : |(d : ℝ)| = (d : ℝ) := abs_of_pos hd0R
@@ -426,7 +426,7 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
         rw [abs_of_nonneg (pow_nonneg hr0.le _)]
         exact pow_le_one₀ hr0.le hr1.le
       rw [hdabs]
-      calc (d : ℝ) * |r ^ (d - 1)| * |q - r - (2 * c * (r - M.sm r) - δ)|
+      calc (d : ℝ) * |r ^ (d - 1)| * |q - r - (2 * c * (r - M.sc r) - δ)|
           ≤ (d : ℝ) * 1 * (28 * (c ^ 2 + δ ^ 2)) := by
             refine mul_le_mul (mul_le_mul_of_nonneg_left hrabs hd0R.le) hlb
               (abs_nonneg _) (mul_nonneg hd0R.le zero_le_one)
@@ -463,24 +463,24 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
           _ = 2 * CΨ * (c ^ 2 + δ ^ 2) := by ring
       rw [div_mul_eq_mul_div, le_div_iff₀ (pow_pos hη0 (m - d))]
       linarith only [h1]
-    calc |(d : ℝ) * r ^ (d - 1) * (q - r) + 2 * c * ((M.sm r) ^ d - r ^ d)|
+    calc |(d : ℝ) * r ^ (d - 1) * (q - r) + 2 * c * ((M.sc r) ^ d - r ^ d)|
         ≤ |2 * c * G - (d : ℝ) * r ^ (d - 1) * δ|
-          + |(d : ℝ) * r ^ (d - 1) * (q - r - (2 * c * (r - M.sm r) - δ))| := by
+          + |(d : ℝ) * r ^ (d - 1) * (q - r - (2 * c * (r - M.sc r) - δ))| := by
           rw [hXsplit]; exact abs_add_le _ _
       _ ≤ 2 * CΨ / η ^ (m - d) * (c ^ 2 + δ ^ 2) + (d : ℝ) * (28 * (c ^ 2 + δ ^ 2)) :=
           add_le_add hX'bound hE3
       _ = CX * (c ^ 2 + δ ^ 2) := by rw [hCX_def]; ring
   -- ### Assemble the graphon
-  refine ⟨bipodalGraphon (Set.Icc 0 c) measurableSet_Icc (1/2) (M.sm r) q haIcc hsIcc hq01,
+  refine ⟨bipodalGraphon (Set.Icc 0 c) measurableSet_Icc (1/2) (M.sc r) q haIcc hsIcc hq01,
     ?_, ?_, ?_, ?_⟩
   · -- edge density
     rw [bipodalGraphon_edgeDensity, unitμ_Icc_toReal hc0 hc1, hq_def]
-    exact qSolve_edge (1/2) (M.sm r) r δ hcne1
+    exact qSolve_edge (1/2) (M.sc r) r δ hcne1
   · -- `H`-density
     rw [tBip_eq_tDensity H haIcc hsIcc hq01 hc0 hc1]
     linarith only [hrootΨ]
   · -- bipodality
-    exact ⟨Set.Icc 0 c, 1/2, M.sm r, q, measurableSet_Icc, haIcc, hsIcc, hq01,
+    exact ⟨Set.Icc 0 c, 1/2, M.sc r, q, measurableSet_Icc, haIcc, hsIcc, hq01,
       Filter.Eventually.of_forall fun _ => rfl⟩
   · -- the entropy bound
     rw [Ip_bipodalGraphon_Icc hpc0 hpc1 haIcc hsIcc hq01 hc0 hc1]
@@ -489,7 +489,7 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
       ⟨by linarith only [hηpc, hη0], by linarith only [hpcr, hr1', hη0]⟩
     have hrβ : r ∈ Set.Icc (η / 2) (1 - η / 2) :=
       ⟨by linarith only [hηr, hη0], by linarith only [hr1', hη0]⟩
-    have hsβ : M.sm r ∈ Set.Icc (η / 2) (1 - η / 2) :=
+    have hsβ : M.sc r ∈ Set.Icc (η / 2) (1 - η / 2) :=
       ⟨by linarith only [hηs, hη0], by linarith only [hs1', hη0]⟩
     have haβ : (1/2 : ℝ) ∈ Set.Icc (η / 2) (1 - η / 2) :=
       ⟨by linarith only [hη12], by linarith only [hη12, hη0]⟩
@@ -504,8 +504,8 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     have hw2 : (q - r) ^ 2 ≤ 512 * (c ^ 2 + δ ^ 2) := abs_le_sq_bound hc0 hδ0.le hw
     have hcw : c * |q - r| ≤ 18 * (c ^ 2 + δ ^ 2) := abs_le_mul_bound hc0 hδ0.le hw
     -- the second-contact identity
-    have hsecond : Jp (M.pc r) (M.sm r)
-        = Jp (M.pc r) r + slope d M.pc r * ((M.sm r) ^ d - r ^ d) :=
+    have hsecond : Jp (M.pc r) (M.sc r)
+        = Jp (M.pc r) r + slope d M.pc r * ((M.sc r) ^ d - r ^ d) :=
       M.secondContact r (hK hr)
     -- the slope identity and bound
     have hdr0 : ((d : ℝ) * r ^ (d - 1)) ≠ 0 :=
@@ -560,32 +560,32 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     -- the `Jp`-magnitude bounds
     have hJa : |Jp (M.pc r) (1/2)| ≤ JM := by
       rw [hJM_def]; exact Jp_abs_le_box hβ0 hpβ haβ
-    have hJs : |Jp (M.pc r) (M.sm r)| ≤ JM := by
+    have hJs : |Jp (M.pc r) (M.sc r)| ≤ JM := by
       rw [hJM_def]; exact Jp_abs_le_box hβ0 hpβ hsβ
     have hJq : |Jp (M.pc r) q| ≤ JM := by
       rw [hJM_def]; exact Jp_abs_le_box hβ0 hpβ hqβ
     -- the decomposition of the entropy excess
-    have hdecomp : c ^ 2 * Jp (M.pc r) (1/2) + 2 * c * (1 - c) * Jp (M.pc r) (M.sm r)
+    have hdecomp : c ^ 2 * Jp (M.pc r) (1/2) + 2 * c * (1 - c) * Jp (M.pc r) (M.sc r)
         + (1 - c) ^ 2 * Jp (M.pc r) q - Jp (M.pc r) r
         = (Jp (M.pc r) q - Jp (M.pc r) r - Jp' (M.pc r) r * (q - r))
           + (Jp' (M.pc r) r * (q - r)
-            + 2 * c * (slope d M.pc r * ((M.sm r) ^ d - r ^ d)))
+            + 2 * c * (slope d M.pc r * ((M.sc r) ^ d - r ^ d)))
           + 2 * c * (Jp (M.pc r) r - Jp (M.pc r) q)
-          + c ^ 2 * (Jp (M.pc r) (1/2) - 2 * Jp (M.pc r) (M.sm r) + Jp (M.pc r) q)
-          + 2 * c * (Jp (M.pc r) (M.sm r) - Jp (M.pc r) r
-            - slope d M.pc r * ((M.sm r) ^ d - r ^ d)) := by
+          + c ^ 2 * (Jp (M.pc r) (1/2) - 2 * Jp (M.pc r) (M.sc r) + Jp (M.pc r) q)
+          + 2 * c * (Jp (M.pc r) (M.sc r) - Jp (M.pc r) r
+            - slope d M.pc r * ((M.sc r) ^ d - r ^ d)) := by
       ring
-    have hzero : Jp (M.pc r) (M.sm r) - Jp (M.pc r) r
-        - slope d M.pc r * ((M.sm r) ^ d - r ^ d) = 0 := by
+    have hzero : Jp (M.pc r) (M.sc r) - Jp (M.pc r) r
+        - slope d M.pc r * ((M.sc r) ^ d - r ^ d) = 0 := by
       rw [hsecond]; ring
     -- bound the four surviving terms
     have hslopeX : |Jp' (M.pc r) r * (q - r)
-        + 2 * c * (slope d M.pc r * ((M.sm r) ^ d - r ^ d))|
+        + 2 * c * (slope d M.pc r * ((M.sc r) ^ d - r ^ d))|
         ≤ Lslope * (CX * (c ^ 2 + δ ^ 2)) := by
       have hexp : Jp' (M.pc r) r * (q - r)
-          + 2 * c * (slope d M.pc r * ((M.sm r) ^ d - r ^ d))
+          + 2 * c * (slope d M.pc r * ((M.sc r) ^ d - r ^ d))
           = slope d M.pc r
-            * ((d : ℝ) * r ^ (d - 1) * (q - r) + 2 * c * ((M.sm r) ^ d - r ^ d)) := by
+            * ((d : ℝ) * r ^ (d - 1) * (q - r) + 2 * c * ((M.sc r) ^ d - r ^ d)) := by
         rw [hslope_id]; ring
       rw [hexp, abs_mul]
       exact mul_le_mul hslope_abs hXbound (abs_nonneg _) hLslope0
@@ -602,26 +602,26 @@ theorem quadratic_upper {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
             refine mul_le_mul_of_nonneg_left hcw ?_
             linarith only [hLJb0, hMJ0]
         _ = 36 * (LJb + MJ) * (c ^ 2 + δ ^ 2) := by ring
-    have hterm4 : |c ^ 2 * (Jp (M.pc r) (1/2) - 2 * Jp (M.pc r) (M.sm r) + Jp (M.pc r) q)|
+    have hterm4 : |c ^ 2 * (Jp (M.pc r) (1/2) - 2 * Jp (M.pc r) (M.sc r) + Jp (M.pc r) q)|
         ≤ 4 * JM * c ^ 2 := by
-      have h2s : |2 * Jp (M.pc r) (M.sm r)| ≤ 2 * JM := by
+      have h2s : |2 * Jp (M.pc r) (M.sc r)| ≤ 2 * JM := by
         rw [abs_mul, abs_two]
         linarith only [hJs]
-      have h1 : |Jp (M.pc r) (1/2) - 2 * Jp (M.pc r) (M.sm r) + Jp (M.pc r) q|
+      have h1 : |Jp (M.pc r) (1/2) - 2 * Jp (M.pc r) (M.sc r) + Jp (M.pc r) q|
           ≤ 4 * JM := by
         have t1 := abs_add_le
-          (Jp (M.pc r) (1/2) - 2 * Jp (M.pc r) (M.sm r)) (Jp (M.pc r) q)
-        have t2 := abs_sub (Jp (M.pc r) (1/2)) (2 * Jp (M.pc r) (M.sm r))
+          (Jp (M.pc r) (1/2) - 2 * Jp (M.pc r) (M.sc r)) (Jp (M.pc r) q)
+        have t2 := abs_sub (Jp (M.pc r) (1/2)) (2 * Jp (M.pc r) (M.sc r))
         linarith only [t1, t2, hJa, hJq, h2s]
-      calc |c ^ 2 * (Jp (M.pc r) (1/2) - 2 * Jp (M.pc r) (M.sm r) + Jp (M.pc r) q)|
-          = c ^ 2 * |Jp (M.pc r) (1/2) - 2 * Jp (M.pc r) (M.sm r) + Jp (M.pc r) q| := by
+      calc |c ^ 2 * (Jp (M.pc r) (1/2) - 2 * Jp (M.pc r) (M.sc r) + Jp (M.pc r) q)|
+          = c ^ 2 * |Jp (M.pc r) (1/2) - 2 * Jp (M.pc r) (M.sc r) + Jp (M.pc r) q| := by
             rw [abs_mul, abs_of_nonneg (sq_nonneg c)]
         _ ≤ c ^ 2 * (4 * JM) := mul_le_mul_of_nonneg_left h1 (sq_nonneg c)
         _ = 4 * JM * c ^ 2 := by ring
     have hMJw : MJ * (q - r) ^ 2 ≤ MJ * (512 * (c ^ 2 + δ ^ 2)) :=
       mul_le_mul_of_nonneg_left hw2 hMJ0.le
     -- assemble
-    have hsum : c ^ 2 * Jp (M.pc r) (1/2) + 2 * c * (1 - c) * Jp (M.pc r) (M.sm r)
+    have hsum : c ^ 2 * Jp (M.pc r) (1/2) + 2 * c * (1 - c) * Jp (M.pc r) (M.sc r)
         + (1 - c) ^ 2 * Jp (M.pc r) q - Jp (M.pc r) r
         ≤ CI * (c ^ 2 + δ ^ 2) := by
       rw [hdecomp, hzero, mul_zero, add_zero]

@@ -82,7 +82,7 @@ noncomputable def JpTilde (d : ℕ) (u : ℝ) : ℝ :=
 `eq:endpoint-supporting-gap` read backwards, since `Γ̃_d = Γ_d` below `1`. -/
 theorem JpTilde_of_le_one {u : ℝ} (hu : u ≤ 1) : JpTilde d u = Jp (pStar d) u := by
   rw [JpTilde, GamTilde_of_le_one hu]
-  exact (Jp_pStar_eq_gam d u).symm
+  exact (Jp_pStar_eq_Gam d u).symm
 
 /-- Above `1` the continuation of `eq:entropy-continuation` is the polynomial
 `J_{p_*}(1) + β_d (u^d - 1) + (u-1)^2`: the constant `J_{p_*}(r_*) - β_d r_*^d` and the

@@ -440,7 +440,7 @@ private theorem graphonLagrangian_mul_le {p h t : ℝ} (hp : 0 ≤ p) (hh : 0 �
 integral replaced by a real number: the splitting (`hsplit`, `hent`), the law half (`hlaw`), the
 central square, mixed rectangles and tail–tail square at the closed radius (`hc`, `hr`, `hk`), the
 graph term (`hlag`, `hμ`), the three-way split of `‖E‖₂²` (`hresid`, `hmixres`, `hcor`), the
-annulus (`hann`), and the smallness of the error coefficients (`hsm1`–`hsm3`). -/
+annulus (`hann`), and the smallness of the error coefficients (`hsc1`–`hsc3`). -/
 private theorem graphonLagrangian_algebra
     {Iw Ih Jn Jh Ent Ec Em Et η μ mabs tW rm A T A' ε X Mx Cr L R Δ a2 θ α b C₁ CC CK Cμ N P40
       τ κ c Ci : ℝ}
@@ -459,7 +459,7 @@ private theorem graphonLagrangian_algebra
     (hθ0 : 0 < θ) (hθ1 : θ ≤ 1) (hα : α = a2 - θ)
     (hτ0 : 0 < τ) (hτb : τ ≤ b / 4) (hτκ : τ * κ ≤ α / 2) (hκ0 : 0 < κ)
     (hc0 : 0 < c) (hc1 : c ≤ 1) (hcτ : c ≤ τ / 150)
-    (hsm1 : CC * L ≤ τ / 3) (hsm2 : CK * ε ≤ τ / 3) (hsm3 : Cμ * P40 * L ≤ c / 2)
+    (hsc1 : CC * L ≤ τ / 3) (hsc2 : CK * ε ≤ τ / 3) (hsc3 : Cμ * P40 * L ≤ c / 2)
     (hCα : Ci ≤ α / 4) (hCb : Ci ≤ b / 8) (hCc : Ci ≤ c / 2) :
     Ci * (A + T + R) - (C₁ + Cμ * N) * Δ ^ 2 ≤ Iw - Ih - μ * (tW - rm) := by
   have l1 : θ * A' ≤ θ * A := mul_le_mul_of_nonneg_left hA'A hθ0.le
@@ -467,10 +467,10 @@ private theorem graphonLagrangian_algebra
     have := mul_le_mul_of_nonneg_right hθ1 hX0
     linarith
   have l3 : CC * (ε * L) ≤ τ / 3 * ε := by
-    have := mul_le_mul_of_nonneg_left hsm1 hε0
+    have := mul_le_mul_of_nonneg_left hsc1 hε0
     linarith
   have l4 : CK * ε ^ 2 ≤ τ / 3 * ε := by
-    have := mul_le_mul_of_nonneg_left hsm2 hε0
+    have := mul_le_mul_of_nonneg_left hsc2 hε0
     linarith
   have l5 : τ * ε ≤ b / 4 * T + α / 2 * A := by
     have h1 := mul_le_mul_of_nonneg_left hann hτ0.le
@@ -498,7 +498,7 @@ private theorem graphonLagrangian_algebra
   have l9 : Cμ * P40 * L ^ 3 ≤ c / 2 * R := by
     have e : L ^ 3 = L * R := by rw [← hLR]; ring
     rw [e]
-    have := mul_le_mul_of_nonneg_right hsm3 hR0
+    have := mul_le_mul_of_nonneg_right hsc3 hR0
     linarith
   have l10 : mabs * (N * Δ ^ 2 + P40 * L ^ 3) ≤ Cμ * (N * Δ ^ 2 + P40 * L ^ 3) :=
     mul_le_mul_of_nonneg_right hμ (by positivity)
@@ -735,17 +735,17 @@ theorem graphon_lagrangian_bound_of_close_uniform (hd : 2 ≤ d) (B : KKTFamily 
       have h2 := comparisonMainChi_nonneg d (ρ / 2) P.f z.2
       positivity
   have hLK : P.residL2 ≤ K₀ * h := by rw [← eN]; exact hres
-  have hsm1 : CC * P.residL2 ≤ τ / 3 :=
+  have hsc1 : CC * P.residL2 ≤ τ / 3 :=
     calc CC * P.residL2 ≤ CC * (K₀ * h) := mul_le_mul_of_nonneg_left hLK hCC.le
       _ = CC * K₀ * h := by ring
       _ ≤ τ / 3 := graphonLagrangian_mul_le (by positivity) hpos.le hhs1
-  have hsm2 : CK * tailMass d (ρ / 2) P.f ≤ τ / 3 :=
+  have hsc2 : CK * tailMass d (ρ / 2) P.f ≤ τ / 3 :=
     calc CK * tailMass d (ρ / 2) P.f ≤ CK * (K' * h) := by
           refine mul_le_mul_of_nonneg_left (le_trans htailC ?_) hCK.le
           exact mul_le_mul_of_nonneg_left (pow_le_of_le_one hpos.le hh1 (by norm_num)) hK'0
       _ = CK * K' * h := by ring
       _ ≤ τ / 3 := graphonLagrangian_mul_le (by positivity) hpos.le hhs2
-  have hsm3 : Cμ * 40 ^ m * P.residL2 ≤ c / 2 :=
+  have hsc3 : Cμ * 40 ^ m * P.residL2 ≤ c / 2 :=
     calc Cμ * 40 ^ m * P.residL2
         ≤ Cμ * 40 ^ m * (K₀ * h) :=
           mul_le_mul_of_nonneg_left hLK (by positivity)
@@ -753,7 +753,7 @@ theorem graphon_lagrangian_bound_of_close_uniform (hd : 2 ≤ d) (B : KKTFamily 
       _ ≤ c / 2 := graphonLagrangian_mul_le (by positivity) hpos.le hhs3
   exact graphonLagrangian_algebra hsplit hent hlaw' hc hr hk hlag hμ hresid hmixres hcor25 hann
     hA'A hA0 hT0 hε0 hε1 hX0 P.residL2_nonneg P.residSq_nonneg P.residL2_sq hN0 (by positivity)
-    hθ0 hθ1 hαdef hτ0 hτb hτκ hκ0 hc0 hc1 hcτ hsm1 hsm2 hsm3 hCinvα hCinvb hCinvc
+    hθ0 hθ1 hαdef hτ0 hτb hτκ hκ0 hc0 hc1 hcτ hsc1 hsc2 hsc3 hCinvα hCinvb hCinvc
 
 /-- **`lem:graphon-lagrangian-bound` for every decomposition close to the constant.**  There are
 `ρ₀ > 0` and `ρ ↦ C_{d,ρ} ≥ 1` on `(0, ρ₀)` such that for every `d`-regular graph `H` with

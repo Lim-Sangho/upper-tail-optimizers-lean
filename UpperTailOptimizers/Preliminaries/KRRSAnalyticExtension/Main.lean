@@ -1,9 +1,9 @@
 import UpperTailOptimizers.Preliminaries.KRRSBipodality.Optimal
 
 /-!
-# Appendix B: the two-sided Kenyon–Radin–Ren–Sadun extension
+# Appendix A: the two-sided Kenyon–Radin–Ren–Sadun extension
 
-This file is the final assembly of Appendix B of `paper/paper.tex`.  It proves the
+This file is the final assembly of Appendix A of `paper/paper.tex`.  It proves the
 master rectangle theorem `krrs_rectangle` and the four public forms of
 `thm:krrs-analytic-extension` (`kenyonRadinRenSadun`, `kenyonRadinRenSadunAnalytic`,
 `kenyonRadinRenSadunStrip`, `kenyonRadinRenSadunUniform`), with no Kenyon–Radin–Ren–Sadun
@@ -37,7 +37,7 @@ open MeasureTheory Real Filter Topology
 
 /-! ### The master rectangle theorem -/
 
-/-- **The master rectangle theorem of Appendix B.**  Near a nonexceptional edge density
+/-- **The master rectangle theorem of Appendix A.**  Near a nonexceptional edge density
 `ε₀` there are a window `U ∋ ε₀`, an excess bound `Δ > 0`, and four functions of
 `(ε, ϑ = τ - ε^m)` — real-analytic at every point of the two-sided strip
 `{(ε, ϑ) : ε ∈ U, |ϑ| < Δ}` — such that on the
@@ -86,7 +86,7 @@ theorem krrs_rectangle {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph 
 
 /-! ### The public forms of `thm:krrs-analytic-extension` -/
 
-/-- **`thm:krrs-analytic-extension`**, proved in Appendix B style; the bipodality input is
+/-- **`thm:krrs-analytic-extension`**, proved in Appendix A style; the bipodality input is
 `KRRSFamily.isOptimal`.
 
 Away from the exceptional density `(d-1)/d`, the entropy maximizer at fixed edge density
@@ -95,7 +95,7 @@ to relabelling: any other maximizer `W'` equals `W` relabelled by a measure-pres
 transformation `σ` of `[0,1]`.
 
 (Kenyon–Radin–Ren–Sadun, arXiv:1509.05370, Theorem 1.1, recorded in the paper as
-`thm:krrs-bipodality`; the form on a window around `ε₀` is that of Appendix B of
+`thm:krrs-bipodality`; the form on a window around `ε₀` is that of Appendix A of
 `paper/paper.tex`.) -/
 theorem kenyonRadinRenSadun {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] {d : ℕ} (hd : 2 ≤ d)
@@ -117,7 +117,7 @@ theorem kenyonRadinRenSadun {V : Type*} [Fintype V] [DecidableEq V]
 
 /-- **`thm:krrs-analytic-extension`, analytic-parametrization clause**, proved in
 `krrs_rectangle` above from the analytic inverse function theorem and the optimality of the
-analytic family (Appendix B of `paper/paper.tex`).
+analytic family (Appendix A of `paper/paper.tex`).
 
 The bipodal parameters `(q₁₁, q₁₂, q₂₂, c)` of the fixed-`(e, t_H)` entropy maximizer are
 jointly real-analytic in `(ε, ϑ)` at the degenerate boundary `ϑ = 0`, with degenerate values

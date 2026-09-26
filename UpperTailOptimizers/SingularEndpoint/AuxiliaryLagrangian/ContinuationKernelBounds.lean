@@ -15,6 +15,9 @@ J̃_{p_h}(z) := J̃_{p_*}(z) + Λ_h z + J_{p_h}(0) - J_{p_*}(0),      0 ≤ z �
 K_h(x,y)  := J̃_{p_h}(xy),                                          x, y ∈ [0,2],
 ```
 
+(the paper writes the continuation variable `z` and the two kernel variables `u, u'`; the Lean
+binders are `z` and `x, y`)
+
 with `Λ_h = ℓ(p_h) - ℓ_*`.  In Lean these are `GamTilde d`, `JpTilde d` and
 `KKTFamily.JpTildeH B h` (the same formulas, with `ℓ_* = ell (pStar d)`), and the kernel is
 `KKTFamily.contKernel B h x y = B.JpTildeH h (x * y)`, the integrand of `distributionJ`.

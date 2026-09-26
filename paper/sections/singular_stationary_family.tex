@@ -61,12 +61,12 @@ stationarity.  We therefore impose the separate condition
 \end{equation}
 obtained by varying the block proportion while keeping $s$ and $t$ fixed.
 
-The following lemma makes a structural reduction: it shows that bipodality is
-forced by the KKT conditions within the interior rank-one class.  The
+The following lemma shows that the KKT conditions force bipodality
+within the interior rank-one class.  The
 construction lemma later begins by seeking a bipodal family; this structural
 result justifies that choice and removes the need to assume bipodality in
 the accompanying local uniqueness assertion.  The proof reduces the stationarity condition
-\eqref{eq:graphon-stationarity} to a scalar equation and bounds the
+\eqref{eq:graphon-stationarity} to an equation in one variable and bounds the
 number of its roots.  For this reduction, define the \emph{$d$-th moment} of
 $f$ by
 \[
@@ -187,7 +187,7 @@ Reparametrize $s$ and $t$ by
   \gamma:=\mu m q(f_{\alpha,s,t})^{v-2}.
 \]
 Thus, $u$ is the midpoint of the two factor values, $|h|$ is half their
-separation, and $\gamma$ is the coefficient appearing in the scalar
+separation, and $\gamma$ is the coefficient appearing in the
 stationarity equation \eqref{eq:rank-one-kkt}.
 The three stationarity equations, evaluated at the three graphon values,
 determine $u,p,\gamma$; the block-proportion equation then determines
@@ -297,7 +297,9 @@ Write
 \[
   \ell(z):=\log\frac{1-z}{z},
   \qquad
-  \ell_*:=\ell(p_*)=\frac{d}{d-1}-\log(d-1).
+  \ell_*:=\ell(p_*)=\frac{d}{d-1}-\log(d-1),
+  \qquad
+  \ell_h:=\ell(p_h).
 \]
 By \Cref{lem:stationary-rank-one-bipodality}, every nonconstant rank-one graphon
 satisfying the KKT conditions has, after a measure-preserving relabeling, a
@@ -311,7 +313,7 @@ two-valued factor.  Motivated by this reduction, we seek a family of the form
   \qquad
   W:=f\otimes f.
 \]
-Since $f\otimes f$ takes the three values $s^2,st,t^2$, the scalar
+Since $f\otimes f$ takes the three values $s^2,st,t^2$, the
 stationarity equation \eqref{eq:rank-one-kkt} requires
 \begin{equation}\label{eq:three-value-kkt}
   \ell(p)-\ell(s^2)=\gamma s^{2d-2},\qquad

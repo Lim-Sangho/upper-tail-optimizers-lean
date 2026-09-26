@@ -36,7 +36,7 @@ Two pieces of bookkeeping turn the abstract neighbourhoods into the explicit rad
 `dist h 0 = |h|`.  For the unknown, `Metric.isOpen_iff` at `zBase d ∈ S` gives `ε > 0`, and
 the metric on `ℝ × ℝ × ℝ` is the sup metric (`Prod.dist_eq`), so the three coordinate
 bounds `|u' - u_*| < ε`, `|ℓ' - ℓ_*| < ε`, `|γ' - γ_*| < ε` are exactly `dist · < ε`.
-Finally `lell_three_eq_iff` converts the three original equations into `Fsys = 0`, which is
+Finally `Lell_three_eq_iff` converts the three original equations into `Fsys = 0`, which is
 legitimate precisely because `h ≠ 0`.
 
 ## Contents
@@ -77,7 +77,7 @@ private theorem dist_zBase_lt {u' lv' g' ε : ℝ} (hu : |u' - uStar d| < ε)
 (`lem:rank-one-kkt-family`).
 
 `analytic_implicit_unique` applied to the desingularized system `Fsys`, with the three
-equations of `eq:three-value-kkt` substituted for `Fsys = 0` by `lell_three_eq_iff`.
+equations of `eq:three-value-kkt` substituted for `Fsys = 0` by `Lell_three_eq_iff`.
 There are an open `S ∋ (u_*, ℓ_*, γ_*)` and an open `T ∋ 0` and an analytic family `z` on
 `T` through `zBase d` such that for `h ∈ T` with `h ≠ 0`, every admissible triple in `S`
 solving the three rank-one KKT equations at half-gap `h` equals `z h`. -/
@@ -99,7 +99,7 @@ theorem exists_scalar_family_locally_unique' (hd : 2 ≤ d) :
   refine ⟨S, T, z, hSopen, hzS, hTopen, h0T, hz0, hzan, hzsol, ?_⟩
   intro h hT hne w hwS hs ht hs1 ht1 hst e1 e2 e3
   refine huniq h hT w hwS ?_
-  obtain ⟨q1, q2, q3⟩ := (lell_three_eq_iff hd hne hs ht hs1 ht1 hst).mp ⟨e1, e2, e3⟩
+  obtain ⟨q1, q2, q3⟩ := (Lell_three_eq_iff hd hne hs ht hs1 ht1 hst).mp ⟨e1, e2, e3⟩
   show (Esys1 d w.2.1 w.2.2 w.1 h, Esys2 d w.2.2 w.1 h, Esys3 d w.2.2 w.1 h) = 0
   rw [q1, q2, q3]
   rfl

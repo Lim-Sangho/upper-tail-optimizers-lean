@@ -16,7 +16,7 @@ R_d(z)^2 ≤ C_d Γ_d(z)             (the unnumbered `R_d² ≤ C_dΓ_d`)
 
 both for `0 ≤ u ≤ 1`.  The first is the quantitative form of the statement that `Γ_d` has a
 zero of *exact* order four at `r_*`: the contact identities
-`eq:endpoint-entropy-derivatives` kill `Γ_d, Γ_d', Γ_d'', Γ_d'''` at `r_*`, while
+`eq:endpoint-contact-derivatives` kill `Γ_d, Γ_d', Γ_d'', Γ_d'''` at `r_*`, while
 `Lstar3_rStar` gives `Γ_d^{(4)}(r_*) = d^5/(d-1)^2 > 0`.  Near `r_*` the bound therefore
 comes from a fourth-order Taylor argument, and away from `r_*` from compactness.  The second
 estimate then follows from the first, because the convexity defect `R_d` vanishes to order
@@ -27,8 +27,8 @@ two at `r_*` (`pow_taylor_abs_le` supplies the explicit constant).
 * `quartic_lower_of_deriv4_ge` — the generic fourth-order analogue of
   `quadratic_lower_of_deriv2_ge`: a function whose first four Taylor coefficients at `c`
   vanish and whose fourth derivative is `≥ m` satisfies `f x ≥ (m/24)(x-c)^4`;
-* `exists_gam_quartic_lower` — `eq:endpoint-gap-quartic-bound`;
-* `exists_rd_sq_le_gam` — `R_d² ≤ C_dΓ_d`.
+* `exists_exceptional_gap_quartic_lower` — `eq:endpoint-gap-quartic-bound`;
+* `exists_Rd_sq_le_Gam` — `R_d² ≤ C_dΓ_d`.
 -/
 
 namespace UpperTailOptimizers
@@ -41,7 +41,7 @@ derivatives vanishes at an interior point `c`, then `f x ≥ (m/24)(x-c)^4` on `
 
 This is the fourth-order analogue of `quadratic_lower_of_deriv2_ge`, and is applied to the
 singular endpoint supporting gap `Γ_d` of `sec:localization-rank-one`, whose first four Taylor
-coefficients at `r_*` vanish by `eq:endpoint-entropy-derivatives`. -/
+coefficients at `r_*` vanish by `eq:endpoint-contact-derivatives`. -/
 theorem quartic_lower_of_deriv4_ge {f f1 f2 f3 f4 : ℝ → ℝ} {c m a b : ℝ}
     (hac : a ≤ c) (hcb : c ≤ b)
     (hf : ∀ x ∈ Set.Icc a b, HasDerivAt f (f1 x) x)
@@ -114,7 +114,7 @@ private theorem continuousAt_Lstar3 (d : ℕ) {z : ℝ} (hz0 : 0 < z) (hz1 : z <
 
 /-- A window `[r_* - δ, r_* + δ] ⊆ (0,1)` on which `𝓛_*''' = Γ_d^{(4)}` stays above half of
 its value `d^5/(d-1)^2` at `r_*` (`Lstar3_rStar`). -/
-private theorem exists_lstar3_window (hd : 2 ≤ d) :
+private theorem exists_Lstar3_window (hd : 2 ≤ d) :
     ∃ δ : ℝ, 0 < δ ∧ 0 < rStar d - δ ∧ rStar d + δ < 1 ∧
       ∀ x ∈ Set.Icc (rStar d - δ) (rStar d + δ),
         (d : ℝ) ^ 5 / ((d : ℝ) - 1) ^ 2 / 2 ≤ Lstar3 d x := by
@@ -152,14 +152,14 @@ Near `r_*` this is the fourth-order Taylor bound `quartic_lower_of_deriv4_ge` ap
 `Lstar1_rStar`, `Lstar2_rStar`) and whose fourth derivative is close to
 `Γ_d^{(4)}(r_*) = d^5/(d-1)^2 > 0`.  Away from `r_*` the set is compact and `Γ_d` is
 continuous and strictly positive there (`Gam_pos_of_ne`), so it has a positive minimum. -/
-theorem exists_gam_quartic_lower (hd : 2 ≤ d) :
+theorem exists_exceptional_gap_quartic_lower (hd : 2 ≤ d) :
     ∃ c : ℝ, 0 < c ∧ ∀ u ∈ Set.Icc (0 : ℝ) 1, c * |u - rStar d| ^ 4 ≤ Gam d u := by
   have h1 : (1 : ℝ) < (d : ℝ) := one_lt_d hd
   have hr0 := rStar_pos hd
   have hr1 := rStar_lt_one hd
   have hApos : 0 < (d : ℝ) ^ 5 / ((d : ℝ) - 1) ^ 2 :=
     div_pos (pow_pos (by linarith) 5) (pow_pos (by linarith) 2)
-  obtain ⟨δ, hδ, hlo, hhi, hL3⟩ := exists_lstar3_window hd
+  obtain ⟨δ, hδ, hlo, hhi, hL3⟩ := exists_Lstar3_window hd
   have hmem : ∀ x ∈ Set.Icc (rStar d - δ) (rStar d + δ), 0 < x ∧ x < 1 := by
     intro x hx
     exact ⟨by linarith [hx.1], by linarith [hx.2]⟩
@@ -226,9 +226,9 @@ The convexity defect `R_d` is the first-order Taylor remainder of `u ↦ u^d` at
 divided by `d r_*^{d-1}`, so `pow_taylor_abs_le` gives `|R_d(u)| ≤ L (u - r_*)^2` with the
 explicit constant `L = d^2/(d r_*^{d-1})`.  Squaring and feeding in
 `eq:endpoint-gap-quartic-bound` produces `C_d = L^2/c_d`. -/
-theorem exists_rd_sq_le_gam (hd : 2 ≤ d) :
+theorem exists_Rd_sq_le_Gam (hd : 2 ≤ d) :
     ∃ C : ℝ, 0 < C ∧ ∀ u ∈ Set.Icc (0 : ℝ) 1, Rd d u ^ 2 ≤ C * Gam d u := by
-  obtain ⟨c, hc, hcbound⟩ := exists_gam_quartic_lower hd
+  obtain ⟨c, hc, hcbound⟩ := exists_exceptional_gap_quartic_lower hd
   have hr0 := rStar_pos hd
   have hr1 := rStar_lt_one hd
   have hD : 0 < (d : ℝ) * rStar d ^ (d - 1) := mul_pos (dpos hd) (pow_pos hr0 _)

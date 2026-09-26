@@ -4,7 +4,7 @@ import UpperTailOptimizers.NonexceptionalEndpoint.Proof.Analytic
 # `rmk:bipodal-parameter-expansions`: the shape of the optimizer near the phase boundary
 
 `rmk:bipodal-parameter-expansions` of `paper/paper.tex` describes how the smaller pode of
-the bipodal optimizer `W_{p,r}` appears as `p` drops below the Lubetzky–Zhao boundary `pc(r)`.
+the bipodal optimizer `W_{p,r}` appears as `p` drops below the Lubetzky–Zhao boundary `p_c(r)`.
 Writing `δ_*(p,r) = r - e(W_{p,r})` for the edge-density deficit and `z = ζ_d(r)` for the
 boundary value of the Kenyon–Radin–Ren–Sadun cross density, the remark asserts
 
@@ -32,7 +32,7 @@ original clauses.  Everything it needs about the Kenyon–Radin–Ren–Sadun
 parameter maps — that they exist as *analytic* maps of `(ε, τ-ε^m)`, that their boundary values
 are `c(r,0)=0`, `q₂₂(r,0)=r`, `q₁₂(r,0)=ζ_d(r) ≠ r`, that they describe a *concrete* optimizer,
 and the a-priori Lipschitz bounds — is exported by `bipodal_family_smallBlock_zeta`, so this file
-adds no axiom and calls the second-variation chart only through that theorem.
+adds no axiom and calls the boundary-excess chart only through that theorem.
 
 **Two conventions.**  (i) The parameter maps are existential, so `q₁₁⁰(r)` is `q11 r 0` for the
 same maps; `parameter_asymptotics_zeta` records that near every `(r, 0)` these maps are the
@@ -691,7 +691,7 @@ theorem parameter_asymptotics_zeta {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d
           mul_le_mul_of_nonneg_right (le_trans hLCdC hCE) hlam0.le
 
 /-- **`rmk:bipodal-parameter-expansions`: the shape of the optimizer near the phase
-boundary.**  On a window `|r - r₀| < ρ`, `pc(r) - η < p < pc(r)` there are an edge-density
+boundary.**  On a window `|r - r₀| < ρ`, `p_c(r) - η < p < p_c(r)` there are an edge-density
 deficit `Δ = Dl` and the four Kenyon–Radin–Ren–Sadun parameter maps such that, with
 `ε = r - Δ(p,r) = e(W_{p,r})`, `θ = r^m - ε^m` and `z = ζ_d(r) = q₁₂(r,0)`:
 

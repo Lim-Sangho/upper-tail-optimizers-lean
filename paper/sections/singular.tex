@@ -1,13 +1,15 @@
 \section{Optimizers near the singular endpoint}
 \label{sec:singular-endpoint}
 
-In this section, we prove \Cref{thm:endpoint-optimizers} in a more precise form.
+In this section, we prove \Cref{thm:endpoint-optimizers} in a precise form.
 Along the Lubetzky--Zhao boundary, the supporting line to the graph of
-$x\mapsto J_{\pc(r)}(x^{1/d})$ touches it at $x=r^d$ and
-$x=\sm(r)^d$.  At the exceptional density $r_*=(d-1)/d$, these two
-points coincide at $x=r_*^d$, so the nonexceptional reduction no longer
-applies.  Following the strategy in
-\Cref{sec:proof-strategy}, we construct an analytic rank-one bipodal family
+$\varphi_{\pc(r),d}$ touches it at coordinates $x=r^d$ and $x=\sc(r)^d$,
+corresponding to the densities $r$ and $\sc(r)$.
+At $r=r_*$, the contacts merge and the gap becomes quartic in
+$|x-r_*^d|$, or equivalently in $|z-r_*|$ when $x=z^d$.
+The resulting density gap $\Gamma_d(z)$ gives the $L^4$-localization used
+below.  Since the KRR--S reduction excludes $r_*$, we use the strategy in
+\Cref{sec:proof-strategy} to construct an analytic rank-one bipodal family
 and establish its global optimality and uniqueness along the associated
 parameter curve approaching $(\pc(r_*),r_*)$.
 
@@ -25,13 +27,12 @@ and write $m:=|E(H)|$ and $v:=|V(H)|=2m/d$.  Set
 \end{equation*}
 We write $\lambda$ for Lebesgue measure on $[0,1]$, and also for its
 product measure on $[0,1]^2$.
-In this section, a kernel means a measurable real-valued function of two
+In this section, a \emph{kernel} means a measurable real-valued function of two
 variables; unlike a graphon, it need not be symmetric or take values in
 $[0,1]$.
 For a measurable function $g:[0,1]\to\mathbb R$, write $g\otimes g$ for
-the rank-one kernel $(g\otimes g)(x,y):=g(x)g(y)$.
+the \emph{rank-one kernel} $(g\otimes g)(x,y):=g(x)g(y)$.
 The following theorem is the main result of this section.
-The remainder of this section is devoted to proving this theorem.
 
 \begin{theorem}[Optimizers near the singular endpoint]
 \label{thm:singular-endpoint}
@@ -45,7 +46,7 @@ $p_h,r_h,u_h,\alpha_h$, defined for $|h|<h_0$, such that
   \alpha_0=\frac12.
 \]
 For every $h\in(0,h_0)$, we have $p_h<\pc(r_h)$,
-and for any measurable set $A_h\subset[0,1]$
+and for any measurable set $A_h\subseteq[0,1]$
 with $\lambda(A_h)=\alpha_h$, set
 \[
   s_h:=u_h-h,

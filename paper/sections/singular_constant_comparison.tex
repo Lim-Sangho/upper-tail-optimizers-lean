@@ -16,18 +16,18 @@ an even analytic function of $h$, and the calculation below shows that its
 leading term is of order $h^4$.  The sign of the difference for small $h>0$ is therefore
 determined by the coefficient of $h^4$.  To compute that coefficient, we
 first record the expansions of the parameters that will be used below.
-Write
+Recall
 \[
   \ell(z):=\log\frac{1-z}{z}, \qquad
   \ell_*:=\ell(p_*)=\frac d{d-1}-\log(d-1), \qquad
-  \Lambda_h:=\ell(p_h)-\ell_*.
+  \ell_h:=\ell(p_h).
 \]
-Here, $\Lambda_h$ represents the slope of the affine difference
+The change from $p_*$ to $p_h$ gives the affine identity
 \begin{equation}\label{eq:entropy-parameter-shift}
-  J_{p_h}(z)-J_{p_*}(z)=\Lambda_h z+J_{p_h}(0)-J_{p_*}(0).
+  J_{p_h}(z)-J_{p_*}(z)=\{\ell_h-\ell_*\}z+J_{p_h}(0)-J_{p_*}(0).
 \end{equation}
 
-\begin{lemma}[Expansions along the rank-one KKT family]
+\begin{lemma}[Expansions of rank-one KKT family]
 \label{lem:rank-one-parameter-expansions}
 The analytic family constructed in
 \Cref{lem:rank-one-kkt-family} satisfies
@@ -35,7 +35,7 @@ The analytic family constructed in
 \begin{aligned}
   u_h&=u_*+\frac{5-3d}{6u_*}h^2+O_d(h^4),
   &&&
-  \Lambda_h&=\frac{2d^3}{3(d-1)}h^2+O_d(h^4),\\
+  \ell_h&=\ell_*+\frac{2d^3}{3(d-1)}h^2+O_d(h^4),\\
   \alpha_h&=\frac12+\frac{2d^2u_*}{3(d-1)}h+O_d(h^3),
   &&&
   r_h&=r_*-\frac{2(4d-1)}3h^2+O_d(h^4).
@@ -46,13 +46,13 @@ The analytic family constructed in
 These expansions immediately locate the family relative to
 $P_*=(p_*,r_*)$.  For all sufficiently small $h>0$, the expansion of $r_h$
 gives $r_h<r_*$.  Moreover, since $\ell$ is strictly decreasing,
-$\Lambda_h>0$ implies $p_h<p_*$.
+$\ell_h>\ell_*$ implies $p_h<p_*$.
 
 \begin{proof}[Proof outline]
 The symmetries in \Cref{lem:rank-one-kkt-family} show that
-$u_h,\gamma_h$, and $\Lambda_h$ have expansions in even powers of $h$, while
+$u_h,\gamma_h$, and $\ell_h$ have expansions in even powers of $h$, while
 $\alpha_h-1/2$ has an expansion in odd powers.  Let $U_2, G_2, L_2$
-denote the quadratic coefficients of $u_h,\gamma_h$, and $\Lambda_h$,
+denote the quadratic coefficients of $u_h,\gamma_h$, and $\ell_h$,
 respectively, and substitute the expansions of $s_h^2,s_ht_h,t_h^2$ into
 \eqref{eq:three-value-kkt}.
 The middle equation at order $h^2$ relates $G_2$ and $L_2$,
@@ -97,41 +97,20 @@ The affine identity \eqref{eq:entropy-parameter-shift} separates the change in $
 from the comparison at $p_*$:
 \[
   I_{p_h}(W_h)-J_{p_h}(r_h)
-  =\{I_{p_*}(W_h)-J_{p_*}(r_h)\}+\Lambda_h\{e(W_h)-r_h\}.
+  =\{I_{p_*}(W_h)-J_{p_*}(r_h)\}
+   +\{\ell_h-\ell_*\}\{e(W_h)-r_h\}.
 \]
 The second term is evaluated using \Cref{lem:rank-one-parameter-expansions}.
-For the first difference, we return to the supporting-line geometry of
-\Cref{thm:scalar-lz-boundary}.  Its proof obtains the quadratic separation
-in \eqref{eq:contact-quadratic-separation} by Taylor-expanding the difference between
-$\varphi_{\pc(r),d}(x)=J_{\pc(r)}(x^{1/d})$ and its tangent line $\ell_r(x)$
-near the two contact points.  We use the same approach at the exceptional
-endpoint, where these contacts coincide.
-
-By the continuous extensions in \Cref{thm:scalar-lz-boundary},
-$\pc(r)\to p_*$ and $\sm(r)\to r_*$ as $r\to r_*$.  The tangent lines
-$\ell_r$ therefore extend continuously to the tangent of
-$\varphi_{p_*,d}$ at $x=r_*^d$:
-\[
-  \ell_{r_*}(x)=J_{p_*}(r_*)+\beta_d(x-r_*^d).
-\]
-Here $\beta_d$ denotes the slope of this tangent, which the chain rule gives as
+For the first difference, we use the gap $\Gamma_d$ from
+\eqref{eq:endpoint-supporting-gap}, which vanishes to fourth order in the
+distance from the density $z$ to $r_*$.
+Write $\beta_d$ for the slope of the tangent $\ell_{r_*}$:
 \[
   \beta_d:=\varphi_{p_*,d}'(r_*^d)
   =\frac{J_{p_*}'(r_*)}{d r_*^{d-1}}
   =\frac{\gamma_*}{d}
   =\frac{d^{d-1}}{(d-1)^d}.
 \]
-Following \eqref{eq:supporting-cost-gap}, define the \emph{supporting cost gap} by
-\begin{equation}\label{eq:endpoint-supporting-gap}
-  \Gamma_d(z)
-  :=\varphi_{p_*,d}(z^d)-\ell_{r_*}(z^d)
-  =J_{p_*}(z)-J_{p_*}(r_*)-\beta_d\{z^d-r_*^d\}
-  \qquad(0\le z\le1).
-\end{equation}
-Thus, $\Gamma_d$ is the continuous extension to $r=r_*$ of the function
-$g_r$ used there.  Its Taylor expansion describes the separation from
-the tangent at their common contact point; as shown below, the leading term is quartic.
-
 By \eqref{eq:endpoint-supporting-gap}, we can express the cost difference
 at $p_*$ in terms of $\Gamma_d$ as
 \[
@@ -139,30 +118,21 @@ at $p_*$ in terms of $\Gamma_d$ as
   =\int\Gamma_d(W_h)-\Gamma_d(r_h)+\beta_d\left(\int W_h^d-r_h^d\right).
 \]
 Adding the affine correction from $p_*$ to $p_h$ gives
-\begin{equation}\label{eq:constant-comparison-decomposition}
+\begin{align}
   I_{p_h}(W_h)-J_{p_h}(r_h)
-  =\int\Gamma_d(W_h)-\Gamma_d(r_h)
+  &=\int\Gamma_d(W_h)-\Gamma_d(r_h)
   +\beta_d\left(\int W_h^d-r_h^d\right)
-  +\Lambda_h\{e(W_h)-r_h\}.
-\end{equation}
-Since $\int W_h^d=(\int f_h^d)^2=q_h^2=r_h^d$, the $d$-th moment term vanishes, and
-\begin{equation}\label{eq:constant-comparison-identity}
-  I_{p_h}(W_h)-J_{p_h}(r_h)
-  =\int\Gamma_d(W_h)-\Gamma_d(r_h) +\Lambda_h\{e(W_h)-r_h\}.
-\end{equation}
-The proof first evaluates $\Gamma_d$ by its quartic expansion,
-then expands all the parameters using \Cref{lem:rank-one-parameter-expansions}.
+  +\{\ell_h-\ell_*\}\{e(W_h)-r_h\}
+  \label{eq:constant-comparison-decomposition} \\
+  &=\int\Gamma_d(W_h)-\Gamma_d(r_h)
+   +\{\ell_h-\ell_*\}\{e(W_h)-r_h\},
+   \label{eq:constant-comparison-identity}
+\end{align}
+where the $d$-th moment term vanishes since $\int W_h^d=(\int f_h^d)^2=q_h^2=r_h^d$.
+We evaluate this identity using the quartic expansion
+\eqref{eq:endpoint-gap-expansion} and \Cref{lem:rank-one-parameter-expansions}.
 
 \begin{proof}
-Tangency gives $\Gamma_d(r_*)=\Gamma_d'(r_*)=0$.  At the exceptional
-endpoint, direct differentiation further gives
-$\Gamma_d''(r_*)=\Gamma_d'''(r_*)=0$ and
-$\Gamma_d^{(4)}(r_*)=d^5/(d-1)^2>0$.
-Taylor's theorem therefore yields, as $z\to r_*$,
-\begin{equation}\label{eq:endpoint-gap-expansion}
-  \Gamma_d(z)
-  =\frac{d^5}{24(d-1)^2}(z-r_*)^4+O_d(|z-r_*|^5).
-\end{equation}
 By the parameter expansions in \eqref{eq:rank-one-parameter-expansions},
 \[
   s_h^2-r_*=-2u_*h+O_d(h^2),
@@ -187,10 +157,8 @@ Finally, $e(W_h)=\{u_h+h(1-2\alpha_h)\}^2$ and the parameter expansions give
 \[
   e(W_h)-r_h=-(d-1)h^2+O_d(h^4),
   \qquad
-  \Lambda_h\{e(W_h)-r_h\}=-\frac{2d^3}{3}h^4+O_d(h^6).
+  \{\ell_h-\ell_*\}\{e(W_h)-r_h\}=-\frac{2d^3}{3}h^4+O_d(h^6).
 \]
 Substituting these expansions into \eqref{eq:constant-comparison-identity}
 proves the lemma.
 \end{proof}
-
-

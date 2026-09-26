@@ -2,9 +2,9 @@ import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.Stationarity
 import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.LocalMax
 
 /-!
-# Local maximality of `Σ` gives `F₁ = F₂ = 0` (Appendix B, paragraphs 3 and 4)
+# Local maximality of `Σ` gives `F₁ = F₂ = 0` (Appendix A, paragraphs 3 and 4)
 
-Paragraph 3 of Appendix B of `paper/paper.tex`, in the proof of
+Paragraph 3 of Appendix A of `paper/paper.tex`, in the proof of
 `eq:krrs-boundary-stationarity`, reads in part:
 
 > Hence, by continuity of `C` and `Q`, every sufficiently nearby pair `(ã,b̃)`, with `c` and
@@ -271,7 +271,7 @@ theorem hasDerivAt_Sigma_b {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGr
 
 /-! ### The payoff -/
 
-/-- **A local maximizer of `Σ` satisfies `F₁ = F₂ = 0` (Appendix B, paragraphs 3 and 4).**
+/-- **A local maximizer of `Σ` satisfies `F₁ = F₂ = 0` (Appendix A, paragraphs 3 and 4).**
 
 If `(a,b)` is a local maximizer of the reduced entropy
 `Σ(ε,·,·,ϑ) = Ŝ(ε,·,·,C(ε,·,·,ϑ))` `eq:krrs-constrained-entropy` — which is what

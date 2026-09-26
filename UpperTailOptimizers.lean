@@ -24,6 +24,13 @@ import UpperTailOptimizers.LZBoundary.AnalyticEntropy
 import UpperTailOptimizers.LZBoundary.Existence
 import UpperTailOptimizers.LZBoundary.Curve
 import UpperTailOptimizers.LZBoundary.PaperForm
+import UpperTailOptimizers.LZBoundary.DensityGap
+import UpperTailOptimizers.LZBoundary.NonexceptionalGap
+import UpperTailOptimizers.LZBoundary.Merge.Bennett
+import UpperTailOptimizers.LZBoundary.Merge.PolyPart
+import UpperTailOptimizers.LZBoundary.Merge.Shift
+import UpperTailOptimizers.LZBoundary.Merge.Critical
+import UpperTailOptimizers.LZBoundary.Merge.ZetaAnalytic
 -- Section 4.1 of `paper/paper.tex`: the local reduction
 import UpperTailOptimizers.Preliminaries.Graphons.JpConvexity
 import UpperTailOptimizers.Preliminaries.Graphons.Functionals
@@ -116,6 +123,7 @@ import UpperTailOptimizers.NonexceptionalEndpoint.Proof.Main
 import UpperTailOptimizers.NonexceptionalEndpoint.Proof.Coefficient
 import UpperTailOptimizers.NonexceptionalEndpoint.Proof.LZCriterion
 import UpperTailOptimizers.NonexceptionalEndpoint.Proof.CrossDensity
+import UpperTailOptimizers.LZBoundary.Merge.CurveAnalytic
 import UpperTailOptimizers.NonexceptionalEndpoint.Proof.ParameterExpansions
 -- Theorem 1.5: a direct corollary of the Section 4 theorem
 import UpperTailOptimizers.NonexceptionalEndpoint.Proof.Global
@@ -196,6 +204,7 @@ import UpperTailOptimizers.SingularEndpoint.ConstantGraphonComparison.FamilyRate
 import UpperTailOptimizers.SingularEndpoint.ConstantGraphonComparison.FamilyQuadratic
 import UpperTailOptimizers.SingularEndpoint.ConstantGraphonComparison.Expansions
 import UpperTailOptimizers.SingularEndpoint.ConstantGraphonComparison.GamTaylor
+import UpperTailOptimizers.SingularEndpoint.ExceptionalGap
 import UpperTailOptimizers.SingularEndpoint.ConstantGraphonComparison.Trapezoid
 import UpperTailOptimizers.SingularEndpoint.RankOneStationaryFamily.Order4
 import UpperTailOptimizers.SingularEndpoint.RankOneStationaryFamily.Order4Right

@@ -6,26 +6,26 @@ import UpperTailOptimizers.LZBoundary.Curve
 
 `local_structure` assembles `thm:nonexceptional-endpoint` (Theorem 4.1) in global boundary
 coordinates: the positive analytic coefficient `A_H`, uniqueness, nonconstancy and bipodality
-of the optimizer on `U = {|p - pc(r)| < η, |r - r₀| < ρ}` with `p < pc(r)`, the vanishing of the
-smaller block as `p ↑ pc(r)`, the analyticity of the six functions `q₁₁, q₁₂, q₂₂, c, e(W_{p,r})`
+of the optimizer on `U = {|p - p_c(r)| < η, |r - r₀| < ρ}` with `p < p_c(r)`, the vanishing of the
+smaller block as `p ↑ p_c(r)`, the analyticity of the six functions `q₁₁, q₁₂, q₂₂, c, e(W_{p,r})`
 and `Φ_H`, and the two expansions with uniform remainders.
 `main_bipodal_optimizer` in `Global.lean` is its introduction corollary. The proof starts with
 the two sides:
 
-* `replica_symmetric_unique` — `p ≥ pc(r)`: the constant graphon `W ≡ r` is the unique
-  optimizer. This is what `thm:lz-criterion` gives under condition (M2) of
+* `replica_symmetric_unique` — `p ≥ p_c(r)`: the constant graphon `W ≡ r` is the unique
+  optimizer. This is what `thm:lz-criterion` gives under the criterion of condition (M1) of
   Theorem 3.1; the paper does not state it inside `thm:nonexceptional-endpoint`, and
   Lean keeps it as an extra conclusion;
-* `symmetry_breaking_side` — `p < pc(r)`: the optimizer is unique up to relabelling,
+* `symmetry_breaking_side` — `p < p_c(r)`: the optimizer is unique up to relabelling,
   nonconstant and bipodal, with the expansions
   `e(W_{p,r}) = r - λ/A_H(r) + O(λ²)` and `Φ_H(p,r) = J_p(r) - λ²/(2A_H(r)) + O(λ³)`.
 
-`local_structure_on_arc` states both on one window `|r - r₀| < ρ`, `|p - pc(r)| < η`, with `ρ`, `η`
+`local_structure_on_arc` states both on one window `|r - r₀| < ρ`, `|p - p_c(r)| < η`, with `ρ`, `η`
 and the expansion constant independent of `r` and `p` — the uniformity the paper asserts.
 `arc_gap_bounds` turns compactness of the `r`-interval into one margin `c` with
-`pc(r) + c ≤ min(r, p_*)` and `c ≤ pc(r)`, which is what makes the window width uniform.  The
+`p_c(r) + c ≤ min(r, p_*)` and `c ≤ p_c(r)`, which is what makes the window width uniform.  The
 window is needed only on the symmetry-breaking side: the replica-symmetric side holds on the
-whole range `pc(r) ≤ p < r`, which is `replica_symmetric_unique_global`.
+whole range `p_c(r) ≤ p < r`, which is `replica_symmetric_unique_global`.
 -/
 
 namespace UpperTailOptimizers
@@ -33,7 +33,7 @@ namespace UpperTailOptimizers
 open MeasureTheory Real Set
 
 /-- **Uniform gaps along a compact subarc.**  On a compact `K ⊆ U` there is one margin
-`c > 0` with `pc(r) + c ≤ r`, `pc(r) + c ≤ p_*` and `c ≤ pc(r)` for every `r ∈ K`.  (The three
+`c > 0` with `p_c(r) + c ≤ r`, `p_c(r) + c ≤ p_*` and `c ≤ p_c(r)` for every `r ∈ K`.  (The three
 orderings `0 < pc r < r` and `pc r < p_*` hold pointwise; compactness makes the gap uniform.) -/
 theorem arc_gap_bounds {d : ℕ} (M : LZBoundaryArc d) {K : Set ℝ}
     (hK : K ⊆ M.U) (hKc : IsCompact K) (hKne : K.Nonempty) :
@@ -63,12 +63,12 @@ theorem arc_gap_bounds {d : ℕ} (M : LZBoundaryArc d) {K : Set ℝ}
 replica-symmetric side added).  Let `H` be `d`-regular with
 `d ≥ 2` and let `r₀` be a non-exceptional point of a regular Lubetzky–Zhao boundary arc.  Then there are
 `ρ, η > 0` and a constant `C ≥ 0` such that for every `r` with `|r - r₀| < ρ` and every `p`
-with `|p - pc(r)| < η` (which forces `0 < p < r`):
+with `|p - p_c(r)| < η` (which forces `0 < p < r`):
 
-**(a)** If `pc(r) ≤ p` then `Φ_H(p,r) = J_p(r)`, the constant graphon `W ≡ r` attains it, and it
+**(a)** If `p_c(r) ≤ p` then `Φ_H(p,r) = J_p(r)`, the constant graphon `W ≡ r` attains it, and it
 is the unique optimizer: every optimizer equals `r` almost everywhere.
 
-**(b)** If `p < pc(r)` then there is an optimizer `W_*` which is bipodal and non-constant, and
+**(b)** If `p < p_c(r)` then there is an optimizer `W_*` which is bipodal and non-constant, and
 every optimizer is `W_*` up to a measure-preserving relabelling.
 
 **(c)** On that side `A_H(r) > 0` and, with `λ = λ(p,r)` the log-odds displacement,
@@ -148,9 +148,9 @@ theorem local_structure_on_arc {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d)
     exact hsb r (lt_of_lt_of_le hrρ hρρb) p (by linarith) hlt
 
 /-- **The replica-symmetric side on its full range**, in global boundary coordinates.
-The window `|p - pc(r)| < η` of `local_structure_on_arc` is needed only for `p < pc(r)`; the
-replica-symmetric side needs no restriction on `p - pc(r)`, and holds
-for every `p ∈ [pc(r), r)`.  That is this statement: for every nonexceptional `r ∈ (0,1)` and
+The window `|p - p_c(r)| < η` of `local_structure_on_arc` is needed only for `p < p_c(r)`; the
+replica-symmetric side needs no restriction on `p - p_c(r)`, and holds
+for every `p ∈ [p_c(r), r)`.  That is this statement: for every nonexceptional `r ∈ (0,1)` and
 every `p` with `pcGlobal(r) ≤ p < r`, the upper-tail value is `J_p(r)`, the constant graphon
 `W ≡ r` attains it, and every optimizer equals `r` almost everywhere. -/
 theorem replica_symmetric_unique_global {d : ℕ} (hd : 2 ≤ d)
@@ -170,10 +170,10 @@ theorem replica_symmetric_unique_global {d : ℕ} (hd : 2 ≤ d)
 
 open Filter Topology
 
-/-- **The global second-variation coefficient `A_H`** (`thm:nonexceptional-endpoint`), stated against the
+/-- **The global quadratic coefficient `A_H`** (`thm:nonexceptional-endpoint`), stated against the
 global boundary curve `pcGlobal` and therefore independent of any chosen Lubetzky–Zhao boundary arc:
-`A_H(r) = lim_{δ↓0} 2 (I_{pc(r),r}(r-δ) - J_{pc(r)}(r))/δ²`.  The paper defines `A_H(r)` as
-`∂²_δG(r,0)` for the analytic extension `G` of `thm:positive-second-variation`;
+`A_H(r) = lim_{δ↓0} 2 (I_{p_c(r),r}(r-δ) - J_{p_c(r)}(r))/δ²`.  The paper defines `A_H(r)` as
+`∂²_δG(r,0)` for the analytic extension `G` of `thm:boundary-excess-expansion`;
 `dDelta_dDelta_eq_AHGlobal` (`NonexceptionalEndpoint/Proof/Coefficient.lean`) shows that the two agree. -/
 noncomputable def AHGlobal {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)
     [DecidableRel H.Adj] (d : ℕ) (r : ℝ) : ℝ :=
@@ -181,14 +181,14 @@ noncomputable def AHGlobal {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGr
     2 * (reducedObjectiveReal H (pcGlobal d r) (r - δ) (r ^ H.edgeFinset.card)
       - Jp (pcGlobal d r) r) / δ ^ 2)
 
-/-- Every arc's second-variation coefficient is the restriction of the global one: `AH H M r`
+/-- Every arc's quadratic coefficient is the restriction of the global one: `AH H M r`
 depends on `M` only through the value `M.pc r`, which is `pcGlobal d r`. -/
 theorem AH_eq_AHGlobal {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V)
     [DecidableRel H.Adj] {d : ℕ} (hd : 2 ≤ d) (M : LZBoundaryArc d) {r : ℝ} (hr : r ∈ M.U) :
     AH H M r = AHGlobal H d r := by
   simp only [AH, AHGlobal, boundaryExcess, pcGlobal_eq_pc hd M hr]
 
-/-- **The global log-odds displacement** `λ(p,r) = log((1-p)/p) - log((1-pc(r))/pc(r))`,
+/-- **The global log-odds displacement** `λ(p,r) = log((1-p)/p) - log((1-p_c(r))/p_c(r))`,
 stated against `pcGlobal`. -/
 noncomputable def lambdaGlobal (d : ℕ) (p r : ℝ) : ℝ := logOdds p - logOdds (pcGlobal d r)
 
@@ -239,13 +239,13 @@ theorem analyticAt_AHGlobal_and_pos {d : ℕ} (hd : 2 ≤ d)
 /-- The conclusions presented in `thm:nonexceptional-optimizers`, including the global coefficient.
 
 * `coefficient`: `A_H` is analytic and positive at every nonexceptional density;
-* `window`: on `|r - r₀| < ρ`, `|p - pc(r)| < η`, the optimizer is unique up to relabelling,
-  nonconstant and bipodal when `p < pc(r)`, with the two expansions. The window also records
-  the replica-symmetric side `p ≥ pc(r)`, which the paper derives from `thm:lz-criterion` and
+* `window`: on `|r - r₀| < ρ`, `|p - p_c(r)| < η`, the optimizer is unique up to relabelling,
+  nonconstant and bipodal when `p < p_c(r)`, with the two expansions. The window also records
+  the replica-symmetric side `p ≥ p_c(r)`, which the paper derives from `thm:lz-criterion` and
   Theorem 3.1;
-* `smallBlock`: on `|r - r₀| < ρ`, `pc(r) - η < p < pc(r)`, an optimizer is the bipodal graphon
+* `smallBlock`: on `|r - r₀| < ρ`, `p_c(r) - η < p < p_c(r)`, an optimizer is the bipodal graphon
   with first block `[0, c(p,r)]`, where `0 < c(p,r) < 1/2`, so `[0, c(p,r)]` is its smaller block;
-  and `c(p,r) → 0` as `p ↑ pc(r)` for every such `r`. -/
+  and `c(p,r) → 0` as `p ↑ p_c(r)` for every such `r`. -/
 structure NonexceptionalOptimizers {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] (d : ℕ) (r₀ : ℝ) : Prop where
   coefficient : ∀ r : ℝ, 0 < r → r < 1 → r ≠ rStar d →
@@ -287,13 +287,13 @@ analytic global coefficient.
 * `window` and `smallBlock` (inherited from `NonexceptionalOptimizers`) carry uniqueness,
   nonconstancy, bipodality, the expansions and the vanishing smaller block.
 * `analyticFamily` carries the analytic statements of `thm:nonexceptional-endpoint` for **one** analytic bipodal
-  family `Dl, q₁₁, q₁₂, q₂₂, c` on **one** window `|r - r₀| < ρ`, `pc(r) - η < p < pc(r)`:
+  family `Dl, q₁₁, q₁₂, q₂₂, c` on **one** window `|r - r₀| < ρ`, `p_c(r) - η < p < p_c(r)`:
   analyticity of `Φ_H`, of the edge density `r - Dl` and of the four parameters; the optimizer
   `B` with first block `[0, c]`, uniqueness up to relabelling, the edge-density and value
   expansions with one constant `Cd`; `0 < c < 1/2` at every point of the window; and
-  `c → 0` as `p ↑ pc(r)` for every `r` of the window.
+  `c → 0` as `p ↑ p_c(r)` for every `r` of the window.
 
-The windows are of the form "`|r - r₀| < ρ` and `p` within `η` of `pc(r)`", so all clauses hold on
+The windows are of the form "`|r - r₀| < ρ` and `p` within `η` of `p_c(r)`", so all clauses hold on
 their intersection; the replica-symmetric side holds on its whole range by
 `replica_symmetric_unique_global`. -/
 structure LocalOptimizerStructure {V : Type*} [Fintype V] [DecidableEq V]

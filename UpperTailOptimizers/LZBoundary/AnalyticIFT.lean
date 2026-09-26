@@ -26,7 +26,7 @@ specialisations are used in the development:
 
 The companion `analytic_inverse` is the **analytic inverse function theorem**
 (Krantz–Parks, *A Primer of Real Analytic Functions*, Theorem 2.5.1), used in the
-formalisation of Appendix B of `paper/paper.tex` (`Preliminaries/KRRSAnalyticExtension/CChart.lean`, `Preliminaries/KRRSAnalyticExtension/Family.lean`) and
+formalisation of Appendix A of `paper/paper.tex` (`Preliminaries/KRRSAnalyticExtension/CChart.lean`, `Preliminaries/KRRSAnalyticExtension/Family.lean`) and
 in `LZBoundary/AnalyticImplicitUnique.lean`.  It is not a corollary of
 `analytic_implicit`: besides the analytic local inverse it supplies the *injectivity* of
 `F` on the source neighbourhood.  That injectivity is what yields the local uniqueness that

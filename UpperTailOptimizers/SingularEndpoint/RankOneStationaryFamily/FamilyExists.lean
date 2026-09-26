@@ -19,7 +19,7 @@ Everything the analytic implicit function theorem needs is in place:
   identified with the invertible `jac3` of `SingularEndpoint/RankOneStationaryFamily/Jacobian3.lean`.
 
 So this file is the call, plus the transport back from the desingularized system
-`(E₁, E₂, E₃)` to the three original equations by `lell_three_eq_iff`, which is legitimate
+`(E₁, E₂, E₃)` to the three original equations by `Lell_three_eq_iff`, which is legitimate
 exactly for `h ≠ 0`.
 
 **What this is not.** The remaining clauses of `lem:rank-one-kkt-family` — the
@@ -87,7 +87,7 @@ theorem exists_scalar_family_components (hd : 2 ≤ d) :
 
 For all sufficiently small `h ≠ 0` the three edge values `s_h², s_h t_h, t_h²` of the
 two-valued factor are roots of `𝓛_h`, with `s_h = u_h - h` and `t_h = u_h + h`.  The
-restriction `h ≠ 0` is exactly where `lell_three_eq_iff` applies; at `h = 0` the three roots
+restriction `h ≠ 0` is exactly where `Lell_three_eq_iff` applies; at `h = 0` the three roots
 merge and the desingularized system is the correct statement instead. -/
 theorem exists_scalar_family_kkt (hd : 2 ≤ d) :
     ∃ u lv g : ℝ → ℝ,
@@ -126,6 +126,6 @@ theorem exists_scalar_family_kkt (hd : 2 ≤ d) :
       rwa [show uStar d * uStar d = rStar d by rw [← uStar_sq hd]; ring] at this
     exact this.eventually_lt_const (rStar_lt_one hd)
   filter_upwards [hsol, hspos, htpos, hssq, htsq, hst] with h hsolh hsh hth hssqh htsqh hsth hne
-  exact (lell_three_eq_iff hd hne hsh hth hssqh htsqh hsth).mpr hsolh
+  exact (Lell_three_eq_iff hd hne hsh hth hssqh htsqh hsth).mpr hsolh
 
 end UpperTailOptimizers

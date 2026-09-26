@@ -34,21 +34,21 @@ $I_p-\mu t(H,\,\cdot\,)$ is equivalent to
   \quad\text{for a.e. }(x,y)\in[0,1]^2.
 \end{equation}
 For the family under construction, we first regard $\gamma_h$ as an
-independent scalar coefficient, so the graphon stationarity equations do not
+independent coefficient, so the graphon stationarity equations do not
 involve $q_h$ or $\alpha_h$.  Evaluating
 \eqref{eq:rank-one-kkt-proof} on the two diagonal blocks and
-the cross block, and using $J'_{p_h}(z)=\ell(p_h)-\ell(z)$, gives
+the cross block, and using $J'_{p_h}(z)=\ell_h-\ell(z)$, gives
 \begin{equation}\label{eq:three-value-kkt-proof}
-  \ell(p_h)-\ell(s_h^2)=\gamma_hs_h^{2d-2},\qquad
-  \ell(p_h)-\ell(s_ht_h)=\gamma_h(s_ht_h)^{d-1},\qquad
-  \ell(p_h)-\ell(t_h^2)=\gamma_ht_h^{2d-2}.
+  \ell_h-\ell(s_h^2)=\gamma_hs_h^{2d-2},\qquad
+  \ell_h-\ell(s_ht_h)=\gamma_h(s_ht_h)^{d-1},\qquad
+  \ell_h-\ell(t_h^2)=\gamma_ht_h^{2d-2}.
 \end{equation}
 We first solve \eqref{eq:three-value-kkt-proof} for
 $u_h,\gamma_h,p_h$, and then impose stationarity under variation of the block
 proportion to determine $\alpha_h$ and the derived quantities
 $q_h,r_h,\mu_h$.
 Recall that $s_h=u_h-h$ and $t_h=u_h+h$.  Subtracting consecutive equations
-eliminates $\ell(p_h)$ and gives
+eliminates $\ell_h$ and gives
 \begin{equation}\label{eq:kkt-divided-slopes}
   \frac{\ell(s_ht_h)-\ell(s_h^2)}
        {s_h^{2d-2}-(s_ht_h)^{d-1}}
@@ -137,7 +137,7 @@ $h$ and, by the preceding expansion, satisfies
   B(u,0)=-2u g_d'(u^2).
 \]
 For $h\ne0$, the equations $A(u,h)=0$ and $B(u,h)=0$ are equivalent.
-Now fix a small interval $U\subset(0,1)$ containing $u_*$.  Since $u>0$ on
+Now fix a small interval $U\subseteq(0,1)$ containing $u_*$.  Since $u>0$ on
 $U$, the explicit formula for $g_d$ gives
 \[
   B(u,0)=0
@@ -167,7 +167,7 @@ Since $B(u_h,h)=0$, the first two expressions in
 their common value, using their analytic extensions at $h=0$.  The middle KKT
 equation in \eqref{eq:three-value-kkt-proof} then gives
 \[
-  \ell(p_h)=\gamma_h(s_ht_h)^{d-1}+\ell(s_ht_h).
+  \ell_h=\gamma_h(s_ht_h)^{d-1}+\ell(s_ht_h).
 \]
 Since $\ell$ is one-to-one, this identity determines a unique $p_h$.
 Combining this definition of $\gamma_h$ with the middle equation recovers the
@@ -182,26 +182,23 @@ the analytic extension of either quotient in
 \]
 The middle KKT equation in \eqref{eq:three-value-kkt-proof} then gives
 \[
-  \ell(p_0)=\gamma_*u_*^{2(d-1)}+\ell(u_*^2)=\ell_*,
+  \ell_0=\gamma_*u_*^{2(d-1)}+\ell(u_*^2)=\ell_*,
 \]
 which implies $p_0=p_*$. 
 We have therefore constructed the unique analytic family
 $(u_h,p_h,\gamma_h)$ near $(u_*,p_*,\gamma_*)$.
-Define
+Recall that
 \[
-  \mathcal M_h(z):=J_{p_h}(z)-\frac{\gamma_h}{d}z^d.
+  \mathcal M_h(z)=J_{p_h}(z)-\frac{\gamma_h}{d}z^d.
 \]
-At the singular endpoint, direct differentiation gives
-\begin{equation}\label{eq:endpoint-entropy-derivatives}
-  J_{p_*}'(r_*)=\gamma_*r_*^{d-1},\qquad
-  J_{p_*}''(r_*)=\gamma_*(d-1)r_*^{d-2},\qquad
-  J_{p_*}^{(3)}(r_*)=\gamma_*(d-1)(d-2)r_*^{d-3}.
-\end{equation}
 Equation \eqref{eq:three-value-kkt-proof} says precisely that
 $s_h^2,s_ht_h,t_h^2$ are critical points of $\mathcal M_h$.
-By \eqref{eq:endpoint-entropy-derivatives},
-the first three derivatives of $\mathcal M_0$ vanish at $r_*$.
-Direct differentiation gives its Taylor expansion
+At $h=0$, the supporting line $\ell_{r_*}$ has slope $\gamma_*/d$, so
+\eqref{eq:endpoint-supporting-gap} gives
+\[
+  \mathcal M_0(z)-\mathcal M_0(r_*)=\Gamma_d(z).
+\]
+Thus (M4) of \Cref{thm:lz-boundary} and analyticity yield
 \begin{equation}\label{eq:mh-cubic-derivative}
   \mathcal M_0'(z)
   =k_3(z-r_*)^3+O_d((z-r_*)^4),
@@ -423,37 +420,33 @@ $\mu=\gamma_h/(m q_h^{v-2})=\mu_h$.  This proves the stated local uniqueness.
 \label{app:rank-one-parameter-expansions}
 
 \begin{proof}[Proof of \Cref{lem:rank-one-parameter-expansions}]
-Since $u_h$, $\gamma_h$, and $\ell(p_h)$ are analytic in $h^2$, write
+Since $u_h$, $\gamma_h$, and $\ell_h$ are analytic in $h^2$, write
 \[
   u_h=u_*+U_2h^2+O_d(h^4),
   \qquad
   \gamma_h=\gamma_*+G_2h^2+O_d(h^4),
   \qquad
-  \ell(p_h)=\ell_*+L_2h^2+O_d(h^4).
+  \ell_h=\ell_*+L_2h^2+O_d(h^4).
 \]
-Define
+Recall that
 \[
-  \mathcal L_h(z):=J_{p_h}'(z)-\gamma_hz^{d-1}.
+  \mathcal M_h'(z)=J_{p_h}'(z)-\gamma_hz^{d-1}.
 \]
-The triple-contact identities
-\eqref{eq:endpoint-entropy-derivatives} show that $\mathcal L_0$ and
-its first two derivatives vanish at $r_*$.  Direct differentiation gives
+To extend \eqref{eq:mh-cubic-derivative} by one order, direct differentiation gives
 \[
-  \mathcal L_0^{(3)}(r_*)=\frac{d^5}{(d-1)^2},
-  \qquad
-  \mathcal L_0^{(4)}(r_*)=\frac{5d^6(d-2)}{(d-1)^3},
+  \mathcal M_0^{(5)}(r_*)=\frac{5d^6(d-2)}{(d-1)^3}.
 \]
-and hence
+Hence
 \begin{align}\label{eq:kkt-quartic-expansion}
-  \mathcal L_0(z)
+  \mathcal M_0'(z)
   &=\frac{d^5}{6(d-1)^2}(z-r_*)^3
     +\frac{5d^6(d-2)}{24(d-1)^3}(z-r_*)^4
     +O_d((z-r_*)^5).
 \end{align}
 Moreover,
 \begin{align}\label{eq:kkt-parameter-shift}
-  \mathcal L_h(z)
-  &=\mathcal L_0(z)+\{\ell(p_h)-\ell_*\}
+  \mathcal M_h'(z)
+  &=\mathcal M_0'(z)+\{\ell_h-\ell_*\}
     -(\gamma_h-\gamma_*)z^{d-1}.
 \end{align}
 
@@ -466,8 +459,8 @@ Since $r_*=u_*^2$, the definitions $s_h=u_h-h$ and $t_h=u_h+h$ give
 \end{aligned}
 \end{equation*}
 We substitute these three roots into \eqref{eq:kkt-parameter-shift} and
-use the equations $\mathcal L_h(s_h^2)=\mathcal L_h(s_ht_h)
-=\mathcal L_h(t_h^2)=0$.  For the middle root,
+use the equations $\mathcal M_h'(s_h^2)=\mathcal M_h'(s_ht_h)
+=\mathcal M_h'(t_h^2)=0$.  For the middle root,
 $s_ht_h-r_*=O_d(h^2)$, so comparison at order $h^2$ gives
 \[
   L_2=G_2r_*^{d-1}.
@@ -484,7 +477,7 @@ Therefore
   L_2=\frac{2d^3}{3(d-1)}.
 \]
 At order $h^4$, subtracting the middle-root equation from either outer-root
-equation cancels the unknown fourth-order coefficients of $\ell(p_h)$ and
+equation cancels the unknown fourth-order coefficients of $\ell_h$ and
 $\gamma_h$ and gives
 \[
   \frac{d^5}{(d-1)^2}u_*^2(1+2u_*U_2)
@@ -495,7 +488,7 @@ Using $u_*^2=r_*=(d-1)/d$ and the value of $G_2$, we obtain
 \[
   U_2=\frac{5-3d}{6u_*}.
 \]
-This proves the stated expansions of $u_h$ and $\ell(p_h)$; the calculation
+This proves the stated expansions of $u_h$ and $\ell_h$; the calculation
 also gives the intermediate expansion of $\gamma_h$ stated above.
 
 We next compute the first nonzero term of $\alpha_h$.  Set

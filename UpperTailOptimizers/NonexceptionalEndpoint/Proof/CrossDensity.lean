@@ -5,17 +5,17 @@ import UpperTailOptimizers.LZBoundary.Curve
 # The limiting cross density is the second contact density
 
 `rmk:bipodal-parameter-expansions` of `paper/paper.tex` observes that the KRR–S limiting cross
-density `ζ_d(r)` of `thm:krrs-cross-density` and the second contact density `sm(r)` of the
+density `ζ_d(r)` of `thm:krrs-cross-density` and the second contact density `s_c(r)` of the
 Lubetzky–Zhao supporting line of Theorem 3.1 coincide, and that `ζ_2(r) = 1 - r`.
 
-* `zetaFun_eq_smGlobal` — `ζ_d(r) = sm(r)` for every `r ∈ (0,1)`.  The paper states it for
-  `r ≠ r_*`; at `r = r_*` both sides equal `r_*` (`zetaFun_rStar`, `smGlobal_rStar`).
+* `zetaFun_eq_scGlobal` — `ζ_d(r) = s_c(r)` for every `r ∈ (0,1)`.  The paper states it for
+  `r ≠ r_*`; at `r = r_*` both sides equal `r_*` (`zetaFun_rStar`, `scGlobal_rStar`).
 * `zetaFun_two` — `ζ_2(r) = 1 - r` for every `r ∈ (0,1)`.
 
-The proof of the first identity follows the remark.  With `β = J'_{pc(r)}(r)/(d r^{d-1})`, the
-supporting cost gap is `g_r(z) = -𝒟_r(z)(ψ_d(r,z) + β)` for `z ≠ r`, because `J_{pc(r)} + 2S₀` is
-affine.  Since `g_r ≥ 0` and `𝒟_r(z) > 0`, `ψ_d(r,z) ≤ -β`, with equality at `z = sm(r)`; the
-maximizer of `ψ_d(r,·)` off the diagonal is unique (`psiD_lt_psiStar`), so `sm(r) = ζ_d(r)`.
+The proof of the first identity follows the remark.  With `β = J'_{p_c(r)}(r)/(d r^{d-1})`, the
+supporting cost gap is `g_{d,r}(z) = -𝒟_r(z)(ψ_d(r,z) + β)` for `z ≠ r`, because
+`J_{p_c(r)} + 2S₀` is affine.  Since `g_{d,r} ≥ 0` and `𝒟_r(z) > 0`, `ψ_d(r,z) ≤ -β`, with equality at `z = s_c(r)`; the
+maximizer of `ψ_d(r,·)` off the diagonal is unique (`psiD_lt_psiStar`), so `s_c(r) = ζ_d(r)`.
 -/
 
 namespace UpperTailOptimizers
@@ -37,16 +37,16 @@ theorem Jp_sub_tangent_eq_neg_Nfun {p r z : ℝ} (hp0 : 0 < p) (hp1 : p < 1)
     Real.log_mul hr0.ne' hp1', Real.log_mul hr1' hp0.ne']
   ring
 
-/-- **`ζ_d(r) = sm(r)`** (`rmk:bipodal-parameter-expansions`): the KRR–S limiting cross density
+/-- **`ζ_d(r) = s_c(r)`** (`rmk:bipodal-parameter-expansions`): the KRR–S limiting cross density
 is the second contact density of the Lubetzky–Zhao supporting line. -/
-theorem zetaFun_eq_smGlobal {d : ℕ} (hd : 2 ≤ d) {r : ℝ} (hr0 : 0 < r) (hr1 : r < 1) :
-    zetaFun d r = smGlobal d r := by
+theorem zetaFun_eq_scGlobal {d : ℕ} (hd : 2 ≤ d) {r : ℝ} (hr0 : 0 < r) (hr1 : r < 1) :
+    zetaFun d r = scGlobal d r := by
   by_cases hrs : r = rStar d
   · subst hrs
-    rw [zetaFun_rStar hd, smGlobal_rStar hd]
+    rw [zetaFun_rStar hd, scGlobal_rStar hd]
   obtain ⟨M, hrU, -⟩ := lz_boundary_arcs hd hr0 hr1 hrs
-  rw [smGlobal_eq_sm hd M hrU]
-  obtain ⟨hpc0, hpcr, -, hsmne, hsm0, hsm1⟩ := M.ordering r hrU
+  rw [scGlobal_eq_sc hd M hrU]
+  obtain ⟨hpc0, hpcr, -, hscne, hsc0, hsc1⟩ := M.ordering r hrU
   have hpc1 : M.pc r < 1 := lt_trans hpcr hr1
   have hden : (d : ℝ) * r ^ (d - 1) ≠ 0 := (mul_pos (dpos hd) (pow_pos hr0 _)).ne'
   -- the supporting slope `β`, with `J_p'(r) = β d r^{d-1}`
@@ -72,17 +72,17 @@ theorem zetaFun_eq_smGlobal {d : ℕ} (hd : 2 ≤ d) {r : ℝ} (hr0 : 0 < r) (hr
     rw [div_le_iff₀ hD]
     linarith
   -- with equality at the second contact
-  have heq : psiD d r (M.sm r) = -slope d M.pc r := by
-    have hD := Dfun_pos hd hr0 hsm0.le hsmne
+  have heq : psiD d r (M.sc r) = -slope d M.pc r := by
+    have hD := Dfun_pos hd hr0 hsc0.le hscne
     have hs := M.secondContact r hrU
-    have hg := hgap (M.sm r) ⟨hsm0, hsm1⟩
+    have hg := hgap (M.sc r) ⟨hsc0, hsc1⟩
     unfold psiD
     rw [div_eq_iff hD.ne']
     linarith
   -- uniqueness of the off-diagonal maximizer
   by_contra hne
   have hrI : r ∈ Ioo (0:ℝ) 1 := ⟨hr0, hr1⟩
-  have hlt := psiD_lt_psiStar hd hrI ⟨hsm0, hsm1⟩ hsmne (Ne.symm hne)
+  have hlt := psiD_lt_psiStar hd hrI ⟨hsc0, hsc1⟩ hscne (Ne.symm hne)
   have hz := hle (zetaFun d r) (zetaFun_mem hd hrI) (zetaFun_ne_self hd hrI hrs)
   unfold psiStar at hlt
   linarith

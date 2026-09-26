@@ -10,6 +10,9 @@ the kernel
 
   `K_h(x,y) = J̃_{p_h}(xy)`,
 
+(the paper writes the two factor values `u, u'` and the operators `I_h^u, R_h^u`; the Lean binders
+are `x, y`),
+
 which equals `J_{p_h}(xy)` on the central square, by interpolating in each variable separately
 in the basis `{1, x^d}` at the two nodes `s_h, t_h`.  This file realises
 

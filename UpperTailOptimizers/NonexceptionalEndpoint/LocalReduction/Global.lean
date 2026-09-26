@@ -10,13 +10,21 @@ nonexceptional densities `r ∈ (0,1) ∖ {r_*}`, and with an open interval `I �
 
 * `edge_density_deficit` — `lem:edge-density-deficit`;
 * `boundary_convergence` — `lem:boundary-convergence`;
-* `one_dimensional_reduction` — `cor:scalar-reduction`, for any `I`, `ρ₀`, `ρ` and `η` satisfying
+* `one_dimensional_reduction` — `cor:one-dimensional-reduction`, for any `I`, `ρ₀`, `ρ` and `η` satisfying
   the clauses of `lem:fixed-density-bipodality`;
 * `uniform_scalar_reduction` — `lem:fixed-density-bipodality` together with
-  `cor:scalar-reduction` for the `I`, `ρ₀` and `η` it constructs;
+  `cor:one-dimensional-reduction` for the `I`, `ρ₀` and `η` it constructs;
 * `fixed_density_bipodality` — `lem:fixed-density-bipodality` alone;
 * `fixed_density_bipodality_Icc` — the same, with `I = (lo, hi)` of compact closure
   `[lo, hi] ⊆ (0,1) ∖ {r_*}`, as the paper's proof chooses it and Section 4.2 uses it.
+
+The paper's scalar variable is the edge-density deficit `δ = r - ε`: it states
+`lem:fixed-density-bipodality` for `0 < δ < δ₀` and a single window width `η`, and
+`eq:edge-density-minimization` as `Φ_H(p,r) = min_{0<δ<δ₀} I_{p,r}(r-δ)`.  Here the deficit
+range is the strip `ε ∈ (r-ρ₀, r)`, so `ρ₀` is the paper's `δ₀`, and the extra radius `ρ ≤ ρ₀`
+is the strengthening proved in `NonexceptionalEndpoint/LocalReduction/Main.lean`; the paper's
+own statement is `ρ = ρ₀`.  The paper's optimizer `Ŵ` and its deficit `δ̂ = r - e(Ŵ)` are the
+`W*` and `e(W*)` below.
 
 In `uniform_scalar_reduction`, the interval is `I = (lo, hi)`, a scalar minimizer of `I_{p,r}`
 over `(r-ρ, r)` is expressed with `IsMinOn`, and "the entropy maximizer `B_{ε,r^m}`" is any
@@ -95,7 +103,7 @@ theorem exists_relabel_symm {W W' : Graphon} {σ : ℝ → ℝ} (hσ : IsRelabel
 /-! ### The results of Section 4.1 -/
 
 /-- **`lem:edge-density-deficit` (strict edge-density deficit).**  Let `r ∈ (0,1) ∖ {r_*}` and
-`0 < p < pc(r)`.  Every optimizer `W` satisfies `e(W) < r`. -/
+`0 < p < p_c(r)`.  Every optimizer `W` satisfies `e(W) < r`. -/
 theorem edge_density_deficit {d : ℕ} (hd : 2 ≤ d) {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] (hreg : ∀ v, H.degree v = d)
     (hm : 1 ≤ H.edgeFinset.card) {r p : ℝ} (hr0 : 0 < r) (hr1 : r < 1) (hr : r ≠ rStar d)
@@ -107,8 +115,8 @@ theorem edge_density_deficit {d : ℕ} (hd : 2 ≤ d) {V : Type*} [Fintype V] [D
   exact edgeDensity_lt_broken hd M hrM H hreg hm hp0 hp W hWfeas hWopt
 
 /-- **`lem:boundary-convergence` (boundary convergence of optimizers).**  Let
-`r_n ∈ (0,1) ∖ {r_*}` and `p_n ∈ (0, pc(r_n))` with `r_n → r₀ ∈ (0,1) ∖ {r_*}` and
-`pc(r_n) - p_n → 0`, and let `W_n` be an optimizer at `(p_n, r_n)`.  Then
+`r_n ∈ (0,1) ∖ {r_*}` and `p_n ∈ (0, p_c(r_n))` with `r_n → r₀ ∈ (0,1) ∖ {r_*}` and
+`p_c(r_n) - p_n → 0`, and let `W_n` be an optimizer at `(p_n, r_n)`.  Then
 `δ_□(W_n, r₀) → 0` and `e(W_n) → r₀`. -/
 theorem boundary_convergence {d : ℕ} (hd : 2 ≤ d) {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] (hreg : ∀ v, H.degree v = d)
@@ -147,11 +155,11 @@ theorem boundary_convergence {d : ℕ} (hd : 2 ≤ d) {V : Type*} [Fintype V] [D
       (edgeDensity_tendsto_boundary hd M H hreg hm hKM hr₀K hrK hrlim' hpos hlt hpclim'
         (fun n => Wn (n + N)) (fun n => hWfeas (n + N)) (fun n => hWopt (n + N)))
 
-/-- **`cor:scalar-reduction` with the real-valued envelope**, for data as in
+/-- **`cor:one-dimensional-reduction` with the real-valued envelope**, for data as in
 `lem:fixed-density-bipodality`: an interval `I = (lo, hi) ⊆ (0,1) ∖ {r_*}` and `ρ₀` such that the
 entropy maximizers `B_{ε,r^m}` (`r ∈ I`, `ε ∈ (r-ρ₀, r)`) exist and are unique up to relabelling,
-and `ρ < ρ₀`, `η < inf_{r∈I} pc(r)` such that every optimizer at `(p,r)` with `r ∈ I`,
-`pc(r) - η < p < pc(r)` has `e(W) ∈ (r-ρ, r)`.  `one_dimensional_reduction` is the paper form. -/
+and `ρ < ρ₀`, `η < inf_{r∈I} p_c(r)` such that every optimizer at `(p,r)` with `r ∈ I`,
+`p_c(r) - η < p < p_c(r)` has `e(W) ∈ (r-ρ, r)`.  `one_dimensional_reduction` is the paper form. -/
 theorem one_dimensional_reduction_real {d : ℕ} (hd : 2 ≤ d) {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] (hm : 1 ≤ H.edgeFinset.card)
     {lo hi ρ₀ ρ η : ℝ} (hI : Set.Ioo lo hi ⊆ Set.Ioo (0:ℝ) 1 \ {rStar d})
@@ -315,10 +323,10 @@ theorem one_dimensional_reduction_real {d : ℕ} (hd : 2 ≤ d) {V : Type*} [Fin
     obtain ⟨hfeas, hIp⟩ := hconv ε hε hεmin (What r ε) he ht hmax
     exact ⟨What r ε, hfeas, hIp, he⟩
 
-/-- **`cor:scalar-reduction`.**  Let `I = (lo, hi) ⊆ (0,1) ∖ {r_*}` and `ρ₀` be as in
+/-- **`cor:one-dimensional-reduction`.**  Let `I = (lo, hi) ⊆ (0,1) ∖ {r_*}` and `ρ₀` be as in
 `lem:fixed-density-bipodality` (the entropy maximizers `B_{ε,r^m}` exist and are unique up to
-relabelling for `r ∈ I`, `ε ∈ (r-ρ₀, r)`), let `ρ < ρ₀`, and let `η < inf_{r∈I} pc(r)` be as in that
-lemma (optimizers at `r ∈ I`, `pc(r) - η < p < pc(r)` have `e(W) ∈ (r-ρ, r)`).  Then for such
+relabelling for `r ∈ I`, `ε ∈ (r-ρ₀, r)`), let `ρ < ρ₀`, and let `η < inf_{r∈I} p_c(r)` be as in that
+lemma (optimizers at `r ∈ I`, `p_c(r) - η < p < p_c(r)` have `e(W) ∈ (r-ρ, r)`).  Then for such
 `r, p`: `Φ_H(p,r) = min_{ε∈(r-ρ,r)} I_{p,r}(ε)`; every optimizer `W*` is `B_{e(W*),r^m}` up to
 relabelling and `e(W*)` minimizes `I_{p,r}` on `(r-ρ,r)`; conversely `B_{ε,r^m}` is an optimizer for
 every such minimizer `ε`; and `W* ↦ e(W*)` is a bijection from optimizers modulo relabelling onto
@@ -514,14 +522,14 @@ theorem uniform_scalar_reduction_real {d : ℕ} (hd : 2 ≤ d) {V : Type*} [Fint
   obtain ⟨he, ht, -, hmax, huniq⟩ := hWhat r (hIK hr) ε hε
   exact ⟨What ε r, he, ht, hmax, huniq⟩
 
-/-- **`lem:fixed-density-bipodality` and `cor:scalar-reduction`.**  Fix `r₀ ∈ (0,1) ∖ {r_*}`.
+/-- **`lem:fixed-density-bipodality` and `cor:one-dimensional-reduction`.**  Fix `r₀ ∈ (0,1) ∖ {r_*}`.
 There are `ρ₀ > 0` and an open interval `I = (lo, hi) ⊆ (0,1) ∖ {r_*}` containing `r₀` such that:
 
 * (lemma) for `r ∈ I` and `ε ∈ (r-ρ₀, r)` the entropy maximizer `B_{ε,r^m}` at edge density `ε`
   and `H`-density `r^m` exists, is bipodal and is unique up to relabelling, and for every
-  `p ∈ (0,1)`, `s(B_{ε,r^m}) = S_H(ε,r^m)` and `I_{p,r}(ε) = I_p(B_{ε,r^m})`;
-* (lemma) for every `0 < ρ < ρ₀` there is `0 < η < inf_{r∈I} pc(r)` such that every optimizer
-  at `(p,r)` with `r ∈ I`, `pc(r) - η < p < pc(r)` has `e(W) ∈ (r-ρ, r)`;
+  `p ∈ (0,1)`, `s(B_{ε,r^m}) = S(ε,r^m)` and `I_{p,r}(ε) = I_p(B_{ε,r^m})`;
+* (lemma) for every `0 < ρ < ρ₀` there is `0 < η < inf_{r∈I} p_c(r)` such that every optimizer
+  at `(p,r)` with `r ∈ I`, `p_c(r) - η < p < p_c(r)` has `e(W) ∈ (r-ρ, r)`;
 * (corollary) for these `ρ, η, r, p`: `Φ_H(p,r) = min_{ε∈(r-ρ,r)} I_{p,r}(ε)`; every optimizer
   `W*` is `B_{e(W*),r^m}` up to relabelling and `e(W*)` minimizes `I_{p,r}` on `(r-ρ,r)`;
   conversely `B_{ε,r^m}` is an optimizer for every such minimizer `ε`; and `W* ↦ e(W*)` is a

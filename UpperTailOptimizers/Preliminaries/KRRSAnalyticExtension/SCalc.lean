@@ -1,9 +1,9 @@
 import UpperTailOptimizers.Preliminaries.KRRSAnalyticExtension.Reduced
 
 /-!
-# The entropy derivatives of Appendix B
+# The entropy derivatives of Appendix A
 
-This file carries out the entropy computations for Appendix B of `paper/paper.tex`: the
+This file carries out the entropy computations for Appendix A of `paper/paper.tex`: the
 boundary derivative `eq:krrs-entropy-derivative` of paragraph 2, and the *exact* `a`- and
 `b`-derivatives used by this formalisation's stationarity system, all for the edge-constrained
 entropy
